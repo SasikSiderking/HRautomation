@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/meetingRoomFragment"
+        android:title="@string/meeting_room"
+        />
+    <item
+        android:id="@+id/colleaguesFragment"
+        android:title="@string/colleagues"
+        />
+    <item
+        android:id="@+id/productFragment"
+        android:title="@string/products"
+        />
+    <item
+        android:id="@+id/eatingFragment"
+        android:title="@string/eating"
+        />
+    <item
+        android:id="@+id/faqFragment"
+        android:title="@string/faq"
+        />
+    <item
+        android:id="@+id/settingsFragment"
+        android:title="@string/settings"
+        />
+    <item
+        android:id="@+id/feedbackFragment"
+        android:title="@string/feedback"
+        />
+</menu>
