@@ -9,4 +9,5 @@
     <string name="faq">FAQ</string>
     <string name="settings">Настройки</string>
     <string name="feedback">Отзыв разработчикам</string>
+    <string name="product_img_contentDescription">Картинка продукта</string>
 </resources>
