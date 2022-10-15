@@ -3,6 +3,7 @@ package com.example.hrautomation.presentation.view.activity
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
@@ -12,8 +13,10 @@ import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import com.example.hrautomation.R
 import com.example.hrautomation.app.App
+import com.example.hrautomation.data.repository.UserRepository
 import com.example.hrautomation.databinding.ActivityMainBinding
 import com.example.hrautomation.di.AppComponent
+import com.example.hrautomation.domain.repository.IUserRepository
 import com.google.android.material.navigation.NavigationView
 import javax.inject.Inject
 
@@ -25,7 +28,7 @@ val Context.appComponent: AppComponent
 
 class MainActivity : AppCompatActivity() {
     @Inject
-    lateinit var message: String
+    lateinit var userRepository: UserRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +45,8 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
         findViewById<NavigationView>(R.id.nav_view)
             .setupWithNavController(navController)
+
+        Log.i("test",(userRepository.getToken() as IUserRepository.GetTokenEvent.Token).token)
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)

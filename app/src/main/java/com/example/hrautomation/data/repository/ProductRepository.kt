@@ -2,7 +2,9 @@ package com.example.hrautomation.data.repository
 
 import com.example.hrautomation.domain.model.Product
 import com.example.hrautomation.domain.repository.IProductRepository
+import javax.inject.Singleton
 
+@Singleton
 class ProductRepository: IProductRepository {
     override suspend fun getProductList(): List<Product> {
         val bread = Product("Хлебобулочные", "https://klike.net/uploads/posts/2020-09/1601201612_2.jpg", "Хлеб")

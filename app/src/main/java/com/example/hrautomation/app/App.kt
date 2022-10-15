@@ -2,6 +2,7 @@ package com.example.hrautomation.app
 
 import android.app.Application
 import com.example.hrautomation.di.AppComponent
+import com.example.hrautomation.di.ContextModule
 import com.example.hrautomation.di.DaggerAppComponent
 
 class App : Application() {
@@ -9,6 +10,6 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        appComponent = DaggerAppComponent.create()
+        appComponent = DaggerAppComponent.builder().contextModule(ContextModule(this)).build()
     }
 }

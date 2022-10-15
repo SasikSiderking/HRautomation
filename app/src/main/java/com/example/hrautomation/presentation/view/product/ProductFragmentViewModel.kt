@@ -1,5 +1,6 @@
 package com.example.hrautomation.presentation.view.product
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,9 +11,8 @@ import com.example.hrautomation.presentation.model.HeaderViewModel
 import com.example.hrautomation.presentation.model.ItemViewModel
 import com.example.hrautomation.presentation.model.ProductListingViewModel
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class ProductFragmentViewModel @Inject constructor(private val repo: ProductRepository): ViewModel() {
+class ProductFragmentViewModel constructor(private val repo: ProductRepository): ViewModel() {
 
     companion object{
         const val HEADER_ITEM = -1
@@ -42,11 +42,6 @@ class ProductFragmentViewModel @Inject constructor(private val repo: ProductRepo
             viewData.add(HeaderViewModel(it))
             val products = productsBySection[it]
             products?.forEach{product: Product -> val item = ProductListingViewModel(product.section,product.img,product.name)
-//            products?.forEach{product: Product -> val item = if(product.isAd){
-//                ProductAdViewModel(product.section,product.img,product.name)
-//            } else{
-//                ProductListingViewModel(product.section,product.img,product.name)
-//            }
                 viewData.add(item)
             }
         }
