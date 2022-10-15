@@ -14,12 +14,13 @@ import javax.inject.Inject
 
 class ProductFragment : Fragment() {
 
-    private lateinit var binding: FragmentProductBinding
+    private var _binding: FragmentProductBinding? = null
+    private val binding: FragmentProductBinding
+    get() = _binding!!
 
     @Inject
     lateinit var productFragmentViewModelProvider: ProductFragmentViewModelProvider
 
-    //        Подключаем ViewModel
     private val viewModel: ProductFragmentViewModel by viewModels {
         productFragmentViewModelProvider
     }
@@ -33,16 +34,15 @@ class ProductFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-//        Подключаем binding
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_product, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_product, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-//         Редактруем рекуклер вью
-//        binding.productRecyclerview.layoutManager = GridLayoutManager(context, 3)
+    override fun onDestroyView() {
+        _binding?.unbind()
+        _binding = null
+        super.onDestroyView()
     }
 }

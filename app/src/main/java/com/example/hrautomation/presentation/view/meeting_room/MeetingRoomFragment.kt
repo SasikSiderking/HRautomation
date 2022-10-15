@@ -5,15 +5,54 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.example.hrautomation.R
+import com.example.hrautomation.presentation.view.activity.appComponent
+import com.example.hrautomation.presentation.view.login_dialog.LoginDialog
+import javax.inject.Inject
 
 class MeetingRoomFragment : Fragment() {
+    @Inject
+    lateinit var meetingRoomViewModelProvider: MeetingRoomViewModelProvider
+
+    private val viewModel: MeetingRoomViewModel by viewModels {
+        meetingRoomViewModelProvider
+    }
+
+    private var loginDialog: LoginDialog? = null
+
+    private val tokenObserver = Observer<Boolean>{
+        if(!it){
+            loginDialog?.dismiss()
+            loginDialog = LoginDialog()
+            loginDialog?.show(childFragmentManager,LoginDialog.TAG)
+        } else{
+            loginDialog?.dismiss()
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        requireContext().appComponent.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        viewModel.isTokenExist.observe(viewLifecycleOwner,tokenObserver)
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_meeting_room, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onDestroyView() {
+        loginDialog = null
+        viewModel.isTokenExist.removeObserver(tokenObserver)
+        super.onDestroyView()
     }
 }
