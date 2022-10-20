@@ -3,29 +3,31 @@
     <item
         android:id="@+id/meetingRoomFragment"
         android:title="@string/meeting_room"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_card_travel_24"
         />
     <item
         android:id="@+id/colleaguesFragment"
         android:title="@string/colleagues"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_emoji_people_24"
         />
     <item
         android:id="@+id/productFragment"
         android:title="@string/products"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_fastfood_24"
         />
     <item
         android:id="@+id/eatingFragment"
         android:title="@string/eating"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_food_bank_24"
         />
     <item
         android:id="@+id/faqFragment"
         android:title="@string/faq"
-        />
-    <item
-        android:id="@+id/settingsFragment"
-        android:title="@string/settings"
-        />
-    <item
-        android:id="@+id/feedbackFragment"
-        android:title="@string/feedback"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_help_24"
         />
 </menu>
