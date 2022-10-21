@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.example.hrautomation.R
 import com.example.hrautomation.databinding.FragmentProductBinding
 import com.example.hrautomation.presentation.view.activity.appComponent
+import com.example.hrautomation.utils.ViewModelFactory
 import javax.inject.Inject
 
 class ProductFragment : Fragment() {
@@ -19,10 +21,10 @@ class ProductFragment : Fragment() {
     get() = _binding!!
 
     @Inject
-    lateinit var productFragmentViewModelProvider: ProductFragmentViewModelProvider
+    lateinit var viewModelFactory: ViewModelFactory
 
-    private val viewModel: ProductFragmentViewModel by viewModels {
-        productFragmentViewModelProvider
+    val viewModel: ProductFragmentViewModel by viewModels{
+        viewModelFactory
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

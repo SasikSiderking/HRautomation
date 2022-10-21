@@ -9,7 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class LoginDialogViewModel constructor(private val repo: IUserRepository): ViewModel() {
+class LoginDialogViewModel @Inject constructor(private val repo: IUserRepository): ViewModel() {
     val tokenState: LiveData<Boolean>
         get() = _tokenState
     private val _tokenState = MutableLiveData<Boolean>()

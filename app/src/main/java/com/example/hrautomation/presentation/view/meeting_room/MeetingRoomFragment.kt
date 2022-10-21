@@ -12,6 +12,7 @@ import com.example.hrautomation.R
 import com.example.hrautomation.databinding.FragmentMeetingRoomBinding
 import com.example.hrautomation.presentation.view.activity.appComponent
 import com.example.hrautomation.presentation.view.login_dialog.LoginDialog
+import com.example.hrautomation.utils.ViewModelFactory
 import javax.inject.Inject
 
 class MeetingRoomFragment : Fragment() {
@@ -21,10 +22,10 @@ class MeetingRoomFragment : Fragment() {
         get() = _binding!!
 
     @Inject
-    lateinit var meetingRoomViewModelProvider: MeetingRoomViewModelProvider
+    lateinit var viewModelFactory: ViewModelFactory
 
-    private val viewModel: MeetingRoomViewModel by viewModels {
-        meetingRoomViewModelProvider
+    val viewModel: MeetingRoomViewModel by viewModels{
+        viewModelFactory
     }
 
     private var loginDialog: LoginDialog? = null

@@ -10,8 +10,9 @@ import com.example.hrautomation.presentation.model.HeaderViewModel
 import com.example.hrautomation.presentation.model.ItemViewModel
 import com.example.hrautomation.presentation.model.ProductListingViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ProductFragmentViewModel constructor(private val repo: IProductRepository): ViewModel() {
+class ProductFragmentViewModel @Inject constructor(private val repo: IProductRepository): ViewModel() {
 
     companion object{
         const val HEADER_ITEM = -1

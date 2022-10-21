@@ -1,6 +1,8 @@
 package com.example.hrautomation.di
 
 import android.content.Context
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.example.hrautomation.data.api.IIUserApi
 import com.example.hrautomation.data.api.IUserApi
 import com.example.hrautomation.data.repository.ProductRepository
@@ -9,17 +11,23 @@ import com.example.hrautomation.domain.repository.IProductRepository
 import com.example.hrautomation.domain.repository.IUserRepository
 import com.example.hrautomation.presentation.view.activity.MainActivity
 import com.example.hrautomation.presentation.view.login_dialog.LoginDialog
+import com.example.hrautomation.presentation.view.login_dialog.LoginDialogViewModel
 import com.example.hrautomation.presentation.view.meeting_room.MeetingRoomFragment
+import com.example.hrautomation.presentation.view.meeting_room.MeetingRoomViewModel
 import com.example.hrautomation.presentation.view.product.ProductFragment
-import dagger.Binds
-import dagger.Component
-import dagger.Module
-import dagger.Provides
+import com.example.hrautomation.presentation.view.product.ProductFragmentViewModel
+import com.example.hrautomation.utils.ViewModelFactory
+import dagger.*
+import dagger.multibindings.IntoMap
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Provider
 import javax.inject.Singleton
+import kotlin.reflect.KClass
 
-@Component(modules = [RepositoryModule::class,ContextModule::class,ApiModule::class,NetworkModule::class])
+@Component(modules = [RepositoryModule::class,ContextModule::class,ApiModule::class,NetworkModule::class,
+    ViewModelFactoryModule::class,ViewModelModule::class
+])
 @Singleton
 interface AppComponent {
     fun inject(activity: MainActivity)
@@ -27,6 +35,7 @@ interface AppComponent {
     fun inject(fragment: MeetingRoomFragment)
     fun inject(dialog: LoginDialog)
 }
+
 @Module
 interface RepositoryModule {
 
@@ -36,6 +45,7 @@ interface RepositoryModule {
     @Binds
     fun provideUserRepository(userRepository: UserRepository): IUserRepository
 }
+
 @Module
 class ContextModule(private val context: Context){
     @Provides
@@ -68,4 +78,36 @@ class NetworkModule(){
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
+}
+
+@Module
+object ViewModelFactoryModule{
+    @Singleton
+    @Provides
+    fun viewModelFactory(providerMap: Map<Class<out ViewModel>, Provider<ViewModel>>): ViewModelProvider.Factory{
+        return ViewModelFactory(providerMap)
+    }
+}
+
+
+@Target(AnnotationTarget.FUNCTION)
+@MapKey
+annotation class ViewModelKey(val value : KClass<out ViewModel>)
+
+@Module
+interface ViewModelModule{
+    @Binds
+    @IntoMap
+    @ViewModelKey(ProductFragmentViewModel::class)
+    fun bindProductFragmentViewModel(productFragmentViewModel: ProductFragmentViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MeetingRoomViewModel::class)
+    fun bindMeetingRoomViewModel(meetingRoomViewModel: MeetingRoomViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(LoginDialogViewModel::class)
+    fun bindLoginDialogViewModel(loginDialogViewModel: LoginDialogViewModel): ViewModel
 }

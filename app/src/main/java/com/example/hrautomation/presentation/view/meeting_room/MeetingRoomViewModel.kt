@@ -7,8 +7,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.hrautomation.data.repository.UserRepository
 import com.example.hrautomation.domain.repository.IUserRepository
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MeetingRoomViewModel(private val repo: IUserRepository): ViewModel() {
+class MeetingRoomViewModel @Inject constructor(private val repo: IUserRepository): ViewModel() {
     val text: LiveData<String>
     get() = _text
     private val _text = MutableLiveData<String>()

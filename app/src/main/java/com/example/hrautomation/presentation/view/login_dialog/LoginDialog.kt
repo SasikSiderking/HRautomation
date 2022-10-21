@@ -15,15 +15,17 @@ import androidx.lifecycle.Observer
 import com.example.hrautomation.R
 import com.example.hrautomation.databinding.DialogAuthBinding
 import com.example.hrautomation.presentation.view.activity.appComponent
+import com.example.hrautomation.presentation.view.product.ProductFragmentViewModel
+import com.example.hrautomation.utils.ViewModelFactory
 import javax.inject.Inject
 
 class LoginDialog: DialogFragment() {
 
     @Inject
-    lateinit var loginDialogViewModelProvider: LoginDialogViewModelProvider
+    lateinit var viewModelFactory: ViewModelFactory
 
-    private val viewModel: LoginDialogViewModel by viewModels{
-        loginDialogViewModelProvider
+    val viewModel: LoginDialogViewModel by viewModels{
+        viewModelFactory
     }
 
     private var _binding: DialogAuthBinding? = null
