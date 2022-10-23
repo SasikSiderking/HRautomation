@@ -10,8 +10,12 @@ import com.example.hrautomation.data.repository.UserRepository
 import com.example.hrautomation.domain.repository.IProductRepository
 import com.example.hrautomation.domain.repository.IUserRepository
 import com.example.hrautomation.presentation.view.activity.MainActivity
-import com.example.hrautomation.presentation.view.login_dialog.LoginDialog
-import com.example.hrautomation.presentation.view.login_dialog.LoginDialogViewModel
+import com.example.hrautomation.presentation.view.loading.activity_load.LoadingActivity
+import com.example.hrautomation.presentation.view.loading.activity_load.LoadingActivityViewModel
+import com.example.hrautomation.presentation.view.loading.code.CodeLogin
+import com.example.hrautomation.presentation.view.loading.code.CodeLoginViewModel
+import com.example.hrautomation.presentation.view.loading.email.EmailLogin
+import com.example.hrautomation.presentation.view.loading.email.EmailLoginViewModel
 import com.example.hrautomation.presentation.view.meeting_room.MeetingRoomFragment
 import com.example.hrautomation.presentation.view.meeting_room.MeetingRoomViewModel
 import com.example.hrautomation.presentation.view.product.ProductFragment
@@ -33,7 +37,10 @@ interface AppComponent {
     fun inject(activity: MainActivity)
     fun inject(fragment: ProductFragment)
     fun inject(fragment: MeetingRoomFragment)
-    fun inject(dialog: LoginDialog)
+
+    fun inject(activity: LoadingActivity)
+    fun inject(fragment: EmailLogin)
+    fun inject(fragment: CodeLogin)
 }
 
 @Module
@@ -53,7 +60,7 @@ class ContextModule(private val context: Context){
 }
 
 @Module
-class ApiModule(){
+class ApiModule {
     @Provides
     @Singleton
     fun provideUserApi(retrofit: Retrofit): IUserApi {
@@ -68,7 +75,7 @@ class ApiModule(){
 }
 
 @Module
-class NetworkModule(){
+class NetworkModule {
 
     @Provides
     @Singleton
@@ -89,7 +96,6 @@ object ViewModelFactoryModule{
     }
 }
 
-
 @Target(AnnotationTarget.FUNCTION)
 @MapKey
 annotation class ViewModelKey(val value : KClass<out ViewModel>)
@@ -108,6 +114,16 @@ interface ViewModelModule{
 
     @Binds
     @IntoMap
-    @ViewModelKey(LoginDialogViewModel::class)
-    fun bindLoginDialogViewModel(loginDialogViewModel: LoginDialogViewModel): ViewModel
+    @ViewModelKey(LoadingActivityViewModel::class)
+    fun bindLoadingActivityViewModel(loadingActivityViewModel: LoadingActivityViewModel):ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(EmailLoginViewModel::class)
+    fun bindEmailLoginViewModel(emailLoginViewModel: EmailLoginViewModel):ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CodeLoginViewModel::class)
+    fun bindCodeLoginViewModel(codeLoginViewModel: CodeLoginViewModel):ViewModel
 }

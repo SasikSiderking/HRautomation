@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import com.example.hrautomation.R
 import com.example.hrautomation.databinding.FragmentProductBinding
 import com.example.hrautomation.presentation.view.activity.appComponent
