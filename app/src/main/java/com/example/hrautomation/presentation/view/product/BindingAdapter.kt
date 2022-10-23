@@ -5,13 +5,13 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.hrautomation.R
-import com.example.hrautomation.presentation.model.ItemViewModel
+import com.example.hrautomation.presentation.model.ProductViewModel
 
 
 @BindingAdapter("itemViewModels")
-fun bindItemViewModels(recyclerView: RecyclerView, itemViewModels: List<ItemViewModel>?) {
+fun bindItemViewModels(recyclerView: RecyclerView, productViewModels: List<ProductViewModel>?) {
     val adapter = getOrCreateAdapter(recyclerView)
-    adapter.updateItems(itemViewModels)
+    adapter.updateItems(productViewModels)
 }
 
 @BindingAdapter("img")

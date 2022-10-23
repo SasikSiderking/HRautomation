@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.hrautomation.domain.model.Product
 import com.example.hrautomation.domain.repository.IProductRepository
 import com.example.hrautomation.presentation.model.HeaderViewModel
-import com.example.hrautomation.presentation.model.ItemViewModel
+import com.example.hrautomation.presentation.model.ProductViewModel
 import com.example.hrautomation.presentation.model.ProductListingViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,9 +19,9 @@ class ProductFragmentViewModel @Inject constructor(private val repo: IProductRep
         const val LISTING_ITEM = -2
     }
 
-    val data: LiveData<List<ItemViewModel>>
+    val data: LiveData<List<ProductViewModel>>
         get() = _data
-    private val _data = MutableLiveData<List<ItemViewModel>>(emptyList())
+    private val _data = MutableLiveData<List<ProductViewModel>>(emptyList())
 
     init {
         loadData()
@@ -36,8 +36,8 @@ class ProductFragmentViewModel @Inject constructor(private val repo: IProductRep
         }
     }
 
-    private fun createViewData(productsBySection: Map<String,List<Product>>): List<ItemViewModel>{
-        val viewData = mutableListOf<ItemViewModel>()
+    private fun createViewData(productsBySection: Map<String,List<Product>>): List<ProductViewModel>{
+        val viewData = mutableListOf<ProductViewModel>()
         productsBySection.keys.forEach{
             viewData.add(HeaderViewModel(it))
             val products = productsBySection[it]

@@ -13,7 +13,7 @@
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/product_recyclerview"
+            android:id="@+id/employees_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:itemViewModels="@{viewModel.data}"

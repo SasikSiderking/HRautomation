@@ -27,11 +27,19 @@
         android:name="com.example.hrautomation.presentation.view.colleagues.ColleaguesFragment"
         android:label="ColleaguesFragment"
         tools:layout="@layout/fragment_colleagues"
-        />
+        >
+        <action
+            android:id="@+id/action_colleaguesFragment_to_employeeFragment"
+            app:destination="@id/employeeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/productFragment"
         android:name="com.example.hrautomation.presentation.view.product.ProductFragment"
         android:label="ProductFragment"
         tools:layout="@layout/fragment_product"
         />
+    <fragment
+        android:id="@+id/employeeFragment"
+        android:name="com.example.hrautomation.presentation.view.employee.EmployeeFragment"
+        android:label="EmployeeFragment" />
 </navigation>

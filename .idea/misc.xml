@@ -7,8 +7,10 @@
         <entry key="..\:/projects/HRautomation/app/src/main/res/layout/activity_loading.xml" value="0.18" />
         <entry key="..\:/projects/HRautomation/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/projects/HRautomation/app/src/main/res/layout/dialog_auth.xml" value="0.25" />
+        <entry key="..\:/projects/HRautomation/app/src/main/res/layout/employee_recyclerview_item.xml" value="0.196875" />
         <entry key="..\:/projects/HRautomation/app/src/main/res/layout/fragment_colleagues.xml" value="0.196875" />
         <entry key="..\:/projects/HRautomation/app/src/main/res/layout/fragment_eating.xml" value="0.14765625" />
+        <entry key="..\:/projects/HRautomation/app/src/main/res/layout/fragment_employee.xml" value="0.25" />
         <entry key="..\:/projects/HRautomation/app/src/main/res/layout/fragment_faq.xml" value="0.196875" />
         <entry key="..\:/projects/HRautomation/app/src/main/res/layout/fragment_feedback.xml" value="0.196875" />
         <entry key="..\:/projects/HRautomation/app/src/main/res/layout/fragment_loading_code.xml" value="0.196875" />

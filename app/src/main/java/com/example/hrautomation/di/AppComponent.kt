@@ -3,13 +3,17 @@ package com.example.hrautomation.di
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.hrautomation.data.api.IIUserApi
-import com.example.hrautomation.data.api.IUserApi
+import com.example.hrautomation.data.api.*
+import com.example.hrautomation.data.repository.EmployeesRepository
 import com.example.hrautomation.data.repository.ProductRepository
 import com.example.hrautomation.data.repository.UserRepository
+import com.example.hrautomation.domain.repository.IEmployeesRepository
 import com.example.hrautomation.domain.repository.IProductRepository
 import com.example.hrautomation.domain.repository.IUserRepository
 import com.example.hrautomation.presentation.view.activity.MainActivity
+import com.example.hrautomation.presentation.view.colleagues.ColleaguesFragment
+import com.example.hrautomation.presentation.view.colleagues.ColleaguesFragmentViewModel
+import com.example.hrautomation.presentation.view.employee.EmployeeFragment
 import com.example.hrautomation.presentation.view.loading.activity_load.LoadingActivity
 import com.example.hrautomation.presentation.view.loading.activity_load.LoadingActivityViewModel
 import com.example.hrautomation.presentation.view.loading.code.CodeLogin
@@ -23,6 +27,7 @@ import com.example.hrautomation.presentation.view.product.ProductFragmentViewMod
 import com.example.hrautomation.utils.ViewModelFactory
 import dagger.*
 import dagger.multibindings.IntoMap
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Provider
@@ -37,6 +42,8 @@ interface AppComponent {
     fun inject(activity: MainActivity)
     fun inject(fragment: ProductFragment)
     fun inject(fragment: MeetingRoomFragment)
+    fun inject(fragment: ColleaguesFragment)
+    fun inject(fragment: EmployeeFragment)
 
     fun inject(activity: LoadingActivity)
     fun inject(fragment: EmailLogin)
@@ -51,6 +58,9 @@ interface RepositoryModule {
 
     @Binds
     fun provideUserRepository(userRepository: UserRepository): IUserRepository
+
+    @Binds
+    fun provideEmployeesRepository(employeesRepository: EmployeesRepository): IEmployeesRepository
 }
 
 @Module
@@ -63,14 +73,31 @@ class ContextModule(private val context: Context){
 class ApiModule {
     @Provides
     @Singleton
-    fun provideUserApi(retrofit: Retrofit): IUserApi {
-       return retrofit.create(IUserApi::class.java)
+    fun provideUserApi(retrofitBuilder: Retrofit.Builder): IUserApi {
+       return retrofitBuilder
+           .build()
+           .create(IUserApi::class.java)
     }
 
     @Provides
     @Singleton
     fun provideUserApi2(): IIUserApi{
         return IIUserApi()
+    }
+
+    @Provides
+    @Singleton
+    fun provideEmployeesApi(retrofitBuilder: Retrofit.Builder, okHttpClient: OkHttpClient): IEmployeesApi{
+        return retrofitBuilder
+            .client(okHttpClient)
+            .build()
+            .create(IEmployeesApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideEmployeesApi2(): IIEmployeesApi{
+        return IIEmployeesApi()
     }
 }
 
@@ -79,11 +106,16 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(): Retrofit {
+    fun provideRetrofitBuilder(): Retrofit.Builder {
         return Retrofit.Builder()
             .baseUrl("http://localhost:8080")
             .addConverterFactory(GsonConverterFactory.create())
-            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideOkHttpClient(authInterceptor: AuthInterceptor): OkHttpClient{
+        return OkHttpClient.Builder().addInterceptor(authInterceptor).build()
     }
 }
 
@@ -126,4 +158,10 @@ interface ViewModelModule{
     @IntoMap
     @ViewModelKey(CodeLoginViewModel::class)
     fun bindCodeLoginViewModel(codeLoginViewModel: CodeLoginViewModel):ViewModel
+
+    @Binds
+    @IntoMap
+    @Singleton
+    @ViewModelKey(ColleaguesFragmentViewModel::class)
+    fun bindColleaguesFragmentViewModel(colleaguesFragmentViewModel: ColleaguesFragmentViewModel): ViewModel
 }

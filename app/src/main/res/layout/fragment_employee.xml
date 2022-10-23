@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/employeeImageView"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:shapeAppearance="@mipmap/ic_launcher_round"
+                    android:src="@mipmap/ic_launcher_round" />
+
+                <TextView
+                    android:textColor="@color/black"
+                    android:id="@+id/employeeFullName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="28sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/employeeImageView"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/employee_email"
+                android:textSize="20sp"
+                android:labelFor="@id/employeeFullEmail"
+                />
+
+            <EditText
+                android:enabled="false"
+                android:textColor="@color/black"
+                android:id="@+id/employeeFullEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:paddingBottom="5dp"
+                android:layout_marginBottom="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/employee_project"
+                android:textSize="20sp"
+                android:labelFor="@id/employeeFullProject"
+                />
+
+            <EditText
+                android:enabled="false"
+                android:textColor="@color/black"
+                android:id="@+id/employeeFullProject"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:layout_marginBottom="15dp" />
+
+            <TextView
+                android:labelFor="@id/employeeFullPost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/employee_post"
+                android:textSize="20sp" />
+
+            <EditText
+                android:enabled="false"
+                android:textColor="@color/black"
+                android:id="@+id/employeeFullPost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:layout_marginBottom="15dp" />
+
+            <TextView
+                android:labelFor="@id/employeeFullAbout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/about_employee"
+                android:textSize="20sp" />
+
+            <EditText
+                android:enabled="false"
+                android:textColor="@color/black"
+                android:id="@+id/employeeFullAbout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </ScrollView>
+</layout>

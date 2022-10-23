@@ -7,10 +7,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hrautomation.BR
-import com.example.hrautomation.presentation.model.ItemViewModel
+import com.example.hrautomation.presentation.model.ProductViewModel
 
 class BindableRecyclerViewAdapter : RecyclerView.Adapter<BindableViewHolder>() {
-    private var itemViewModels: List<ItemViewModel> = emptyList()
+    private var productViewModels: List<ProductViewModel> = emptyList()
     private val viewTypeToLayoutId: MutableMap<Int,Int> = mutableMapOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindableViewHolder{
@@ -23,29 +23,29 @@ class BindableRecyclerViewAdapter : RecyclerView.Adapter<BindableViewHolder>() {
     }
 
     override fun getItemViewType(position: Int): Int {
-        val item = itemViewModels[position]
+        val item = productViewModels[position]
         if (!viewTypeToLayoutId.containsKey(item.viewType)) {
             viewTypeToLayoutId[item.viewType] = item.layoutId
         }
         return item.viewType
     }
 
-    override fun getItemCount(): Int = itemViewModels.size
+    override fun getItemCount(): Int = productViewModels.size
 
     override fun onBindViewHolder(holder: BindableViewHolder, position: Int) {
-        holder.bind(itemViewModels[position])
+        holder.bind(productViewModels[position])
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateItems(items: List<ItemViewModel>?) {
-        itemViewModels = items ?: emptyList()
+    fun updateItems(items: List<ProductViewModel>?) {
+        productViewModels = items ?: emptyList()
         notifyDataSetChanged()
     }
 }
 
 class BindableViewHolder(private val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(itemViewModel: ItemViewModel) {
-        binding.setVariable(BR.itemViewModel, itemViewModel)
+    fun bind(productViewModel: ProductViewModel) {
+        binding.setVariable(BR.itemViewModel, productViewModel)
     }
 }
