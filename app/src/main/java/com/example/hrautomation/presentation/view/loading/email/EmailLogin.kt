@@ -11,8 +11,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.hrautomation.R
+import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.FragmentLoadingEmailBinding
-import com.example.hrautomation.presentation.view.activity.appComponent
 import com.example.hrautomation.utils.ViewModelFactory
 import javax.inject.Inject
 
@@ -33,7 +33,7 @@ class EmailLogin : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        requireContext().appComponent.inject(this)
+        (requireContext().applicationContext as App).appComponent.inject(this)
 
         _binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_loading_email, container, false)

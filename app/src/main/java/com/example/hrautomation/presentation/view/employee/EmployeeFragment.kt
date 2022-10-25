@@ -9,9 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.hrautomation.R
+import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.FragmentEmployeeBinding
 import com.example.hrautomation.domain.model.Employee
-import com.example.hrautomation.presentation.view.activity.appComponent
 import com.example.hrautomation.presentation.view.colleagues.ColleaguesFragmentViewModel
 import com.example.hrautomation.utils.ViewModelFactory
 import javax.inject.Inject
@@ -30,7 +30,7 @@ class EmployeeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requireContext().appComponent.inject(this)
+        (requireContext().applicationContext as App).appComponent.inject(this)
     }
 
     override fun onCreateView(

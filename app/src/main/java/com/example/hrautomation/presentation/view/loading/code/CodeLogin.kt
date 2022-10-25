@@ -11,9 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.hrautomation.R
+import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.FragmentLoadingCodeBinding
 import com.example.hrautomation.presentation.view.activity.MainActivity
-import com.example.hrautomation.presentation.view.activity.appComponent
 import com.example.hrautomation.utils.ViewModelFactory
 import javax.inject.Inject
 
@@ -29,12 +29,16 @@ class CodeLogin : Fragment() {
         viewModelFactory
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        (requireContext().applicationContext as App).appComponent.inject(this)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        requireContext().appComponent.inject(this)
 
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_loading_code, container, false)
         binding.lifecycleOwner = this

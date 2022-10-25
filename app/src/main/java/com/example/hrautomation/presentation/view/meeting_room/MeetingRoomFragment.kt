@@ -8,8 +8,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.hrautomation.R
+import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.FragmentMeetingRoomBinding
-import com.example.hrautomation.presentation.view.activity.appComponent
 import com.example.hrautomation.utils.ViewModelFactory
 import javax.inject.Inject
 
@@ -28,7 +28,7 @@ class MeetingRoomFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requireContext().appComponent.inject(this)
+        (requireContext().applicationContext as App).appComponent.inject(this)
     }
 
     override fun onCreateView(

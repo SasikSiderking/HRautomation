@@ -15,10 +15,6 @@ class ColleaguesFragmentViewModel @Inject constructor(private val repo: IEmploye
         get() = _data
     private val _data = MutableLiveData<List<Employee>>(emptyList())
 
-//    val selectedEmployee: LiveData<Employee>
-//    get() = _selectedEmployee
-//    private val _selectedEmployee = MutableLiveData<Employee>()
-
     private val _selectedEmployee = MutableLiveData<Employee>()
     val selectedEmployee: LiveData<Employee> get() = _selectedEmployee
 
