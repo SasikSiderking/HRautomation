@@ -4,12 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.hrautomation.domain.repository.IUserRepository
+import com.example.hrautomation.domain.repository.ITokenRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class LoadingActivityViewModel @Inject constructor(private val repo: IUserRepository) : ViewModel() {
+class LoadingActivityViewModel @Inject constructor(private val repo: ITokenRepository) : ViewModel() {
     val isLoading: LiveData<Boolean>
         get() = _isLoading
     private val _isLoading = MutableLiveData(true)

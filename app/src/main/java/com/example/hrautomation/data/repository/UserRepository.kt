@@ -1,7 +1,5 @@
 package com.example.hrautomation.data.repository
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.util.Log
 import com.example.hrautomation.data.api.IIUserApi
 import com.example.hrautomation.domain.repository.IUserRepository
@@ -11,20 +9,8 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class UserRepository @Inject constructor(private val context: Context, private val api: IIUserApi) :
+class UserRepository @Inject constructor(private val api: IIUserApi) :
     IUserRepository {
-    override fun getToken(): String? {
-        val preferences: SharedPreferences =
-            context.getSharedPreferences("app", Context.MODE_PRIVATE)
-        return preferences.getString("token", null)
-    }
-
-
-    override fun saveToken(token: String) {
-        val preferences: SharedPreferences =
-            context.getSharedPreferences("app", Context.MODE_PRIVATE)
-        preferences.edit().putString("token", token).apply()
-    }
 
     override suspend fun checkEmail(email: String): Boolean {
         return try {

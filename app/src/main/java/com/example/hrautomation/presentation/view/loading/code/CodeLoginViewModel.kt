@@ -4,12 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.hrautomation.domain.repository.ITokenRepository
 import com.example.hrautomation.domain.repository.IUserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class CodeLoginViewModel @Inject constructor(private val repo: IUserRepository) : ViewModel() {
+class CodeLoginViewModel @Inject constructor(private val repo: ITokenRepository, private val userRepo: IUserRepository) : ViewModel() {
 
     val isCodeCheckSuccess: LiveData<Boolean>
         get() = _isCodeCheckSuccess
@@ -17,7 +18,7 @@ class CodeLoginViewModel @Inject constructor(private val repo: IUserRepository) 
 
     fun checkCode(email: String, code: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val token = repo.confirmEmail(email, code)
+            val token = userRepo.confirmEmail(email, code)
             if (token != "") {
                 _isCodeCheckSuccess.postValue(true)
                 repo.saveToken(token)
