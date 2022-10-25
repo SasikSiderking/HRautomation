@@ -27,7 +27,7 @@ class ColleaguesFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    val viewModel: ColleaguesFragmentViewModel by viewModels{
+    val viewModel: ColleaguesFragmentViewModel by viewModels {
         viewModelFactory
     }
 
@@ -56,10 +56,10 @@ class ColleaguesFragment : Fragment() {
                 }
             )
         }
-        viewModel.data.observe(viewLifecycleOwner,colleaguesObserver)
+        viewModel.data.observe(viewLifecycleOwner, colleaguesObserver)
     }
 
-    private val colleaguesObserver = Observer<List<Employee>>{
+    private val colleaguesObserver = Observer<List<Employee>> {
         adapter?.update(it)
     }
 

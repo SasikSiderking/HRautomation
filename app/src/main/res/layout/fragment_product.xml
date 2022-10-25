@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.example.hrautomation.presentation.view.product.ProductFragmentViewModel" />
@@ -17,8 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:itemViewModels="@{viewModel.data}"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            />
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
 
     </LinearLayout>
 </layout>

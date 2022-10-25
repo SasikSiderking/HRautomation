@@ -7,14 +7,14 @@ import androidx.lifecycle.viewModelScope
 import com.example.hrautomation.domain.model.Product
 import com.example.hrautomation.domain.repository.IProductRepository
 import com.example.hrautomation.presentation.model.HeaderViewModel
-import com.example.hrautomation.presentation.model.ProductViewModel
 import com.example.hrautomation.presentation.model.ProductListingViewModel
+import com.example.hrautomation.presentation.model.ProductViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class ProductFragmentViewModel @Inject constructor(private val repo: IProductRepository): ViewModel() {
+class ProductFragmentViewModel @Inject constructor(private val repo: IProductRepository) : ViewModel() {
 
-    companion object{
+    companion object {
         const val HEADER_ITEM = -1
         const val LISTING_ITEM = -2
     }
@@ -27,7 +27,7 @@ class ProductFragmentViewModel @Inject constructor(private val repo: IProductRep
         loadData()
     }
 
-    private fun loadData(){
+    private fun loadData() {
         viewModelScope.launch {
             val productList = repo.getProductList()
             val productsBySection = productList.groupBy { it.section }
@@ -36,12 +36,13 @@ class ProductFragmentViewModel @Inject constructor(private val repo: IProductRep
         }
     }
 
-    private fun createViewData(productsBySection: Map<String,List<Product>>): List<ProductViewModel>{
+    private fun createViewData(productsBySection: Map<String, List<Product>>): List<ProductViewModel> {
         val viewData = mutableListOf<ProductViewModel>()
-        productsBySection.keys.forEach{
+        productsBySection.keys.forEach {
             viewData.add(HeaderViewModel(it))
             val products = productsBySection[it]
-            products?.forEach{product: Product -> val item = ProductListingViewModel(product.section,product.img,product.name)
+            products?.forEach { product: Product ->
+                val item = ProductListingViewModel(product.section, product.img, product.name)
                 viewData.add(item)
             }
         }

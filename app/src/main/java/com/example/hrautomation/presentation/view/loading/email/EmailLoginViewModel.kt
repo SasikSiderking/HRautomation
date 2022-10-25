@@ -9,13 +9,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class EmailLoginViewModel @Inject constructor(private val repo: IUserRepository): ViewModel() {
+class EmailLoginViewModel @Inject constructor(private val repo: IUserRepository) : ViewModel() {
 
     val isEmailCheckSuccess: LiveData<Boolean>
         get() = _isEmailCheckSuccess
     private val _isEmailCheckSuccess = MutableLiveData<Boolean>()
 
-    fun checkEmail(email:String){
+    fun checkEmail(email: String) {
         viewModelScope.launch(Dispatchers.IO) {
             _isEmailCheckSuccess.postValue(repo.checkEmail(email))
         }

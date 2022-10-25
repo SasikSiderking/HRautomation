@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/emailLogin"
         android:name="com.example.hrautomation.presentation.view.loading.email.EmailLogin"
-        android:label="EmailLogin" >
+        android:label="EmailLogin">
         <action
             android:id="@+id/action_emailLogin_to_codeLogin"
             app:destination="@id/codeLogin" />
@@ -18,7 +18,7 @@
     <fragment
         android:id="@+id/codeLogin"
         android:name="com.example.hrautomation.presentation.view.loading.code.CodeLogin"
-        android:label="CodeLogin" >
+        android:label="CodeLogin">
         <action
             android:id="@+id/action_codeLogin_to_emailLogin"
             app:destination="@id/emailLogin" />

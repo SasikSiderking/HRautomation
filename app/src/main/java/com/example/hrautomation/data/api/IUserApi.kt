@@ -9,5 +9,5 @@ interface IUserApi {
     suspend fun checkEmail(@Query("email") email: String): Response<Boolean>
 
     @GET("/authorization/confirm")
-    fun confirmEmail(@Query("email") email: String,@Query("code") code: String): Response<String>
+    fun confirmEmail(@Query("email") email: String, @Query("code") code: String): Response<String>
 }

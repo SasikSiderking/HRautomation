@@ -8,14 +8,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.hrautomation.R
 import com.example.hrautomation.domain.model.Employee
 
-class ColleaguesFragmentRecyclerViewAdapter(private var dataSet: List<Employee>, private val onClickListener: OnEmployeeClickListener): RecyclerView.Adapter<ColleaguesFragmentRecyclerViewAdapter.ViewHolder>() {
-    class ViewHolder(view: View, clickAtPosition: (Int)->Unit) : RecyclerView.ViewHolder(view) {
+class ColleaguesFragmentRecyclerViewAdapter(private var dataSet: List<Employee>, private val onClickListener: OnEmployeeClickListener) :
+    RecyclerView.Adapter<ColleaguesFragmentRecyclerViewAdapter.ViewHolder>() {
+    class ViewHolder(view: View, clickAtPosition: (Int) -> Unit) : RecyclerView.ViewHolder(view) {
         val nameTextView: TextView
         val postTextView: TextView
 
         init {
             // Define click listener for the ViewHolder's View.
-            view.setOnClickListener{clickAtPosition(adapterPosition)}
+            view.setOnClickListener { clickAtPosition(adapterPosition) }
             nameTextView = view.findViewById(R.id.employeeName)
             postTextView = view.findViewById(R.id.employeePost)
         }
@@ -36,7 +37,7 @@ class ColleaguesFragmentRecyclerViewAdapter(private var dataSet: List<Employee>,
         return dataSet.size
     }
 
-    fun update(data: List<Employee>){
+    fun update(data: List<Employee>) {
         dataSet = data
         notifyDataSetChanged()
     }

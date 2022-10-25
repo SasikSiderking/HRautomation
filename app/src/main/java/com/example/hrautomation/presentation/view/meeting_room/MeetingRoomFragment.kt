@@ -22,7 +22,7 @@ class MeetingRoomFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    val viewModel: MeetingRoomViewModel by viewModels{
+    val viewModel: MeetingRoomViewModel by viewModels {
         viewModelFactory
     }
 

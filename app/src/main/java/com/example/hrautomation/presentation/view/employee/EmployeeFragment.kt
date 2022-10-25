@@ -16,7 +16,7 @@ import com.example.hrautomation.presentation.view.colleagues.ColleaguesFragmentV
 import com.example.hrautomation.utils.ViewModelFactory
 import javax.inject.Inject
 
-class EmployeeFragment: Fragment() {
+class EmployeeFragment : Fragment() {
     private var _binding: FragmentEmployeeBinding? = null
     private val binding: FragmentEmployeeBinding
         get() = _binding!!
@@ -24,7 +24,7 @@ class EmployeeFragment: Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    val viewModel: ColleaguesFragmentViewModel by viewModels{
+    val viewModel: ColleaguesFragmentViewModel by viewModels {
         viewModelFactory
     }
 
@@ -45,7 +45,7 @@ class EmployeeFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.selectedEmployee.observe(viewLifecycleOwner,selectedEmployeeObserver)
+        viewModel.selectedEmployee.observe(viewLifecycleOwner, selectedEmployeeObserver)
     }
 
     override fun onDestroyView() {
@@ -54,7 +54,7 @@ class EmployeeFragment: Fragment() {
         super.onDestroyView()
     }
 
-    private val selectedEmployeeObserver = Observer<Employee>{
+    private val selectedEmployeeObserver = Observer<Employee> {
         binding.employeeFullName.text = it.name
         binding.employeeFullEmail.setText(it.email)
         binding.employeeFullPost.setText(it.post)

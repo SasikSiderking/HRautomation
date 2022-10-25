@@ -8,13 +8,14 @@ interface ProductViewModel {
     @get:LayoutRes
     val layoutId: Int
     val viewType: Int
-    get()=0
+        get() = 0
 }
 
 class HeaderViewModel(val title: String) : ProductViewModel {
     override val layoutId: Int = R.layout.item_header
     override val viewType: Int = ProductFragmentViewModel.HEADER_ITEM
 }
+
 class ProductListingViewModel(val section: String, val img: String, val name: String) :
     ProductViewModel {
     override val layoutId: Int = R.layout.item_product_listing

@@ -10,18 +10,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import com.example.hrautomation.R
 import com.example.hrautomation.databinding.FragmentLoadingCodeBinding
 import com.example.hrautomation.presentation.view.activity.MainActivity
 import com.example.hrautomation.presentation.view.activity.appComponent
-import com.example.hrautomation.presentation.view.loading.activity_load.LoadingActivityViewModel
-import com.example.hrautomation.presentation.view.loading.email.EmailLoginViewModel
 import com.example.hrautomation.utils.ViewModelFactory
 import javax.inject.Inject
 
-class CodeLogin: Fragment() {
+class CodeLogin : Fragment() {
     private var _binding: FragmentLoadingCodeBinding? = null
     private val binding: FragmentLoadingCodeBinding
         get() = _binding!!
@@ -50,7 +46,7 @@ class CodeLogin: Fragment() {
 
         binding.okCodeButton.setOnClickListener { checkCode() }
 
-        viewModel.isCodeCheckSuccess.observe(viewLifecycleOwner,codeCheckObserver)
+        viewModel.isCodeCheckSuccess.observe(viewLifecycleOwner, codeCheckObserver)
     }
 
     override fun onDestroyView() {
@@ -59,11 +55,11 @@ class CodeLogin: Fragment() {
         super.onDestroyView()
     }
 
-    private fun checkCode(){
-        binding.code.isEnabled=false
-        binding.code.inputType=0
-        binding.progressBar.visibility=View.VISIBLE
-        arguments?.getString("email")?.let { viewModel.checkCode(it,binding.code.text.toString()) }
+    private fun checkCode() {
+        binding.code.isEnabled = false
+        binding.code.inputType = 0
+        binding.progressBar.visibility = View.VISIBLE
+        arguments?.getString("email")?.let { viewModel.checkCode(it, binding.code.text.toString()) }
     }
 
     private val codeCheckObserver = Observer<Boolean> {
@@ -72,8 +68,8 @@ class CodeLogin: Fragment() {
             startActivity(intent)
             requireActivity().finish()
         }
-        binding.code.isEnabled=true
-        binding.code.inputType=InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-        binding.progressBar.visibility=View.INVISIBLE
+        binding.code.isEnabled = true
+        binding.code.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+        binding.progressBar.visibility = View.INVISIBLE
     }
 }

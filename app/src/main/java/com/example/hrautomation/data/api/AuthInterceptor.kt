@@ -11,7 +11,7 @@ class AuthInterceptor @Inject constructor(private val userRepository: UserReposi
         proceed(
             request()
                 .newBuilder()
-                .addHeader("appid","hrautomation")
+                .addHeader("appid", "hrautomation")
                 .addHeader("deviceplatform", "android")
                 .addHeader("Authorization", "Bearer" + userRepository.getToken())
                 .build()

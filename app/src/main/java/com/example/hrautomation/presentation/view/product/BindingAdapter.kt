@@ -15,7 +15,7 @@ fun bindItemViewModels(recyclerView: RecyclerView, productViewModels: List<Produ
 }
 
 @BindingAdapter("img")
-fun loadImage(view: ImageView, img: String){
+fun loadImage(view: ImageView, img: String) {
     Glide.with(view.context).load(img).placeholder(R.drawable.ic_launcher_foreground).into(view)
 }
 

@@ -17,12 +17,12 @@ class ProductFragment : Fragment() {
 
     private var _binding: FragmentProductBinding? = null
     private val binding: FragmentProductBinding
-    get() = _binding!!
+        get() = _binding!!
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    val viewModel: ProductFragmentViewModel by viewModels{
+    val viewModel: ProductFragmentViewModel by viewModels {
         viewModelFactory
     }
 

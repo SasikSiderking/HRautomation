@@ -1,9 +1,7 @@
 package com.example.hrautomation.presentation.view.loading.email
 
-import android.opengl.Visibility
 import android.os.Bundle
 import android.text.InputType
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,7 +46,7 @@ class EmailLogin : Fragment() {
 
         binding.okEmailButton.setOnClickListener { checkEmail() }
 
-        viewModel.isEmailCheckSuccess.observe(viewLifecycleOwner,emailCheckObserver)
+        viewModel.isEmailCheckSuccess.observe(viewLifecycleOwner, emailCheckObserver)
     }
 
     override fun onDestroyView() {
@@ -58,9 +56,9 @@ class EmailLogin : Fragment() {
     }
 
     private fun checkEmail() {
-        binding.email.isEnabled=false
-        binding.email.inputType=0
-        binding.progressBar.visibility=View.VISIBLE
+        binding.email.isEnabled = false
+        binding.email.inputType = 0
+        binding.progressBar.visibility = View.VISIBLE
         viewModel.checkEmail(binding.email.text.toString())
     }
 
@@ -68,10 +66,10 @@ class EmailLogin : Fragment() {
         if (it) {
             val bundle = Bundle()
             bundle.putString("email", binding.email.text.toString())
-            findNavController().navigate(R.id.action_emailLogin_to_codeLogin,bundle)
+            findNavController().navigate(R.id.action_emailLogin_to_codeLogin, bundle)
         }
-        binding.email.isEnabled=true
-        binding.email.inputType=InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
-        binding.progressBar.visibility=View.INVISIBLE
+        binding.email.isEnabled = true
+        binding.email.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+        binding.progressBar.visibility = View.INVISIBLE
     }
 }

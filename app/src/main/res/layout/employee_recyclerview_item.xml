@@ -8,11 +8,10 @@
         android:id="@+id/employeeImageView"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:src="@mipmap/ic_launcher_round"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearance="@mipmap/ic_launcher_round"
-        android:src="@mipmap/ic_launcher_round"
-        />
+        app:shapeAppearance="@mipmap/ic_launcher_round" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="268dp"

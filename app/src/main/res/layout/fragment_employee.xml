@@ -25,16 +25,16 @@
                     android:id="@+id/employeeImageView"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
+                    android:src="@mipmap/ic_launcher_round"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:shapeAppearance="@mipmap/ic_launcher_round"
-                    android:src="@mipmap/ic_launcher_round" />
+                    app:shapeAppearance="@mipmap/ic_launcher_round" />
 
                 <TextView
-                    android:textColor="@color/black"
                     android:id="@+id/employeeFullName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     android:textSize="28sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -45,67 +45,65 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/employee_email"
-                android:textSize="20sp"
                 android:labelFor="@id/employeeFullEmail"
-                />
+                android:text="@string/employee_email"
+                android:textSize="20sp" />
 
             <EditText
-                android:enabled="false"
-                android:textColor="@color/black"
                 android:id="@+id/employeeFullEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="24sp"
+                android:layout_marginBottom="15dp"
+                android:enabled="false"
                 android:paddingBottom="5dp"
-                android:layout_marginBottom="15dp" />
+                android:textColor="@color/black"
+                android:textSize="24sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/employee_project"
-                android:textSize="20sp"
                 android:labelFor="@id/employeeFullProject"
-                />
+                android:text="@string/employee_project"
+                android:textSize="20sp" />
 
             <EditText
-                android:enabled="false"
-                android:textColor="@color/black"
                 android:id="@+id/employeeFullProject"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="22sp"
-                android:layout_marginBottom="15dp" />
+                android:layout_marginBottom="15dp"
+                android:enabled="false"
+                android:textColor="@color/black"
+                android:textSize="22sp" />
 
             <TextView
-                android:labelFor="@id/employeeFullPost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:labelFor="@id/employeeFullPost"
                 android:text="@string/employee_post"
                 android:textSize="20sp" />
 
             <EditText
-                android:enabled="false"
-                android:textColor="@color/black"
                 android:id="@+id/employeeFullPost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="22sp"
-                android:layout_marginBottom="15dp" />
+                android:layout_marginBottom="15dp"
+                android:enabled="false"
+                android:textColor="@color/black"
+                android:textSize="22sp" />
 
             <TextView
-                android:labelFor="@id/employeeFullAbout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:labelFor="@id/employeeFullAbout"
                 android:text="@string/about_employee"
                 android:textSize="20sp" />
 
             <EditText
-                android:enabled="false"
-                android:textColor="@color/black"
                 android:id="@+id/employeeFullAbout"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:textColor="@color/black" />
         </LinearLayout>
     </ScrollView>
 </layout>

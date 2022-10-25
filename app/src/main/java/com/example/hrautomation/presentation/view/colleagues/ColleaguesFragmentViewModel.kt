@@ -6,11 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.hrautomation.domain.model.Employee
 import com.example.hrautomation.domain.repository.IEmployeesRepository
-import com.example.hrautomation.domain.repository.IUserRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class ColleaguesFragmentViewModel @Inject constructor(private val repo: IEmployeesRepository): ViewModel() {
+class ColleaguesFragmentViewModel @Inject constructor(private val repo: IEmployeesRepository) : ViewModel() {
 
     val data: LiveData<List<Employee>>
         get() = _data
@@ -24,14 +23,14 @@ class ColleaguesFragmentViewModel @Inject constructor(private val repo: IEmploye
     val selectedEmployee: LiveData<Employee> get() = _selectedEmployee
 
     fun selectEmployee(employee: Employee) {
-       _selectedEmployee.value = employee
+        _selectedEmployee.value = employee
     }
 
     init {
         loadData()
     }
 
-    private fun loadData(){
+    private fun loadData() {
         viewModelScope.launch {
             val employeeList = repo.getEmployeeList()
             _data.postValue(employeeList)

@@ -11,14 +11,15 @@ import com.example.hrautomation.presentation.model.ProductViewModel
 
 class BindableRecyclerViewAdapter : RecyclerView.Adapter<BindableViewHolder>() {
     private var productViewModels: List<ProductViewModel> = emptyList()
-    private val viewTypeToLayoutId: MutableMap<Int,Int> = mutableMapOf()
+    private val viewTypeToLayoutId: MutableMap<Int, Int> = mutableMapOf()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindableViewHolder{
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindableViewHolder {
         val binding: ViewDataBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
             viewTypeToLayoutId[viewType] ?: 0,
-        parent,
-        false)
+            parent,
+            false
+        )
         return BindableViewHolder(binding)
     }
 

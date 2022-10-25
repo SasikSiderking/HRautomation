@@ -14,12 +14,12 @@ import com.example.hrautomation.presentation.view.activity.appComponent
 import com.example.hrautomation.utils.ViewModelFactory
 import javax.inject.Inject
 
-class LoadingActivity: AppCompatActivity() {
+class LoadingActivity : AppCompatActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    val viewModel: LoadingActivityViewModel by viewModels{
+    val viewModel: LoadingActivityViewModel by viewModels {
         viewModelFactory
     }
 
@@ -37,12 +37,12 @@ class LoadingActivity: AppCompatActivity() {
         val binding: ActivityLoadingBinding = DataBindingUtil.setContentView(this, R.layout.activity_loading)
         binding.lifecycleOwner = this
 
-        viewModel.isTokenExist.observe(this,tokenObserver)
+        viewModel.isTokenExist.observe(this, tokenObserver)
     }
 
-    private val tokenObserver = Observer<Boolean>{
-        if(it){
-            val intent = Intent(this,MainActivity::class.java)
+    private val tokenObserver = Observer<Boolean> {
+        if (it) {
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
         }

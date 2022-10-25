@@ -9,6 +9,6 @@ data class ProductResponse(
     val name: String
 )
 
-class ProductResponseToProductMapper: IMapper<ProductResponse,Product>{
-    override fun convert(model: ProductResponse): Product = Product(model.section,model.img,model.name)
+class ProductResponseToProductMapper : IMapper<ProductResponse, Product> {
+    override fun convert(model: ProductResponse): Product = Product(model.section, model.img, model.name)
 }

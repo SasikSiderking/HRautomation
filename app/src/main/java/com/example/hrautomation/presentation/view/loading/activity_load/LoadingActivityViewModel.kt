@@ -9,32 +9,32 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class LoadingActivityViewModel @Inject constructor(private val repo: IUserRepository): ViewModel() {
+class LoadingActivityViewModel @Inject constructor(private val repo: IUserRepository) : ViewModel() {
     val isLoading: LiveData<Boolean>
         get() = _isLoading
     private val _isLoading = MutableLiveData(true)
 
     val isTokenExist: LiveData<Boolean>
-    get() = _isTokenExist
+        get() = _isTokenExist
     private val _isTokenExist = MutableLiveData(false)
 
     init {
         start()
     }
 
-        private fun start(){
+    private fun start() {
         viewModelScope.launch {
             delay(1000)
             findToken()
         }
     }
 
-    private fun findToken(){
+    private fun findToken() {
         val token = repo.getToken()
         token?.let {
             _isTokenExist.postValue(true)
             _isLoading.postValue(false)
-        }?:apply{
+        } ?: apply {
             _isTokenExist.postValue(false)
             _isLoading.postValue(false)
         }
