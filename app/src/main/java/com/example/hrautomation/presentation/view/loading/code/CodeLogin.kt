@@ -25,7 +25,7 @@ class CodeLogin : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    val viewModel: CodeLoginViewModel by viewModels {
+    private val viewModel: CodeLoginViewModel by viewModels {
         viewModelFactory
     }
 

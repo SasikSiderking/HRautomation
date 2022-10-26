@@ -22,12 +22,12 @@ class ColleaguesFragment : Fragment() {
     private val binding: FragmentColleaguesBinding
         get() = _binding!!
 
-    private val adapter get() = binding.colleaguesRecyclerview.adapter as? ColleaguesFragmentRecyclerViewAdapter
+    private lateinit var adapter: ColleaguesFragmentRecyclerViewAdapter
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    val viewModel: ColleaguesFragmentViewModel by viewModels {
+    private val viewModel: ColleaguesFragmentViewModel by viewModels {
         viewModelFactory
     }
 
@@ -42,25 +42,20 @@ class ColleaguesFragment : Fragment() {
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_colleagues, container, false)
         binding.lifecycleOwner = this
+
+        adapter = ColleaguesFragmentRecyclerViewAdapter(emptyList(), OnEmployeeClickListener { employee ->
+            findNavController().navigate(R.id.action_colleaguesFragment_to_employeeFragment)
+            viewModel.selectEmployee(employee)
+        })
+        binding.colleaguesRecyclerview.adapter = adapter
+
+        viewModel.data.observe(viewLifecycleOwner, colleaguesObserver)
+
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.colleaguesRecyclerview.adapter = viewModel.data.value?.let {
-            ColleaguesFragmentRecyclerViewAdapter(
-                it, OnEmployeeClickListener { employee ->
-                    findNavController().navigate(R.id.action_colleaguesFragment_to_employeeFragment)
-                    viewModel.selectEmployee(employee)
-                }
-            )
-        }
-        viewModel.data.observe(viewLifecycleOwner, colleaguesObserver)
-    }
-
     private val colleaguesObserver = Observer<List<Employee>> {
-        adapter?.update(it)
+        adapter.update(it)
     }
 
     override fun onDestroyView() {

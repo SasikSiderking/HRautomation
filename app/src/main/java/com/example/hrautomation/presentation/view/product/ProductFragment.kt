@@ -22,7 +22,7 @@ class ProductFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    val viewModel: ProductFragmentViewModel by viewModels {
+    private val viewModel: ProductFragmentViewModel by viewModels {
         viewModelFactory
     }
 

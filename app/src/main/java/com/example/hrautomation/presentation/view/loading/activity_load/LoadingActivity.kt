@@ -19,7 +19,7 @@ class LoadingActivity : AppCompatActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    val viewModel: LoadingActivityViewModel by viewModels {
+    private val viewModel: LoadingActivityViewModel by viewModels {
         viewModelFactory
     }
 

@@ -24,7 +24,7 @@ class EmailLogin : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    val viewModel: EmailLoginViewModel by viewModels {
+    private val viewModel: EmailLoginViewModel by viewModels {
         viewModelFactory
     }
 
