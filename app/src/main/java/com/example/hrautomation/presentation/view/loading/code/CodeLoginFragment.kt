@@ -75,4 +75,14 @@ class CodeLoginFragment : Fragment() {
         binding.okCodeButton.setOnClickListener { checkCode() }
         viewModel.isCodeCheckSuccess.observe(viewLifecycleOwner, codeCheckObserver)
     }
+
+    companion object {
+        private const val EMAIL_EXTRA = "email"
+
+        fun prepareBundle(email: String): Bundle {
+            return Bundle().apply {
+                putString(EMAIL_EXTRA, email)
+            }
+        }
+    }
 }

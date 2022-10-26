@@ -17,7 +17,8 @@ class EmailLoginViewModel @Inject constructor(private val repo: IUserRepository)
 
     fun checkEmail(email: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            _isEmailCheckSuccess.postValue(repo.checkEmail(email))
+            val isEmailValid = repo.checkEmail(email)
+            _isEmailCheckSuccess.postValue(isEmailValid)
         }
     }
 }
