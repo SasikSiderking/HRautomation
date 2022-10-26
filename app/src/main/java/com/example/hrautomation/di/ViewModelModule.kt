@@ -1,7 +1,8 @@
 package com.example.hrautomation.di
 
 import androidx.lifecycle.ViewModel
-import com.example.hrautomation.presentation.view.colleagues.ColleaguesFragmentViewModel
+import com.example.hrautomation.presentation.view.colleagues.ColleaguesViewModel
+import com.example.hrautomation.presentation.view.employee.EmployeeViewModel
 import com.example.hrautomation.presentation.view.loading.activity_load.LoadingActivityViewModel
 import com.example.hrautomation.presentation.view.loading.code.CodeLoginViewModel
 import com.example.hrautomation.presentation.view.loading.email.EmailLoginViewModel
@@ -10,7 +11,6 @@ import com.example.hrautomation.presentation.view.product.ProductFragmentViewMod
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
-import javax.inject.Singleton
 
 @Module
 interface ViewModelModule {
@@ -41,7 +41,11 @@ interface ViewModelModule {
 
     @Binds
     @IntoMap
-    @Singleton
-    @ViewModelKey(ColleaguesFragmentViewModel::class)
-    fun bindColleaguesFragmentViewModel(colleaguesFragmentViewModel: ColleaguesFragmentViewModel): ViewModel
+    @ViewModelKey(ColleaguesViewModel::class)
+    fun bindColleaguesFragmentViewModel(colleaguesViewModel: ColleaguesViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(EmployeeViewModel::class)
+    fun bindEmployeeViewModel(employeeViewModel: EmployeeViewModel): ViewModel
 }

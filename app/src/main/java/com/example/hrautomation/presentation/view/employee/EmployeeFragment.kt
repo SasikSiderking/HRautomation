@@ -7,12 +7,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.example.hrautomation.R
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.FragmentEmployeeBinding
-import com.example.hrautomation.domain.model.Employee
-import com.example.hrautomation.presentation.view.colleagues.ColleaguesFragmentViewModel
 import com.example.hrautomation.utils.ViewModelFactory
 import javax.inject.Inject
 
@@ -24,7 +21,7 @@ class EmployeeFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    val viewModel: ColleaguesFragmentViewModel by viewModels {
+    private val viewModel: EmployeeViewModel by viewModels {
         viewModelFactory
     }
 
@@ -39,13 +36,14 @@ class EmployeeFragment : Fragment() {
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_employee, container, false)
         binding.lifecycleOwner = this
+
+        binding.employeeFullName.text = viewModel.getSelectedEmployee().name
+        binding.employeeFullEmail.setText(viewModel.getSelectedEmployee().email)
+        binding.employeeFullPost.setText(viewModel.getSelectedEmployee().post)
+        binding.employeeFullProject.setText(viewModel.getSelectedEmployee().project)
+        binding.employeeFullAbout.setText(viewModel.getSelectedEmployee().info)
+
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        viewModel.selectedEmployee.observe(viewLifecycleOwner, selectedEmployeeObserver)
     }
 
     override fun onDestroyView() {
@@ -54,12 +52,11 @@ class EmployeeFragment : Fragment() {
         super.onDestroyView()
     }
 
-    private val selectedEmployeeObserver = Observer<Employee> {
-        binding.employeeFullName.text = it.name
-        binding.employeeFullEmail.setText(it.email)
-        binding.employeeFullPost.setText(it.post)
-        binding.employeeFullProject.setText(it.project)
-        binding.employeeFullAbout.setText(it.info)
-
-    }
+//    private val selectedEmployeeObserver = Observer<Employee> {
+//        binding.employeeFullName.text = it.name
+//        binding.employeeFullEmail.setText(it.email)
+//        binding.employeeFullPost.setText(it.post)
+//        binding.employeeFullProject.setText(it.project)
+//        binding.employeeFullAbout.setText(it.info)
+//    }
 }

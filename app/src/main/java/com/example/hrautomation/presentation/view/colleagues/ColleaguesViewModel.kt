@@ -9,17 +9,14 @@ import com.example.hrautomation.domain.repository.IEmployeesRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class ColleaguesFragmentViewModel @Inject constructor(private val repo: IEmployeesRepository) : ViewModel() {
+class ColleaguesViewModel @Inject constructor(private val repo: IEmployeesRepository) : ViewModel() {
 
     val data: LiveData<List<Employee>>
         get() = _data
     private val _data = MutableLiveData<List<Employee>>(emptyList())
 
-    private val _selectedEmployee = MutableLiveData<Employee>()
-    val selectedEmployee: LiveData<Employee> get() = _selectedEmployee
-
     fun selectEmployee(employee: Employee) {
-        _selectedEmployee.value = employee
+        repo.setSelectedEmployee(employee)
     }
 
     init {

@@ -1,31 +1,31 @@
 package com.example.hrautomation.presentation.view.colleagues
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.hrautomation.R
+import com.example.hrautomation.databinding.EmployeeRecyclerviewItemBinding
 import com.example.hrautomation.domain.model.Employee
 
-class ColleaguesFragmentRecyclerViewAdapter(private var dataSet: List<Employee>, private val onClickListener: OnEmployeeClickListener) :
-    RecyclerView.Adapter<ColleaguesFragmentRecyclerViewAdapter.ViewHolder>() {
-    class ViewHolder(view: View, clickAtPosition: (Int) -> Unit) : RecyclerView.ViewHolder(view) {
+class ColleaguesAdapter(private var dataSet: List<Employee>, private val onClickListener: OnEmployeeClickListener) :
+    RecyclerView.Adapter<ColleaguesAdapter.ViewHolder>() {
+    class ViewHolder(binding: EmployeeRecyclerviewItemBinding, clickAtPosition: (Int) -> Unit) : RecyclerView.ViewHolder(binding.root) {
         val nameTextView: TextView
         val postTextView: TextView
 
         init {
             // Define click listener for the ViewHolder's View.
-            view.setOnClickListener { clickAtPosition(adapterPosition) }
-            nameTextView = view.findViewById(R.id.employeeName)
-            postTextView = view.findViewById(R.id.employeePost)
+            binding.root.setOnClickListener { clickAtPosition(adapterPosition) }
+            nameTextView = binding.employeeName
+            postTextView = binding.employeePost
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.employee_recyclerview_item, parent, false)
-        return ViewHolder(view) { onClickListener.clickListener(dataSet[it]) }
+        val binding = EmployeeRecyclerviewItemBinding
+            .inflate(LayoutInflater.from(parent.context), parent, false)
+
+        return ViewHolder(binding) { onClickListener.onClick(dataSet[it]) }
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

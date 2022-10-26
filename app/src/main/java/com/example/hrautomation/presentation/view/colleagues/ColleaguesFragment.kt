@@ -22,12 +22,12 @@ class ColleaguesFragment : Fragment() {
     private val binding: FragmentColleaguesBinding
         get() = _binding!!
 
-    private lateinit var adapter: ColleaguesFragmentRecyclerViewAdapter
+    private lateinit var adapter: ColleaguesAdapter
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    private val viewModel: ColleaguesFragmentViewModel by viewModels {
+    private val viewModel: ColleaguesViewModel by viewModels {
         viewModelFactory
     }
 
@@ -43,10 +43,10 @@ class ColleaguesFragment : Fragment() {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_colleagues, container, false)
         binding.lifecycleOwner = this
 
-        adapter = ColleaguesFragmentRecyclerViewAdapter(emptyList(), OnEmployeeClickListener { employee ->
+        adapter = ColleaguesAdapter(emptyList()) { employee ->
             findNavController().navigate(R.id.action_colleaguesFragment_to_employeeFragment)
             viewModel.selectEmployee(employee)
-        })
+        }
         binding.colleaguesRecyclerview.adapter = adapter
 
         viewModel.data.observe(viewLifecycleOwner, colleaguesObserver)
