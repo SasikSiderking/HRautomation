@@ -6,11 +6,9 @@ import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.example.hrautomation.R
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.FragmentLoadingCodeBinding
 import com.example.hrautomation.presentation.view.activity.MainActivity
@@ -40,7 +38,7 @@ class CodeLogin : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_loading_code, container, false)
+        _binding = FragmentLoadingCodeBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         return binding.root
     }

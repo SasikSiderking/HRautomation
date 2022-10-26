@@ -5,7 +5,6 @@ import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -35,8 +34,7 @@ class EmailLogin : Fragment() {
     ): View {
         (requireContext().applicationContext as App).appComponent.inject(this)
 
-        _binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_loading_email, container, false)
+        _binding = FragmentLoadingEmailBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         return binding.root
     }

@@ -5,9 +5,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import com.example.hrautomation.R
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.ActivityLoadingBinding
 import com.example.hrautomation.presentation.view.activity.MainActivity
@@ -34,8 +32,9 @@ class LoadingActivity : AppCompatActivity() {
 
         (applicationContext as App).appComponent.inject(this)
 
-        val binding: ActivityLoadingBinding = DataBindingUtil.setContentView(this, R.layout.activity_loading)
+        val binding = ActivityLoadingBinding.inflate(layoutInflater)
         binding.lifecycleOwner = this
+        setContentView(binding.root)
 
         viewModel.isTokenExist.observe(this, tokenObserver)
     }
