@@ -35,11 +35,7 @@ class EmployeeFragment : Fragment() {
         _binding = FragmentEmployeeBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
 
-        binding.employeeFullName.text = viewModel.getSelectedEmployee().name
-        binding.employeeFullEmail.setText(viewModel.getSelectedEmployee().email)
-        binding.employeeFullPost.setText(viewModel.getSelectedEmployee().post)
-        binding.employeeFullProject.setText(viewModel.getSelectedEmployee().project)
-        binding.employeeFullAbout.setText(viewModel.getSelectedEmployee().info)
+        initUi()
 
         return binding.root
     }
@@ -48,5 +44,13 @@ class EmployeeFragment : Fragment() {
         _binding?.unbind()
         _binding = null
         super.onDestroyView()
+    }
+
+    private fun initUi() {
+        binding.employeeFullName.text = viewModel.getSelectedEmployee().name
+        binding.employeeFullEmail.setText(viewModel.getSelectedEmployee().email)
+        binding.employeeFullPost.setText(viewModel.getSelectedEmployee().post)
+        binding.employeeFullProject.setText(viewModel.getSelectedEmployee().project)
+        binding.employeeFullAbout.setText(viewModel.getSelectedEmployee().info)
     }
 }

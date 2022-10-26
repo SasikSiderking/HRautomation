@@ -19,7 +19,7 @@ class CodeLoginViewModel @Inject constructor(private val repo: ITokenRepository,
     fun checkCode(email: String, code: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val token = userRepo.confirmEmail(email, code)
-            if (token != "") {
+            if (token.isNotEmpty()) {
                 _isCodeCheckSuccess.postValue(true)
                 repo.saveToken(token)
             } else {

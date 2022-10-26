@@ -36,7 +36,7 @@ class LoadingActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         setContentView(binding.root)
 
-        viewModel.isTokenExist.observe(this, tokenObserver)
+        initUi()
     }
 
     private val tokenObserver = Observer<Boolean> {
@@ -45,5 +45,9 @@ class LoadingActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+    }
+
+    private fun initUi() {
+        viewModel.isTokenExist.observe(this, tokenObserver)
     }
 }

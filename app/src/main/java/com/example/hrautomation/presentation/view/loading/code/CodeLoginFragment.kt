@@ -40,15 +40,10 @@ class CodeLoginFragment : Fragment() {
 
         _binding = FragmentLoadingCodeBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
+
+        initUi()
+
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.okCodeButton.setOnClickListener { checkCode() }
-
-        viewModel.isCodeCheckSuccess.observe(viewLifecycleOwner, codeCheckObserver)
     }
 
     override fun onDestroyView() {
@@ -74,5 +69,10 @@ class CodeLoginFragment : Fragment() {
     private fun setFieldsVisibility(flag: Boolean) {
         binding.code.isEnabled = flag
         binding.progressBar.isVisible = !flag
+    }
+
+    private fun initUi() {
+        binding.okCodeButton.setOnClickListener { checkCode() }
+        viewModel.isCodeCheckSuccess.observe(viewLifecycleOwner, codeCheckObserver)
     }
 }

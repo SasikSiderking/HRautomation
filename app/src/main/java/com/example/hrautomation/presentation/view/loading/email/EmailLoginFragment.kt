@@ -35,15 +35,10 @@ class EmailLoginFragment : Fragment() {
 
         _binding = FragmentLoadingEmailBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
+
+        initUi()
+
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.okEmailButton.setOnClickListener { checkEmail() }
-
-        viewModel.isEmailCheckSuccess.observe(viewLifecycleOwner, emailCheckObserver)
     }
 
     override fun onDestroyView() {
@@ -66,5 +61,10 @@ class EmailLoginFragment : Fragment() {
         }
         binding.email.isEnabled = true
         binding.progressBar.visibility = View.INVISIBLE
+    }
+
+    private fun initUi() {
+        binding.okEmailButton.setOnClickListener { checkEmail() }
+        viewModel.isEmailCheckSuccess.observe(viewLifecycleOwner, emailCheckObserver)
     }
 }

@@ -42,13 +42,7 @@ class ColleaguesFragment : Fragment() {
         _binding = FragmentColleaguesBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
 
-        adapter = ColleaguesAdapter(emptyList()) { employee ->
-            findNavController().navigate(R.id.action_colleaguesFragment_to_employeeFragment)
-            viewModel.selectEmployee(employee)
-        }
-        binding.colleaguesRecyclerview.adapter = adapter
-
-        viewModel.data.observe(viewLifecycleOwner, colleaguesObserver)
+        initUi()
 
         return binding.root
     }
@@ -61,5 +55,15 @@ class ColleaguesFragment : Fragment() {
         _binding?.unbind()
         _binding = null
         super.onDestroyView()
+    }
+
+    private fun initUi() {
+        adapter = ColleaguesAdapter(emptyList()) { employee ->
+            findNavController().navigate(R.id.action_colleaguesFragment_to_employeeFragment)
+            viewModel.selectEmployee(employee)
+        }
+        binding.colleaguesRecyclerview.adapter = adapter
+
+        viewModel.data.observe(viewLifecycleOwner, colleaguesObserver)
     }
 }
