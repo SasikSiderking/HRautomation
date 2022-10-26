@@ -4,8 +4,8 @@ import com.example.hrautomation.presentation.view.activity.MainActivity
 import com.example.hrautomation.presentation.view.colleagues.ColleaguesFragment
 import com.example.hrautomation.presentation.view.employee.EmployeeFragment
 import com.example.hrautomation.presentation.view.loading.activity_load.LoadingActivity
-import com.example.hrautomation.presentation.view.loading.code.CodeLogin
-import com.example.hrautomation.presentation.view.loading.email.EmailLogin
+import com.example.hrautomation.presentation.view.loading.code.CodeLoginFragment
+import com.example.hrautomation.presentation.view.loading.email.EmailLoginFragment
 import com.example.hrautomation.presentation.view.meeting_room.MeetingRoomFragment
 import com.example.hrautomation.presentation.view.product.ProductFragment
 import dagger.Component
@@ -25,6 +25,6 @@ interface AppComponent {
     fun inject(fragment: EmployeeFragment)
 
     fun inject(activity: LoadingActivity)
-    fun inject(fragment: EmailLogin)
-    fun inject(fragment: CodeLogin)
+    fun inject(fragment: EmailLoginFragment)
+    fun inject(fragment: CodeLoginFragment)
 }

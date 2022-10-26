@@ -1,7 +1,6 @@
 package com.example.hrautomation.presentation.view.loading.email
 
 import android.os.Bundle
-import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,7 @@ import com.example.hrautomation.databinding.FragmentLoadingEmailBinding
 import com.example.hrautomation.utils.ViewModelFactory
 import javax.inject.Inject
 
-class EmailLogin : Fragment() {
+class EmailLoginFragment : Fragment() {
     private var _binding: FragmentLoadingEmailBinding? = null
     private val binding: FragmentLoadingEmailBinding
         get() = _binding!!
@@ -55,7 +54,6 @@ class EmailLogin : Fragment() {
 
     private fun checkEmail() {
         binding.email.isEnabled = false
-        binding.email.inputType = 0
         binding.progressBar.visibility = View.VISIBLE
         viewModel.checkEmail(binding.email.text.toString())
     }
@@ -67,7 +65,6 @@ class EmailLogin : Fragment() {
             findNavController().navigate(R.id.action_emailLogin_to_codeLogin, bundle)
         }
         binding.email.isEnabled = true
-        binding.email.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
         binding.progressBar.visibility = View.INVISIBLE
     }
 }

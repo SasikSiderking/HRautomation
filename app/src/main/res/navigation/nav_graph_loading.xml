@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/emailLogin"
-        android:name="com.example.hrautomation.presentation.view.loading.email.EmailLogin"
+        android:name="com.example.hrautomation.presentation.view.loading.email.EmailLoginFragment"
         android:label="EmailLogin">
         <action
             android:id="@+id/action_emailLogin_to_codeLogin"
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/codeLogin"
-        android:name="com.example.hrautomation.presentation.view.loading.code.CodeLogin"
+        android:name="com.example.hrautomation.presentation.view.loading.code.CodeLoginFragment"
         android:label="CodeLogin">
         <action
             android:id="@+id/action_codeLogin_to_emailLogin"

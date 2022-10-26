@@ -2,10 +2,10 @@ package com.example.hrautomation.presentation.view.loading.code
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -15,7 +15,7 @@ import com.example.hrautomation.presentation.view.activity.MainActivity
 import com.example.hrautomation.utils.ViewModelFactory
 import javax.inject.Inject
 
-class CodeLogin : Fragment() {
+class CodeLoginFragment : Fragment() {
     private var _binding: FragmentLoadingCodeBinding? = null
     private val binding: FragmentLoadingCodeBinding
         get() = _binding!!
@@ -58,20 +58,21 @@ class CodeLogin : Fragment() {
     }
 
     private fun checkCode() {
-        binding.code.isEnabled = false
-        binding.code.inputType = 0
-        binding.progressBar.visibility = View.VISIBLE
+        setFieldsVisibility(false)
         arguments?.getString("email")?.let { viewModel.checkCode(it, binding.code.text.toString()) }
     }
 
-    private val codeCheckObserver = Observer<Boolean> {
-        if (it) {
+    private val codeCheckObserver = Observer<Boolean> { isCodeValid ->
+        if (isCodeValid) {
             val intent = Intent(requireActivity(), MainActivity::class.java)
             startActivity(intent)
             requireActivity().finish()
         }
-        binding.code.isEnabled = true
-        binding.code.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-        binding.progressBar.visibility = View.INVISIBLE
+        setFieldsVisibility(true)
+    }
+
+    private fun setFieldsVisibility(flag: Boolean) {
+        binding.code.isEnabled = flag
+        binding.progressBar.isVisible = !flag
     }
 }
