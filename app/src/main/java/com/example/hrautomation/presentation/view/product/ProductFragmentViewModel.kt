@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.hrautomation.domain.model.Product
 import com.example.hrautomation.domain.repository.IProductRepository
-import com.example.hrautomation.presentation.model.HeaderViewModel
-import com.example.hrautomation.presentation.model.ProductListingViewModel
-import com.example.hrautomation.presentation.model.ProductViewModel
+import com.example.hrautomation.presentation.model.HeaderItem
+import com.example.hrautomation.presentation.model.ProductItem
+import com.example.hrautomation.presentation.model.ProductListingItem
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,9 +19,9 @@ class ProductFragmentViewModel @Inject constructor(private val repo: IProductRep
         const val LISTING_ITEM = -2
     }
 
-    val data: LiveData<List<ProductViewModel>>
+    val data: LiveData<List<ProductItem>>
         get() = _data
-    private val _data = MutableLiveData<List<ProductViewModel>>(emptyList())
+    private val _data = MutableLiveData<List<ProductItem>>(emptyList())
 
     init {
         loadData()
@@ -36,13 +36,13 @@ class ProductFragmentViewModel @Inject constructor(private val repo: IProductRep
         }
     }
 
-    private fun createViewData(productsBySection: Map<String, List<Product>>): List<ProductViewModel> {
-        val viewData = mutableListOf<ProductViewModel>()
+    private fun createViewData(productsBySection: Map<String, List<Product>>): List<ProductItem> {
+        val viewData = mutableListOf<ProductItem>()
         productsBySection.keys.forEach {
-            viewData.add(HeaderViewModel(it))
+            viewData.add(HeaderItem(it))
             val products = productsBySection[it]
             products?.forEach { product: Product ->
-                val item = ProductListingViewModel(product.section, product.img, product.name)
+                val item = ProductListingItem(product.section, product.img, product.name)
                 viewData.add(item)
             }
         }

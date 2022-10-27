@@ -6,7 +6,7 @@
 
         <variable
             name="itemViewModel"
-            type="com.example.hrautomation.presentation.model.HeaderViewModel" />
+            type="com.example.hrautomation.presentation.model.HeaderItem" />
     </data>
 
     <LinearLayout
