@@ -20,7 +20,7 @@
             android:layout_height="100dp"
             android:layout_marginEnd="4dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/employeeImageView"
+            app:layout_constraintStart_toEndOf="@id/employeeImageView"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/employeeName" />
+                app:layout_constraintTop_toBottomOf="@id/employeeName" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

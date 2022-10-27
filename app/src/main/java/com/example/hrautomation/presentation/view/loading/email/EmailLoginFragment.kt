@@ -40,6 +40,8 @@ class EmailLoginFragment : Fragment() {
 
         initUi()
 
+        viewModel.isEmailCheckSuccess.observe(viewLifecycleOwner, emailCheckObserver)
+
         return binding.root
     }
 
@@ -54,8 +56,8 @@ class EmailLoginFragment : Fragment() {
         viewModel.checkEmail(binding.email.text.toString())
     }
 
-    private val emailCheckObserver = Observer<Boolean> {
-        if (it) {
+    private val emailCheckObserver = Observer<Boolean> { isEmailValid ->
+        if (isEmailValid) {
             findNavController().navigate(R.id.action_emailLogin_to_codeLogin, CodeLoginFragment.prepareBundle(binding.email.text.toString()))
         }
         setFieldsVisibility(true)
@@ -68,6 +70,5 @@ class EmailLoginFragment : Fragment() {
 
     private fun initUi() {
         binding.okEmailButton.setOnClickListener { checkEmail() }
-        viewModel.isEmailCheckSuccess.observe(viewLifecycleOwner, emailCheckObserver)
     }
 }

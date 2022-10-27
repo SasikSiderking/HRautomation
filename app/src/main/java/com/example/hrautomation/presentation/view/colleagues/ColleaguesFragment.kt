@@ -43,12 +43,12 @@ class ColleaguesFragment : Fragment() {
         binding.lifecycleOwner = this
 
         initUi()
-
+        viewModel.data.observe(viewLifecycleOwner, colleaguesObserver)
         return binding.root
     }
 
-    private val colleaguesObserver = Observer<List<Employee>> {
-        adapter.update(it)
+    private val colleaguesObserver = Observer<List<Employee>> { updatedDataSet ->
+        adapter.update(updatedDataSet)
     }
 
     override fun onDestroyView() {
@@ -64,6 +64,5 @@ class ColleaguesFragment : Fragment() {
         }
         binding.colleaguesRecyclerview.adapter = adapter
 
-        viewModel.data.observe(viewLifecycleOwner, colleaguesObserver)
     }
 }

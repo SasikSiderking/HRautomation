@@ -43,6 +43,8 @@ class CodeLoginFragment : Fragment() {
 
         initUi()
 
+        viewModel.isCodeCheckSuccess.observe(viewLifecycleOwner, codeCheckObserver)
+
         return binding.root
     }
 
@@ -73,7 +75,6 @@ class CodeLoginFragment : Fragment() {
 
     private fun initUi() {
         binding.okCodeButton.setOnClickListener { checkCode() }
-        viewModel.isCodeCheckSuccess.observe(viewLifecycleOwner, codeCheckObserver)
     }
 
     companion object {

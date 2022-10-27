@@ -9,12 +9,12 @@ import com.example.hrautomation.domain.model.Employee
 
 class ColleaguesAdapter(private var dataSet: List<Employee>, private val onClickListener: OnEmployeeClickListener) :
     RecyclerView.Adapter<ColleaguesAdapter.ViewHolder>() {
+
     class ViewHolder(binding: EmployeeRecyclerviewItemBinding, clickAtPosition: (Int) -> Unit) : RecyclerView.ViewHolder(binding.root) {
         val nameTextView: TextView
         val postTextView: TextView
 
         init {
-            // Define click listener for the ViewHolder's View.
             binding.root.setOnClickListener { clickAtPosition(adapterPosition) }
             nameTextView = binding.employeeName
             postTextView = binding.employeePost

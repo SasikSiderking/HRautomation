@@ -26,4 +26,5 @@
     <string name="employee_post">Должность</string>
     <string name="employee_project">Проект</string>
     <string name="employee_email">Почта</string>
+    <string name="product_image">Product image</string>
 </resources>
