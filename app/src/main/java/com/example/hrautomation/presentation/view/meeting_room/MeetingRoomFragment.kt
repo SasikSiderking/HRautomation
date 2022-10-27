@@ -1,19 +1,45 @@
 package com.example.hrautomation.presentation.view.meeting_room
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.hrautomation.R
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import com.example.hrautomation.app.App
+import com.example.hrautomation.databinding.FragmentMeetingRoomBinding
+import com.example.hrautomation.utils.ViewModelFactory
+import javax.inject.Inject
 
 class MeetingRoomFragment : Fragment() {
+
+    private var _binding: FragmentMeetingRoomBinding? = null
+    private val binding: FragmentMeetingRoomBinding
+        get() = _binding!!
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private val viewModel: MeetingRoomViewModel by viewModels {
+        viewModelFactory
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        (requireContext().applicationContext as App).appComponent.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_meeting_room, container, false)
+    ): View {
+        _binding = FragmentMeetingRoomBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        _binding?.unbind()
+        _binding = null
+        super.onDestroyView()
     }
 }

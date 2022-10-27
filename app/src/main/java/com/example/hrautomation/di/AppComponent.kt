@@ -1,28 +1,30 @@
 package com.example.hrautomation.di
 
-import com.example.hrautomation.data.repository.ProductRepository
 import com.example.hrautomation.presentation.view.activity.MainActivity
+import com.example.hrautomation.presentation.view.colleagues.ColleaguesFragment
+import com.example.hrautomation.presentation.view.employee.EmployeeFragment
+import com.example.hrautomation.presentation.view.loading.activity_load.LoadingActivity
+import com.example.hrautomation.presentation.view.loading.code.CodeLoginFragment
+import com.example.hrautomation.presentation.view.loading.email.EmailLoginFragment
+import com.example.hrautomation.presentation.view.meeting_room.MeetingRoomFragment
 import com.example.hrautomation.presentation.view.product.ProductFragment
 import dagger.Component
-import dagger.Module
-import dagger.Provides
 import javax.inject.Singleton
 
-@Component(modules = [RepositoryModule::class])
+@Component(
+    modules = [RepositoryModule::class, ContextModule::class, ApiModule::class,
+        ViewModelFactoryModule::class, ViewModelModule::class, ColleagueCashManagerModule::class
+    ]
+)
 @Singleton
 interface AppComponent {
     fun inject(activity: MainActivity)
     fun inject(fragment: ProductFragment)
-}
-@Module
-class RepositoryModule {
-    @Provides
-    fun provideMessage(): String {
-        return "cho-cho-o"
-    }
+    fun inject(fragment: MeetingRoomFragment)
+    fun inject(fragment: ColleaguesFragment)
+    fun inject(fragment: EmployeeFragment)
 
-    @Provides
-    fun provideProductRepository(): ProductRepository{
-        return ProductRepository()
-    }
+    fun inject(activity: LoadingActivity)
+    fun inject(fragment: EmailLoginFragment)
+    fun inject(fragment: CodeLoginFragment)
 }

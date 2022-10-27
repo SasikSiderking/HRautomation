@@ -1,62 +1,64 @@
 package com.example.hrautomation.presentation.view.product
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.hrautomation.R
-import com.example.hrautomation.databinding.ActivityMainBinding
+import androidx.lifecycle.Observer
+import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.FragmentProductBinding
-import com.example.hrautomation.databinding.RecyclerviewProductItemBinding
-import com.example.hrautomation.presentation.view.activity.appComponent
+import com.example.hrautomation.presentation.model.ProductItem
+import com.example.hrautomation.utils.ViewModelFactory
 import javax.inject.Inject
 
 class ProductFragment : Fragment() {
 
-    private lateinit var binding: FragmentProductBinding
+    private var _binding: FragmentProductBinding? = null
+    private val binding: FragmentProductBinding
+        get() = _binding!!
+
+    private lateinit var adapter: ProductAdapter
 
     @Inject
-    lateinit var productFragmentViewModelProvider: ProductFragmentViewModelProvider
+    lateinit var viewModelFactory: ViewModelFactory
 
-    //        Подключаем ViewModel
     private val viewModel: ProductFragmentViewModel by viewModels {
-        productFragmentViewModelProvider
+        viewModelFactory
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requireContext().appComponent.inject(this)
+        (requireContext().applicationContext as App).appComponent.inject(this)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-//        Подключаем binding
-//        binding = FragmentProductBinding.inflate(layoutInflater)
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_product, container, false)
-
+        _binding = FragmentProductBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
-        binding.viewModel = viewModel
-        // Inflate the layout for this fragment
+
+        initUi()
+
+        viewModel.data.observe(viewLifecycleOwner, productObserver)
+
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onDestroyView() {
+        _binding?.unbind()
+        _binding = null
+        super.onDestroyView()
+    }
 
+    private fun initUi() {
+        adapter = ProductAdapter(emptyList())
+        binding.employeesRecyclerview.adapter = adapter
+    }
 
-//         Подключаем рекуклер вью
-//        binding.productRecyclerview.layoutManager = GridLayoutManager(context, 3)
-
+    private val productObserver = Observer<List<ProductItem>> { newItems ->
+        adapter.update(newItems)
     }
 }
