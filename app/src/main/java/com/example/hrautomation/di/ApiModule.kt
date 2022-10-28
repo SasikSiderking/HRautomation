@@ -1,9 +1,9 @@
 package com.example.hrautomation.di
 
-import com.example.hrautomation.data.api.IEmployeesApi
-import com.example.hrautomation.data.api.IIEmployeesApi
-import com.example.hrautomation.data.api.IIUserApi
-import com.example.hrautomation.data.api.IUserApi
+import com.example.hrautomation.data.api.EmployeesApi
+import com.example.hrautomation.data.api.EmployeesApi2
+import com.example.hrautomation.data.api.UserApi
+import com.example.hrautomation.data.api.UserApi2
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -13,25 +13,25 @@ class ApiModule {
 
     @Provides
     @Singleton
-    fun provideUserApi(retrofitProvider: RetrofitProvider): IUserApi {
+    fun provideUserApi(retrofitProvider: RetrofitProvider): UserApi {
         return retrofitProvider.userApi
     }
 
     @Provides
     @Singleton
-    fun provideUserApi2(retrofitProvider: RetrofitProvider): IIUserApi {
+    fun provideUserApi2(retrofitProvider: RetrofitProvider): UserApi2 {
         return retrofitProvider.userApi2
     }
 
     @Provides
     @Singleton
-    fun provideEmployeesApi(retrofitProvider: RetrofitProvider): IEmployeesApi {
+    fun provideEmployeesApi(retrofitProvider: RetrofitProvider): EmployeesApi {
         return retrofitProvider.employeesApi
     }
 
     @Provides
     @Singleton
-    fun provideEmployeesApi2(retrofitProvider: RetrofitProvider): IIEmployeesApi {
+    fun provideEmployeesApi2(retrofitProvider: RetrofitProvider): EmployeesApi2 {
         return retrofitProvider.employeesApi2
     }
 }

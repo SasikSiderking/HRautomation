@@ -5,7 +5,7 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-interface IEmployeesApi {
+interface EmployeesApi {
     @GET("/users")
     suspend fun getEmployeesResponse(): Response<List<EmployeeResponse>>
 

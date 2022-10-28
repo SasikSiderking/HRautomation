@@ -4,13 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.hrautomation.domain.repository.ITokenRepository
-import com.example.hrautomation.domain.repository.IUserRepository
+import com.example.hrautomation.domain.repository.TokenRepository
+import com.example.hrautomation.domain.repository.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class CodeLoginViewModel @Inject constructor(private val repo: ITokenRepository, private val userRepo: IUserRepository) : ViewModel() {
+class CodeLoginViewModel @Inject constructor(private val repo: TokenRepository, private val userRepo: UserRepository) : ViewModel() {
 
     val isCodeCheckSuccess: LiveData<Boolean>
         get() = _isCodeCheckSuccess

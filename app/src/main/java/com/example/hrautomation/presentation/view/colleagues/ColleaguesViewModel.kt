@@ -5,11 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.hrautomation.domain.model.Employee
-import com.example.hrautomation.domain.repository.IEmployeesRepository
+import com.example.hrautomation.domain.repository.EmployeesRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class ColleaguesViewModel @Inject constructor(private val repo: IEmployeesRepository) : ViewModel() {
+class ColleaguesViewModel @Inject constructor(private val repo: EmployeesRepository) : ViewModel() {
 
     val data: LiveData<List<Employee>>
         get() = _data

@@ -3,7 +3,7 @@ package com.example.hrautomation.data.api
 import com.example.hrautomation.data.model.EmployeeResponse
 import retrofit2.Response
 
-class IIEmployeesApi : IEmployeesApi {
+class EmployeesApi2 : EmployeesApi {
     val emp1 = EmployeeResponse(0, "Alexander Sidorkin", "Sidrsidsashok@mail.ru", "HRautomation", "Android Developer", "-_-", "notadmin")
     val emp2 = EmployeeResponse(
         1,

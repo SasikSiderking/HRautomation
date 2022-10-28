@@ -4,12 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.hrautomation.domain.repository.IProductRepository
+import com.example.hrautomation.domain.repository.ProductRepository
 import com.example.hrautomation.presentation.model.ProductItem
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class ProductFragmentViewModel @Inject constructor(private val repo: IProductRepository) : ViewModel() {
+class ProductFragmentViewModel @Inject constructor(private val repo: ProductRepository) : ViewModel() {
 
     val data: LiveData<List<ProductItem>>
         get() = _data

@@ -4,12 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.hrautomation.domain.repository.IUserRepository
+import com.example.hrautomation.domain.repository.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class EmailLoginViewModel @Inject constructor(private val repo: IUserRepository) : ViewModel() {
+class EmailLoginViewModel @Inject constructor(private val repo: UserRepository) : ViewModel() {
 
     val isEmailCheckSuccess: LiveData<Boolean>
         get() = _isEmailCheckSuccess
