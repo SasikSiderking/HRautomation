@@ -10,5 +10,5 @@ import dagger.Reusable
 interface DispatchersModule {
     @Reusable
     @Binds
-    fun provideDispatchers(dispatchers: CoroutineDispatchers): CoroutineDispatchersImpl
+    fun provideDispatchers(dispatchers: CoroutineDispatchersImpl): CoroutineDispatchers
 }

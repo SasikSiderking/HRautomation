@@ -41,7 +41,6 @@ class EmailLoginFragment : Fragment() {
         initUi()
 
         viewModel.isEmailCheckSuccess.observe(viewLifecycleOwner, emailCheckObserver)
-
         return binding.root
     }
 
