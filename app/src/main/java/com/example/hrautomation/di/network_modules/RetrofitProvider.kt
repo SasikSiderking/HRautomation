@@ -1,4 +1,4 @@
-package com.example.hrautomation.di
+package com.example.hrautomation.di.network_modules
 
 import com.example.hrautomation.BuildConfig
 import com.example.hrautomation.data.api.*

@@ -1,4 +1,4 @@
-package com.example.hrautomation.di
+package com.example.hrautomation.di.view_model_modules
 
 import androidx.lifecycle.ViewModel
 import com.example.hrautomation.presentation.view.colleagues.ColleaguesViewModel
