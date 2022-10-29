@@ -54,7 +54,7 @@ class ProductFragment : Fragment() {
     }
 
     private fun initUi() {
-        adapter = ProductAdapter(emptyList())
+        adapter = ProductAdapter()
         binding.employeesRecyclerview.adapter = adapter
     }
 

@@ -58,10 +58,12 @@ class ColleaguesFragment : Fragment() {
     }
 
     private fun initUi() {
-        adapter = ColleaguesAdapter(emptyList()) { employee ->
-            findNavController().navigate(R.id.action_colleaguesFragment_to_employeeFragment)
-            viewModel.selectEmployee(employee)
-        }
+        adapter = ColleaguesAdapter(
+            onClickListener = OnEmployeeClickListener { employee ->
+                findNavController().navigate(R.id.action_colleaguesFragment_to_employeeFragment)
+                viewModel.selectEmployee(employee)
+            }
+        )
         binding.colleaguesRecyclerview.adapter = adapter
 
     }

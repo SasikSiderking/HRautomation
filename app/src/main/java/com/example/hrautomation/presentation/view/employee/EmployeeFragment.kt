@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.FragmentEmployeeBinding
+import com.example.hrautomation.domain.model.Employee
 import com.example.hrautomation.utils.ViewModelFactory
 import javax.inject.Inject
 
@@ -46,11 +48,15 @@ class EmployeeFragment : Fragment() {
         super.onDestroyView()
     }
 
+    private val selectedEmployeeObserver = Observer<Employee> { employee ->
+        binding.employeeFullName.text = employee.name
+        binding.employeeFullEmail.setText(employee.email)
+        binding.employeeFullPost.setText(employee.post)
+        binding.employeeFullProject.setText(employee.project)
+        binding.employeeFullAbout.setText(employee.info)
+    }
+
     private fun initUi() {
-        binding.employeeFullName.text = viewModel.getSelectedEmployee().name
-        binding.employeeFullEmail.setText(viewModel.getSelectedEmployee().email)
-        binding.employeeFullPost.setText(viewModel.getSelectedEmployee().post)
-        binding.employeeFullProject.setText(viewModel.getSelectedEmployee().project)
-        binding.employeeFullAbout.setText(viewModel.getSelectedEmployee().info)
+        viewModel.selectedEmployee.observe(viewLifecycleOwner, selectedEmployeeObserver)
     }
 }

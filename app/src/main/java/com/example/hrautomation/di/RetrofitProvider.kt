@@ -4,18 +4,23 @@ import com.example.hrautomation.BuildConfig
 import com.example.hrautomation.data.api.*
 import com.example.hrautomation.data.repository.TokenRepository
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 import javax.inject.Inject
 
-class RetrofitProvider @Inject constructor(tokenRepository: TokenRepository) {
+class RetrofitProvider @Inject constructor(private val tokenRepository: TokenRepository) {
 
 
-    private val httpClient by lazy {
-        OkHttpClient.Builder()
-            .addInterceptor(AuthInterceptor(tokenRepository.getToken() ?: "")).build()
-    }
+    private val httpClient: OkHttpClient
+        get() = OkHttpClient.Builder()
+            .addInterceptor(AuthInterceptor(tokenRepository.getToken() ?: ""))
+            .addInterceptor(logging)
+            .build()
+
+    private val logging: HttpLoggingInterceptor =
+        HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC)
 
     private val retrofitBuilder by lazy {
         Retrofit.Builder()

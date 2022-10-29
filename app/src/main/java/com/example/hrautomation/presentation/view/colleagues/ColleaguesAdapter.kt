@@ -7,10 +7,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.hrautomation.databinding.EmployeeRecyclerviewItemBinding
 import com.example.hrautomation.domain.model.Employee
 
-class ColleaguesAdapter(private var dataSet: List<Employee>, private val onClickListener: OnEmployeeClickListener) :
+class ColleaguesAdapter(private val onClickListener: OnEmployeeClickListener) :
     RecyclerView.Adapter<ColleaguesAdapter.ViewHolder>() {
 
-    class ViewHolder(binding: EmployeeRecyclerviewItemBinding, clickAtPosition: (Int) -> Unit) : RecyclerView.ViewHolder(binding.root) {
+    private var dataSet: List<Employee> = emptyList()
+
+    class ViewHolder(binding: EmployeeRecyclerviewItemBinding, clickAtPosition: (Int) -> Unit) :
+        RecyclerView.ViewHolder(binding.root) {
         val nameTextView: TextView
         val postTextView: TextView
 

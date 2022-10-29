@@ -6,12 +6,15 @@ import com.example.hrautomation.data.model.EmployeeResponse
 import com.example.hrautomation.data.model.EmployeesResponseToEmployeesMapper
 import com.example.hrautomation.domain.model.Employee
 import com.example.hrautomation.domain.repository.IEmployeesRepository
-import com.example.hrautomation.presentation.view.colleagues.SelectedColleagueCashManager
+import com.example.hrautomation.presentation.view.colleagues.SelectedColleagueCacheManager
 import okio.IOException
 import retrofit2.HttpException
 import javax.inject.Inject
 
-class EmployeesRepository @Inject constructor(private val api: IIEmployeesApi, private val selectedColleagueCashManager: SelectedColleagueCashManager) :
+class EmployeesRepository @Inject constructor(
+    private val api: IIEmployeesApi,
+    private val selectedColleagueCacheManager: SelectedColleagueCacheManager
+) :
     IEmployeesRepository {
 
     private var employeesResponse: List<EmployeeResponse> = emptyList()
@@ -30,10 +33,10 @@ class EmployeesRepository @Inject constructor(private val api: IIEmployeesApi, p
     }
 
     override fun setSelectedEmployee(employee: Employee) {
-        selectedColleagueCashManager.setSelectedEmployee(employee)
+        selectedColleagueCacheManager.setSelectedEmployee(employee)
     }
 
     override fun getSelectedEmployee(): Employee {
-        return selectedColleagueCashManager.getSelectedEmployee()!!
+        return selectedColleagueCacheManager.getSelectedEmployee()!!
     }
 }

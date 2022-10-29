@@ -1,5 +1,6 @@
 package com.example.hrautomation.domain.model
 
+import com.example.hrautomation.presentation.model.ListedProductItem
 import com.example.hrautomation.presentation.model.ProductItem
 import com.example.hrautomation.utils.IMapper
 
@@ -9,6 +10,7 @@ data class Product(
     val name: String
 )
 
-class ProductToProductItemMapper : IMapper<Product, ProductItem> {
-    override fun convert(model: Product): ProductItem = ProductItem(model.section, model.img, model.name)
+class ProductToListedProductItemMapper : IMapper<Product, ProductItem> {
+    override fun convert(model: Product): ProductItem =
+        ListedProductItem(model.section, model.img, model.name)
 }

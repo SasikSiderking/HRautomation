@@ -2,7 +2,7 @@ package com.example.hrautomation.data.repository
 
 import com.example.hrautomation.data.model.ProductResponse
 import com.example.hrautomation.data.model.ProductResponseToProductMapper
-import com.example.hrautomation.domain.model.ProductToProductItemMapper
+import com.example.hrautomation.domain.model.ProductToListedProductItemMapper
 import com.example.hrautomation.domain.repository.IProductRepository
 import com.example.hrautomation.presentation.model.ProductItem
 import javax.inject.Inject
@@ -17,6 +17,10 @@ class ProductRepository @Inject constructor() : IProductRepository {
     private val productResponseList = listOf(bread, pie, water)
 
     override suspend fun getProductItemList(): List<ProductItem> {
-        return productResponseList.map { ProductToProductItemMapper().convert(ProductResponseToProductMapper().convert(it)) }
+        return productResponseList.map {
+            ProductToListedProductItemMapper().convert(
+                ProductResponseToProductMapper().convert(it)
+            )
+        }
     }
 }
