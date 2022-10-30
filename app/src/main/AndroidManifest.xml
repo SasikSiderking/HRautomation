@@ -27,10 +27,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name="com.example.hrautomation.presentation.view.loading.activity_login.LoginActivity" />
         <activity
             android:name=".presentation.view.activity.MainActivity"
             android:exported="true" />
+
+        <activity android:name=".presentation.view.employee.EmployeeActivity" />
     </application>
 
 </manifest>
