@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.FragmentProductBinding
-import com.example.hrautomation.presentation.model.ProductItem
+import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.utils.ViewModelFactory
 import javax.inject.Inject
 
@@ -58,7 +58,7 @@ class ProductFragment : Fragment() {
         binding.employeesRecyclerview.adapter = adapter
     }
 
-    private val productObserver = Observer<List<ProductItem>> { newItems ->
+    private val productObserver = Observer<List<BaseListItem>> { newItems ->
         adapter.update(newItems)
     }
 }

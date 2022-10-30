@@ -1,13 +1,10 @@
 package com.example.hrautomation.presentation.model
 
-interface ProductItem {
-    val section: String
-    val img: String
-    val name: String
-}
+import com.example.hrautomation.presentation.base.delegates.BaseListItem
 
 data class ListedProductItem(
-    override val section: String,
-    override val img: String,
-    override val name: String
-) : ProductItem
+    val section: String,
+    val img: String,
+    val name: String,
+    override val id: String = name
+) : BaseListItem

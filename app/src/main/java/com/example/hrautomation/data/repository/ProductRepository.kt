@@ -4,7 +4,7 @@ import com.example.hrautomation.data.model.ProductResponse
 import com.example.hrautomation.data.model.ProductResponseToProductMapper
 import com.example.hrautomation.domain.model.ProductToListedProductItemMapper
 import com.example.hrautomation.domain.repository.IProductRepository
-import com.example.hrautomation.presentation.model.ProductItem
+import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -16,7 +16,8 @@ class ProductRepository @Inject constructor() : IProductRepository {
         ProductResponse("Вода", "https://www.uavgusta.net/upload/resize_cache/iblock/d5c/740_740_2/15_faktov_o_roli_vody_v_zhizni_cheloveka.jpg", "Минералочка")
     private val productResponseList = listOf(bread, pie, water)
 
-    override suspend fun getProductItemList(): List<ProductItem> {
+    // TODO: Make this method return domain model instead of presentation model
+    override suspend fun getProductItemList(): List<BaseListItem> {
         return productResponseList.map {
             ProductToListedProductItemMapper().convert(
                 ProductResponseToProductMapper().convert(it)
