@@ -10,6 +10,10 @@ import javax.inject.Inject
 
 class LoadingActivityViewModel @Inject constructor(private val tokenRepo: TokenRepository) : ViewModel() {
 
+    val isLoading: LiveData<Boolean>
+        get() = _isLoading
+    private val _isLoading = MutableLiveData(true)
+
     val isTokenExist: LiveData<Boolean>
         get() = _isTokenExist
     private val _isTokenExist = MutableLiveData(false)
@@ -22,6 +26,7 @@ class LoadingActivityViewModel @Inject constructor(private val tokenRepo: TokenR
         viewModelScope.launch {
             val token = tokenRepo.getToken()
             _isTokenExist.postValue(token != null)
+            _isLoading.postValue(false)
         }
     }
 }

@@ -19,6 +19,7 @@
         <activity
             android:name=".presentation.view.loading.LoadingActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
