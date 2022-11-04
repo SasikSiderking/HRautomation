@@ -1,39 +1,15 @@
 package com.example.hrautomation.presentation.view.product
 
-import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
-import com.example.hrautomation.presentation.model.ProductItem
-import com.hannesdorfmann.adapterdelegates4.AdapterDelegatesManager
+import com.example.hrautomation.presentation.base.delegates.BaseListItem
+import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 
-
-class ProductAdapter(dataSet: List<ProductItem>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private val delegatesManager: AdapterDelegatesManager<List<ProductItem>>
-    private var dataSet: List<ProductItem>
-    override fun getItemViewType(position: Int): Int {
-        return delegatesManager.getItemViewType(dataSet, position)
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return delegatesManager.onCreateViewHolder(parent, viewType)
-    }
-
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        delegatesManager.onBindViewHolder(dataSet, position, holder)
-    }
-
-    override fun getItemCount(): Int {
-        return dataSet.size
-    }
-
+class ProductAdapter : ListDelegationAdapter<List<BaseListItem>>() {
     init {
-        this.dataSet = dataSet
-        delegatesManager = AdapterDelegatesManager<List<ProductItem>>()
-
-        delegatesManager.addDelegate(ProductAdapterDelegate())
+        delegatesManager.addDelegate(ProductListItemAdapterDelegate())
     }
 
-    fun update(data: List<ProductItem>) {
-        dataSet = data
+    fun update(data: List<BaseListItem>) {
+        setItems(data)
         notifyDataSetChanged()
     }
 }

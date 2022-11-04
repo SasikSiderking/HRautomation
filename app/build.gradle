@@ -92,4 +92,7 @@ dependencies {
 
 //    AdapterDelegates
     implementation 'com.hannesdorfmann:adapterdelegates4:4.3.2'
+
+//    HttpLoggingInterceptor
+    implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
 }

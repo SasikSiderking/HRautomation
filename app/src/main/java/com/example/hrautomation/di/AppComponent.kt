@@ -17,7 +17,7 @@ import javax.inject.Singleton
 
 @Component(
     modules = [RepositoryModule::class, ContextModule::class, ApiModule::class,
-        ViewModelFactoryModule::class, ViewModelModule::class, ColleagueCashManagerModule::class, DispatchersModule::class
+        ViewModelFactoryModule::class, ViewModelModule::class, ColleagueCashManagerModule::class, MapperModule::class, DispatchersModule::class
     ]
 )
 @Singleton
