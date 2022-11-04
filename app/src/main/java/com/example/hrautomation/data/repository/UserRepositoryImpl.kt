@@ -1,16 +1,16 @@
 package com.example.hrautomation.data.repository
 
 import android.util.Log
-import com.example.hrautomation.data.api.IIUserApi
-import com.example.hrautomation.domain.repository.IUserRepository
+import com.example.hrautomation.data.api.UserApi2
+import com.example.hrautomation.domain.repository.UserRepository
 import okio.IOException
 import retrofit2.HttpException
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class UserRepository @Inject constructor(private val api: IIUserApi) :
-    IUserRepository {
+class UserRepositoryImpl @Inject constructor(private val api: UserApi2) :
+    UserRepository {
 
     override suspend fun checkEmail(email: String): Boolean {
         return try {

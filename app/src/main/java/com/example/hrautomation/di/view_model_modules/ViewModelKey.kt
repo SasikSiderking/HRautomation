@@ -1,4 +1,4 @@
-package com.example.hrautomation.di
+package com.example.hrautomation.di.view_model_modules
 
 import androidx.lifecycle.ViewModel
 import dagger.MapKey

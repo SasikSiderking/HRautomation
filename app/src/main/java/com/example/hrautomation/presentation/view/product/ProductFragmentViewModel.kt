@@ -4,16 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.hrautomation.domain.repository.IProductRepository
+import com.example.hrautomation.data.dispatcher.CoroutineDispatchers
+import com.example.hrautomation.domain.repository.ProductRepository
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.model.ProductToListedProductItemMapper
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class ProductFragmentViewModel @Inject constructor(
-    private val repo: IProductRepository,
-    private val productToListedProductItemMapper: ProductToListedProductItemMapper
-) : ViewModel() {
+class ProductFragmentViewModel @Inject constructor(private val productRepo: ProductRepository, private val dispatchers: CoroutineDispatchers, private val productToListedProductItemMapper: ProductToListedProductItemMapper) : ViewModel() {
 
     val data: LiveData<List<BaseListItem>>
         get() = _data
@@ -24,7 +22,7 @@ class ProductFragmentViewModel @Inject constructor(
     }
 
     private fun loadData() {
-        viewModelScope.launch {
+        viewModelScope.launch(dispatchers.io) {
             val productList = repo.getProductItemList()
             _data.postValue(productList.map { productToListedProductItemMapper.convert(it) })
         }

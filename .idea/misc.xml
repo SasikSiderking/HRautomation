@@ -3,9 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/projects/HRautomation/app/src/main/res/drawable/anim_splash.xml" value="0.178" />
         <entry key="..\:/projects/HRautomation/app/src/main/res/drawable/ic_baseline_group_24.xml" value="0.1765" />
+        <entry key="..\:/projects/HRautomation/app/src/main/res/drawable/ic_tinkoff.xml" value="0.139" />
+        <entry key="..\:/projects/HRautomation/app/src/main/res/drawable/splash_screen.xml" value="0.1385" />
+        <entry key="..\:/projects/HRautomation/app/src/main/res/drawable/tinkoff.xml" value="0.139" />
         <entry key="..\:/projects/HRautomation/app/src/main/res/layout/activity_loading.xml" value="0.18" />
-        <entry key="..\:/projects/HRautomation/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/projects/HRautomation/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/projects/HRautomation/app/src/main/res/layout/dialog_auth.xml" value="0.25" />
         <entry key="..\:/projects/HRautomation/app/src/main/res/layout/employee_recyclerview_item.xml" value="0.196875" />
         <entry key="..\:/projects/HRautomation/app/src/main/res/layout/fragment_colleagues.xml" value="0.196875" />
@@ -24,6 +28,7 @@
         <entry key="..\:/projects/HRautomation/app/src/main/res/layout/item_product_listing_ad.xml" value="0.196875" />
         <entry key="..\:/projects/HRautomation/app/src/main/res/layout/recyclerview_product_item.xml" value="0.19583333333333333" />
         <entry key="..\:/projects/HRautomation/app/src/main/res/menu/menu_navigation.xml" value="0.196875" />
+        <entry key="..\:/projects/HRautomation/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.178" />
       </map>
     </option>
   </component>

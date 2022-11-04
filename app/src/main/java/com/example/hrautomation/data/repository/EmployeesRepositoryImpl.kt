@@ -1,21 +1,21 @@
 package com.example.hrautomation.data.repository
 
 import android.util.Log
-import com.example.hrautomation.data.api.IIEmployeesApi
+import com.example.hrautomation.data.api.EmployeesApi2
 import com.example.hrautomation.data.model.EmployeeResponse
 import com.example.hrautomation.data.model.EmployeesResponseToEmployeesMapper
 import com.example.hrautomation.domain.model.Employee
-import com.example.hrautomation.domain.repository.IEmployeesRepository
+import com.example.hrautomation.domain.repository.EmployeesRepository
 import com.example.hrautomation.presentation.view.colleagues.SelectedColleagueCacheManager
 import okio.IOException
 import retrofit2.HttpException
 import javax.inject.Inject
 
-class EmployeesRepository @Inject constructor(
-    private val api: IIEmployeesApi,
+class EmployeesRepositoryImpl @Inject constructor(
+    private val api: EmployeesApi2,
     private val selectedColleagueCacheManager: SelectedColleagueCacheManager
 ) :
-    IEmployeesRepository {
+    EmployeesRepository {
 
     private var employeesResponse: List<EmployeeResponse> = emptyList()
 

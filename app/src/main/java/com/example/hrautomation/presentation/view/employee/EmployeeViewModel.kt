@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.hrautomation.domain.model.Employee
-import com.example.hrautomation.domain.repository.IEmployeesRepository
+import com.example.hrautomation.domain.repository.EmployeesRepository
 import javax.inject.Inject
 
-class EmployeeViewModel @Inject constructor(private val repo: IEmployeesRepository) : ViewModel() {
+class EmployeeViewModel @Inject constructor(private val repo: EmployeesRepository) : ViewModel() {
     val selectedEmployee: LiveData<Employee>
         get() = _selectedEmployee
     private val _selectedEmployee = MutableLiveData<Employee>()

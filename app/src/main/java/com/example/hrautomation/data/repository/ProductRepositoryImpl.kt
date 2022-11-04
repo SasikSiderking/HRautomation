@@ -3,12 +3,12 @@ package com.example.hrautomation.data.repository
 import com.example.hrautomation.data.model.ProductResponse
 import com.example.hrautomation.data.model.ProductResponseToProductMapper
 import com.example.hrautomation.domain.model.Product
-import com.example.hrautomation.domain.repository.IProductRepository
+import com.example.hrautomation.domain.repository.ProductRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ProductRepository @Inject constructor(private val productResponseToProductMapper: ProductResponseToProductMapper) : IProductRepository {
+class ProductRepositoryImpl @Inject constructor(private val productResponseToProductMapper: ProductResponseToProductMapper) : ProductRepository {
     private val bread = ProductResponse("Хлебобулочные", "https://klike.net/uploads/posts/2020-09/1601201612_2.jpg", "Хлеб")
     private val pie = ProductResponse("Хлебобулочные", "https://1xleb.ru/upload/iblock/489/48942c2cb0eae6e117e03472cd34b8e3.jpg", "Пирожок")
     private val water =

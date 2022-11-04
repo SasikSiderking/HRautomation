@@ -1,8 +1,8 @@
-package com.example.hrautomation.di
+package com.example.hrautomation.di.network_modules
 
 import com.example.hrautomation.BuildConfig
 import com.example.hrautomation.data.api.*
-import com.example.hrautomation.data.repository.TokenRepository
+import com.example.hrautomation.data.repository.TokenRepositoryImpl
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -10,12 +10,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 import javax.inject.Inject
 
-class RetrofitProvider @Inject constructor(private val tokenRepository: TokenRepository) {
+class RetrofitProvider @Inject constructor(private val tokenRepositoryImpl: TokenRepositoryImpl) {
 
 
     private val httpClient: OkHttpClient by lazy {
         OkHttpClient.Builder()
-            .addInterceptor(AuthInterceptor(tokenRepository.getToken() ?: ""))
+            .addInterceptor(AuthInterceptor(tokenRepositoryImpl.getToken() ?: ""))
             .addInterceptor(logging)
             .build()
     }
@@ -31,21 +31,21 @@ class RetrofitProvider @Inject constructor(private val tokenRepository: TokenRep
             .addConverterFactory(GsonConverterFactory.create())
     }
 
-    val userApi: IUserApi by lazy {
+    val userApi: UserApi by lazy {
         retrofitBuilder
             .client(httpClient)
             .build()
             .create()
     }
 
-    val userApi2: IIUserApi by lazy { IIUserApi() }
+    val userApi2: UserApi2 by lazy { UserApi2() }
 
-    val employeesApi: IEmployeesApi by lazy {
+    val employeesApi: EmployeesApi by lazy {
         retrofitBuilder
             .client(httpClient)
             .build()
             .create()
     }
 
-    val employeesApi2: IIEmployeesApi by lazy { IIEmployeesApi() }
+    val employeesApi2: IIEmployeesApi by lazy { EmployeesApi2() }
 }

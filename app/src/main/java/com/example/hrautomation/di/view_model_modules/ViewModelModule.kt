@@ -1,9 +1,10 @@
-package com.example.hrautomation.di
+package com.example.hrautomation.di.view_model_modules
 
 import androidx.lifecycle.ViewModel
 import com.example.hrautomation.presentation.view.colleagues.ColleaguesViewModel
 import com.example.hrautomation.presentation.view.employee.EmployeeViewModel
-import com.example.hrautomation.presentation.view.loading.activity_load.LoadingActivityViewModel
+import com.example.hrautomation.presentation.view.loading.LoadingActivityViewModel
+import com.example.hrautomation.presentation.view.loading.activity_login.LoginActivityViewModel
 import com.example.hrautomation.presentation.view.loading.code.CodeLoginViewModel
 import com.example.hrautomation.presentation.view.loading.email.EmailLoginViewModel
 import com.example.hrautomation.presentation.view.meeting_room.MeetingRoomViewModel
@@ -26,8 +27,8 @@ interface ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(LoadingActivityViewModel::class)
-    fun bindLoadingActivityViewModel(loadingActivityViewModel: LoadingActivityViewModel): ViewModel
+    @ViewModelKey(LoginActivityViewModel::class)
+    fun bindLoginActivityViewModel(loginActivityViewModel: LoginActivityViewModel): ViewModel
 
     @Binds
     @IntoMap
@@ -48,4 +49,9 @@ interface ViewModelModule {
     @IntoMap
     @ViewModelKey(EmployeeViewModel::class)
     fun bindEmployeeViewModel(employeeViewModel: EmployeeViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(LoadingActivityViewModel::class)
+    fun bindLoadingActivityViewModel(loadingActivityViewModel: LoadingActivityViewModel): ViewModel
 }

@@ -1,5 +1,5 @@
 package com.example.hrautomation.utils
 
-interface IMapper<In, Out> {
+interface Mapper<In, Out> {
     fun convert(model: In): Out
 }
