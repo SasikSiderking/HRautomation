@@ -21,10 +21,6 @@ class LoadingActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-//        installSplashScreen().apply {
-//            setKeepOnScreenCondition{viewModel.isLoading.value == true}
-//        }
-
         super.onCreate(savedInstanceState)
         (applicationContext as App).appComponent.inject(this)
 
@@ -35,11 +31,11 @@ class LoadingActivity : AppCompatActivity() {
     private val tokenObserver = Observer<Boolean> { isTokenExist ->
         if (isTokenExist) {
             val intent = Intent(this, MainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
         } else {
             val intent = Intent(this, LoginActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
         }
         finish()
