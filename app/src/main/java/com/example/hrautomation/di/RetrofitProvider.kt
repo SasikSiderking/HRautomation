@@ -13,14 +13,17 @@ import javax.inject.Inject
 class RetrofitProvider @Inject constructor(private val tokenRepository: TokenRepository) {
 
 
-    private val httpClient: OkHttpClient
-        get() = OkHttpClient.Builder()
+    private val httpClient: OkHttpClient by lazy {
+        OkHttpClient.Builder()
             .addInterceptor(AuthInterceptor(tokenRepository.getToken() ?: ""))
             .addInterceptor(logging)
             .build()
+    }
 
-    private val logging: HttpLoggingInterceptor =
+
+    private val logging: HttpLoggingInterceptor by lazy {
         HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC)
+    }
 
     private val retrofitBuilder by lazy {
         Retrofit.Builder()
@@ -35,7 +38,7 @@ class RetrofitProvider @Inject constructor(private val tokenRepository: TokenRep
             .create()
     }
 
-    val userApi2: IIUserApi = IIUserApi()
+    val userApi2: IIUserApi by lazy { IIUserApi() }
 
     val employeesApi: IEmployeesApi by lazy {
         retrofitBuilder
@@ -44,5 +47,5 @@ class RetrofitProvider @Inject constructor(private val tokenRepository: TokenRep
             .create()
     }
 
-    val employeesApi2: IIEmployeesApi = IIEmployeesApi()
+    val employeesApi2: IIEmployeesApi by lazy { IIEmployeesApi() }
 }

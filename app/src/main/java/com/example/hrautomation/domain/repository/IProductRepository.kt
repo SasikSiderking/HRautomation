@@ -1,9 +1,9 @@
 package com.example.hrautomation.domain.repository
 
-import com.example.hrautomation.presentation.base.delegates.BaseListItem
+import com.example.hrautomation.domain.model.Product
 
 
 interface IProductRepository {
 
-    suspend fun getProductItemList(): List<BaseListItem>
+    suspend fun getProductItemList(): List<Product>
 }
