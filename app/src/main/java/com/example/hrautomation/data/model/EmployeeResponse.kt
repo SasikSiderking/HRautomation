@@ -1,7 +1,7 @@
 package com.example.hrautomation.data.model
 
 import com.example.hrautomation.domain.model.Employee
-import com.example.hrautomation.utils.IMapper
+import com.example.hrautomation.utils.Mapper
 
 data class EmployeeResponse(
     val id: Int,
@@ -13,7 +13,7 @@ data class EmployeeResponse(
     val role: String
 )
 
-class EmployeesResponseToEmployeesMapper : IMapper<EmployeeResponse, Employee> {
+class EmployeesResponseToEmployeesMapper : Mapper<EmployeeResponse, Employee> {
     override fun convert(model: EmployeeResponse): Employee {
         return Employee(model.name, model.email, model.project, model.post, model.info)
     }

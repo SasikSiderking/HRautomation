@@ -1,6 +1,6 @@
 package com.example.hrautomation.domain.repository
 
-interface ITokenRepository {
+interface TokenRepository {
     fun getToken(): String?
     fun saveToken(token: String)
 }
