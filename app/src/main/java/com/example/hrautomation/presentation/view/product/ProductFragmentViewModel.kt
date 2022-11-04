@@ -23,7 +23,7 @@ class ProductFragmentViewModel @Inject constructor(private val productRepo: Prod
 
     private fun loadData() {
         viewModelScope.launch(dispatchers.io) {
-            val productList = repo.getProductItemList()
+            val productList = productRepo.getProductItemList()
             _data.postValue(productList.map { productToListedProductItemMapper.convert(it) })
         }
     }

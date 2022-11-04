@@ -3,15 +3,9 @@ package com.example.hrautomation.presentation.view.employee
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.ActivityEmployeeBinding
-import com.example.hrautomation.databinding.FragmentEmployeeBinding
 import com.example.hrautomation.domain.model.Employee
 import com.example.hrautomation.utils.ViewModelFactory
 import javax.inject.Inject
@@ -53,6 +47,6 @@ class EmployeeActivity : AppCompatActivity() {
     }
 
     private fun initUi() {
-        viewModel.selectedEmployee.observe(viewLifecycleOwner, selectedEmployeeObserver)
+        viewModel.selectedEmployee.observe(this, selectedEmployeeObserver)
     }
 }

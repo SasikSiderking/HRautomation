@@ -2,7 +2,7 @@ package com.example.hrautomation.presentation.model
 
 import com.example.hrautomation.domain.model.Product
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
-import com.example.hrautomation.utils.IMapper
+import com.example.hrautomation.utils.Mapper
 
 data class ListedProductItem(
     val section: String,
@@ -11,7 +11,7 @@ data class ListedProductItem(
     override val id: String = name
 ) : BaseListItem
 
-class ProductToListedProductItemMapper : IMapper<Product, ListedProductItem> {
+class ProductToListedProductItemMapper : Mapper<Product, ListedProductItem> {
     override fun convert(model: Product): ListedProductItem =
         ListedProductItem(model.section, model.img, model.name)
 }

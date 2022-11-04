@@ -58,11 +58,11 @@ class ColleaguesFragment : Fragment() {
     }
 
     private fun initUi() {
-        adapter = ColleaguesAdapter(emptyList()) { employee ->
+        adapter = ColleaguesAdapter(OnEmployeeClickListener { employee ->
             val intent = Intent(requireContext(), EmployeeActivity::class.java)
             startActivity(intent)
             viewModel.selectEmployee(employee)
-        }
+        })
         binding.colleaguesRecyclerview.adapter = adapter
 
     }

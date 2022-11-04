@@ -47,5 +47,5 @@ class RetrofitProvider @Inject constructor(private val tokenRepositoryImpl: Toke
             .create()
     }
 
-    val employeesApi2: IIEmployeesApi by lazy { EmployeesApi2() }
+    val employeesApi2: EmployeesApi2 by lazy { EmployeesApi2() }
 }
