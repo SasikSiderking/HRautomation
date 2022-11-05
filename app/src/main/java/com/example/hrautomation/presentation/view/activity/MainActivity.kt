@@ -6,6 +6,8 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.hrautomation.R
 import com.example.hrautomation.app.App
@@ -31,6 +33,10 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
         findViewById<BottomNavigationView>(R.id.bottom_nav)
             .setupWithNavController(navController)
+
+        val appBarConfiguration =
+            AppBarConfiguration(setOf(R.id.meetingRoomFragment, R.id.colleaguesFragment, R.id.productFragment, R.id.eatingFragment, R.id.faqFragment))
+        setupActionBarWithNavController(navController, appBarConfiguration)
 
         this.onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
     }
