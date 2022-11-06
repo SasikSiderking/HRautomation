@@ -2,14 +2,8 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.cardview.widget.CardView
-        style="@style/SelectableRecyclerViewItemStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginBottom="10dp">
-
         <androidx.constraintlayout.widget.ConstraintLayout
+            style="@style/SelectableRecyclerViewItemStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -40,19 +34,18 @@
                 android:textColor="@color/main_text"
                 android:textSize="26sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/cardView"
+                app:layout_constraintStart_toEndOf="@id/cardView"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/employeePost"
-
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/cardView"
-                app:layout_constraintTop_toBottomOf="@+id/employeeName" />
+                app:layout_constraintStart_toEndOf="@id/cardView"
+                app:layout_constraintTop_toBottomOf="@id/employeeName" />
 
             <TextView
                 android:id="@+id/employeeProject"
@@ -64,9 +57,8 @@
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/cardView"
-                app:layout_constraintTop_toBottomOf="@+id/employeePost" />
+                app:layout_constraintStart_toEndOf="@id/cardView"
+                app:layout_constraintTop_toBottomOf="@id/employeePost" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
 </layout>

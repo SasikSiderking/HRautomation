@@ -8,7 +8,7 @@
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/black</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorOnSecondary">@color/yellow</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/yellow</item>
         <!-- Customize your theme here. -->
@@ -17,10 +17,25 @@
         <item name="android:windowBackground">@color/background</item>
     </style>
 
+    <!--Recycler View Item Style-->
     <style name="SelectableRecyclerViewItemStyle">
         <item name="android:foreground">?selectableItemBackground</item>
-        <item name="cardCornerRadius">20dp</item>
-        <item name="cardBackgroundColor">@color/white</item>
+        <item name="android:background">@drawable/recycler_view_item_shape</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginHorizontal">20dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
+
+    <!--Custom Search View Style-->
+    <style name="CustomSearchViewStyle">
+        <item name="android:padding">20dp</item>
+        <item name="android:layout_margin">20dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/custom_search_shape</item>
+        <item name="android:drawableRight">@drawable/ic_baseline_search_24</item>
+        <item name="android:inputType">textMultiLine</item>
     </style>
 
     <style name="SplashTheme" parent="Theme.HRautomation">

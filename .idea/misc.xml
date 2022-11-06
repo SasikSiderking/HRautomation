@@ -5,15 +5,19 @@
       <map>
         <entry key="..\:/projects/HRautomation/app/src/main/res/drawable/anim_splash.xml" value="0.178" />
         <entry key="..\:/projects/HRautomation/app/src/main/res/drawable/bottom_nav_icon_color_selector.xml" value="0.178" />
+        <entry key="..\:/projects/HRautomation/app/src/main/res/drawable/custom_search_shape.xml" value="0.178" />
+        <entry key="..\:/projects/HRautomation/app/src/main/res/drawable/custom_search_shape_selector.xml" value="0.178" />
         <entry key="..\:/projects/HRautomation/app/src/main/res/drawable/ic_baseline_group_24.xml" value="0.1765" />
+        <entry key="..\:/projects/HRautomation/app/src/main/res/drawable/ic_search.xml" value="0.178" />
         <entry key="..\:/projects/HRautomation/app/src/main/res/drawable/ic_tinkoff.xml" value="0.139" />
+        <entry key="..\:/projects/HRautomation/app/src/main/res/drawable/recycler_view_item_shape.xml" value="0.178" />
         <entry key="..\:/projects/HRautomation/app/src/main/res/drawable/splash_screen.xml" value="0.1385" />
         <entry key="..\:/projects/HRautomation/app/src/main/res/drawable/tinkoff.xml" value="0.139" />
         <entry key="..\:/projects/HRautomation/app/src/main/res/layout/activity_loading.xml" value="0.18" />
         <entry key="..\:/projects/HRautomation/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/projects/HRautomation/app/src/main/res/layout/dialog_auth.xml" value="0.25" />
-        <entry key="..\:/projects/HRautomation/app/src/main/res/layout/employee_recyclerview_item.xml" value="0.10655737704918032" />
-        <entry key="..\:/projects/HRautomation/app/src/main/res/layout/fragment_colleagues.xml" value="0.196875" />
+        <entry key="..\:/projects/HRautomation/app/src/main/res/layout/employee_recyclerview_item.xml" value="0.25" />
+        <entry key="..\:/projects/HRautomation/app/src/main/res/layout/fragment_colleagues.xml" value="0.1" />
         <entry key="..\:/projects/HRautomation/app/src/main/res/layout/fragment_eating.xml" value="0.14765625" />
         <entry key="..\:/projects/HRautomation/app/src/main/res/layout/fragment_employee.xml" value="0.25" />
         <entry key="..\:/projects/HRautomation/app/src/main/res/layout/fragment_faq.xml" value="0.196875" />
