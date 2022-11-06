@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.ActivityEmployeeBinding
-import com.example.hrautomation.domain.model.Employee
+import com.example.hrautomation.presentation.model.ColleagueItem
 import com.example.hrautomation.utils.ViewModelFactory
 import javax.inject.Inject
 
@@ -38,12 +38,12 @@ class EmployeeActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
-    private val selectedEmployeeObserver = Observer<Employee> { employee ->
-        binding.employeeFullName.text = employee.name
-        binding.employeeFullEmail.setText(employee.email)
-        binding.employeeFullPost.setText(employee.post)
-        binding.employeeFullProject.setText(employee.project)
-        binding.employeeFullAbout.setText(employee.info)
+    private val selectedEmployeeObserver = Observer<ColleagueItem> { colleague ->
+        binding.employeeFullName.text = colleague.name
+        binding.employeeFullEmail.setText(colleague.email)
+        binding.employeeFullPost.setText(colleague.post)
+        binding.employeeFullProject.setText(colleague.project)
+        binding.employeeFullAbout.setText(colleague.info)
     }
 
     private fun initUi() {

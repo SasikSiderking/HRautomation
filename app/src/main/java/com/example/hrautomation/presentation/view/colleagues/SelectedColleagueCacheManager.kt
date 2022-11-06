@@ -1,17 +1,17 @@
 package com.example.hrautomation.presentation.view.colleagues
 
-import com.example.hrautomation.domain.model.Employee
+import com.example.hrautomation.presentation.model.ColleagueItem
 import javax.inject.Inject
 
 class SelectedColleagueCacheManager @Inject constructor() {
 
-    private var cachedSelectedEmployee: Employee? = null
+    private var cachedSelectedEmployee: ColleagueItem? = null
 
-    fun setSelectedEmployee(employee: Employee) {
+    fun setSelectedEmployee(employee: ColleagueItem) {
         cachedSelectedEmployee = employee
     }
 
-    fun getSelectedEmployee(): Employee? {
+    fun getSelectedEmployee(): ColleagueItem? {
         return cachedSelectedEmployee
     }
 

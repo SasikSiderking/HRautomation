@@ -5,19 +5,27 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.hrautomation.data.dispatcher.CoroutineDispatchers
-import com.example.hrautomation.domain.model.Employee
 import com.example.hrautomation.domain.repository.EmployeesRepository
+import com.example.hrautomation.presentation.model.ColleagueItem
+import com.example.hrautomation.presentation.model.EmployeeToColleagueItemMapper
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class ColleaguesViewModel @Inject constructor(private val repo: EmployeesRepository, private val dispatchers: CoroutineDispatchers) : ViewModel() {
+class ColleaguesViewModel @Inject constructor(
+    private val repo: EmployeesRepository,
+    private val dispatchers: CoroutineDispatchers,
+    private val employeesToColleagueItemMapper: EmployeeToColleagueItemMapper,
+    private val selectedColleagueCacheManager: SelectedColleagueCacheManager
+) : ViewModel() {
 
-    val data: LiveData<List<Employee>>
+    val data: LiveData<List<ColleagueItem>>
         get() = _data
-    private val _data = MutableLiveData<List<Employee>>(emptyList())
+    private val _data = MutableLiveData<List<ColleagueItem>>(emptyList())
 
-    fun selectEmployee(employee: Employee) {
-        repo.setSelectedEmployee(employee)
+    private var reservedData: List<ColleagueItem> = emptyList()
+
+    fun selectEmployee(employee: ColleagueItem) {
+        selectedColleagueCacheManager.setSelectedEmployee(employee)
     }
 
     init {
@@ -27,7 +35,23 @@ class ColleaguesViewModel @Inject constructor(private val repo: EmployeesReposit
     private fun loadData() {
         viewModelScope.launch(dispatchers.io) {
             val employeeList = repo.getEmployeeList()
-            _data.postValue(employeeList)
+            reservedData = employeeList.map { employeesToColleagueItemMapper.convert(it) }
+            _data.postValue(reservedData)
+        }
+    }
+
+    fun performSearch(name: String) {
+        _data.value = reservedData
+        viewModelScope.launch(dispatchers.default) {
+            if (name.isNotEmpty()) {
+                _data.postValue(
+                    _data.value?.filter { employee ->
+                        employee.name.contains(name, ignoreCase = true)
+                    } ?: emptyList()
+                )
+            } else {
+                _data.postValue(reservedData)
+            }
         }
     }
 }

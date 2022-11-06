@@ -4,12 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hrautomation.databinding.EmployeeRecyclerviewItemBinding
-import com.example.hrautomation.domain.model.Employee
+import com.example.hrautomation.presentation.model.ColleagueItem
 
-class ColleaguesAdapter(private val onClickListener: OnEmployeeClickListener) :
+class ColleaguesAdapter(private val onClickListener: OnColleagueClickListener) :
     RecyclerView.Adapter<ColleaguesAdapter.ViewHolder>() {
 
-    private var dataSet: List<Employee> = emptyList()
+    private var dataSet: List<ColleagueItem> = emptyList()
 
     class ViewHolder(val binding: EmployeeRecyclerviewItemBinding, clickAtPosition: (Int) -> Unit) :
         RecyclerView.ViewHolder(binding.root) {
@@ -36,7 +36,7 @@ class ColleaguesAdapter(private val onClickListener: OnEmployeeClickListener) :
         return dataSet.size
     }
 
-    fun update(data: List<Employee>) {
+    fun update(data: List<ColleagueItem>) {
         dataSet = data
         notifyDataSetChanged()
     }

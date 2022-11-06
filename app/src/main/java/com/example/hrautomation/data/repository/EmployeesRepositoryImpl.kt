@@ -6,14 +6,13 @@ import com.example.hrautomation.data.model.EmployeeResponse
 import com.example.hrautomation.data.model.EmployeesResponseToEmployeesMapper
 import com.example.hrautomation.domain.model.Employee
 import com.example.hrautomation.domain.repository.EmployeesRepository
-import com.example.hrautomation.presentation.view.colleagues.SelectedColleagueCacheManager
 import okio.IOException
 import retrofit2.HttpException
 import javax.inject.Inject
 
 class EmployeesRepositoryImpl @Inject constructor(
     private val api: EmployeesApi2,
-    private val selectedColleagueCacheManager: SelectedColleagueCacheManager
+    private val employeesResponseToEmployeesMapper: EmployeesResponseToEmployeesMapper
 ) :
     EmployeesRepository {
 
@@ -29,14 +28,6 @@ class EmployeesRepositoryImpl @Inject constructor(
                 Log.e("exception", "Unexpected response")
             }
         }
-        return employeesResponse.map { EmployeesResponseToEmployeesMapper().convert(it) }
-    }
-
-    override fun setSelectedEmployee(employee: Employee) {
-        selectedColleagueCacheManager.setSelectedEmployee(employee)
-    }
-
-    override fun getSelectedEmployee(): Employee {
-        return selectedColleagueCacheManager.getSelectedEmployee()!!
+        return employeesResponse.map { employeesResponseToEmployeesMapper.convert(it) }
     }
 }

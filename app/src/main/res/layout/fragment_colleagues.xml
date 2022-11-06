@@ -7,10 +7,37 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <EditText
-            style="@style/CustomSearchViewStyle"
-            android:autofillHints="Ваш запрос"
-            android:hint="@string/search_view_text" />
+        <androidx.constraintlayout.widget.ConstraintLayout style="@style/CustomSearchViewStyle">
+
+            <EditText
+                android:id="@+id/editSearch"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:autofillHints="Ваш запрос"
+                android:background="@color/transparent"
+                android:drawableEnd="@drawable/ic_baseline_search_24"
+                android:hint="@string/search_view_text"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:minHeight="48dp"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/clear_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/clear_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/clear_text"
+                android:src="@drawable/ic_baseline_clear_24"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/colleagues_recyclerview"
