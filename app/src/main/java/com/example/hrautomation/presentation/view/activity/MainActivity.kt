@@ -35,7 +35,15 @@ class MainActivity : AppCompatActivity() {
             .setupWithNavController(navController)
 
         val appBarConfiguration =
-            AppBarConfiguration(setOf(R.id.meetingRoomFragment, R.id.colleaguesFragment, R.id.productFragment, R.id.eatingFragment, R.id.faqFragment))
+            AppBarConfiguration(
+                setOf(
+                    R.id.meetingRoomFragment,
+                    R.id.colleaguesFragment,
+                    R.id.productFragment,
+                    R.id.eatingFragment,
+                    R.id.faqFragment
+                )
+            )
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         this.onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
