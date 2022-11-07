@@ -10,10 +10,11 @@ import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.base.delegates.ClickableViewHolder
 import com.example.hrautomation.presentation.base.delegates.OnViewHolderClickListener
 import com.example.hrautomation.presentation.model.ColleagueItem
+import com.example.hrautomation.presentation.view.colleagues.ColleaguesItemAdapterDelegate.ColleagueViewHolder
 
 class ColleaguesItemAdapterDelegate(private val onColleagueClickListener: OnColleagueClickListener) :
-    BaseItemAdapterDelegate<ColleagueItem, ColleaguesItemAdapterDelegate.ColleagueViewHolder>(),
-    OnViewHolderClickListener<ColleaguesItemAdapterDelegate.ColleagueViewHolder> {
+    BaseItemAdapterDelegate<ColleagueItem, ColleagueViewHolder>(),
+    OnViewHolderClickListener<ColleagueViewHolder> {
     override fun isForViewType(item: BaseListItem): Boolean {
         return item is ColleagueItem
     }
