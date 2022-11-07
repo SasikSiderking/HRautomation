@@ -14,7 +14,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.FragmentColleaguesBinding
-import com.example.hrautomation.presentation.model.ColleagueItem
+import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.view.employee.EmployeeActivity
 import com.example.hrautomation.utils.ViewModelFactory
 import javax.inject.Inject
@@ -83,7 +83,7 @@ class ColleaguesFragment : Fragment() {
         }
     }
 
-    private val colleaguesObserver = Observer<List<ColleagueItem>> { updatedDataSet ->
+    private val colleaguesObserver = Observer<List<BaseListItem>> { updatedDataSet ->
         adapter.update(updatedDataSet)
     }
 
