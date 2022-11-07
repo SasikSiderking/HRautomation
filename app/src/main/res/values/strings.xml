@@ -1,11 +1,10 @@
 <resources>
     <string name="app_name">HR Автоматизация</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="meeting_room">Переговорная</string>
     <string name="colleagues">Коллеги</string>
     <string name="products">Продукты</string>
-    <string name="eating">Поесть</string>
+    <string name="eating">Где поесть</string>
     <string name="faq">FAQ</string>
     <string name="settings">Настройки</string>
     <string name="feedback">Отзыв разработчикам</string>
@@ -29,4 +28,5 @@
     <string name="product_image">Product image</string>
     <string name="search_view_text">Введите фамилию и имя</string>
     <string name="clear_text">очистить строку</string>
+
 </resources>

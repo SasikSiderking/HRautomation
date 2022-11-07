@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView.OnEditorActionListener
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -52,10 +53,11 @@ class ColleaguesFragment : Fragment() {
 
         binding.editSearch.setOnEditorActionListener(OnEditorActionListener { v, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                viewModel.performSearch(v.text.toString())
+                viewModel.performSearch(v.text.toString().trim())
                 return@OnEditorActionListener true
+            } else {
+                false
             }
-            false
         })
 
         binding.editSearch.addTextChangedListener(textWatcher)
@@ -70,13 +72,10 @@ class ColleaguesFragment : Fragment() {
         }
 
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-            if (s.toString().trim().isEmpty()) {
-                binding.clearText.visibility = View.GONE
-            } else {
-                binding.clearText.visibility = View.VISIBLE
-            }
+            val searchReq = s.toString().trim()
 
-            viewModel.performSearch(s.toString())
+            binding.clearText.isVisible = searchReq.isNotEmpty()
+            viewModel.performSearch(searchReq)
         }
 
         override fun afterTextChanged(p0: Editable?) {
