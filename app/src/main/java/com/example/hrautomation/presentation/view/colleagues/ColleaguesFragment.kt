@@ -1,6 +1,5 @@
 package com.example.hrautomation.presentation.view.colleagues
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -94,9 +93,7 @@ class ColleaguesFragment : Fragment() {
 
     private fun initUi() {
         adapter = ColleaguesAdapter(OnColleagueClickListener { colleague ->
-            val intent = Intent(requireContext(), EmployeeActivity::class.java)
-            intent.putExtra("selectedEmployeeId", colleague.id)
-            startActivity(intent)
+            startActivity(EmployeeActivity.createIntent(requireContext(), colleague.id))
         })
         binding.colleaguesRecyclerview.adapter = adapter
 

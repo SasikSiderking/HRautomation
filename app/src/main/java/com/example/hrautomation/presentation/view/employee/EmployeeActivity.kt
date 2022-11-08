@@ -1,5 +1,7 @@
 package com.example.hrautomation.presentation.view.employee
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -33,7 +35,7 @@ class EmployeeActivity : AppCompatActivity() {
         initUi()
         val extras = intent.extras
         if (extras != null) {
-            val selectedEmployeeId = extras.getLong("selectedEmployeeId")
+            val selectedEmployeeId = extras.getLong(ID_EXTRA)
             viewModel.loadData(selectedEmployeeId)
         }
     }
@@ -59,5 +61,14 @@ class EmployeeActivity : AppCompatActivity() {
     private fun initUi() {
         viewModel.selectedEmployee.observe(this, selectedEmployeeObserver)
         viewModel.exception.observe(this, exceptionObserver)
+    }
+
+    companion object {
+        private const val ID_EXTRA = "selectedEmployeeId"
+        fun createIntent(context: Context, id: Long): Intent {
+            val intent = Intent(context, EmployeeActivity::class.java)
+            intent.putExtra(ID_EXTRA, id)
+            return intent
+        }
     }
 }

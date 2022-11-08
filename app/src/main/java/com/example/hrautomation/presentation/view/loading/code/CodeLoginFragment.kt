@@ -56,7 +56,7 @@ class CodeLoginFragment : Fragment() {
 
     private fun checkCode() {
         setFieldsVisibility(false)
-        arguments?.getString("email")?.let { viewModel.checkCode(it, binding.code.text.toString()) }
+        arguments?.getString(EMAIL_EXTRA)?.let { viewModel.checkCode(it, binding.code.text.toString()) }
     }
 
     private val codeCheckObserver = Observer<Boolean> { isCodeValid ->
