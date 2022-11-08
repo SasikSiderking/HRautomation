@@ -21,9 +21,13 @@ class EmployeeViewModel @Inject constructor(
         get() = _selectedEmployee
     private val _selectedEmployee = MutableLiveData<EmployeeItem>()
 
-    val exception: LiveData<Throwable>
+    val exception: LiveData<Throwable?>
         get() = _exception
-    private val _exception = MutableLiveData<Throwable>()
+    private val _exception = MutableLiveData<Throwable?>()
+
+    fun setToastShownState() {
+        _exception.postValue(null)
+    }
 
     fun loadData(id: Long) {
         viewModelScope.launch(dispatchers.io) {

@@ -54,8 +54,11 @@ class EmployeeActivity : AppCompatActivity() {
         binding.employeeFullAbout.setText(colleague.info)
     }
 
-    private val exceptionObserver = Observer<Throwable> { exception ->
-        Toast.makeText(this, exception.message, Toast.LENGTH_LONG).show()
+    private val exceptionObserver = Observer<Throwable?> { exception ->
+        exception?.let {
+            Toast.makeText(this, exception.message, Toast.LENGTH_LONG).show()
+            viewModel.setToastShownState()
+        }
     }
 
     private fun initUi() {
