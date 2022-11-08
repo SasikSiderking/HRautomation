@@ -5,15 +5,13 @@ import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.utils.Mapper
 
 data class ColleagueItem(
+    override val id: Long,
     val name: String,
-    val email: String,
     val project: String,
     val post: String,
-    val info: String,
-    override val id: String = name
 ) : BaseListItem
 
 class EmployeeToColleagueItemMapper : Mapper<Employee, ColleagueItem> {
     override fun convert(model: Employee): ColleagueItem =
-        ColleagueItem(model.name, model.email, model.project, model.post, model.info)
+        ColleagueItem(model.id, model.name, model.project, model.post)
 }

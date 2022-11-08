@@ -8,7 +8,6 @@ import com.example.hrautomation.data.dispatcher.CoroutineDispatchers
 import com.example.hrautomation.domain.model.Employee
 import com.example.hrautomation.domain.repository.EmployeesRepository
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
-import com.example.hrautomation.presentation.model.ColleagueItem
 import com.example.hrautomation.presentation.model.EmployeeToColleagueItemMapper
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,8 +15,7 @@ import javax.inject.Inject
 class ColleaguesViewModel @Inject constructor(
     private val repo: EmployeesRepository,
     private val dispatchers: CoroutineDispatchers,
-    private val employeesToColleagueItemMapper: EmployeeToColleagueItemMapper,
-    private val selectedColleagueCacheManager: SelectedColleagueCacheManager
+    private val employeesToColleagueItemMapper: EmployeeToColleagueItemMapper
 ) : ViewModel() {
 
     val data: LiveData<List<BaseListItem>>
@@ -25,10 +23,6 @@ class ColleaguesViewModel @Inject constructor(
     private val _data = MutableLiveData<List<BaseListItem>>(emptyList())
 
     private var reservedData: List<Employee> = emptyList()
-
-    fun selectEmployee(employee: ColleagueItem) {
-        selectedColleagueCacheManager.setSelectedEmployee(employee)
-    }
 
     init {
         loadData()

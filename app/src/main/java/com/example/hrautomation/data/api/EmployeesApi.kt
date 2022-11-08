@@ -10,5 +10,5 @@ interface EmployeesApi {
     suspend fun getEmployeesResponse(): Response<List<EmployeeResponse>>
 
     @GET("/users/{id}")
-    suspend fun getEmployeeResponse(@Path("id") id: Int): Response<EmployeeResponse>
+    suspend fun getEmployeeResponse(@Path("id") id: Long): Response<EmployeeResponse>
 }

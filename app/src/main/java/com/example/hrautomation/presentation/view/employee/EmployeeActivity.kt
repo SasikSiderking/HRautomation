@@ -1,12 +1,13 @@
 package com.example.hrautomation.presentation.view.employee
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.ActivityEmployeeBinding
-import com.example.hrautomation.presentation.model.ColleagueItem
+import com.example.hrautomation.presentation.model.EmployeeItem
 import com.example.hrautomation.utils.ViewModelFactory
 import javax.inject.Inject
 
@@ -30,6 +31,11 @@ class EmployeeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initUi()
+        val extras = intent.extras
+        if (extras != null) {
+            val selectedEmployeeId = extras.getLong("selectedEmployeeId")
+            viewModel.loadData(selectedEmployeeId)
+        }
     }
 
     override fun onDestroy() {
@@ -38,7 +44,7 @@ class EmployeeActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
-    private val selectedEmployeeObserver = Observer<ColleagueItem> { colleague ->
+    private val selectedEmployeeObserver = Observer<EmployeeItem> { colleague ->
         binding.employeeFullName.text = colleague.name
         binding.employeeFullEmail.setText(colleague.email)
         binding.employeeFullPost.setText(colleague.post)
@@ -46,7 +52,12 @@ class EmployeeActivity : AppCompatActivity() {
         binding.employeeFullAbout.setText(colleague.info)
     }
 
+    private val exceptionObserver = Observer<Throwable> { exception ->
+        Toast.makeText(this, exception.message, Toast.LENGTH_LONG).show()
+    }
+
     private fun initUi() {
         viewModel.selectedEmployee.observe(this, selectedEmployeeObserver)
+        viewModel.exception.observe(this, exceptionObserver)
     }
 }

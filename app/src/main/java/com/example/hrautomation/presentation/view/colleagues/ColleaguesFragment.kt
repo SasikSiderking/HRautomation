@@ -94,8 +94,8 @@ class ColleaguesFragment : Fragment() {
 
     private fun initUi() {
         adapter = ColleaguesAdapter(OnColleagueClickListener { colleague ->
-            viewModel.selectEmployee(colleague)
             val intent = Intent(requireContext(), EmployeeActivity::class.java)
+            intent.putExtra("selectedEmployeeId", colleague.id)
             startActivity(intent)
         })
         binding.colleaguesRecyclerview.adapter = adapter

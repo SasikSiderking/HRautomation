@@ -30,4 +30,16 @@ class EmployeesRepositoryImpl @Inject constructor(
         }
         return employeesResponse.map { employeesResponseToEmployeesMapper.convert(it) }
     }
+
+    override suspend fun getEmployee(id: Long): Result<Employee> {
+        val employeeResponse = api.getEmployeeResponse(id)
+        if (employeeResponse.isSuccessful) {
+            employeeResponse.body()?.let {
+                return Result.success(employeesResponseToEmployeesMapper.convert(it))
+            }
+            return Result.failure(Exception("Нет сотрудника в базе"))
+        } else {
+            return Result.failure(Exception("Ошибка запроса: " + employeeResponse.code() + ": " + employeeResponse.errorBody()))
+        }
+    }
 }

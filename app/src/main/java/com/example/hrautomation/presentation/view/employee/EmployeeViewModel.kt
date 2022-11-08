@@ -3,21 +3,37 @@ package com.example.hrautomation.presentation.view.employee
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.hrautomation.presentation.model.ColleagueItem
-import com.example.hrautomation.presentation.view.colleagues.SelectedColleagueCacheManager
+import androidx.lifecycle.viewModelScope
+import com.example.hrautomation.data.dispatcher.CoroutineDispatchers
+import com.example.hrautomation.domain.model.Employee
+import com.example.hrautomation.domain.repository.EmployeesRepository
+import com.example.hrautomation.presentation.model.EmployeeItem
+import com.example.hrautomation.presentation.model.EmployeeToEmployeeItemMapper
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class EmployeeViewModel @Inject constructor(private val selectedColleagueCacheManager: SelectedColleagueCacheManager) : ViewModel() {
-    val selectedEmployee: LiveData<ColleagueItem>
+class EmployeeViewModel @Inject constructor(
+    private val repo: EmployeesRepository,
+    private val dispatchers: CoroutineDispatchers,
+    private val employeeToEmployeeItemMapper: EmployeeToEmployeeItemMapper
+) : ViewModel() {
+    val selectedEmployee: LiveData<EmployeeItem>
         get() = _selectedEmployee
-    private val _selectedEmployee = MutableLiveData<ColleagueItem>()
+    private val _selectedEmployee = MutableLiveData<EmployeeItem>()
 
-    init {
-        loadData()
-    }
+    val exception: LiveData<Throwable>
+        get() = _exception
+    private val _exception = MutableLiveData<Throwable>()
 
-    private fun loadData() {
-        val employee = selectedColleagueCacheManager.getSelectedEmployee()
-        _selectedEmployee.postValue(employee!!)
+    fun loadData(id: Long) {
+        viewModelScope.launch(dispatchers.io) {
+            val result = repo.getEmployee(id)
+            result.onSuccess { employee: Employee ->
+                _selectedEmployee.postValue(employeeToEmployeeItemMapper.convert(employee))
+            }
+            result.onFailure { exception: Throwable ->
+                _exception.postValue(exception)
+            }
+        }
     }
 }
