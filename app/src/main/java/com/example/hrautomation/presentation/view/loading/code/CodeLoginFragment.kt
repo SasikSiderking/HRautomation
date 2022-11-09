@@ -27,6 +27,8 @@ class CodeLoginFragment : Fragment() {
         viewModelFactory
     }
 
+    private val email by lazy { requireArguments().getString(EMAIL_EXTRA)!! }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (requireContext().applicationContext as App).appComponent.inject(this)
@@ -56,7 +58,7 @@ class CodeLoginFragment : Fragment() {
 
     private fun checkCode() {
         setFieldsVisibility(false)
-        arguments?.getString("email")?.let { viewModel.checkCode(it, binding.code.text.toString()) }
+        viewModel.checkCode(email, binding.code.text.toString())
     }
 
     private val codeCheckObserver = Observer<Boolean> { isCodeValid ->

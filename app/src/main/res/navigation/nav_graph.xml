@@ -8,27 +8,27 @@
     <fragment
         android:id="@+id/meetingRoomFragment"
         android:name="com.example.hrautomation.presentation.view.meeting_room.MeetingRoomFragment"
-        android:label="fragment_meeting_room"
+        android:label="@string/meeting_room"
         tools:layout="@layout/fragment_meeting_room" />
     <fragment
         android:id="@+id/eatingFragment"
         android:name="com.example.hrautomation.presentation.view.eating.EatingFragment"
-        android:label="EatingFragment"
+        android:label="@string/eating"
         tools:layout="@layout/fragment_eating" />
     <fragment
         android:id="@+id/faqFragment"
         android:name="com.example.hrautomation.presentation.view.faq.FaqFragment"
-        android:label="FaqFragment"
+        android:label="@string/faq"
         tools:layout="@layout/fragment_faq" />
     <fragment
         android:id="@+id/colleaguesFragment"
         android:name="com.example.hrautomation.presentation.view.colleagues.ColleaguesFragment"
-        android:label="ColleaguesFragment"
+        android:label="@string/colleagues"
         tools:layout="@layout/fragment_colleagues">
     </fragment>
     <fragment
         android:id="@+id/productFragment"
         android:name="com.example.hrautomation.presentation.view.product.ProductFragment"
-        android:label="ProductFragment"
+        android:label="@string/products"
         tools:layout="@layout/fragment_product" />
 </navigation>

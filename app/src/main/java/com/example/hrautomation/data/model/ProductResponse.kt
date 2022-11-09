@@ -4,11 +4,12 @@ import com.example.hrautomation.domain.model.Product
 import com.example.hrautomation.utils.Mapper
 
 data class ProductResponse(
+    val id: Long,
     val section: String,
     val img: String,
     val name: String
 )
 
 class ProductResponseToProductMapper : Mapper<ProductResponse, Product> {
-    override fun convert(model: ProductResponse): Product = Product(model.section, model.img, model.name)
+    override fun convert(model: ProductResponse): Product = Product(model.id, model.section, model.img, model.name)
 }

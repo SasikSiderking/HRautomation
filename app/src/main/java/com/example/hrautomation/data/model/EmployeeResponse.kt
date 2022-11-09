@@ -4,7 +4,7 @@ import com.example.hrautomation.domain.model.Employee
 import com.example.hrautomation.utils.Mapper
 
 data class EmployeeResponse(
-    val id: Int,
+    val id: Long,
     val name: String,
     val email: String,
     val project: String,
@@ -15,6 +15,6 @@ data class EmployeeResponse(
 
 class EmployeesResponseToEmployeesMapper : Mapper<EmployeeResponse, Employee> {
     override fun convert(model: EmployeeResponse): Employee {
-        return Employee(model.name, model.email, model.project, model.post, model.info)
+        return Employee(model.id, model.name, model.email, model.project, model.post, model.info)
     }
 }

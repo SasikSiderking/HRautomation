@@ -7,18 +7,22 @@ import androidx.lifecycle.viewModelScope
 import com.example.hrautomation.data.dispatcher.CoroutineDispatchers
 import com.example.hrautomation.domain.model.Employee
 import com.example.hrautomation.domain.repository.EmployeesRepository
+import com.example.hrautomation.presentation.base.delegates.BaseListItem
+import com.example.hrautomation.presentation.model.EmployeeToColleagueItemMapper
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class ColleaguesViewModel @Inject constructor(private val repo: EmployeesRepository, private val dispatchers: CoroutineDispatchers) : ViewModel() {
+class ColleaguesViewModel @Inject constructor(
+    private val repo: EmployeesRepository,
+    private val dispatchers: CoroutineDispatchers,
+    private val employeesToColleagueItemMapper: EmployeeToColleagueItemMapper
+) : ViewModel() {
 
-    val data: LiveData<List<Employee>>
+    val data: LiveData<List<BaseListItem>>
         get() = _data
-    private val _data = MutableLiveData<List<Employee>>(emptyList())
+    private val _data = MutableLiveData<List<BaseListItem>>(emptyList())
 
-    fun selectEmployee(employee: Employee) {
-        repo.setSelectedEmployee(employee)
-    }
+    private var reservedData: List<Employee> = emptyList()
 
     init {
         loadData()
@@ -26,8 +30,22 @@ class ColleaguesViewModel @Inject constructor(private val repo: EmployeesReposit
 
     private fun loadData() {
         viewModelScope.launch(dispatchers.io) {
-            val employeeList = repo.getEmployeeList()
-            _data.postValue(employeeList)
+            reservedData = repo.getEmployeeList()
+            _data.postValue(reservedData.map { employeesToColleagueItemMapper.convert(it) })
+        }
+    }
+
+    fun performSearch(name: String) {
+        viewModelScope.launch(dispatchers.default) {
+            if (name.isNotEmpty()) {
+                _data.postValue(
+                    reservedData.filter { employee ->
+                        employee.name.contains(name, ignoreCase = true)
+                    }.map { employeesToColleagueItemMapper.convert(it) }
+                )
+            } else {
+                _data.postValue(reservedData.map { employeesToColleagueItemMapper.convert(it) })
+            }
         }
     }
 }

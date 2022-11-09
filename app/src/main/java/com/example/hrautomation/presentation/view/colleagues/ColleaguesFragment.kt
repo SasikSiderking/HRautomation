@@ -1,19 +1,24 @@
 package com.example.hrautomation.presentation.view.colleagues
 
-import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView.OnEditorActionListener
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.FragmentColleaguesBinding
-import com.example.hrautomation.domain.model.Employee
+import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.view.employee.EmployeeActivity
 import com.example.hrautomation.utils.ViewModelFactory
 import javax.inject.Inject
+
 
 class ColleaguesFragment : Fragment() {
 
@@ -44,10 +49,39 @@ class ColleaguesFragment : Fragment() {
 
         initUi()
         viewModel.data.observe(viewLifecycleOwner, colleaguesObserver)
+
+        binding.editSearch.setOnEditorActionListener(OnEditorActionListener { v, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                viewModel.performSearch(v.text.toString().trim())
+                true
+            } else {
+                false
+            }
+        })
+
+        binding.editSearch.addTextChangedListener(textWatcher)
+
+        binding.clearText.setOnClickListener(View.OnClickListener { binding.editSearch.text.clear() })
+
         return binding.root
     }
 
-    private val colleaguesObserver = Observer<List<Employee>> { updatedDataSet ->
+    private var textWatcher: TextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        }
+
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            val searchReq = s.toString().trim()
+
+            binding.clearText.isVisible = searchReq.isNotEmpty()
+            viewModel.performSearch(searchReq)
+        }
+
+        override fun afterTextChanged(p0: Editable?) {
+        }
+    }
+
+    private val colleaguesObserver = Observer<List<BaseListItem>> { updatedDataSet ->
         adapter.update(updatedDataSet)
     }
 
@@ -58,10 +92,8 @@ class ColleaguesFragment : Fragment() {
     }
 
     private fun initUi() {
-        adapter = ColleaguesAdapter(OnEmployeeClickListener { employee ->
-            val intent = Intent(requireContext(), EmployeeActivity::class.java)
-            startActivity(intent)
-            viewModel.selectEmployee(employee)
+        adapter = ColleaguesAdapter(OnColleagueClickListener { colleague ->
+            startActivity(EmployeeActivity.createIntent(requireContext(), colleague.id))
         })
         binding.colleaguesRecyclerview.adapter = adapter
 
