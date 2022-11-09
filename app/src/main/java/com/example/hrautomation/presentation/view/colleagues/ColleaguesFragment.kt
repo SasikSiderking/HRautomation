@@ -53,7 +53,7 @@ class ColleaguesFragment : Fragment() {
         binding.editSearch.setOnEditorActionListener(OnEditorActionListener { v, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 viewModel.performSearch(v.text.toString().trim())
-                return@OnEditorActionListener true
+                true
             } else {
                 false
             }

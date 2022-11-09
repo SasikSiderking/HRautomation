@@ -16,8 +16,14 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Component(
-    modules = [RepositoryModule::class, ContextModule::class, ApiModule::class,
-        ViewModelFactoryModule::class, ViewModelModule::class, MapperModule::class, DispatchersModule::class
+    modules = [
+        RepositoryModule::class,
+        ContextModule::class,
+        ApiModule::class,
+        ViewModelFactoryModule::class,
+        ViewModelModule::class,
+        MapperModule::class,
+        DispatchersModule::class
     ]
 )
 @Singleton

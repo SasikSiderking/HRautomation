@@ -18,6 +18,8 @@ class EmployeeActivity : AppCompatActivity() {
     private val binding: ActivityEmployeeBinding
         get() = _binding!!
 
+    private val selectedEmployeeId: Long by lazy { intent.getLongExtra(ID_EXTRA, 0L) }
+
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
@@ -33,11 +35,8 @@ class EmployeeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initUi()
-        val extras = intent.extras
-        if (extras != null) {
-            val selectedEmployeeId = extras.getLong(ID_EXTRA)
+
             viewModel.loadData(selectedEmployeeId)
-        }
     }
 
     override fun onDestroy() {
@@ -56,7 +55,8 @@ class EmployeeActivity : AppCompatActivity() {
 
     private val exceptionObserver = Observer<Throwable?> { exception ->
         exception?.let {
-            Toast.makeText(this, exception.message, Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Ошибка при загрузке данных", Toast.LENGTH_LONG).show()
+
             viewModel.setToastShownState()
         }
     }
@@ -68,6 +68,7 @@ class EmployeeActivity : AppCompatActivity() {
 
     companion object {
         private const val ID_EXTRA = "selectedEmployeeId"
+
         fun createIntent(context: Context, id: Long): Intent {
             val intent = Intent(context, EmployeeActivity::class.java)
             intent.putExtra(ID_EXTRA, id)
