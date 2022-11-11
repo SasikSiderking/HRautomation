@@ -1,5 +1,6 @@
 package com.example.hrautomation.data.api
 
+import com.example.hrautomation.data.model.TokenResponse
 import retrofit2.Response
 
 class UserApi2 : UserApi {
@@ -7,7 +8,7 @@ class UserApi2 : UserApi {
         return Response.success(true)
     }
 
-    override fun confirmEmail(email: String, code: String): Response<String> {
-        return Response.success("123")
+    override suspend fun confirmEmail(email: String, code: String): Response<TokenResponse> {
+        return Response.success(TokenResponse("Bearer", "access", "refresh"))
     }
 }
