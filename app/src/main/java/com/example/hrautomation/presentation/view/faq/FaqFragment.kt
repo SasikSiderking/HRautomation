@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.FragmentFaqBinding
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
+import com.example.hrautomation.presentation.view.faq.activity_question.QuestionActivity
 import com.example.hrautomation.utils.ViewModelFactory
 import javax.inject.Inject
 
@@ -53,7 +54,9 @@ class FaqFragment : Fragment() {
     }
 
     private fun initUi() {
-        adapter = FaqAdapter()
+        adapter = FaqAdapter(OnFaqCategoryClickListener { category ->
+            startActivity(QuestionActivity.createIntent(requireContext(), category.id))
+        })
         binding.faqRecyclerview.adapter = adapter
 
         viewModel.data.observe(viewLifecycleOwner, categoryObserver)

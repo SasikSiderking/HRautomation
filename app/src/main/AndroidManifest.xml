@@ -29,11 +29,14 @@
         </activity>
 
         <activity android:name="com.example.hrautomation.presentation.view.loading.activity_login.LoginActivity" />
+
         <activity
             android:name=".presentation.view.activity.MainActivity"
             android:exported="true" />
 
-        <activity android:name=".presentation.view.employee.EmployeeActivity" />
+        <activity android:name="com.example.hrautomation.presentation.view.colleagues.employee.EmployeeActivity" />
+
+        <activity android:name=".presentation.view.faq.activity_question.QuestionActivity" />
     </application>
 
 </manifest>

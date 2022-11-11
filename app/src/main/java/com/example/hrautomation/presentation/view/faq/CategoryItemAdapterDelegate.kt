@@ -12,7 +12,8 @@ import com.example.hrautomation.presentation.base.delegates.OnViewHolderClickLis
 import com.example.hrautomation.presentation.model.FaqCategoryItem
 import com.example.hrautomation.presentation.view.faq.CategoryItemAdapterDelegate.FaqCategoryItemViewHolder
 
-class CategoryItemAdapterDelegate : BaseItemAdapterDelegate<FaqCategoryItem, FaqCategoryItemViewHolder>(),
+class CategoryItemAdapterDelegate(private val onFaqCategoryClickListener: OnFaqCategoryClickListener) :
+    BaseItemAdapterDelegate<FaqCategoryItem, FaqCategoryItemViewHolder>(),
     OnViewHolderClickListener<FaqCategoryItemViewHolder> {
     override fun isForViewType(item: BaseListItem): Boolean {
         return item is FaqCategoryItem
@@ -28,6 +29,8 @@ class CategoryItemAdapterDelegate : BaseItemAdapterDelegate<FaqCategoryItem, Faq
     }
 
     override fun onViewHolderClick(view: View, holder: FaqCategoryItemViewHolder) {
+        val item = getItemForViewHolder(holder)
+        onFaqCategoryClickListener.onClick(item)
     }
 
     class FaqCategoryItemViewHolder(binding: FaqRecyclerviewItemBinding, clickListener: OnViewHolderClickListener<FaqCategoryItemViewHolder>) :

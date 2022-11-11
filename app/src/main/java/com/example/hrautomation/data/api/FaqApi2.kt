@@ -44,7 +44,7 @@ class FaqApi2 : FaqApi {
 
 
     val listCat: List<FaqCategoryResponse> = listOf(cat1, cat2, cat3, cat4, cat5, cat6, cat7, cat8, cat9, cat10, cat11)
-    val listQ: List<FaqQuestionResponse> = listOf(q1, q2, q3)
+    val listQ: List<FaqQuestionResponse> = listOf(q1, q2, q3, q4)
     override suspend fun getFaqCategoriesResponse(): Response<List<FaqCategoryResponse>> {
         return Response.success(listCat)
     }

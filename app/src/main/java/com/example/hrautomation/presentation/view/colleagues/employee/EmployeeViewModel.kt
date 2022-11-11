@@ -1,4 +1,4 @@
-package com.example.hrautomation.presentation.view.employee
+package com.example.hrautomation.presentation.view.colleagues.employee
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

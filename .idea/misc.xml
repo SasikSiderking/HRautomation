@@ -16,8 +16,10 @@
         <entry key="..\:/projects/HRautomation/app/src/main/res/drawable/tinkoff.xml" value="0.139" />
         <entry key="..\:/projects/HRautomation/app/src/main/res/layout/activity_loading.xml" value="0.18" />
         <entry key="..\:/projects/HRautomation/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/projects/HRautomation/app/src/main/res/layout/activity_question.xml" value="0.16666666666666666" />
         <entry key="..\:/projects/HRautomation/app/src/main/res/layout/dialog_auth.xml" value="0.25" />
         <entry key="..\:/projects/HRautomation/app/src/main/res/layout/employee_recyclerview_item.xml" value="0.25" />
+        <entry key="..\:/projects/HRautomation/app/src/main/res/layout/faq_question_item.xml" value="0.33" />
         <entry key="..\:/projects/HRautomation/app/src/main/res/layout/faq_recyclerview_item.xml" value="0.33" />
         <entry key="..\:/projects/HRautomation/app/src/main/res/layout/fragment_colleagues.xml" value="0.22" />
         <entry key="..\:/projects/HRautomation/app/src/main/res/layout/fragment_eating.xml" value="0.14765625" />

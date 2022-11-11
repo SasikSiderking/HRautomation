@@ -14,7 +14,6 @@ class FaqQuestionResponseToFaqQuestionMapper : Mapper<FaqQuestionResponse, FaqQu
     override fun convert(model: FaqQuestionResponse): FaqQuestion = FaqQuestion(
         model.id,
         model.title,
-        model.description,
-        model.categoryId
+        model.description
     )
 }

@@ -20,7 +20,7 @@ class FaqRepositoryImpl @Inject constructor(
             faqCategoryRes.body()?.let { faqCategoryList ->
                 return Result.success(faqCategoryList.map { faqCategoryResponseToFaqCategoryMapper.convert(it) })
             }
-            return Result.failure(Exception("Категорий нет в базе"))
+            return Result.failure(Exception("Ошибка запроса: пустое тело ответа" + faqCategoryRes.code() + ": " + faqCategoryRes.errorBody()))
         } else {
             return Result.failure(Exception("Ошибка запроса: " + faqCategoryRes.code() + ": " + faqCategoryRes.errorBody()))
         }
@@ -71,7 +71,7 @@ class FaqRepositoryImpl @Inject constructor(
             faqQuestionRes.body()?.let { faqQuestionList ->
                 return Result.success(faqQuestionList.map { faqQuestionResponseToFaqQuestionMapper.convert(it) })
             }
-            return Result.failure(Exception("Вопросов нет в базе"))
+            return Result.failure(Exception("Ошибка запроса: пустое тело ответа" + faqQuestionRes.code() + ": " + faqQuestionRes.errorBody()))
         } else {
             return Result.failure(Exception("Ошибка запроса: " + faqQuestionRes.code() + ": " + faqQuestionRes.errorBody()))
         }

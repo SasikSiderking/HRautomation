@@ -15,7 +15,7 @@ import androidx.lifecycle.Observer
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.FragmentColleaguesBinding
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
-import com.example.hrautomation.presentation.view.employee.EmployeeActivity
+import com.example.hrautomation.presentation.view.colleagues.employee.EmployeeActivity
 import com.example.hrautomation.utils.ViewModelFactory
 import javax.inject.Inject
 

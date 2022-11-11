@@ -1,4 +1,4 @@
-package com.example.hrautomation.presentation.view.employee
+package com.example.hrautomation.presentation.view.colleagues.employee
 
 import android.content.Context
 import android.content.Intent
