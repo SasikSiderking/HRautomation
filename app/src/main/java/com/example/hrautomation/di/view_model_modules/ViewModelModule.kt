@@ -3,6 +3,7 @@ package com.example.hrautomation.di.view_model_modules
 import androidx.lifecycle.ViewModel
 import com.example.hrautomation.presentation.view.colleagues.ColleaguesViewModel
 import com.example.hrautomation.presentation.view.employee.EmployeeViewModel
+import com.example.hrautomation.presentation.view.faq.FaqViewModel
 import com.example.hrautomation.presentation.view.loading.LoadingActivityViewModel
 import com.example.hrautomation.presentation.view.loading.activity_login.LoginActivityViewModel
 import com.example.hrautomation.presentation.view.loading.code.CodeLoginViewModel
@@ -54,4 +55,9 @@ interface ViewModelModule {
     @IntoMap
     @ViewModelKey(LoadingActivityViewModel::class)
     fun bindLoadingActivityViewModel(loadingActivityViewModel: LoadingActivityViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FaqViewModel::class)
+    fun bindFaqViewModel(faqViewModel: FaqViewModel): ViewModel
 }

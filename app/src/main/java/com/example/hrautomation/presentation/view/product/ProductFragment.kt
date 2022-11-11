@@ -55,7 +55,7 @@ class ProductFragment : Fragment() {
 
     private fun initUi() {
         adapter = ProductAdapter()
-        binding.employeesRecyclerview.adapter = adapter
+        binding.productRecyclerview.adapter = adapter
     }
 
     private val productObserver = Observer<List<BaseListItem>> { newItems ->

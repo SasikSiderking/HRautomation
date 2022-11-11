@@ -1,9 +1,11 @@
 package com.example.hrautomation.di
 
 import com.example.hrautomation.data.model.EmployeesResponseToEmployeesMapper
+import com.example.hrautomation.data.model.FaqCategoryResponseToFaqCategoryMapper
 import com.example.hrautomation.data.model.ProductResponseToProductMapper
 import com.example.hrautomation.presentation.model.EmployeeToColleagueItemMapper
 import com.example.hrautomation.presentation.model.EmployeeToEmployeeItemMapper
+import com.example.hrautomation.presentation.model.FaqCategoryToFaqCategoryItemMapper
 import com.example.hrautomation.presentation.model.ProductToListedProductItemMapper
 import dagger.Module
 import dagger.Provides
@@ -30,4 +32,12 @@ class MapperModule {
     @Reusable
     @Provides
     fun provideEmployeeToEmployeeItemMapper(): EmployeeToEmployeeItemMapper = EmployeeToEmployeeItemMapper()
+
+    @Reusable
+    @Provides
+    fun provideFaqCategoryResponseToFaqCategoryMapper(): FaqCategoryResponseToFaqCategoryMapper = FaqCategoryResponseToFaqCategoryMapper()
+
+    @Reusable
+    @Provides
+    fun provideFaqCategoryToFaqCategoryItemMapper(): FaqCategoryToFaqCategoryItemMapper = FaqCategoryToFaqCategoryItemMapper()
 }

@@ -55,7 +55,7 @@ class EmployeeActivity : AppCompatActivity() {
 
     private val exceptionObserver = Observer<Throwable?> { exception ->
         exception?.let {
-            Toast.makeText(this, "Ошибка при загрузке данных", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Что-то пошло не так", Toast.LENGTH_LONG).show()
 
             viewModel.setToastShownState()
         }
