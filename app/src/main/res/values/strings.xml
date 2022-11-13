@@ -29,5 +29,9 @@
     <string name="search_view_text">Введите фамилию и имя</string>
     <string name="clear_text">очистить строку</string>
     <string name="arrow_right_description">Нажмите чтобы перейти</string>
+    <string name="action_profile">Профиль</string>
+    <string name="action_moderator">Связь с модератором</string>
+    <string name="action_settings">Настройки приложения</string>
+    <string name="action_exit">Выйти</string>
 
 </resources>
