@@ -51,6 +51,7 @@ class EmployeeActivity : AppCompatActivity() {
         binding.employeeFullPost.setText(colleague.post)
         binding.employeeFullProject.setText(colleague.project)
         binding.employeeFullAbout.setText(colleague.info)
+        supportActionBar?.title = colleague.name
     }
 
     private val exceptionObserver = Observer<Throwable?> { exception ->

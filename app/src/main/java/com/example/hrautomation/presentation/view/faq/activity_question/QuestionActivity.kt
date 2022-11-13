@@ -39,6 +39,7 @@ class QuestionActivity : AppCompatActivity() {
         initUi()
 
         viewModel.loadData(selectedCategoryId)
+        supportActionBar?.title = intent.getStringExtra(NAME_EXTRA)
     }
 
     override fun onDestroy() {
@@ -69,10 +70,12 @@ class QuestionActivity : AppCompatActivity() {
 
     companion object {
         private const val ID_EXTRA = "selectedCategoryId"
+        private const val NAME_EXTRA = "selectedCategoryName"
 
-        fun createIntent(context: Context, id: Long): Intent {
+        fun createIntent(context: Context, id: Long, name: String): Intent {
             val intent = Intent(context, QuestionActivity::class.java)
             intent.putExtra(ID_EXTRA, id)
+            intent.putExtra(NAME_EXTRA, name)
             return intent
         }
     }
