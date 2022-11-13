@@ -1,4 +1,4 @@
-package com.example.hrautomation.presentation.view.employee
+package com.example.hrautomation.presentation.view.colleagues.employee
 
 import android.content.Context
 import android.content.Intent
@@ -55,7 +55,7 @@ class EmployeeActivity : AppCompatActivity() {
 
     private val exceptionObserver = Observer<Throwable?> { exception ->
         exception?.let {
-            Toast.makeText(this, "Ошибка при загрузке данных", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Что-то пошло не так", Toast.LENGTH_LONG).show()
 
             viewModel.setToastShownState()
         }
