@@ -30,7 +30,7 @@ class CategoryItemAdapterDelegate(private val onFaqCategoryClickListener: OnFaqC
 
     override fun onViewHolderClick(view: View, holder: FaqCategoryItemViewHolder) {
         val item = getItemForViewHolder(holder)
-        onFaqCategoryClickListener.onClick(item)
+        onFaqCategoryClickListener.onClick(item.id)
     }
 
     class FaqCategoryItemViewHolder(binding: FaqRecyclerviewItemBinding, clickListener: OnViewHolderClickListener<FaqCategoryItemViewHolder>) :

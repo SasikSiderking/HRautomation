@@ -36,8 +36,7 @@ class QuestionViewModel @Inject constructor(
             val result = faqRepo.getFaqQuestionList(id)
             result.onSuccess { listFaqQuestion: List<FaqQuestion> ->
                 _data.postValue(listFaqQuestion.map { faqQuestionToFaqQuestionItemMapper.convert(it) })
-            }
-            result.onFailure { exception: Throwable ->
+            }.onFailure { exception: Throwable ->
                 Timber.e(exception)
                 _exception.postValue(exception)
             }

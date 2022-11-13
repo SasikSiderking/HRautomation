@@ -54,8 +54,8 @@ class FaqFragment : Fragment() {
     }
 
     private fun initUi() {
-        adapter = FaqAdapter(OnFaqCategoryClickListener { category ->
-            startActivity(QuestionActivity.createIntent(requireContext(), category.id))
+        adapter = FaqAdapter(OnFaqCategoryClickListener { id ->
+            startActivity(QuestionActivity.createIntent(requireContext(), id))
         })
         binding.faqRecyclerview.adapter = adapter
 
