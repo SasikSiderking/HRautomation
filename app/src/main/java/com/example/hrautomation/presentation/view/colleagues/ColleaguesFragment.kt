@@ -45,7 +45,6 @@ class ColleaguesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentColleaguesBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = this
 
         initUi()
         viewModel.data.observe(viewLifecycleOwner, colleaguesObserver)
@@ -86,7 +85,6 @@ class ColleaguesFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        _binding?.unbind()
         _binding = null
         super.onDestroyView()
     }

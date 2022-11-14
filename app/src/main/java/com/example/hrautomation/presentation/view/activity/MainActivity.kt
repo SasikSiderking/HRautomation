@@ -27,7 +27,6 @@ class MainActivity : AppCompatActivity() {
         (application as App).appComponent.inject(this)
 
         val binding = ActivityMainBinding.inflate(layoutInflater)
-        binding.lifecycleOwner = this
         setContentView(binding.root)
 
         val navHostFragment =
