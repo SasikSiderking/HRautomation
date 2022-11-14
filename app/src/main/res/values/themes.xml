@@ -19,7 +19,7 @@
 
     <!--Recycler View Item Style-->
     <style name="SelectableViewItemStyle">
-        <item name="android:foreground">?selectableItemBackground</item>
+        <item name="android:foreground">@drawable/recycler_view_item_ripple_shape</item>
         <item name="android:background">@drawable/recycler_view_item_shape</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
