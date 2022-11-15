@@ -5,22 +5,14 @@
     style="@style/SelectableViewItemStyle"
     android:padding="10dp">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="40dp"
+    <com.google.android.material.imageview.ShapeableImageView
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/productImage"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            app:shapeAppearance="@mipmap/ic_launcher_round" />
-
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/productImage"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:shapeAppearanceOverlay="@style/roundedImageViewRounded" />
 
     <TextView
         android:id="@+id/productName"
@@ -32,7 +24,7 @@
         android:textSize="26sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/cardView"
+        app:layout_constraintStart_toEndOf="@id/productImage"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

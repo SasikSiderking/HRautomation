@@ -56,7 +56,7 @@ class EmployeeActivity : AppCompatActivity() {
     }
 
     private val selectedEmployeeObserver = Observer<EmployeeItem> { colleague ->
-        binding.employeeFullName.text = colleague.name
+        binding.employeeFullName.setText(colleague.name)
         binding.employeeFullEmail.setText(colleague.email)
         binding.employeeFullPost.setText(colleague.post)
         binding.employeeFullProject.setText(colleague.project)
