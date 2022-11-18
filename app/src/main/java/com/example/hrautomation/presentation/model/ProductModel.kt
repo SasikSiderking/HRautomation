@@ -6,12 +6,12 @@ import com.example.hrautomation.utils.Mapper
 
 data class ListedProductItem(
     override val id: Long,
-    val section: String,
+    val categoryId: Long,
     val img: String,
     val name: String
 ) : BaseListItem
 
 class ProductToListedProductItemMapper : Mapper<Product, ListedProductItem> {
     override fun convert(model: Product): ListedProductItem =
-        ListedProductItem(model.id, model.section, model.img, model.name)
+        ListedProductItem(model.id, model.categoryId, model.img, model.name)
 }

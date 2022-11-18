@@ -10,6 +10,6 @@ interface FaqApi {
     @GET("/faq/categories")
     suspend fun getFaqCategoriesResponse(): Response<List<FaqCategoryResponse>>
 
-    @GET("/faq/{id}")
+    @GET("/faq//categories/{id}")
     suspend fun getFaqQuestionsResponse(@Path("id") id: Long): Response<List<FaqQuestionResponse>>
 }
