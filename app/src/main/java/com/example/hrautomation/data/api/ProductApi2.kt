@@ -14,7 +14,7 @@ class ProductApi2 : ProductApi {
             "https://www.uavgusta.net/upload/resize_cache/iblock/d5c/740_740_2/15_faktov_o_roli_vody_v_zhizni_cheloveka.jpg",
             "Минералочка"
         )
-    private val productResponseList = listOf(bread, pie, pie, pie, pie, pie, pie, pie, pie, water)
+    private val productResponseList = listOf(bread, pie, pie, water)
 
     override suspend fun orderProduct(id: Long): Response<Boolean> {
         return Response.success(true)

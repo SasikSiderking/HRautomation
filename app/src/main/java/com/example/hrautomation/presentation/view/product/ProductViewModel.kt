@@ -24,11 +24,11 @@ class ProductViewModel @Inject constructor(
 
     val exception: LiveData<Throwable?>
         get() = _exception
-    private val _exception = MutableLiveData<Throwable?>()
+    private var _exception = MutableLiveData<Throwable?>()
 
     val message: LiveData<String?>
         get() = _message
-    private val _message = MutableLiveData<String?>()
+    private var _message = MutableLiveData<String?>()
 
     val data: LiveData<List<BaseListItem>>
         get() = _data
@@ -43,8 +43,8 @@ class ProductViewModel @Inject constructor(
     }
 
     fun clearToastState() {
-        _exception.postValue(null)
-        _message.postValue(null)
+        _exception = MutableLiveData<Throwable?>()
+        _message = MutableLiveData<String?>()
     }
 
     fun loadProductsByCategory(categoryId: Long?) {
