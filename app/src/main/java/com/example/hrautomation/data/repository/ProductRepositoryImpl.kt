@@ -36,4 +36,10 @@ class ProductRepositoryImpl @Inject constructor(
             productCategoryList.map { productCategoryResponseToProductCategoryMapper.convert(it) }
         }
     }
+
+    override suspend fun getProductsByCategory(categoryId: Long): Result<List<Product>> {
+        return productApi.getProductsByCategory(categoryId).asResult { productList: List<ProductResponse> ->
+            productList.map { productResponseToProductMapper.convert(it) }
+        }
+    }
 }

@@ -5,8 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.hrautomation.data.dispatcher.CoroutineDispatchers
+import com.example.hrautomation.domain.model.Product
 import com.example.hrautomation.domain.repository.ProductRepository
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
+import com.example.hrautomation.presentation.model.ProductCategoryItem
 import com.example.hrautomation.presentation.model.ProductCategoryToProductCategoryItemMapper
 import com.example.hrautomation.presentation.model.ProductToListedProductItemMapper
 import kotlinx.coroutines.launch
@@ -28,9 +30,9 @@ class ProductViewModel @Inject constructor(
         get() = _data
     private val _data = MutableLiveData<List<BaseListItem>>(emptyList())
 
-    val categories: LiveData<List<BaseListItem>>
+    val categories: LiveData<List<ProductCategoryItem>>
         get() = _categories
-    private val _categories = MutableLiveData<List<BaseListItem>>(emptyList())
+    private val _categories = MutableLiveData<List<ProductCategoryItem>>(emptyList())
 
     init {
         loadData()
@@ -40,15 +42,25 @@ class ProductViewModel @Inject constructor(
         _exception.postValue(null)
     }
 
+    fun loadProductsByCategory(categoryId: Long?) {
+        viewModelScope.launch(dispatchers.io) {
+            if (categoryId != null) {
+                loadProducts(productRepo.getProductsByCategory(categoryId))
+            } else {
+                loadProducts(productRepo.getProductList(1, 999, "id"))
+            }
+        }
+    }
+
+    fun loadAllProducts() {
+        viewModelScope.launch(dispatchers.io) {
+            loadProducts(productRepo.getProductList(1, 999, "id"))
+        }
+    }
+
     private fun loadData() {
         viewModelScope.launch(dispatchers.io) {
-            productRepo.getProductList(1, 100, "id")
-                .onSuccess { productList ->
-                    _data.postValue(productList.map { productToListedProductItemMapper.convert(it) })
-                }.onFailure { exception: Throwable ->
-                    Timber.e(exception)
-                    _exception.postValue(exception)
-                }
+            loadProducts(productRepo.getProductList(1, 999, "id"))
 
             productRepo.getProductCategoryList()
                 .onSuccess { categoryList ->
@@ -59,5 +71,15 @@ class ProductViewModel @Inject constructor(
                     _exception.postValue(exception)
                 }
         }
+    }
+
+    private fun loadProducts(result: Result<List<Product>>) {
+        result
+            .onSuccess { productList ->
+                _data.postValue(productList.map { productToListedProductItemMapper.convert(it) })
+            }.onFailure { exception: Throwable ->
+                Timber.e(exception)
+                _exception.postValue(exception)
+            }
     }
 }

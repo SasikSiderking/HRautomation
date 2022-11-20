@@ -11,4 +11,6 @@ interface ProductRepository {
     suspend fun orderProduct(id: Long): Result<Boolean>
 
     suspend fun getProductCategoryList(): Result<List<ProductCategory>>
+
+    suspend fun getProductsByCategory(categoryId: Long): Result<List<Product>>
 }

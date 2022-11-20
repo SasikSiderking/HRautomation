@@ -18,6 +18,9 @@ interface ProductApi {
         @Query("sortBy") sortBy: String
     ): Response<List<ProductResponse>>
 
+    @GET("/products/categories/{id}")
+    suspend fun getProductsByCategory(@Path("id") id: Long): Response<List<ProductResponse>>
+
     @GET("/products/categories")
     suspend fun getProductCategoriesResponse(): Response<List<ProductCategoryResponse>>
 }
