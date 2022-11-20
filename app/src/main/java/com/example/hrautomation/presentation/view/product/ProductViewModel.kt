@@ -26,6 +26,10 @@ class ProductViewModel @Inject constructor(
         get() = _exception
     private val _exception = MutableLiveData<Throwable?>()
 
+    val message: LiveData<String?>
+        get() = _message
+    private val _message = MutableLiveData<String?>()
+
     val data: LiveData<List<BaseListItem>>
         get() = _data
     private val _data = MutableLiveData<List<BaseListItem>>(emptyList())
@@ -38,23 +42,31 @@ class ProductViewModel @Inject constructor(
         loadData()
     }
 
-    fun setToastShownState() {
+    fun clearToastState() {
         _exception.postValue(null)
+        _message.postValue(null)
     }
 
     fun loadProductsByCategory(categoryId: Long?) {
         viewModelScope.launch(dispatchers.io) {
-            if (categoryId != null) {
-                loadProducts(productRepo.getProductsByCategory(categoryId))
-            } else {
+            categoryId?.let {
+                loadProducts(productRepo.getProductsByCategory(it))
+            } ?: run {
                 loadProducts(productRepo.getProductList(1, 999, "id"))
             }
         }
     }
 
-    fun loadAllProducts() {
+    fun orderProduct(id: Long) {
         viewModelScope.launch(dispatchers.io) {
-            loadProducts(productRepo.getProductList(1, 999, "id"))
+            productRepo.orderProduct(id)
+                .onSuccess {
+                    _message.postValue("Продукт заказан")
+                }
+                .onFailure { exception: Throwable ->
+                    Timber.e(exception)
+                    _exception.postValue(exception)
+                }
         }
     }
 

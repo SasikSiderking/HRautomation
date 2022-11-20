@@ -42,6 +42,7 @@ class EmployeeActivity : AppCompatActivity() {
     override fun onDestroy() {
         _binding?.unbind()
         _binding = null
+        viewModel.clearToastState()
         super.onDestroy()
     }
 
@@ -56,8 +57,6 @@ class EmployeeActivity : AppCompatActivity() {
     private val exceptionObserver = Observer<Throwable?> { exception ->
         exception?.let {
             Toast.makeText(this, "Что-то пошло не так", Toast.LENGTH_LONG).show()
-
-            viewModel.setToastShownState()
         }
     }
 

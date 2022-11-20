@@ -14,10 +14,9 @@ import com.example.hrautomation.presentation.base.delegates.ClickableViewHolder
 import com.example.hrautomation.presentation.base.delegates.OnViewHolderClickListener
 import com.example.hrautomation.presentation.model.ProductItem
 import com.example.hrautomation.presentation.view.product.ProductItemAdapterDelegate.ProductViewHolder
-import timber.log.Timber
 
-class ProductItemAdapterDelegate
-    : BaseItemAdapterDelegate<ProductItem, ProductViewHolder>(), OnViewHolderClickListener<ProductViewHolder> {
+class ProductItemAdapterDelegate(private val onProductClickListener: OnProductClickListener) : BaseItemAdapterDelegate<ProductItem, ProductViewHolder>(),
+    OnViewHolderClickListener<ProductViewHolder> {
 
     override fun isForViewType(item: BaseListItem): Boolean {
         return item is ProductItem
@@ -43,7 +42,7 @@ class ProductItemAdapterDelegate
 
     override fun onViewHolderClick(view: View, holder: ProductViewHolder) {
         val item = getItemForViewHolder(holder)
-        Timber.tag("ProductItemAdapterDelegate").d("Clicked on view holder %s", item.id)
+        onProductClickListener.onClick(item.id)
     }
 
     class ProductViewHolder(

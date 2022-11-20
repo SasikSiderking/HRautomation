@@ -27,7 +27,7 @@ class FaqViewModel @Inject constructor(
         get() = _exception
     private val _exception = MutableLiveData<Throwable?>()
 
-    fun setToastShownState() {
+    fun clearToastState() {
         _exception.postValue(null)
     }
 

@@ -50,6 +50,7 @@ class FaqFragment : Fragment() {
     override fun onDestroyView() {
         _binding?.unbind()
         _binding = null
+        viewModel.clearToastState()
         super.onDestroyView()
     }
 
@@ -69,8 +70,6 @@ class FaqFragment : Fragment() {
     private val exceptionObserver = Observer<Throwable?> { exception ->
         exception?.let {
             Toast.makeText(requireContext(), "Что-то пошло не так", Toast.LENGTH_LONG).show()
-
-            viewModel.setToastShownState()
         }
     }
 }

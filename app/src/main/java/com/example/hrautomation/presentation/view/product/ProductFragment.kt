@@ -1,5 +1,7 @@
 package com.example.hrautomation.presentation.view.product
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,7 +28,6 @@ class ProductFragment : Fragment() {
         get() = _binding!!
 
     private lateinit var adapter: ProductAdapter
-    private lateinit var categoryAdapter: ProductCategoryAdapter
 
 
     @Inject
@@ -58,19 +59,21 @@ class ProductFragment : Fragment() {
     override fun onDestroyView() {
         _binding?.unbind()
         _binding = null
+        viewModel.clearToastState()
         super.onDestroyView()
     }
 
     private fun initUi() {
-        adapter = ProductAdapter()
+        adapter = ProductAdapter(OnProductClickListener { id: Long ->
+            showOrderDialog(id)
+        })
         binding.productRecyclerview.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         binding.productRecyclerview.adapter = adapter
-
-        categoryAdapter = ProductCategoryAdapter()
 
         viewModel.data.observe(viewLifecycleOwner, productObserver)
         viewModel.categories.observe(viewLifecycleOwner, categoriesObserver)
         viewModel.exception.observe(viewLifecycleOwner, exceptionObserver)
+        viewModel.message.observe(viewLifecycleOwner, messageObserver)
     }
 
     private val productObserver = Observer<List<BaseListItem>> { newItems ->
@@ -94,8 +97,7 @@ class ProductFragment : Fragment() {
 
     private fun chooseCategory(group: ChipGroup, checkedIds: List<Int>) {
         var categoryId: Long? = null
-        val checkedId = checkedIds.firstOrNull()
-        if (checkedId != null) {
+        checkedIds.firstOrNull()?.let { checkedId ->
             val chip: Chip = group.findViewById(checkedId)
             categoryId = chip.id.toLong()
         }
@@ -105,8 +107,32 @@ class ProductFragment : Fragment() {
     private val exceptionObserver = Observer<Throwable?> { exception ->
         exception?.let {
             Toast.makeText(requireContext(), "Что-то пошло не так", Toast.LENGTH_LONG).show()
-
-            viewModel.setToastShownState()
         }
+    }
+
+    private val messageObserver = Observer<String?> { message ->
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showOrderDialog(id: Long) {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+        builder.apply {
+            setPositiveButton(
+                "Да",
+                DialogInterface.OnClickListener { _, _ ->
+                    viewModel.orderProduct(id)
+                }
+            )
+            setNegativeButton("Нет",
+                DialogInterface.OnClickListener { dialog, _ ->
+                    dialog.cancel()
+                }
+            )
+        }
+        builder
+            .setMessage("Заказать?")
+            .setTitle("Вы уверены?")
+        builder.create()
+        builder.show()
     }
 }
