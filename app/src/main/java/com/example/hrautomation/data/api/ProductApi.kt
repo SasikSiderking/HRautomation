@@ -1,5 +1,6 @@
 package com.example.hrautomation.data.api
 
+import com.example.hrautomation.data.model.ProductCategoryResponse
 import com.example.hrautomation.data.model.ProductResponse
 import retrofit2.Response
 import retrofit2.http.GET
@@ -16,4 +17,7 @@ interface ProductApi {
         @Query("size") size: Int,
         @Query("sortBy") sortBy: String
     ): Response<List<ProductResponse>>
+
+    @GET("/products/categories")
+    suspend fun getProductCategoriesResponse(): Response<List<ProductCategoryResponse>>
 }
