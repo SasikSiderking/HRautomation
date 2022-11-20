@@ -42,7 +42,7 @@ class ProductItemAdapterDelegate(private val onProductClickListener: OnProductCl
 
     override fun onViewHolderClick(view: View, holder: ProductViewHolder) {
         val item = getItemForViewHolder(holder)
-        onProductClickListener.onClick(item.id)
+        onProductClickListener.onClick(item.id, item.name)
     }
 
     class ProductViewHolder(

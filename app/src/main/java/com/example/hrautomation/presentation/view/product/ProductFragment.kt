@@ -64,8 +64,8 @@ class ProductFragment : Fragment() {
     }
 
     private fun initUi() {
-        adapter = ProductAdapter(OnProductClickListener { id: Long ->
-            showOrderDialog(id)
+        adapter = ProductAdapter(OnProductClickListener { id: Long, name: String ->
+            showOrderDialog(id, name)
         })
         binding.productRecyclerview.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         binding.productRecyclerview.adapter = adapter
@@ -114,7 +114,7 @@ class ProductFragment : Fragment() {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
-    private fun showOrderDialog(id: Long) {
+    private fun showOrderDialog(id: Long, name: String) {
         val builder: AlertDialog.Builder = AlertDialog.Builder(context)
         builder.apply {
             setPositiveButton(
@@ -130,8 +130,8 @@ class ProductFragment : Fragment() {
             )
         }
         builder
-            .setMessage("Заказать?")
-            .setTitle("Вы уверены?")
+            .setMessage("Заказать $name?")
+            .setTitle("Заказ продукта")
         builder.create()
         builder.show()
     }
