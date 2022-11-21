@@ -40,7 +40,6 @@ class FaqFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFaqBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = this
 
         initUi()
 
@@ -48,14 +47,13 @@ class FaqFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        _binding?.unbind()
         _binding = null
         super.onDestroyView()
     }
 
     private fun initUi() {
-        adapter = FaqAdapter(OnFaqCategoryClickListener { id ->
-            startActivity(QuestionActivity.createIntent(requireContext(), id))
+        adapter = FaqAdapter(OnFaqCategoryClickListener { id: Long, name: String ->
+            startActivity(QuestionActivity.createIntent(requireContext(), id, name))
         })
         binding.faqRecyclerview.adapter = adapter
 

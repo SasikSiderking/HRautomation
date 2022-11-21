@@ -23,7 +23,6 @@ class LoginActivity : AppCompatActivity() {
         (applicationContext as App).appComponent.inject(this)
 
         val binding = ActivityLoadingBinding.inflate(layoutInflater)
-        binding.lifecycleOwner = this
         setContentView(binding.root)
     }
 }

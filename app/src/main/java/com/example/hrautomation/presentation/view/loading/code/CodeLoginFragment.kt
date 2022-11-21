@@ -41,7 +41,6 @@ class CodeLoginFragment : Fragment() {
     ): View {
 
         _binding = FragmentLoadingCodeBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = this
 
         initUi()
 
@@ -51,7 +50,6 @@ class CodeLoginFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        _binding?.unbind()
         _binding = null
         super.onDestroyView()
     }

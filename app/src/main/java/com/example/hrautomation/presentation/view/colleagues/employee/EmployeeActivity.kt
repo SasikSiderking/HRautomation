@@ -3,6 +3,7 @@ package com.example.hrautomation.presentation.view.colleagues.employee
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -31,26 +32,36 @@ class EmployeeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         (applicationContext as App).appComponent.inject(this)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         _binding = ActivityEmployeeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         initUi()
 
-            viewModel.loadData(selectedEmployeeId)
+        viewModel.loadData(selectedEmployeeId)
     }
 
     override fun onDestroy() {
-        _binding?.unbind()
         _binding = null
         super.onDestroy()
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> finish()
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
     private val selectedEmployeeObserver = Observer<EmployeeItem> { colleague ->
-        binding.employeeFullName.text = colleague.name
+        binding.employeeFullName.setText(colleague.name)
         binding.employeeFullEmail.setText(colleague.email)
         binding.employeeFullPost.setText(colleague.post)
         binding.employeeFullProject.setText(colleague.project)
         binding.employeeFullAbout.setText(colleague.info)
+        supportActionBar?.title = colleague.name
     }
 
     private val exceptionObserver = Observer<Throwable?> { exception ->
