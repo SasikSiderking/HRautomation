@@ -6,21 +6,20 @@
     android:padding="10dp">
 
     <com.google.android.material.imageview.ShapeableImageView
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/productImage"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/roundedImageViewRounded" />
 
     <TextView
         android:id="@+id/employeeName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_marginHorizontal="10dp"
         android:layout_marginTop="5dp"
-        android:layout_marginEnd="10dp"
         android:textColor="@color/main_text"
         android:textSize="26sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,8 +30,7 @@
         android:id="@+id/employeePost"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginHorizontal="10dp"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/productImage"
@@ -42,8 +40,7 @@
         android:id="@+id/employeeProject"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginHorizontal="10dp"
         android:layout_marginBottom="5dp"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"

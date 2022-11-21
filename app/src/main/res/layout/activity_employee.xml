@@ -2,6 +2,7 @@
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -34,8 +35,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:enabled="false"
-                android:text="Alexandrinio Sidorkinio"
-                android:textColor="@color/onSurface" />
+                android:textColor="@color/onSurface"
+                tools:text="Alexandrinio Sidorkinio" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -48,12 +49,12 @@
             android:hint="@string/employee_email">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:enabled="false"
                 android:id="@+id/employeeFullEmail"
-                android:text="Alexandrinio Sidorkinio"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/onSurface" />
+                android:enabled="false"
+                android:textColor="@color/onSurface"
+                tools:text="Alexandrinio Sidorkinio" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -66,12 +67,12 @@
             android:hint="@string/employee_project">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:enabled="false"
                 android:id="@+id/employeeFullProject"
                 android:layout_width="match_parent"
-                android:text="Alexandrinio Sidorkinio"
                 android:layout_height="wrap_content"
-                android:textColor="@color/onSurface" />
+                android:enabled="false"
+                android:textColor="@color/onSurface"
+                tools:text="Alexandrinio Sidorkinio" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -84,11 +85,11 @@
             android:hint="@string/employee_post">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:enabled="false"
-                android:layout_width="match_parent"
                 android:id="@+id/employeeFullPost"
-                android:text="Alexandrinio Sidorkinio"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:enabled="false"
+                tools:text="Alexandrinio Sidorkinio"
                 android:textColor="@color/onSurface" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -101,11 +102,11 @@
             android:hint="@string/about_employee">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:enabled="false"
-                android:layout_width="match_parent"
                 android:id="@+id/employeeFullAbout"
-                android:text="Alexandrinio Sidorkinio"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:enabled="false"
+                tools:text="Alexandrinio Sidorkinio"
                 android:textColor="@color/onSurface" />
 
         </com.google.android.material.textfield.TextInputLayout>
