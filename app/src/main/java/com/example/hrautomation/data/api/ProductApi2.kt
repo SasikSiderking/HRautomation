@@ -34,9 +34,7 @@ class ProductApi2 : ProductApi {
         val cat3 = ProductCategoryResponse(2, "Молочка")
         val cat4 = ProductCategoryResponse(3, "Фрукты")
         val cat5 = ProductCategoryResponse(4, "Чипсеки")
-        val cat6 = ProductCategoryResponse(5, "Fef")
-        val cat7 = ProductCategoryResponse(6, "SDrege")
-        val cat8 = ProductCategoryResponse(7, "scxvse")
-        return Response.success(listOf(cat1, cat2, cat3, cat4, cat5, cat6, cat7, cat8))
+        val cat6 = ProductCategoryResponse(5, "Другое")
+        return Response.success(listOf(cat1, cat2, cat3, cat4, cat5, cat6))
     }
 }

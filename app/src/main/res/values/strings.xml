@@ -3,12 +3,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="meeting_room">Переговорная</string>
     <string name="colleagues">Коллеги</string>
-    <string name="products">Продукты</string>
     <string name="eating">Где поесть</string>
     <string name="faq">FAQ</string>
     <string name="settings">Настройки</string>
     <string name="feedback">Отзыв разработчикам</string>
-    <string name="product_img_contentDescription">Картинка продукта</string>
     <string name="your_email_input_field">Ваша рабочая почта</string>
     <string name="your_code_input_field">Код сообщения</string>
     <string name="login_dialog_ok_button">Подтвердить</string>
@@ -25,8 +23,16 @@
     <string name="employee_post">Должность</string>
     <string name="employee_project">Проект</string>
     <string name="employee_email">Почта</string>
-    <string name="product_image">Product image</string>
     <string name="search_view_text">Введите фамилию и имя</string>
     <string name="clear_text">очистить строку</string>
     <string name="arrow_right_description">Нажмите чтобы перейти</string>
+
+    <!--Products-->
+    <string name="products">Продукты</string>
+    <string name="product_img_contentDescription">Картинка продукта</string>
+    <string name="product_image">Product image</string>
+    <string name="order_product_dialog_positive">Да</string>
+    <string name="order_product_dialog_negative">Нет</string>
+    <string name="order_product_dialog_message">Заказать %1$s?</string>
+    <string name="order_product_dialog_title">Заказ продукта</string>
 </resources>

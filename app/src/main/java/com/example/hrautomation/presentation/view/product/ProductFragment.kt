@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.hrautomation.R
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.FragmentProductBinding
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
@@ -118,20 +119,20 @@ class ProductFragment : Fragment() {
         val builder: AlertDialog.Builder = AlertDialog.Builder(context)
         builder.apply {
             setPositiveButton(
-                "Да",
+                getString(R.string.order_product_dialog_positive),
                 DialogInterface.OnClickListener { _, _ ->
                     viewModel.orderProduct(id)
                 }
             )
-            setNegativeButton("Нет",
+            setNegativeButton(getString(R.string.order_product_dialog_negative),
                 DialogInterface.OnClickListener { dialog, _ ->
                     dialog.cancel()
                 }
             )
         }
         builder
-            .setMessage("Заказать $name?")
-            .setTitle("Заказ продукта")
+            .setMessage(getString(R.string.order_product_dialog_message, name))
+            .setTitle(getString(R.string.order_product_dialog_title))
         builder.create()
         builder.show()
     }
