@@ -48,7 +48,6 @@ class ProductFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProductBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = this
 
         initUi()
 
@@ -58,7 +57,6 @@ class ProductFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        _binding?.unbind()
         _binding = null
         viewModel.clearToastState()
         super.onDestroyView()

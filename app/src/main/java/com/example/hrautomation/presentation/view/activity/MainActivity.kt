@@ -1,6 +1,8 @@
 package com.example.hrautomation.presentation.view.activity
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
@@ -25,7 +27,6 @@ class MainActivity : AppCompatActivity() {
         (application as App).appComponent.inject(this)
 
         val binding = ActivityMainBinding.inflate(layoutInflater)
-        binding.lifecycleOwner = this
         setContentView(binding.root)
 
         val navHostFragment =
@@ -65,5 +66,11 @@ class MainActivity : AppCompatActivity() {
                 isBackPressedOnce = false
             }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.menu_action_bar, menu)
+        return true
     }
 }

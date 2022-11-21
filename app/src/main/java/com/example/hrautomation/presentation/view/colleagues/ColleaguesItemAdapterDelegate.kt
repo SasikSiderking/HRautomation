@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.example.hrautomation.databinding.EmployeeRecyclerviewItemBinding
+import com.example.hrautomation.databinding.ItemEmployeeBinding
 import com.example.hrautomation.presentation.base.delegates.BaseItemAdapterDelegate
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.base.delegates.ClickableViewHolder
@@ -20,7 +20,7 @@ class ColleaguesItemAdapterDelegate(private val onColleagueClickListener: OnColl
     }
 
     override fun onCreateViewHolder(parent: ViewGroup): ColleagueViewHolder {
-        val binding = EmployeeRecyclerviewItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemEmployeeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ColleagueViewHolder(binding, this)
     }
 
@@ -35,7 +35,7 @@ class ColleaguesItemAdapterDelegate(private val onColleagueClickListener: OnColl
         onColleagueClickListener.onClick(item)
     }
 
-    class ColleagueViewHolder(binding: EmployeeRecyclerviewItemBinding, clickListener: OnViewHolderClickListener<ColleagueViewHolder>) :
+    class ColleagueViewHolder(binding: ItemEmployeeBinding, clickListener: OnViewHolderClickListener<ColleagueViewHolder>) :
         ClickableViewHolder<ColleagueViewHolder>(binding.root, clickListener) {
         val name: TextView
         val post: TextView

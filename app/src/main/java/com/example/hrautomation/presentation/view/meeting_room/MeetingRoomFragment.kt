@@ -38,7 +38,6 @@ class MeetingRoomFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        _binding?.unbind()
         _binding = null
         super.onDestroyView()
     }

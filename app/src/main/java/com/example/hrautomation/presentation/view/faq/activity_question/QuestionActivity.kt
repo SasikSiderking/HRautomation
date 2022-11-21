@@ -3,6 +3,7 @@ package com.example.hrautomation.presentation.view.faq.activity_question
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -33,19 +34,29 @@ class QuestionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         (applicationContext as App).appComponent.inject(this)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         _binding = ActivityQuestionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         initUi()
 
         viewModel.loadData(selectedCategoryId)
+        supportActionBar?.title = intent.getStringExtra(NAME_EXTRA)
     }
 
     override fun onDestroy() {
-        _binding?.unbind()
         _binding = null
         viewModel.clearToastState()
         super.onDestroy()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> finish()
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     private val questionsObserver = Observer<List<BaseListItem>> { newItems ->
@@ -68,10 +79,12 @@ class QuestionActivity : AppCompatActivity() {
 
     companion object {
         private const val ID_EXTRA = "selectedCategoryId"
+        private const val NAME_EXTRA = "selectedCategoryName"
 
-        fun createIntent(context: Context, id: Long): Intent {
+        fun createIntent(context: Context, id: Long, name: String): Intent {
             val intent = Intent(context, QuestionActivity::class.java)
             intent.putExtra(ID_EXTRA, id)
+            intent.putExtra(NAME_EXTRA, name)
             return intent
         }
     }

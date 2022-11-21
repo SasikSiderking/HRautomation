@@ -36,7 +36,6 @@ class EmailLoginFragment : Fragment() {
         (requireContext().applicationContext as App).appComponent.inject(this)
 
         _binding = FragmentLoadingEmailBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = this
 
         initUi()
 
@@ -45,7 +44,6 @@ class EmailLoginFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        _binding?.unbind()
         _binding = null
         super.onDestroyView()
     }
