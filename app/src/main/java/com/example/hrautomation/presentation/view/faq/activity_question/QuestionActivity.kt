@@ -47,7 +47,6 @@ class QuestionActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         _binding = null
-        viewModel.clearToastState()
         super.onDestroy()
     }
 
@@ -66,6 +65,7 @@ class QuestionActivity : AppCompatActivity() {
     private val exceptionObserver = Observer<Throwable?> { exception ->
         exception?.let {
             Toast.makeText(this, "Что-то пошло не так", Toast.LENGTH_LONG).show()
+            viewModel.clearExceptionState()
         }
     }
 

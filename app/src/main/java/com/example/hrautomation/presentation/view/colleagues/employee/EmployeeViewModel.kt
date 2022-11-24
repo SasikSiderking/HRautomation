@@ -26,8 +26,8 @@ class EmployeeViewModel @Inject constructor(
         get() = _exception
     private var _exception = MutableLiveData<Throwable?>()
 
-    fun clearToastState() {
-        _exception = MutableLiveData<Throwable?>()
+    fun clearExceptionState() {
+        _exception.postValue(null)
     }
 
     fun loadData(id: Long) {

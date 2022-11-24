@@ -58,7 +58,6 @@ class ProductFragment : Fragment() {
 
     override fun onDestroyView() {
         _binding = null
-        viewModel.clearToastState()
         super.onDestroyView()
     }
 
@@ -106,11 +105,15 @@ class ProductFragment : Fragment() {
     private val exceptionObserver = Observer<Throwable?> { exception ->
         exception?.let {
             Toast.makeText(requireContext(), "Что-то пошло не так", Toast.LENGTH_LONG).show()
+            viewModel.clearExceptionState()
         }
     }
 
     private val messageObserver = Observer<String?> { message ->
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        message?.let {
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+            viewModel.clearMessageState()
+        }
     }
 
     private fun showOrderDialog(id: Long, name: String) {

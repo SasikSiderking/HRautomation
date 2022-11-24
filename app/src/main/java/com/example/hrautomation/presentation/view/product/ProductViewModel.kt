@@ -42,9 +42,12 @@ class ProductViewModel @Inject constructor(
         loadData()
     }
 
-    fun clearToastState() {
-        _exception = MutableLiveData<Throwable?>()
-        _message = MutableLiveData<String?>()
+    fun clearExceptionState() {
+        _exception.postValue(null)
+    }
+
+    fun clearMessageState() {
+        _message.postValue(null)
     }
 
     fun loadProductsByCategory(categoryId: Long?) {
