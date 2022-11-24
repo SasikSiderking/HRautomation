@@ -83,12 +83,13 @@ class ProductFragment : Fragment() {
 
     private fun fillChipGroup(list: List<ProductCategoryItem>) {
         list.forEach { category ->
-            val chip = Chip(context)
-            chip.id = category.id.toInt()
-            chip.text = category.name
-            chip.textSize = 22F
-            chip.isClickable = true
-            chip.isCheckable = true
+            val chip = Chip(context).apply {
+                id = category.id.toInt()
+                text = category.name
+                textSize = 22F
+                isClickable = true
+                isCheckable = true
+            }
             binding.chipGroup.addView(chip)
         }
     }
