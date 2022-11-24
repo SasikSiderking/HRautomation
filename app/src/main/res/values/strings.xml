@@ -40,4 +40,7 @@
     <string name="order_product_dialog_negative">Нет</string>
     <string name="order_product_dialog_message">Заказать %1$s?</string>
     <string name="order_product_dialog_title">Заказ продукта</string>
+
+    <!--Common-->
+    <string name="toast_overall_error">Что-то пошло не так</string>
 </resources>

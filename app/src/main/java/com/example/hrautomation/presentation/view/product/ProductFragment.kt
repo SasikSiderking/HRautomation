@@ -105,7 +105,7 @@ class ProductFragment : Fragment() {
 
     private val exceptionObserver = Observer<Throwable?> { exception ->
         exception?.let {
-            Toast.makeText(requireContext(), "Что-то пошло не так", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), R.string.toast_overall_error, Toast.LENGTH_LONG).show()
             viewModel.clearExceptionState()
         }
     }
@@ -135,7 +135,6 @@ class ProductFragment : Fragment() {
         builder
             .setMessage(getString(R.string.order_product_dialog_message, name))
             .setTitle(getString(R.string.order_product_dialog_title))
-        builder.create()
         builder.show()
     }
 }

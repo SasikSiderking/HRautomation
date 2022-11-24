@@ -15,6 +15,9 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
+const val PAGE_SIZE = 999
+const val PAGE_NUMBER = 1
+
 class ProductViewModel @Inject constructor(
     private val productRepo: ProductRepository,
     private val dispatchers: CoroutineDispatchers,
@@ -55,7 +58,7 @@ class ProductViewModel @Inject constructor(
             categoryId?.let {
                 loadProducts(productRepo.getProductsByCategory(it))
             } ?: run {
-                loadProducts(productRepo.getProductList(1, 999, "id"))
+                loadProducts(productRepo.getProductList(PAGE_NUMBER, PAGE_SIZE, "id"))
             }
         }
     }
@@ -75,7 +78,7 @@ class ProductViewModel @Inject constructor(
 
     private fun loadData() {
         viewModelScope.launch(dispatchers.io) {
-            loadProducts(productRepo.getProductList(1, 999, "id"))
+            loadProducts(productRepo.getProductList(PAGE_NUMBER, PAGE_SIZE, "id"))
 
             productRepo.getProductCategoryList()
                 .onSuccess { categoryList ->
