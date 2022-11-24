@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.hrautomation.data.dispatcher.CoroutineDispatchers
 import com.example.hrautomation.domain.model.Product
+import com.example.hrautomation.domain.model.ProductSortBy
 import com.example.hrautomation.domain.repository.ProductRepository
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.model.ProductCategoryItem
@@ -15,8 +16,6 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
-const val PAGE_SIZE = 999
-const val PAGE_NUMBER = 1
 
 class ProductViewModel @Inject constructor(
     private val productRepo: ProductRepository,
@@ -58,7 +57,7 @@ class ProductViewModel @Inject constructor(
             categoryId?.let {
                 loadProducts(productRepo.getProductsByCategory(it))
             } ?: run {
-                loadProducts(productRepo.getProductList(PAGE_NUMBER, PAGE_SIZE, "id"))
+                loadProducts(productRepo.getProductList(PAGE_NUMBER, PAGE_SIZE, ProductSortBy.ID))
             }
         }
     }
@@ -78,7 +77,7 @@ class ProductViewModel @Inject constructor(
 
     private fun loadData() {
         viewModelScope.launch(dispatchers.io) {
-            loadProducts(productRepo.getProductList(PAGE_NUMBER, PAGE_SIZE, "id"))
+            loadProducts(productRepo.getProductList(PAGE_NUMBER, PAGE_SIZE, ProductSortBy.ID))
 
             productRepo.getProductCategoryList()
                 .onSuccess { categoryList ->
@@ -99,5 +98,10 @@ class ProductViewModel @Inject constructor(
                 Timber.e(exception)
                 _exception.postValue(exception)
             }
+    }
+
+    private companion object {
+        const val PAGE_SIZE = 999
+        const val PAGE_NUMBER = 1
     }
 }
