@@ -21,10 +21,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField ("String", "BASE_URL",'"http://10.0.2.2:8080"')
+            buildConfigField ("String", "BASE_URL",'"https://hr-automation-backend.onrender.com"')
         }
         debug{
-            buildConfigField ("String", "BASE_URL",'"http://10.0.2.2:8080"')
+            buildConfigField ("String", "BASE_URL",'"https://hr-automation-backend.onrender.com"')
         }
     }
     compileOptions {
@@ -74,6 +74,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
 // LiveData
     implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
+
 //    Coroutine
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1")
 

@@ -17,8 +17,9 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/employeeImageView"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@mipmap/ic_launcher"
             android:layout_marginVertical="25dp"
             app:shapeAppearanceOverlay="@style/roundedImageViewRounded" />
 

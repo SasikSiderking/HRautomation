@@ -4,6 +4,8 @@ import com.example.hrautomation.data.api.EmployeesApi
 import com.example.hrautomation.data.api.EmployeesApi2
 import com.example.hrautomation.data.api.FaqApi
 import com.example.hrautomation.data.api.FaqApi2
+import com.example.hrautomation.data.api.ProductApi
+import com.example.hrautomation.data.api.ProductApi2
 import com.example.hrautomation.data.api.UserApi
 import com.example.hrautomation.data.api.UserApi2
 import dagger.Module
@@ -47,5 +49,11 @@ class ApiModule {
     @Singleton
     fun provideFaqApi2(retrofitProvider: RetrofitProvider): FaqApi2 {
         return retrofitProvider.faqApi2
+    }
+
+    @Provides
+    @Singleton
+    fun provideProductApi(retrofitProvider: RetrofitProvider): ProductApi {
+        return ProductApi2()
     }
 }

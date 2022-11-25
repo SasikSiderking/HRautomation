@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import com.example.hrautomation.R
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.ActivityQuestionBinding
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
@@ -64,9 +65,8 @@ class QuestionActivity : AppCompatActivity() {
 
     private val exceptionObserver = Observer<Throwable?> { exception ->
         exception?.let {
-            Toast.makeText(this, "Что-то пошло не так", Toast.LENGTH_LONG).show()
-
-            viewModel.setToastShownState()
+            Toast.makeText(this, R.string.toast_overall_error, Toast.LENGTH_LONG).show()
+            viewModel.clearExceptionState()
         }
     }
 

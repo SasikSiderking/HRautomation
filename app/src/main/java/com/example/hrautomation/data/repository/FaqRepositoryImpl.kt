@@ -1,6 +1,6 @@
 package com.example.hrautomation.data.repository
 
-import com.example.hrautomation.data.api.FaqApi2
+import com.example.hrautomation.data.api.FaqApi
 import com.example.hrautomation.data.model.FaqCategoryResponseToFaqCategoryMapper
 import com.example.hrautomation.data.model.FaqQuestionResponseToFaqQuestionMapper
 import com.example.hrautomation.domain.model.FaqCategory
@@ -10,7 +10,7 @@ import com.example.hrautomation.utils.asResult
 import javax.inject.Inject
 
 class FaqRepositoryImpl @Inject constructor(
-    private val api: FaqApi2,
+    private val api: FaqApi,
     private val faqCategoryResponseToFaqCategoryMapper: FaqCategoryResponseToFaqCategoryMapper,
     private val faqQuestionResponseToFaqQuestionMapper: FaqQuestionResponseToFaqQuestionMapper
 ) : FaqRepository {
