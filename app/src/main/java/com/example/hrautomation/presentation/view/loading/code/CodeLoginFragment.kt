@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.example.hrautomation.R
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.FragmentLoadingCodeBinding
 import com.example.hrautomation.presentation.view.activity.MainActivity
@@ -44,8 +46,6 @@ class CodeLoginFragment : Fragment() {
 
         initUi()
 
-        viewModel.isCodeCheckSuccess.observe(viewLifecycleOwner, codeCheckObserver)
-
         return binding.root
     }
 
@@ -68,6 +68,13 @@ class CodeLoginFragment : Fragment() {
         setFieldsVisibility(true)
     }
 
+    private val exceptionObserver = Observer<Throwable?> { exception ->
+        exception?.let {
+            Toast.makeText(context, R.string.toast_overall_error, Toast.LENGTH_SHORT).show()
+            viewModel.clearExceptionState()
+        }
+    }
+
     private fun setFieldsVisibility(flag: Boolean) {
         binding.code.isEnabled = flag
         binding.progressBar.isVisible = !flag
@@ -75,6 +82,9 @@ class CodeLoginFragment : Fragment() {
 
     private fun initUi() {
         binding.okCodeButton.setOnClickListener { checkCode() }
+
+        viewModel.isCodeCheckSuccess.observe(viewLifecycleOwner, codeCheckObserver)
+        viewModel.exception.observe(viewLifecycleOwner, exceptionObserver)
     }
 
     companion object {

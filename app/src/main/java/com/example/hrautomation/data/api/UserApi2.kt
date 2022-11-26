@@ -5,8 +5,7 @@ import com.example.hrautomation.data.model.TokenResponse
 import retrofit2.Response
 
 class UserApi2 : UserApi {
-    override suspend fun checkEmail(email: String): Response<Boolean> {
-        return Response.success(true)
+    override suspend fun checkEmail(email: String) {
     }
 
     override suspend fun confirmEmail(email: String, code: String): Response<TokenResponse> {
@@ -25,5 +24,8 @@ class UserApi2 : UserApi {
                 "Not admin"
             )
         )
+    }
+
+    override suspend fun saveUser(user: EmployeeResponse) {
     }
 }
