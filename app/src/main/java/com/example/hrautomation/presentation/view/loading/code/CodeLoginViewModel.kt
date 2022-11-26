@@ -35,7 +35,7 @@ class CodeLoginViewModel @Inject constructor(
             userRepo.confirmEmail(email, code)
                 .onSuccess { token: Token ->
                     _isCodeCheckSuccess.postValue(true)
-                    tokenRepo.apply {
+                    with(tokenRepo) {
                         saveAccessToken(token.accessToken)
                         saveRefreshToken(token.refreshToken)
                         saveUserId(token.userId)

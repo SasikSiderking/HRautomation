@@ -26,12 +26,12 @@ class TokenRepositoryImpl @Inject constructor(private val context: Context) : To
         preferences.edit().putString(REF_TOKEN, refToken).apply()
     }
 
-    override fun getUserId(): Long {
-        return preferences.getLong(USER_ID, 1337)
+    override fun getUserId(): Long? {
+        return preferences.getString(USER_ID, null)?.toLong()
     }
 
     override fun saveUserId(userId: Long) {
-        preferences.edit().putLong(USER_ID, userId).apply()
+        preferences.edit().putString(USER_ID, userId.toString()).apply()
     }
 
     private companion object {
