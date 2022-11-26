@@ -5,6 +5,7 @@ import com.example.hrautomation.data.model.FaqCategoryResponseToFaqCategoryMappe
 import com.example.hrautomation.data.model.FaqQuestionResponseToFaqQuestionMapper
 import com.example.hrautomation.data.model.ProductCategoryResponseToProductCategoryMapper
 import com.example.hrautomation.data.model.ProductResponseToProductMapper
+import com.example.hrautomation.data.model.TokenResponseToTokenMapper
 import com.example.hrautomation.presentation.model.EmployeeToColleagueItemMapper
 import com.example.hrautomation.presentation.model.EmployeeToEmployeeItemMapper
 import com.example.hrautomation.presentation.model.FaqCategoryToFaqCategoryItemMapper
@@ -61,4 +62,8 @@ class MapperModule {
     @Reusable
     @Provides
     fun provideProductCategoryToProductCategoryItemMapper(): ProductCategoryToProductCategoryItemMapper = ProductCategoryToProductCategoryItemMapper()
+
+    @Reusable
+    @Provides
+    fun provideTokenResponseToTokenMapper(): TokenResponseToTokenMapper = TokenResponseToTokenMapper()
 }
