@@ -1,6 +1,10 @@
 package com.example.hrautomation.domain.repository
 
 interface TokenRepository {
-    fun getToken(): String?
-    fun saveToken(token: String)
+    fun getAccessToken(): String?
+    fun saveAccessToken(token: String)
+    fun getRefreshToken(): String?
+    fun saveRefreshToken(refToken: String)
+    fun getUserId(): Long?
+    fun saveUserId(userId: Long)
 }
