@@ -36,6 +36,7 @@ class ProductItemAdapterDelegate(private val onProductClickListener: OnProductCl
 
         Glide.with(holder.img)
             .load(item.img)
+            .centerCrop()
             .placeholder(R.drawable.ic_launcher_foreground)
             .into(holder.img)
     }
