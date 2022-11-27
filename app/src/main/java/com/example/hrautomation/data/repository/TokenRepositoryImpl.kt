@@ -8,16 +8,36 @@ import javax.inject.Singleton
 
 @Singleton
 class TokenRepositoryImpl @Inject constructor(private val context: Context) : TokenRepository {
-    override fun getToken(): String? {
-        val preferences: SharedPreferences =
-            context.getSharedPreferences("app", Context.MODE_PRIVATE)
-        return preferences.getString("token", null)
+    private val preferences: SharedPreferences by lazy { context.getSharedPreferences(PREF_ACCESS, Context.MODE_PRIVATE) }
+
+    override fun getAccessToken(): String? {
+        return preferences.getString(ACC_TOKEN, null)
     }
 
+    override fun saveAccessToken(token: String) {
+        preferences.edit().putString(ACC_TOKEN, token).apply()
+    }
 
-    override fun saveToken(token: String) {
-        val preferences: SharedPreferences =
-            context.getSharedPreferences("app", Context.MODE_PRIVATE)
-        preferences.edit().putString("token", token).apply()
+    override fun getRefreshToken(): String? {
+        return preferences.getString(REF_TOKEN, null)
+    }
+
+    override fun saveRefreshToken(refToken: String) {
+        preferences.edit().putString(REF_TOKEN, refToken).apply()
+    }
+
+    override fun getUserId(): Long? {
+        return preferences.getString(USER_ID, null)?.toLong()
+    }
+
+    override fun saveUserId(userId: Long) {
+        preferences.edit().putString(USER_ID, userId.toString()).apply()
+    }
+
+    private companion object {
+        const val PREF_ACCESS = "app"
+        const val ACC_TOKEN = "accessToken"
+        const val REF_TOKEN = "refreshToken"
+        const val USER_ID = "userId"
     }
 }

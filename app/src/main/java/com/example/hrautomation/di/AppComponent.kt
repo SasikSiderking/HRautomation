@@ -14,6 +14,7 @@ import com.example.hrautomation.presentation.view.loading.code.CodeLoginFragment
 import com.example.hrautomation.presentation.view.loading.email.EmailLoginFragment
 import com.example.hrautomation.presentation.view.meeting_room.MeetingRoomFragment
 import com.example.hrautomation.presentation.view.product.ProductFragment
+import com.example.hrautomation.presentation.view.profile.ProfileActivity
 import dagger.Component
 import javax.inject.Singleton
 
@@ -31,10 +32,14 @@ import javax.inject.Singleton
 @Singleton
 interface AppComponent {
     fun inject(activity: MainActivity)
+
     fun inject(fragment: ProductFragment)
+
     fun inject(fragment: MeetingRoomFragment)
+
     fun inject(fragment: ColleaguesFragment)
     fun inject(activity: EmployeeActivity)
+
     fun inject(fragment: FaqFragment)
     fun inject(activity: QuestionActivity)
 
@@ -42,4 +47,6 @@ interface AppComponent {
     fun inject(activity: LoginActivity)
     fun inject(fragment: EmailLoginFragment)
     fun inject(fragment: CodeLoginFragment)
+
+    fun inject(activity: ProfileActivity)
 }

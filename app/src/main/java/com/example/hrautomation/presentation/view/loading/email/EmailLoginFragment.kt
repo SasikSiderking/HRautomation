@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -39,7 +40,6 @@ class EmailLoginFragment : Fragment() {
 
         initUi()
 
-        viewModel.isEmailCheckSuccess.observe(viewLifecycleOwner, emailCheckObserver)
         return binding.root
     }
 
@@ -60,6 +60,13 @@ class EmailLoginFragment : Fragment() {
         setFieldsVisibility(true)
     }
 
+    private val exceptionObserver = Observer<Throwable?> { exception ->
+        exception?.let {
+            Toast.makeText(context, R.string.toast_overall_error, Toast.LENGTH_SHORT).show()
+            viewModel.clearExceptionState()
+        }
+    }
+
     private fun setFieldsVisibility(flag: Boolean) {
         binding.email.isEnabled = flag
         binding.progressBar.isVisible = !flag
@@ -67,5 +74,8 @@ class EmailLoginFragment : Fragment() {
 
     private fun initUi() {
         binding.okEmailButton.setOnClickListener { checkEmail() }
+
+        viewModel.isEmailCheckSuccess.observe(viewLifecycleOwner, emailCheckObserver)
+        viewModel.exception.observe(viewLifecycleOwner, exceptionObserver)
     }
 }

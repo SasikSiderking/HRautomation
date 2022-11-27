@@ -24,7 +24,7 @@ class LoadingActivityViewModel @Inject constructor(private val tokenRepo: TokenR
 
     private fun start() {
         viewModelScope.launch {
-            val token = tokenRepo.getToken()
+            val token = tokenRepo.getAccessToken()
             _isTokenExist.postValue(token != null)
             _isLoading.postValue(false)
         }

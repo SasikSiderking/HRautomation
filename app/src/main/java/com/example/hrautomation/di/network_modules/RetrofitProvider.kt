@@ -26,7 +26,7 @@ class RetrofitProvider @Inject constructor(private val tokenRepositoryImpl: Toke
             .connectTimeout(20, TimeUnit.SECONDS)
             .readTimeout(20, TimeUnit.SECONDS)
             .writeTimeout(20, TimeUnit.SECONDS)
-            .addInterceptor(AuthInterceptor(tokenRepositoryImpl.getToken() ?: ""))
+            .addInterceptor(AuthInterceptor(tokenRepositoryImpl.getAccessToken() ?: ""))
             .addInterceptor(logging)
             .build()
     }
