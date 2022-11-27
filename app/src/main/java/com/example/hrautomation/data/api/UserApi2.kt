@@ -7,12 +7,8 @@ import java.util.Date
 
 class UserApi2 : UserApi {
 
-    fun returnUnit() {
-//        Ультра костыль 9000
-    }
-
     override suspend fun checkEmail(email: String): Response<Unit> {
-        return Response.success(returnUnit())
+        return Response.success(Unit)
     }
 
     override suspend fun confirmEmail(email: String, code: String): Response<TokenResponse> {
