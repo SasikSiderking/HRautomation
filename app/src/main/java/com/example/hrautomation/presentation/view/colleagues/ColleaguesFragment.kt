@@ -47,20 +47,6 @@ class ColleaguesFragment : Fragment() {
         _binding = FragmentColleaguesBinding.inflate(inflater, container, false)
 
         initUi()
-        viewModel.data.observe(viewLifecycleOwner, colleaguesObserver)
-
-        binding.editSearch.setOnEditorActionListener(OnEditorActionListener { v, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                viewModel.performSearch(v.text.toString().trim())
-                true
-            } else {
-                false
-            }
-        })
-
-        binding.editSearch.addTextChangedListener(textWatcher)
-
-        binding.clearText.setOnClickListener(View.OnClickListener { binding.editSearch.text.clear() })
 
         return binding.root
     }
@@ -83,6 +69,9 @@ class ColleaguesFragment : Fragment() {
     private val colleaguesObserver = Observer<List<BaseListItem>> { updatedDataSet ->
         adapter.update(updatedDataSet)
     }
+    private val isLoadingObserver = Observer<Boolean> { isLoading ->
+        binding.progressBar.isVisible = isLoading
+    }
 
     override fun onDestroyView() {
         _binding = null
@@ -95,5 +84,20 @@ class ColleaguesFragment : Fragment() {
         })
         binding.colleaguesRecyclerview.adapter = adapter
 
+        viewModel.data.observe(viewLifecycleOwner, colleaguesObserver)
+        viewModel.isLoading.observe(viewLifecycleOwner, isLoadingObserver)
+
+        binding.editSearch.setOnEditorActionListener(OnEditorActionListener { v, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                viewModel.performSearch(v.text.toString().trim())
+                true
+            } else {
+                false
+            }
+        })
+
+        binding.editSearch.addTextChangedListener(textWatcher)
+
+        binding.clearText.setOnClickListener(View.OnClickListener { binding.editSearch.text.clear() })
     }
 }

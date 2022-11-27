@@ -22,6 +22,10 @@ class ColleaguesViewModel @Inject constructor(
         get() = _data
     private val _data = MutableLiveData<List<BaseListItem>>(emptyList())
 
+    val isLoading: LiveData<Boolean>
+        get() = _isLoading
+    private val _isLoading = MutableLiveData<Boolean>(true)
+
     private var reservedData: List<Employee> = emptyList()
 
     init {
@@ -30,8 +34,10 @@ class ColleaguesViewModel @Inject constructor(
 
     private fun loadData() {
         viewModelScope.launch(dispatchers.io) {
+            _isLoading.postValue(true)
             reservedData = repo.getEmployeeList()
             _data.postValue(reservedData.map { employeesToColleagueItemMapper.convert(it) })
+            _isLoading.postValue(false)
         }
     }
 

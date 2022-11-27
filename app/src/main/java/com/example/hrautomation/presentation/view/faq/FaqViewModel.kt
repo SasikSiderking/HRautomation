@@ -27,6 +27,10 @@ class FaqViewModel @Inject constructor(
         get() = _exception
     private val _exception = MutableLiveData<Throwable?>()
 
+    val isLoading: LiveData<Boolean>
+        get() = _isLoading
+    private val _isLoading = MutableLiveData<Boolean>(true)
+
     fun clearExceptionState() {
         _exception.postValue(null)
     }
@@ -37,6 +41,7 @@ class FaqViewModel @Inject constructor(
 
     private fun loadData() {
         viewModelScope.launch(dispatchers.io) {
+            _isLoading.postValue(true)
             val result = faqRepo.getFaqCategoryList()
             result.onSuccess { listFaqCategory: List<FaqCategory> ->
                 _data.postValue(listFaqCategory.map { faqCategoryToFaqCategoryItemMapper.convert(it) })
@@ -45,6 +50,7 @@ class FaqViewModel @Inject constructor(
                 Timber.e(exception)
                 _exception.postValue(exception)
             }
+            _isLoading.postValue(false)
         }
     }
 }

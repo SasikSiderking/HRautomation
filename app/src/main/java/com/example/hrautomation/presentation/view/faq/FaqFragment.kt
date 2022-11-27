@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -60,15 +61,21 @@ class FaqFragment : Fragment() {
 
         viewModel.data.observe(viewLifecycleOwner, categoryObserver)
         viewModel.exception.observe(viewLifecycleOwner, exceptionObserver)
+        viewModel.isLoading.observe(viewLifecycleOwner, isLoadingObserver)
     }
 
     private val categoryObserver = Observer<List<BaseListItem>> { newItems ->
         adapter.update(newItems)
     }
+
     private val exceptionObserver = Observer<Throwable?> { exception ->
         exception?.let {
             Toast.makeText(requireContext(), R.string.toast_overall_error, Toast.LENGTH_LONG).show()
             viewModel.clearExceptionState()
         }
+    }
+
+    private val isLoadingObserver = Observer<Boolean> { isLoading ->
+        binding.progressBar.isVisible = isLoading
     }
 }

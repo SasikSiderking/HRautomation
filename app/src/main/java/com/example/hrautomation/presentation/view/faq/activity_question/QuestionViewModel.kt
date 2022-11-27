@@ -27,12 +27,17 @@ class QuestionViewModel @Inject constructor(
         get() = _exception
     private val _exception = MutableLiveData<Throwable?>()
 
+    val isLoading: LiveData<Boolean>
+        get() = _isLoading
+    private val _isLoading = MutableLiveData<Boolean>(true)
+
     fun clearExceptionState() {
         _exception.postValue(null)
     }
 
     fun loadData(id: Long) {
         viewModelScope.launch(dispatchers.io) {
+            _isLoading.postValue(true)
             val result = faqRepo.getFaqQuestionList(id)
             result.onSuccess { listFaqQuestion: List<FaqQuestion> ->
                 _data.postValue(listFaqQuestion.map { faqQuestionToFaqQuestionItemMapper.convert(it) })
@@ -40,6 +45,7 @@ class QuestionViewModel @Inject constructor(
                 Timber.e(exception)
                 _exception.postValue(exception)
             }
+            _isLoading.postValue(false)
         }
     }
 }

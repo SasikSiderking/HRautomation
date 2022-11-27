@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.example.hrautomation.R
 import com.example.hrautomation.app.App
@@ -70,12 +71,17 @@ class QuestionActivity : AppCompatActivity() {
         }
     }
 
+    private val isLoadingObserver = Observer<Boolean> { isLoading ->
+        binding.progressBar.isVisible = isLoading
+    }
+
     private fun initUi() {
         adapter = QuestionAdapter()
         binding.questionRecyclerview.adapter = adapter
 
         viewModel.data.observe(this, questionsObserver)
         viewModel.exception.observe(this, exceptionObserver)
+        viewModel.isLoading.observe(this, isLoadingObserver)
     }
 
     companion object {
