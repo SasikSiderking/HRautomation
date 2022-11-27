@@ -9,7 +9,6 @@ import com.example.hrautomation.domain.model.Employee
 import com.example.hrautomation.domain.model.Token
 import com.example.hrautomation.domain.repository.UserRepository
 import com.example.hrautomation.utils.asResult
-import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -34,23 +33,16 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getUser(id: Long): Result<Employee> {
-        with(userApi.getUser(id)) {
-            Timber.i(this.body().toString())
-            asResult { employeeResponse ->
-                employeeResponse
-            }.onSuccess { employeeResponse ->
-                user = employeeResponse
-            }
-            return asResult { employeeResponse: EmployeeResponse ->
-                employeesResponseToEmployeesMapper.convert(employeeResponse)
-            }
+        return userApi.getUser(id).asResult { employeeResponse: EmployeeResponse ->
+            user = employeeResponse
+            employeesResponseToEmployeesMapper.convert(employeeResponse)
         }
     }
 
     override suspend fun saveUser(project: String, info: String) {
         user?.let {
             it.project = project
-            it.info = info
+            it.about = info
             userApi.saveUser(it)
         }
     }
