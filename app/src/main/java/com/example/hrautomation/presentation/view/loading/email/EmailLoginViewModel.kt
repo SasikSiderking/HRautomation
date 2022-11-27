@@ -17,7 +17,7 @@ class EmailLoginViewModel @Inject constructor(private val userRepo: UserReposito
 
     val exception: LiveData<Throwable?>
         get() = _exception
-    private var _exception = MutableLiveData<Throwable?>()
+    private val _exception = MutableLiveData<Throwable?>()
 
     fun clearExceptionState() {
         _exception.postValue(null)
@@ -26,11 +26,12 @@ class EmailLoginViewModel @Inject constructor(private val userRepo: UserReposito
     fun checkEmail(email: String) {
         viewModelScope.launch(dispatchers.io) {
             userRepo.checkEmail(email)
-                .onSuccess { isChecked: Boolean ->
-                    _isEmailCheckSuccess.postValue(isChecked)
+                .onSuccess {
+                    _isEmailCheckSuccess.postValue(true)
                 }
                 .onFailure { exception: Throwable ->
                     _exception.postValue(exception)
+                    _isEmailCheckSuccess.postValue(false)
                 }
         }
     }

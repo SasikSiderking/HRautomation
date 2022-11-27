@@ -11,6 +11,7 @@ import com.example.hrautomation.presentation.view.loading.code.CodeLoginViewMode
 import com.example.hrautomation.presentation.view.loading.email.EmailLoginViewModel
 import com.example.hrautomation.presentation.view.meeting_room.MeetingRoomViewModel
 import com.example.hrautomation.presentation.view.product.ProductViewModel
+import com.example.hrautomation.presentation.view.profile.ProfileViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -66,4 +67,9 @@ interface ViewModelModule {
     @IntoMap
     @ViewModelKey(QuestionViewModel::class)
     fun bindQuestionViewModel(questionViewModel: QuestionViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ProfileViewModel::class)
+    fun bindProfileViewModel(profileViewModel: ProfileViewModel): ViewModel
 }
