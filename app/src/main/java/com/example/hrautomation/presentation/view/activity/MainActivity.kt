@@ -3,6 +3,7 @@ package com.example.hrautomation.presentation.view.activity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +15,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.hrautomation.R
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.ActivityMainBinding
+import com.example.hrautomation.presentation.view.profile.ProfileActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -72,5 +74,17 @@ class MainActivity : AppCompatActivity() {
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.menu_action_bar, menu)
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_profile -> openProfile()
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun openProfile() {
+        startActivity(ProfileActivity.createIntent(this))
     }
 }
