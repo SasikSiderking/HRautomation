@@ -10,7 +10,6 @@ import com.example.hrautomation.domain.model.Token
 import com.example.hrautomation.domain.repository.TokenRepository
 import com.example.hrautomation.domain.repository.UserRepository
 import com.example.hrautomation.utils.asResult
-import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -21,8 +20,6 @@ class UserRepositoryImpl @Inject constructor(
     private val tokenResponseToTokenMapper: TokenResponseToTokenMapper,
     private val tokenRepo: TokenRepository
 ) : UserRepository {
-
-    private var user: EmployeeResponse? = null
 
     override suspend fun checkEmail(email: String): Result<Unit> {
         return userApi.checkEmail(email).asResult { }
@@ -36,30 +33,20 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun getUser(id: Long): Result<Employee> {
         return userApi.getUser(id).asResult { employeeResponse: EmployeeResponse ->
-            user = employeeResponse
             employeesResponseToEmployeesMapper.convert(employeeResponse)
         }
     }
 
     override suspend fun saveUser(project: String, info: String): Result<Unit> {
-        tokenRepo.getUserId()?.let { userId: Long ->
-            userApi.getUser(userId).asResult { it }
-                .onSuccess { user ->
-                    with(user) {
-                        this.project = project
-                        about = info
-                        return userApi.saveUser(this).asResult { }
-                    }
-                }
-                .onFailure { exception: Throwable ->
-                    Timber.e(exception)
-                    return Result.failure(exception)
-                }
-        }
-//          Вот это не прокатило, пишет что нет return(
-//            ?: run {
-//            return Result.failure(IllegalStateException("No auth token"))
-//        }
-        return Result.failure(IllegalStateException("No auth token"))
+        return tokenRepo.getUserId()?.let { userId: Long ->
+            val userResult = userApi.getUser(userId).asResult { it }
+            if (userResult.isSuccess) {
+                val oldUser = userResult.getOrThrow()
+                val newUser = oldUser.copy(project = project, about = info)
+                userApi.saveUser(newUser).asResult { }
+            } else {
+                Result.failure(userResult.exceptionOrNull()!!)
+            }
+        } ?: Result.failure(IllegalStateException("No auth token"))
     }
 }

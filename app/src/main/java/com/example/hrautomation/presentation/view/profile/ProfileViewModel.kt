@@ -67,8 +67,9 @@ class ProfileViewModel @Inject constructor(
                 .onSuccess {
                     _message.postValue(R.string.profile_save_success)
                 }
-                .onFailure {
+                .onFailure { exception ->
                     _message.postValue(R.string.toast_overall_error)
+                    Timber.e(exception)
                 }
         }
     }
