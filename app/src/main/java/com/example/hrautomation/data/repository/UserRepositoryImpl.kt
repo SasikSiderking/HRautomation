@@ -21,8 +21,8 @@ class UserRepositoryImpl @Inject constructor(
 
     private var user: EmployeeResponse? = null
 
-    override suspend fun checkEmail(email: String) {
-        userApi.checkEmail(email)
+    override suspend fun checkEmail(email: String): Result<Unit> {
+        return userApi.checkEmail(email).asResult { }
     }
 
     override suspend fun confirmEmail(email: String, code: String): Result<Token> {

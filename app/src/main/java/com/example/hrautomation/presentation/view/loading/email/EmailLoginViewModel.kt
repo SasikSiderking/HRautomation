@@ -26,7 +26,13 @@ class EmailLoginViewModel @Inject constructor(private val userRepo: UserReposito
     fun checkEmail(email: String) {
         viewModelScope.launch(dispatchers.io) {
             userRepo.checkEmail(email)
-            _isEmailCheckSuccess.postValue(true)
+                .onSuccess {
+                    _isEmailCheckSuccess.postValue(true)
+                }
+                .onFailure { exception: Throwable ->
+                    _exception.postValue(exception)
+                    _isEmailCheckSuccess.postValue(false)
+                }
         }
     }
 }

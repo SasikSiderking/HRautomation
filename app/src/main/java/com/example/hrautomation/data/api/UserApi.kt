@@ -11,7 +11,7 @@ import retrofit2.http.Query
 
 interface UserApi {
     @GET("/authorization")
-    suspend fun checkEmail(@Query("email") email: String)
+    suspend fun checkEmail(@Query("email") email: String): Response<Unit>
 
     @GET("/authorization/confirm")
     suspend fun confirmEmail(@Query("email") email: String, @Query("code") code: String): Response<TokenResponse>
