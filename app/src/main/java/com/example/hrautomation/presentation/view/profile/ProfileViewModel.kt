@@ -46,6 +46,8 @@ class ProfileViewModel @Inject constructor(
                         Timber.e(exception)
                         _exception.postValue(exception)
                     }
+            } ?: run {
+                throw Exception("No auth token")
             }
         }
     }

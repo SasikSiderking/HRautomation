@@ -69,7 +69,7 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun initUi() {
         with(binding) {
-            binding.saveButton.addOnCheckedChangeListener { _, _ ->
+            saveButton.addOnCheckedChangeListener { _, _ ->
                 viewModel.saveData(
                     employeeFullProject.text.toString(),
                     employeeFullAbout.text.toString()

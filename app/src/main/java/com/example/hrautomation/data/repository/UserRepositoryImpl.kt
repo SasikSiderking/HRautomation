@@ -17,8 +17,7 @@ class UserRepositoryImpl @Inject constructor(
     private val userApi: UserApi,
     private val employeesResponseToEmployeesMapper: EmployeesResponseToEmployeesMapper,
     private val tokenResponseToTokenMapper: TokenResponseToTokenMapper
-) :
-    UserRepository {
+) : UserRepository {
 
     private var user: EmployeeResponse? = null
 
