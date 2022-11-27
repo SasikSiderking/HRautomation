@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.hrautomation.R
 import com.example.hrautomation.data.dispatcher.CoroutineDispatchers
 import com.example.hrautomation.domain.repository.TokenRepository
 import com.example.hrautomation.domain.repository.UserRepository
@@ -25,10 +26,18 @@ class ProfileViewModel @Inject constructor(
 
     val exception: LiveData<Throwable?>
         get() = _exception
-    private var _exception = MutableLiveData<Throwable?>()
+    private val _exception = MutableLiveData<Throwable?>()
+
+    val message: LiveData<Int?>
+        get() = _message
+    private val _message = MutableLiveData<Int?>()
 
     fun clearExceptionState() {
-        _exception = MutableLiveData<Throwable?>()
+        _exception.postValue(null)
+    }
+
+    fun clearMessageState() {
+        _message.postValue(null)
     }
 
     init {
@@ -47,7 +56,7 @@ class ProfileViewModel @Inject constructor(
                         _exception.postValue(exception)
                     }
             } ?: run {
-                throw Exception("No auth token")
+                throw IllegalStateException("No auth token")
             }
         }
     }
@@ -55,6 +64,12 @@ class ProfileViewModel @Inject constructor(
     fun saveData(project: String, info: String) {
         viewModelScope.launch(dispatchers.io) {
             userRepo.saveUser(project, info)
+                .onSuccess {
+                    _message.postValue(R.string.profile_save_success)
+                }
+                .onFailure {
+                    _message.postValue(R.string.toast_overall_error)
+                }
         }
     }
 }

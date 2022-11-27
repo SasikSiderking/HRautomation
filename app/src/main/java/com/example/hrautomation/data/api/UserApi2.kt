@@ -31,6 +31,7 @@ class UserApi2 : UserApi {
         )
     }
 
-    override suspend fun saveUser(user: EmployeeResponse) {
+    override suspend fun saveUser(user: EmployeeResponse): Response<Unit> {
+        return Response.success(Unit)
     }
 }

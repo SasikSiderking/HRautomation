@@ -24,7 +24,7 @@ class CodeLoginViewModel @Inject constructor(
 
     val exception: LiveData<Throwable?>
         get() = _exception
-    private var _exception = MutableLiveData<Throwable?>()
+    private val _exception = MutableLiveData<Throwable?>()
 
     fun clearExceptionState() {
         _exception.postValue(null)

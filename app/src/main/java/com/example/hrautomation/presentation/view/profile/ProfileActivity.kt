@@ -64,12 +64,20 @@ class ProfileActivity : AppCompatActivity() {
     private val exceptionObserver = Observer<Throwable?> { exception ->
         exception?.let {
             Toast.makeText(this, R.string.toast_overall_error, Toast.LENGTH_SHORT).show()
+            viewModel.clearExceptionState()
+        }
+    }
+
+    private val messageObserver = Observer<Int?> { stringId ->
+        stringId?.let {
+            Toast.makeText(this, getString(stringId), Toast.LENGTH_SHORT).show()
+            viewModel.clearMessageState()
         }
     }
 
     private fun initUi() {
         with(binding) {
-            saveButton.addOnCheckedChangeListener { _, _ ->
+            saveButton.setOnClickListener { _ ->
                 viewModel.saveData(
                     employeeFullProject.text.toString(),
                     employeeFullAbout.text.toString()
@@ -78,6 +86,7 @@ class ProfileActivity : AppCompatActivity() {
         }
         viewModel.data.observe(this, employeeObserver)
         viewModel.exception.observe(this, exceptionObserver)
+        viewModel.message.observe(this, messageObserver)
     }
 
     companion object {

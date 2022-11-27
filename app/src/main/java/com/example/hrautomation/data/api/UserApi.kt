@@ -20,5 +20,5 @@ interface UserApi {
     suspend fun getUser(@Path("id") id: Long): Response<EmployeeResponse>
 
     @PUT("/users")
-    suspend fun saveUser(@Body user: EmployeeResponse)
+    suspend fun saveUser(@Body user: EmployeeResponse): Response<Unit>
 }

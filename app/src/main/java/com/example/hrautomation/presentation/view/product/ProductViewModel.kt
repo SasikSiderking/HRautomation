@@ -26,7 +26,7 @@ class ProductViewModel @Inject constructor(
 
     val exception: LiveData<Throwable?>
         get() = _exception
-    private var _exception = MutableLiveData<Throwable?>()
+    private val _exception = MutableLiveData<Throwable?>()
 
     val message: LiveData<String?>
         get() = _message
