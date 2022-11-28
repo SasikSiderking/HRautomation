@@ -17,6 +17,10 @@ import com.example.hrautomation.databinding.FragmentColleaguesBinding
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.view.colleagues.employee.EmployeeActivity
 import com.example.hrautomation.utils.ViewModelFactory
+import com.example.hrautomation.utils.ui.switcher.ContentLoadingSettings
+import com.example.hrautomation.utils.ui.switcher.ContentLoadingState
+import com.example.hrautomation.utils.ui.switcher.ContentLoadingStateSwitcher
+import com.example.hrautomation.utils.ui.switcher.base.SwitchAnimationParams
 import javax.inject.Inject
 
 
@@ -35,6 +39,8 @@ class ColleaguesFragment : Fragment() {
         viewModelFactory
     }
 
+    private val contentLoadingSwitcher: ContentLoadingStateSwitcher = ContentLoadingStateSwitcher()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (requireContext().applicationContext as App).appComponent.inject(this)
@@ -49,18 +55,7 @@ class ColleaguesFragment : Fragment() {
         initUi()
         viewModel.data.observe(viewLifecycleOwner, colleaguesObserver)
 
-        binding.editSearch.setOnEditorActionListener(OnEditorActionListener { v, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                viewModel.performSearch(v.text.toString().trim())
-                true
-            } else {
-                false
-            }
-        })
 
-        binding.editSearch.addTextChangedListener(textWatcher)
-
-        binding.clearText.setOnClickListener(View.OnClickListener { binding.editSearch.text.clear() })
 
         return binding.root
     }
@@ -82,6 +77,7 @@ class ColleaguesFragment : Fragment() {
 
     private val colleaguesObserver = Observer<List<BaseListItem>> { updatedDataSet ->
         adapter.update(updatedDataSet)
+        contentLoadingSwitcher.switchState(ContentLoadingState.CONTENT, SwitchAnimationParams(delay = 500L))
     }
 
     override fun onDestroyView() {
@@ -90,10 +86,30 @@ class ColleaguesFragment : Fragment() {
     }
 
     private fun initUi() {
+        contentLoadingSwitcher.setup(
+            ContentLoadingSettings(
+                contentViews = listOf(binding.colleaguesRecyclerview),
+                loadingViews = listOf(binding.progressBar),
+                initState = ContentLoadingState.LOADING
+            )
+        )
+
         adapter = ColleaguesAdapter(OnColleagueClickListener { colleague ->
             startActivity(EmployeeActivity.createIntent(requireContext(), colleague.id))
         })
         binding.colleaguesRecyclerview.adapter = adapter
 
+        binding.editSearch.setOnEditorActionListener(OnEditorActionListener { v, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                viewModel.performSearch(v.text.toString().trim())
+                true
+            } else {
+                false
+            }
+        })
+
+        binding.editSearch.addTextChangedListener(textWatcher)
+
+        binding.clearText.setOnClickListener(View.OnClickListener { binding.editSearch.text.clear() })
     }
 }
