@@ -55,8 +55,6 @@ class ColleaguesFragment : Fragment() {
         initUi()
         viewModel.data.observe(viewLifecycleOwner, colleaguesObserver)
 
-
-
         return binding.root
     }
 
@@ -86,30 +84,33 @@ class ColleaguesFragment : Fragment() {
     }
 
     private fun initUi() {
-        contentLoadingSwitcher.setup(
-            ContentLoadingSettings(
-                contentViews = listOf(binding.colleaguesRecyclerview),
-                loadingViews = listOf(binding.progressBar),
-                initState = ContentLoadingState.LOADING
+        with(binding) {
+            contentLoadingSwitcher.setup(
+                ContentLoadingSettings(
+                    contentViews = listOf(colleaguesRecyclerview, searchContainer),
+                    loadingViews = listOf(progressBar),
+                    initState = ContentLoadingState.LOADING
+                )
             )
-        )
 
-        adapter = ColleaguesAdapter(OnColleagueClickListener { colleague ->
-            startActivity(EmployeeActivity.createIntent(requireContext(), colleague.id))
-        })
-        binding.colleaguesRecyclerview.adapter = adapter
+            adapter = ColleaguesAdapter(OnColleagueClickListener { colleague ->
+                startActivity(EmployeeActivity.createIntent(requireContext(), colleague.id))
+            })
+            colleaguesRecyclerview.adapter = adapter
 
-        binding.editSearch.setOnEditorActionListener(OnEditorActionListener { v, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                viewModel.performSearch(v.text.toString().trim())
-                true
-            } else {
-                false
-            }
-        })
+            editSearch.setOnEditorActionListener(OnEditorActionListener { v, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    viewModel.performSearch(v.text.toString().trim())
+                    true
+                } else {
+                    false
+                }
+            })
 
-        binding.editSearch.addTextChangedListener(textWatcher)
+            editSearch.addTextChangedListener(textWatcher)
 
-        binding.clearText.setOnClickListener(View.OnClickListener { binding.editSearch.text.clear() })
+            clearText.setOnClickListener(View.OnClickListener { editSearch.text.clear() })
+        }
+
     }
 }
