@@ -53,8 +53,8 @@ class ColleaguesFragment : Fragment() {
         _binding = FragmentColleaguesBinding.inflate(inflater, container, false)
 
         initUi()
-        viewModel.data.observe(viewLifecycleOwner, colleaguesObserver)
 
+        viewModel.data.observe(viewLifecycleOwner, colleaguesObserver)
         return binding.root
     }
 
@@ -111,6 +111,5 @@ class ColleaguesFragment : Fragment() {
 
             clearText.setOnClickListener(View.OnClickListener { editSearch.text.clear() })
         }
-
     }
 }

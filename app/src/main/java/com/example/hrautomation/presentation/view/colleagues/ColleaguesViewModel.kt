@@ -5,10 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.hrautomation.data.dispatcher.CoroutineDispatchers
-import com.example.hrautomation.domain.model.Employee
+import com.example.hrautomation.domain.model.employees.ColleaguesSortBy
+import com.example.hrautomation.domain.model.employees.ListEmployee
 import com.example.hrautomation.domain.repository.EmployeesRepository
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
-import com.example.hrautomation.presentation.model.EmployeeToColleagueItemMapper
+import com.example.hrautomation.presentation.model.colleagues.EmployeeToColleagueItemMapper
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,9 +21,9 @@ class ColleaguesViewModel @Inject constructor(
 
     val data: LiveData<List<BaseListItem>>
         get() = _data
-    private val _data = MutableLiveData<List<BaseListItem>>(emptyList())
+    private val _data = MutableLiveData<List<BaseListItem>>()
 
-    private var reservedData: List<Employee> = emptyList()
+    private var reservedData: List<ListEmployee> = emptyList()
 
     init {
         loadData()
@@ -30,7 +31,7 @@ class ColleaguesViewModel @Inject constructor(
 
     private fun loadData() {
         viewModelScope.launch(dispatchers.io) {
-            reservedData = repo.getEmployeeList()
+            reservedData = repo.getEmployeeList(PAGE_NUMBER, PAGE_SIZE, ColleaguesSortBy.NAME)
             _data.postValue(reservedData.map { employeesToColleagueItemMapper.convert(it) })
         }
     }
@@ -40,12 +41,17 @@ class ColleaguesViewModel @Inject constructor(
             if (name.isNotEmpty()) {
                 _data.postValue(
                     reservedData.filter { employee ->
-                        employee.name.contains(name, ignoreCase = true)
+                        employee.username.contains(name, ignoreCase = true)
                     }.map { employeesToColleagueItemMapper.convert(it) }
                 )
             } else {
                 _data.postValue(reservedData.map { employeesToColleagueItemMapper.convert(it) })
             }
         }
+    }
+
+    private companion object {
+        const val PAGE_SIZE = 20
+        const val PAGE_NUMBER = 1
     }
 }

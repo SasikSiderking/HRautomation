@@ -7,11 +7,12 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.example.hrautomation.R
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.ActivityEmployeeBinding
-import com.example.hrautomation.presentation.model.EmployeeItem
+import com.example.hrautomation.presentation.model.colleagues.EmployeeItem
 import com.example.hrautomation.utils.ViewModelFactory
 import javax.inject.Inject
 
@@ -71,10 +72,14 @@ class EmployeeActivity : AppCompatActivity() {
             viewModel.clearExceptionState()
         }
     }
+    private val isLoadingObserver = Observer<Boolean> { isLoading ->
+        binding.progressBar.isVisible = isLoading
+    }
 
     private fun initUi() {
         viewModel.selectedEmployee.observe(this, selectedEmployeeObserver)
         viewModel.exception.observe(this, exceptionObserver)
+        viewModel.isLoading.observe(this, isLoadingObserver)
     }
 
     companion object {

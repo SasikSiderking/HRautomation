@@ -34,11 +34,15 @@ class ProductViewModel @Inject constructor(
 
     val data: LiveData<List<BaseListItem>>
         get() = _data
-    private val _data = MutableLiveData<List<BaseListItem>>(emptyList())
+    private val _data = MutableLiveData<List<BaseListItem>>()
 
     val categories: LiveData<List<ProductCategoryItem>>
         get() = _categories
-    private val _categories = MutableLiveData<List<ProductCategoryItem>>(emptyList())
+    private val _categories = MutableLiveData<List<ProductCategoryItem>>()
+
+    val isLoading: LiveData<Boolean>
+        get() = _isLoading
+    private val _isLoading = MutableLiveData<Boolean>(true)
 
     init {
         loadData()
@@ -54,16 +58,19 @@ class ProductViewModel @Inject constructor(
 
     fun loadProductsByCategory(categoryId: Long?) {
         viewModelScope.launch(dispatchers.io) {
+            _isLoading.postValue(true)
             categoryId?.let {
                 loadProducts(productRepo.getProductsByCategory(it))
             } ?: run {
                 loadProducts(productRepo.getProductList(PAGE_NUMBER, PAGE_SIZE, ProductSortBy.ID))
             }
+            _isLoading.postValue(false)
         }
     }
 
     fun orderProduct(id: Long) {
         viewModelScope.launch(dispatchers.io) {
+            _isLoading.postValue(true)
             productRepo.orderProduct(id)
                 .onSuccess {
                     _message.postValue("Продукт заказан")
@@ -72,11 +79,13 @@ class ProductViewModel @Inject constructor(
                     Timber.e(exception)
                     _exception.postValue(exception)
                 }
+            _isLoading.postValue(false)
         }
     }
 
     private fun loadData() {
         viewModelScope.launch(dispatchers.io) {
+            _isLoading.postValue(true)
             loadProducts(productRepo.getProductList(PAGE_NUMBER, PAGE_SIZE, ProductSortBy.ID))
 
             productRepo.getProductCategoryList()
@@ -87,6 +96,7 @@ class ProductViewModel @Inject constructor(
                     Timber.e(exception)
                     _exception.postValue(exception)
                 }
+            _isLoading.postValue(false)
         }
     }
 

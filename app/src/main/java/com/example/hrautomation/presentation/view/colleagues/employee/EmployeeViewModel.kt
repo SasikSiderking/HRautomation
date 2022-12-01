@@ -7,8 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.hrautomation.data.dispatcher.CoroutineDispatchers
 import com.example.hrautomation.domain.model.Employee
 import com.example.hrautomation.domain.repository.EmployeesRepository
-import com.example.hrautomation.presentation.model.EmployeeItem
-import com.example.hrautomation.presentation.model.EmployeeToEmployeeItemMapper
+import com.example.hrautomation.presentation.model.colleagues.EmployeeItem
+import com.example.hrautomation.presentation.model.colleagues.EmployeeToEmployeeItemMapper
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -26,12 +26,17 @@ class EmployeeViewModel @Inject constructor(
         get() = _exception
     private val _exception = MutableLiveData<Throwable?>()
 
+    val isLoading: LiveData<Boolean>
+        get() = _isLoading
+    private val _isLoading = MutableLiveData<Boolean>(true)
+
     fun clearExceptionState() {
         _exception.postValue(null)
     }
 
     fun loadData(id: Long) {
         viewModelScope.launch(dispatchers.io) {
+            _isLoading.postValue(true)
             val result = repo.getEmployee(id)
             result.onSuccess { employee: Employee ->
                 _selectedEmployee.postValue(employeeToEmployeeItemMapper.convert(employee))
@@ -40,6 +45,7 @@ class EmployeeViewModel @Inject constructor(
                 Timber.e(exception)
                 _exception.postValue(exception)
             }
+            _isLoading.postValue(false)
         }
     }
 }

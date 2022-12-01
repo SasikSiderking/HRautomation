@@ -3,13 +3,14 @@ package com.example.hrautomation.di.network_modules
 import com.example.hrautomation.BuildConfig
 import com.example.hrautomation.data.api.AuthInterceptor
 import com.example.hrautomation.data.api.EmployeesApi
-import com.example.hrautomation.data.api.EmployeesApi2
 import com.example.hrautomation.data.api.FaqApi
 import com.example.hrautomation.data.api.FaqApi2
 import com.example.hrautomation.data.api.ProductApi
 import com.example.hrautomation.data.api.UserApi
 import com.example.hrautomation.data.api.UserApi2
 import com.example.hrautomation.data.repository.TokenRepositoryImpl
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -36,10 +37,11 @@ class RetrofitProvider @Inject constructor(private val tokenRepositoryImpl: Toke
         HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC)
     }
 
+    private val gson: Gson = GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX").create()
     private val retrofitBuilder by lazy {
         Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
     }
 
     val userApi: UserApi by lazy {
@@ -57,8 +59,6 @@ class RetrofitProvider @Inject constructor(private val tokenRepositoryImpl: Toke
             .build()
             .create()
     }
-
-    val employeesApi2: EmployeesApi2 by lazy { EmployeesApi2() }
 
     val faqApi: FaqApi by lazy {
         retrofitBuilder
