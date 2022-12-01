@@ -1,7 +1,6 @@
 package com.example.hrautomation.di.network_modules
 
 import com.example.hrautomation.data.api.EmployeesApi
-import com.example.hrautomation.data.api.EmployeesApi2
 import com.example.hrautomation.data.api.FaqApi
 import com.example.hrautomation.data.api.FaqApi2
 import com.example.hrautomation.data.api.ProductApi
@@ -31,12 +30,6 @@ class ApiModule {
     @Singleton
     fun provideEmployeesApi(retrofitProvider: RetrofitProvider): EmployeesApi {
         return retrofitProvider.employeesApi
-    }
-
-    @Provides
-    @Singleton
-    fun provideEmployeesApi2(retrofitProvider: RetrofitProvider): EmployeesApi2 {
-        return retrofitProvider.employeesApi2
     }
 
     @Provides

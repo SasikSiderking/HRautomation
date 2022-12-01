@@ -8,8 +8,8 @@ import com.example.hrautomation.R
 import com.example.hrautomation.data.dispatcher.CoroutineDispatchers
 import com.example.hrautomation.domain.repository.TokenRepository
 import com.example.hrautomation.domain.repository.UserRepository
-import com.example.hrautomation.presentation.model.EmployeeItem
-import com.example.hrautomation.presentation.model.EmployeeToEmployeeItemMapper
+import com.example.hrautomation.presentation.model.colleagues.EmployeeItem
+import com.example.hrautomation.presentation.model.colleagues.EmployeeToEmployeeItemMapper
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject

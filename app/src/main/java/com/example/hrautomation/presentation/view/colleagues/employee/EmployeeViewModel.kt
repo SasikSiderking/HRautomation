@@ -7,8 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.hrautomation.data.dispatcher.CoroutineDispatchers
 import com.example.hrautomation.domain.model.Employee
 import com.example.hrautomation.domain.repository.EmployeesRepository
-import com.example.hrautomation.presentation.model.EmployeeItem
-import com.example.hrautomation.presentation.model.EmployeeToEmployeeItemMapper
+import com.example.hrautomation.presentation.model.colleagues.EmployeeItem
+import com.example.hrautomation.presentation.model.colleagues.EmployeeToEmployeeItemMapper
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject

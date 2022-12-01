@@ -1,7 +1,7 @@
 package com.example.hrautomation.presentation.view.colleagues
 
-import com.example.hrautomation.presentation.model.ColleagueItem
+import com.example.hrautomation.presentation.model.colleagues.ListedColleagueItem
 
 fun interface OnColleagueClickListener {
-    fun onClick(colleague: ColleagueItem)
+    fun onClick(colleague: ListedColleagueItem)
 }

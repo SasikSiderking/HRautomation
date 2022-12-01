@@ -3,15 +3,16 @@ package com.example.hrautomation.di
 import com.example.hrautomation.data.model.EmployeesResponseToEmployeesMapper
 import com.example.hrautomation.data.model.FaqCategoryResponseToFaqCategoryMapper
 import com.example.hrautomation.data.model.FaqQuestionResponseToFaqQuestionMapper
+import com.example.hrautomation.data.model.ListEmployeeResponseToListEmployeeMapper
 import com.example.hrautomation.data.model.ProductCategoryResponseToProductCategoryMapper
 import com.example.hrautomation.data.model.ProductResponseToProductMapper
 import com.example.hrautomation.data.model.TokenResponseToTokenMapper
-import com.example.hrautomation.presentation.model.EmployeeToColleagueItemMapper
-import com.example.hrautomation.presentation.model.EmployeeToEmployeeItemMapper
 import com.example.hrautomation.presentation.model.FaqCategoryToFaqCategoryItemMapper
 import com.example.hrautomation.presentation.model.FaqQuestionToFaqQuestionItemMapper
 import com.example.hrautomation.presentation.model.ProductCategoryToProductCategoryItemMapper
 import com.example.hrautomation.presentation.model.ProductToListedProductItemMapper
+import com.example.hrautomation.presentation.model.colleagues.EmployeeToColleagueItemMapper
+import com.example.hrautomation.presentation.model.colleagues.EmployeeToEmployeeItemMapper
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
@@ -66,4 +67,8 @@ class MapperModule {
     @Reusable
     @Provides
     fun provideTokenResponseToTokenMapper(): TokenResponseToTokenMapper = TokenResponseToTokenMapper()
+
+    @Reusable
+    @Provides
+    fun provideListEmployeeResponseToListEmployeeMapper(): ListEmployeeResponseToListEmployeeMapper = ListEmployeeResponseToListEmployeeMapper()
 }

@@ -53,8 +53,8 @@ class ColleaguesFragment : Fragment() {
         _binding = FragmentColleaguesBinding.inflate(inflater, container, false)
 
         initUi()
+
         viewModel.data.observe(viewLifecycleOwner, colleaguesObserver)
-        viewModel.isLoading.observe(viewLifecycleOwner, isLoadingObserver)
         return binding.root
     }
 
@@ -76,9 +76,6 @@ class ColleaguesFragment : Fragment() {
     private val colleaguesObserver = Observer<List<BaseListItem>> { updatedDataSet ->
         adapter.update(updatedDataSet)
         contentLoadingSwitcher.switchState(ContentLoadingState.CONTENT, SwitchAnimationParams(delay = 500L))
-    }
-    private val isLoadingObserver = Observer<Boolean> { isLoading ->
-        binding.progressBar.isVisible = isLoading
     }
 
     override fun onDestroyView() {
@@ -114,6 +111,5 @@ class ColleaguesFragment : Fragment() {
 
             clearText.setOnClickListener(View.OnClickListener { editSearch.text.clear() })
         }
-
     }
 }

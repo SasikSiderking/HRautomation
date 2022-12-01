@@ -1,4 +1,4 @@
-package com.example.hrautomation.presentation.model
+package com.example.hrautomation.presentation.model.colleagues
 
 import com.example.hrautomation.domain.model.Employee
 import com.example.hrautomation.utils.Mapper

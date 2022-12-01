@@ -3,7 +3,6 @@ package com.example.hrautomation.di.network_modules
 import com.example.hrautomation.BuildConfig
 import com.example.hrautomation.data.api.AuthInterceptor
 import com.example.hrautomation.data.api.EmployeesApi
-import com.example.hrautomation.data.api.EmployeesApi2
 import com.example.hrautomation.data.api.FaqApi
 import com.example.hrautomation.data.api.FaqApi2
 import com.example.hrautomation.data.api.ProductApi
@@ -60,8 +59,6 @@ class RetrofitProvider @Inject constructor(private val tokenRepositoryImpl: Toke
             .build()
             .create()
     }
-
-    val employeesApi2: EmployeesApi2 by lazy { EmployeesApi2() }
 
     val faqApi: FaqApi by lazy {
         retrofitBuilder

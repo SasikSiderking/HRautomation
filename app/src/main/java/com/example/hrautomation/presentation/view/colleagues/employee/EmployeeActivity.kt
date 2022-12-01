@@ -12,7 +12,7 @@ import androidx.lifecycle.Observer
 import com.example.hrautomation.R
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.ActivityEmployeeBinding
-import com.example.hrautomation.presentation.model.EmployeeItem
+import com.example.hrautomation.presentation.model.colleagues.EmployeeItem
 import com.example.hrautomation.utils.ViewModelFactory
 import javax.inject.Inject
 
