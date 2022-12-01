@@ -21,7 +21,7 @@ class FaqViewModel @Inject constructor(
 
     val data: LiveData<List<BaseListItem>>
         get() = _data
-    private val _data = MutableLiveData<List<BaseListItem>>(emptyList())
+    private val _data = MutableLiveData<List<BaseListItem>>()
 
     val exception: LiveData<Throwable?>
         get() = _exception

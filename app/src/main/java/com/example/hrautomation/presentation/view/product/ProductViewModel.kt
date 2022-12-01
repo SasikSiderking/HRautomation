@@ -34,11 +34,11 @@ class ProductViewModel @Inject constructor(
 
     val data: LiveData<List<BaseListItem>>
         get() = _data
-    private val _data = MutableLiveData<List<BaseListItem>>(emptyList())
+    private val _data = MutableLiveData<List<BaseListItem>>()
 
     val categories: LiveData<List<ProductCategoryItem>>
         get() = _categories
-    private val _categories = MutableLiveData<List<ProductCategoryItem>>(emptyList())
+    private val _categories = MutableLiveData<List<ProductCategoryItem>>()
 
     val isLoading: LiveData<Boolean>
         get() = _isLoading
