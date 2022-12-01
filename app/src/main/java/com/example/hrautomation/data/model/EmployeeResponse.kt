@@ -8,12 +8,11 @@ data class EmployeeResponse(
     val id: Long,
     val username: String,
     val email: String,
-    var project: String,
+    val project: String,
     val post: String,
-    var about: String,
+    val about: String,
     val admin: String,
     val birthDate: Date,
-    val pictureUrl: String
 )
 
 class EmployeesResponseToEmployeesMapper : Mapper<EmployeeResponse, Employee> {

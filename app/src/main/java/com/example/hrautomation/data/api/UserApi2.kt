@@ -25,8 +25,7 @@ class UserApi2 : UserApi {
                 "Oleg-developer",
                 "It's wensday, my dudes",
                 "Not admin",
-                Date(2001, 10, 1),
-                "https://studybreaks.com/wp-content/uploads/2020/09/557D69DA-1FD2-494E-826B-C7E98FEF99BA_1_201_a-e1600797919133.jpeg"
+                Date(2001, 10, 1)
             )
         )
     }
