@@ -10,7 +10,6 @@ import com.example.hrautomation.domain.model.employees.ListEmployee
 import com.example.hrautomation.domain.repository.EmployeesRepository
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.model.colleagues.EmployeeToColleagueItemMapper
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -32,7 +31,6 @@ class ColleaguesViewModel @Inject constructor(
 
     private fun loadData() {
         viewModelScope.launch(dispatchers.io) {
-            delay(10000)
             reservedData = repo.getEmployeeList(PAGE_NUMBER, PAGE_SIZE, ColleaguesSortBy.NAME)
             _data.postValue(reservedData.map { employeesToColleagueItemMapper.convert(it) })
         }
