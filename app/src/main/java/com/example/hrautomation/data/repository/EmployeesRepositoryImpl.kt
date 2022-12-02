@@ -2,9 +2,9 @@ package com.example.hrautomation.data.repository
 
 import android.util.Log
 import com.example.hrautomation.data.api.EmployeesApi
-import com.example.hrautomation.data.model.EmployeesResponseToEmployeesMapper
-import com.example.hrautomation.data.model.ListEmployeeResponse
-import com.example.hrautomation.data.model.ListEmployeeResponseToListEmployeeMapper
+import com.example.hrautomation.data.model.employee.EmployeesResponseToEmployeesMapper
+import com.example.hrautomation.data.model.employee.ListEmployeeResponse
+import com.example.hrautomation.data.model.employee.ListEmployeeResponseToListEmployeeMapper
 import com.example.hrautomation.domain.model.Employee
 import com.example.hrautomation.domain.model.employees.ColleaguesSortBy
 import com.example.hrautomation.domain.model.employees.ListEmployee

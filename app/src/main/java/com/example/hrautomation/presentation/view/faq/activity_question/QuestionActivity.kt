@@ -14,6 +14,10 @@ import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.ActivityQuestionBinding
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.utils.ViewModelFactory
+import com.example.hrautomation.utils.ui.switcher.ContentLoadingSettings
+import com.example.hrautomation.utils.ui.switcher.ContentLoadingState
+import com.example.hrautomation.utils.ui.switcher.ContentLoadingStateSwitcher
+import com.example.hrautomation.utils.ui.switcher.base.SwitchAnimationParams
 import javax.inject.Inject
 
 class QuestionActivity : AppCompatActivity() {
@@ -31,6 +35,8 @@ class QuestionActivity : AppCompatActivity() {
     private val viewModel: QuestionViewModel by viewModels {
         viewModelFactory
     }
+
+    private val contentLoadingSwitcher: ContentLoadingStateSwitcher = ContentLoadingStateSwitcher()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,6 +68,7 @@ class QuestionActivity : AppCompatActivity() {
 
     private val questionsObserver = Observer<List<BaseListItem>> { newItems ->
         adapter.update(newItems)
+        contentLoadingSwitcher.switchState(ContentLoadingState.CONTENT, SwitchAnimationParams(delay = 500L))
     }
 
     private val exceptionObserver = Observer<Throwable?> { exception ->
@@ -76,8 +83,17 @@ class QuestionActivity : AppCompatActivity() {
     }
 
     private fun initUi() {
-        adapter = QuestionAdapter()
-        binding.questionRecyclerview.adapter = adapter
+        with(binding) {
+            contentLoadingSwitcher.setup(
+                ContentLoadingSettings(
+                    contentViews = listOf(questionRecyclerview),
+                    loadingViews = listOf(progressBar),
+                    initState = ContentLoadingState.LOADING
+                )
+            )
+            adapter = QuestionAdapter()
+            binding.questionRecyclerview.adapter = adapter
+        }
 
         viewModel.data.observe(this, questionsObserver)
         viewModel.exception.observe(this, exceptionObserver)
