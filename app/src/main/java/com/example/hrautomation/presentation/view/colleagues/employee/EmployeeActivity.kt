@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
 import com.example.hrautomation.R
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.ActivityEmployeeBinding
@@ -63,11 +64,18 @@ class EmployeeActivity : AppCompatActivity() {
     }
 
     private val selectedEmployeeObserver = Observer<EmployeeItem> { colleague ->
-        binding.employeeFullName.setText(colleague.name)
-        binding.employeeFullEmail.setText(colleague.email)
-        binding.employeeFullPost.setText(colleague.post)
-        binding.employeeFullProject.setText(colleague.project)
-        binding.employeeFullAbout.setText(colleague.info)
+        with(binding) {
+            Glide.with(employeeImageView)
+                .load("https://cdn.mos.cms.futurecdn.net/PzPq6Pbn5RqgrWunhEx6rg.jpg")
+                .centerCrop()
+                .placeholder(R.drawable.ic_launcher_foreground)
+                .into(employeeImageView)
+            employeeFullName.setText(colleague.name)
+            employeeFullEmail.setText(colleague.email)
+            employeeFullPost.setText(colleague.post)
+            employeeFullProject.setText(colleague.project)
+            employeeFullAbout.setText(colleague.info)
+        }
         supportActionBar?.title = colleague.name
 
         contentLoadingSwitcher.switchState(ContentLoadingState.CONTENT, SwitchAnimationParams(delay = 500L))
@@ -77,6 +85,7 @@ class EmployeeActivity : AppCompatActivity() {
         exception?.let {
             Toast.makeText(this, R.string.toast_overall_error, Toast.LENGTH_LONG).show()
             viewModel.clearExceptionState()
+            contentLoadingSwitcher.switchState(ContentLoadingState.ERROR, SwitchAnimationParams(delay = 500L))
         }
     }
 
@@ -85,10 +94,15 @@ class EmployeeActivity : AppCompatActivity() {
             contentLoadingSwitcher.setup(
                 ContentLoadingSettings(
                     contentViews = listOf(scrollView2),
-                    loadingViews = listOf(progressBar),
+                    errorViews = listOf(reusableReload.reusableReload),
+                    loadingViews = listOf(reusableLoading.progressBar),
                     initState = ContentLoadingState.LOADING
                 )
             )
+            reusableReload.reloadButton.setOnClickListener {
+                viewModel.reload(selectedEmployeeId)
+                contentLoadingSwitcher.switchState(ContentLoadingState.LOADING, SwitchAnimationParams(delay = 500L))
+            }
         }
         viewModel.selectedEmployee.observe(this, selectedEmployeeObserver)
         viewModel.exception.observe(this, exceptionObserver)

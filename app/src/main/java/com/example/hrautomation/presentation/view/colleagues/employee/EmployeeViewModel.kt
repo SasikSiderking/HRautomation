@@ -30,6 +30,10 @@ class EmployeeViewModel @Inject constructor(
         _exception.postValue(null)
     }
 
+    fun reload(id: Long) {
+        loadData(id)
+    }
+
     fun loadData(id: Long) {
         viewModelScope.launch(dispatchers.io) {
             val result = repo.getEmployee(id)

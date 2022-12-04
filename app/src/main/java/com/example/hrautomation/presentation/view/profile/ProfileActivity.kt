@@ -7,8 +7,8 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
 import com.example.hrautomation.R
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.ActivityProfileBinding
@@ -61,11 +61,18 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private val employeeObserver = Observer<EmployeeItem> { employeeItem ->
-        binding.employeeFullName.setText(employeeItem.name)
-        binding.employeeFullEmail.setText(employeeItem.email)
-        binding.employeeFullPost.setText(employeeItem.post)
-        binding.employeeFullProject.setText(employeeItem.project)
-        binding.employeeFullAbout.setText(employeeItem.info)
+        with(binding) {
+            Glide.with(employeeImageView)
+                .load("https://cdn.mos.cms.futurecdn.net/PzPq6Pbn5RqgrWunhEx6rg.jpg")
+                .centerCrop()
+                .placeholder(R.drawable.ic_launcher_foreground)
+                .into(employeeImageView)
+            employeeFullName.setText(employeeItem.name)
+            employeeFullEmail.setText(employeeItem.email)
+            employeeFullPost.setText(employeeItem.post)
+            employeeFullProject.setText(employeeItem.project)
+            employeeFullAbout.setText(employeeItem.info)
+        }
 
         contentLoadingSwitcher.switchState(ContentLoadingState.CONTENT, SwitchAnimationParams(delay = 500L))
     }
@@ -74,10 +81,8 @@ class ProfileActivity : AppCompatActivity() {
         exception?.let {
             Toast.makeText(this, R.string.toast_overall_error, Toast.LENGTH_SHORT).show()
             viewModel.clearExceptionState()
+            contentLoadingSwitcher.switchState(ContentLoadingState.ERROR, SwitchAnimationParams(delay = 500L))
         }
-    }
-    private val isLoadingObserver = Observer<Boolean> { isLoading ->
-        binding.progressBar.isVisible = isLoading
     }
 
     private val messageObserver = Observer<Int?> { stringId ->
@@ -92,7 +97,8 @@ class ProfileActivity : AppCompatActivity() {
             contentLoadingSwitcher.setup(
                 ContentLoadingSettings(
                     contentViews = listOf(scrollView3),
-                    loadingViews = listOf(progressBar),
+                    errorViews = listOf(reusableReload.reusableReload),
+                    loadingViews = listOf(reusableLoading.progressBar),
                     initState = ContentLoadingState.LOADING
                 )
             )
@@ -103,11 +109,15 @@ class ProfileActivity : AppCompatActivity() {
                     employeeFullAbout.text.toString()
                 )
             }
+
+            reusableReload.reloadButton.setOnClickListener {
+                viewModel.reload()
+                contentLoadingSwitcher.switchState(ContentLoadingState.LOADING, SwitchAnimationParams(delay = 500L))
+            }
         }
         viewModel.data.observe(this, employeeObserver)
         viewModel.exception.observe(this, exceptionObserver)
         viewModel.message.observe(this, messageObserver)
-        viewModel.isLoading.observe(this, isLoadingObserver)
     }
 
     companion object {

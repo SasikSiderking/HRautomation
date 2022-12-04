@@ -32,10 +32,6 @@ class ProfileViewModel @Inject constructor(
         get() = _message
     private val _message = MutableLiveData<Int?>()
 
-    val isLoading: LiveData<Boolean>
-        get() = _isLoading
-    private val _isLoading = MutableLiveData<Boolean>(true)
-
     fun clearExceptionState() {
         _exception.postValue(null)
     }
@@ -44,13 +40,16 @@ class ProfileViewModel @Inject constructor(
         _message.postValue(null)
     }
 
+    fun reload() {
+        loadData()
+    }
+
     init {
         loadData()
     }
 
     private fun loadData() {
         viewModelScope.launch(dispatchers.io) {
-            _isLoading.postValue(true)
             tokenRepo.getUserId()?.let { userId: Long ->
                 userRepo.getUser(userId)
                     .onSuccess { user ->
@@ -63,13 +62,11 @@ class ProfileViewModel @Inject constructor(
             } ?: run {
                 throw IllegalStateException("No auth token")
             }
-            _isLoading.postValue(false)
         }
     }
 
     fun saveData(project: String, info: String) {
         viewModelScope.launch(dispatchers.io) {
-            _isLoading.postValue(true)
             userRepo.saveUser(project, info)
                 .onSuccess {
                     _message.postValue(R.string.profile_save_success)
@@ -78,7 +75,6 @@ class ProfileViewModel @Inject constructor(
                     _message.postValue(R.string.toast_overall_error)
                     Timber.e(exception)
                 }
-            _isLoading.postValue(false)
         }
     }
 }

@@ -37,6 +37,10 @@ class ColleaguesViewModel @Inject constructor(
         _exception.postValue(null)
     }
 
+    fun reload() {
+        loadData()
+    }
+
     private fun loadData() {
         viewModelScope.launch(dispatchers.io) {
             repo.getEmployeeList(PAGE_NUMBER, PAGE_SIZE, ColleaguesSortBy.NAME)

@@ -7,7 +7,6 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.example.hrautomation.R
 import com.example.hrautomation.app.App
@@ -75,11 +74,8 @@ class QuestionActivity : AppCompatActivity() {
         exception?.let {
             Toast.makeText(this, R.string.toast_overall_error, Toast.LENGTH_LONG).show()
             viewModel.clearExceptionState()
+            contentLoadingSwitcher.switchState(ContentLoadingState.ERROR, SwitchAnimationParams(delay = 500L))
         }
-    }
-
-    private val isLoadingObserver = Observer<Boolean> { isLoading ->
-        binding.progressBar.isVisible = isLoading
     }
 
     private fun initUi() {
@@ -87,17 +83,22 @@ class QuestionActivity : AppCompatActivity() {
             contentLoadingSwitcher.setup(
                 ContentLoadingSettings(
                     contentViews = listOf(questionRecyclerview),
-                    loadingViews = listOf(progressBar),
+                    errorViews = listOf(reusableReload.reusableReload),
+                    loadingViews = listOf(reusableLoading.progressBar),
                     initState = ContentLoadingState.LOADING
                 )
             )
             adapter = QuestionAdapter()
             binding.questionRecyclerview.adapter = adapter
+
+            reusableReload.reloadButton.setOnClickListener {
+                viewModel.reload(selectedCategoryId)
+                contentLoadingSwitcher.switchState(ContentLoadingState.LOADING, SwitchAnimationParams(delay = 500L))
+            }
         }
 
         viewModel.data.observe(this, questionsObserver)
         viewModel.exception.observe(this, exceptionObserver)
-        viewModel.isLoading.observe(this, isLoadingObserver)
     }
 
     companion object {
