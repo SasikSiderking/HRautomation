@@ -14,6 +14,10 @@ import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.ActivityProfileBinding
 import com.example.hrautomation.presentation.model.colleagues.EmployeeItem
 import com.example.hrautomation.utils.ViewModelFactory
+import com.example.hrautomation.utils.ui.switcher.ContentLoadingSettings
+import com.example.hrautomation.utils.ui.switcher.ContentLoadingState
+import com.example.hrautomation.utils.ui.switcher.ContentLoadingStateSwitcher
+import com.example.hrautomation.utils.ui.switcher.base.SwitchAnimationParams
 import javax.inject.Inject
 
 class ProfileActivity : AppCompatActivity() {
@@ -28,6 +32,8 @@ class ProfileActivity : AppCompatActivity() {
     private val viewModel: ProfileViewModel by viewModels {
         viewModelFactory
     }
+
+    private val contentLoadingSwitcher: ContentLoadingStateSwitcher = ContentLoadingStateSwitcher()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +66,8 @@ class ProfileActivity : AppCompatActivity() {
         binding.employeeFullPost.setText(employeeItem.post)
         binding.employeeFullProject.setText(employeeItem.project)
         binding.employeeFullAbout.setText(employeeItem.info)
+
+        contentLoadingSwitcher.switchState(ContentLoadingState.CONTENT, SwitchAnimationParams(delay = 500L))
     }
 
     private val exceptionObserver = Observer<Throwable?> { exception ->
@@ -81,6 +89,14 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun initUi() {
         with(binding) {
+            contentLoadingSwitcher.setup(
+                ContentLoadingSettings(
+                    contentViews = listOf(scrollView3),
+                    loadingViews = listOf(progressBar),
+                    initState = ContentLoadingState.LOADING
+                )
+            )
+
             saveButton.setOnClickListener { _ ->
                 viewModel.saveData(
                     employeeFullProject.text.toString(),

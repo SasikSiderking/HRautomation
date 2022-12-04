@@ -15,6 +15,10 @@ import com.example.hrautomation.databinding.FragmentFaqBinding
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.view.faq.activity_question.QuestionActivity
 import com.example.hrautomation.utils.ViewModelFactory
+import com.example.hrautomation.utils.ui.switcher.ContentLoadingSettings
+import com.example.hrautomation.utils.ui.switcher.ContentLoadingState
+import com.example.hrautomation.utils.ui.switcher.ContentLoadingStateSwitcher
+import com.example.hrautomation.utils.ui.switcher.base.SwitchAnimationParams
 import javax.inject.Inject
 
 class FaqFragment : Fragment() {
@@ -31,6 +35,8 @@ class FaqFragment : Fragment() {
     private val viewModel: FaqViewModel by viewModels {
         viewModelFactory
     }
+
+    private val contentLoadingSwitcher: ContentLoadingStateSwitcher = ContentLoadingStateSwitcher()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +60,15 @@ class FaqFragment : Fragment() {
     }
 
     private fun initUi() {
+        with(binding) {
+            contentLoadingSwitcher.setup(
+                ContentLoadingSettings(
+                    contentViews = listOf(faqRecyclerview),
+                    loadingViews = listOf(progressBar),
+                    initState = ContentLoadingState.LOADING
+                )
+            )
+        }
         adapter = FaqAdapter(OnFaqCategoryClickListener { id: Long, name: String ->
             startActivity(QuestionActivity.createIntent(requireContext(), id, name))
         })
@@ -66,6 +81,7 @@ class FaqFragment : Fragment() {
 
     private val categoryObserver = Observer<List<BaseListItem>> { newItems ->
         adapter.update(newItems)
+        contentLoadingSwitcher.switchState(ContentLoadingState.CONTENT, SwitchAnimationParams(delay = 500L))
     }
 
     private val exceptionObserver = Observer<Throwable?> { exception ->
