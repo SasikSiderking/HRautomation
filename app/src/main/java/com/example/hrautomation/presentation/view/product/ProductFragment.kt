@@ -19,6 +19,10 @@ import com.example.hrautomation.databinding.FragmentProductBinding
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.model.ProductCategoryItem
 import com.example.hrautomation.utils.ViewModelFactory
+import com.example.hrautomation.utils.ui.switcher.ContentLoadingSettings
+import com.example.hrautomation.utils.ui.switcher.ContentLoadingState
+import com.example.hrautomation.utils.ui.switcher.ContentLoadingStateSwitcher
+import com.example.hrautomation.utils.ui.switcher.base.SwitchAnimationParams
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import javax.inject.Inject
@@ -38,6 +42,8 @@ class ProductFragment : Fragment() {
     private val viewModel: ProductViewModel by viewModels {
         viewModelFactory
     }
+
+    private val contentLoadingSwitcher: ContentLoadingStateSwitcher = ContentLoadingStateSwitcher()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,11 +69,21 @@ class ProductFragment : Fragment() {
     }
 
     private fun initUi() {
-        adapter = ProductAdapter(OnProductClickListener { id: Long, name: String ->
-            showOrderDialog(id, name)
-        })
-        binding.productRecyclerview.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        binding.productRecyclerview.adapter = adapter
+        with(binding) {
+            contentLoadingSwitcher.setup(
+                ContentLoadingSettings(
+                    contentViews = listOf(productRecyclerview),
+                    loadingViews = listOf(progressBar),
+                    initState = ContentLoadingState.LOADING
+                )
+            )
+
+            adapter = ProductAdapter(OnProductClickListener { id: Long, name: String ->
+                showOrderDialog(id, name)
+            })
+            binding.productRecyclerview.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            binding.productRecyclerview.adapter = adapter
+        }
 
         viewModel.data.observe(viewLifecycleOwner, productObserver)
         viewModel.categories.observe(viewLifecycleOwner, categoriesObserver)
@@ -78,6 +94,7 @@ class ProductFragment : Fragment() {
 
     private val productObserver = Observer<List<BaseListItem>> { newItems ->
         adapter.update(newItems)
+        contentLoadingSwitcher.switchState(ContentLoadingState.CONTENT, SwitchAnimationParams(delay = 500L))
     }
     private val categoriesObserver = Observer<List<ProductCategoryItem>> { newItems ->
         fillChipGroup(newItems)

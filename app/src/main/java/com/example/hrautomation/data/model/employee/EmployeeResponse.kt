@@ -1,4 +1,4 @@
-package com.example.hrautomation.data.model
+package com.example.hrautomation.data.model.employee
 
 import com.example.hrautomation.domain.model.Employee
 import com.example.hrautomation.utils.Mapper

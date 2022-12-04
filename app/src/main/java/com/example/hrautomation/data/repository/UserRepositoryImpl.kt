@@ -1,10 +1,10 @@
 package com.example.hrautomation.data.repository
 
 import com.example.hrautomation.data.api.UserApi
-import com.example.hrautomation.data.model.EmployeeResponse
-import com.example.hrautomation.data.model.EmployeesResponseToEmployeesMapper
 import com.example.hrautomation.data.model.TokenResponse
 import com.example.hrautomation.data.model.TokenResponseToTokenMapper
+import com.example.hrautomation.data.model.employee.EmployeeResponse
+import com.example.hrautomation.data.model.employee.EmployeesResponseToEmployeesMapper
 import com.example.hrautomation.domain.model.Employee
 import com.example.hrautomation.domain.model.Token
 import com.example.hrautomation.domain.repository.TokenRepository
