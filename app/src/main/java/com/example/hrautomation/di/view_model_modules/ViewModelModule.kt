@@ -9,7 +9,6 @@ import com.example.hrautomation.presentation.view.loading.LoadingActivityViewMod
 import com.example.hrautomation.presentation.view.loading.activity_login.LoginActivityViewModel
 import com.example.hrautomation.presentation.view.loading.code.CodeLoginViewModel
 import com.example.hrautomation.presentation.view.loading.email.EmailLoginViewModel
-import com.example.hrautomation.presentation.view.meeting_room.MeetingRoomViewModel
 import com.example.hrautomation.presentation.view.product.ProductViewModel
 import com.example.hrautomation.presentation.view.profile.ProfileViewModel
 import dagger.Binds
@@ -22,11 +21,6 @@ interface ViewModelModule {
     @IntoMap
     @ViewModelKey(ProductViewModel::class)
     fun bindProductFragmentViewModel(productViewModel: ProductViewModel): ViewModel
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(MeetingRoomViewModel::class)
-    fun bindMeetingRoomViewModel(meetingRoomViewModel: MeetingRoomViewModel): ViewModel
 
     @Binds
     @IntoMap
