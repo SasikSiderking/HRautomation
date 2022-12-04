@@ -22,7 +22,7 @@ fun CoroutineScope.tryLaunch(
     }
 }
 
-fun <T> runSuspendCatching(block: () -> T): Result<T> {
+inline fun <T> runSuspendCatching(block: () -> T): Result<T> {
     return try {
         Result.success(block())
     } catch (e: CancellationException) {

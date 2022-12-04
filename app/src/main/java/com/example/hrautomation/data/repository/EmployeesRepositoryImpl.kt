@@ -1,6 +1,5 @@
 package com.example.hrautomation.data.repository
 
-import android.util.Log
 import com.example.hrautomation.data.api.EmployeesApi
 import com.example.hrautomation.data.model.employee.EmployeesResponseToEmployeesMapper
 import com.example.hrautomation.data.model.employee.ListEmployeeResponse
@@ -9,8 +8,6 @@ import com.example.hrautomation.domain.model.Employee
 import com.example.hrautomation.domain.model.employees.ColleaguesSortBy
 import com.example.hrautomation.domain.model.employees.ListEmployee
 import com.example.hrautomation.domain.repository.EmployeesRepository
-import okio.IOException
-import retrofit2.HttpException
 import javax.inject.Inject
 
 class EmployeesRepositoryImpl @Inject constructor(
@@ -23,13 +20,7 @@ class EmployeesRepositoryImpl @Inject constructor(
     private var employeesResponse: List<ListEmployeeResponse> = emptyList()
 
     override suspend fun getEmployeeList(pageNumber: Int, size: Int, sortBy: ColleaguesSortBy): List<ListEmployee> {
-        try {
-            employeesResponse = api.getEmployeesResponse(pageNumber, size, sortBy.sortBy).body() ?: emptyList()
-        } catch (e: IOException) {
-            Log.e("exception", "Where Internet?")
-        } catch (e: HttpException) {
-            Log.e("exception", "Unexpected response")
-        }
+        employeesResponse = api.getEmployeesResponse(pageNumber, size, sortBy.sortBy).body() ?: emptyList()
         return employeesResponse.map { listEmployeeResponseToListEmployeeMapper.convert(it) }
     }
 
