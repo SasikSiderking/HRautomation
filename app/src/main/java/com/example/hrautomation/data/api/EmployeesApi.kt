@@ -2,7 +2,6 @@ package com.example.hrautomation.data.api
 
 import com.example.hrautomation.data.model.EmployeeResponse
 import com.example.hrautomation.data.model.ListEmployeeResponse
-import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -13,8 +12,8 @@ interface EmployeesApi {
         @Query("pageNumber") pageNumber: Int,
         @Query("size") size: Int,
         @Query("sortBy") sortBy: String
-    ): Response<List<ListEmployeeResponse>>
+    ): Result<List<ListEmployeeResponse>>
 
     @GET("/users/{id}")
-    suspend fun getEmployeeResponse(@Path("id") id: Long): Response<EmployeeResponse>
+    suspend fun getEmployeeResponse(@Path("id") id: Long): Result<EmployeeResponse>
 }

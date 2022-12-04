@@ -6,7 +6,7 @@ import com.example.hrautomation.data.model.FaqQuestionResponseToFaqQuestionMappe
 import com.example.hrautomation.domain.model.FaqCategory
 import com.example.hrautomation.domain.model.FaqQuestion
 import com.example.hrautomation.domain.repository.FaqRepository
-import com.example.hrautomation.utils.asResult
+import com.example.hrautomation.utils.asDomain
 import javax.inject.Inject
 
 class FaqRepositoryImpl @Inject constructor(
@@ -16,13 +16,13 @@ class FaqRepositoryImpl @Inject constructor(
 ) : FaqRepository {
 
     override suspend fun getFaqCategoryList(): Result<List<FaqCategory>> {
-        return api.getFaqCategoriesResponse().asResult { faqCategoryList ->
+        return api.getFaqCategoriesResponse().asDomain { faqCategoryList ->
             faqCategoryList.map { faqCategoryResponseToFaqCategoryMapper.convert(it) }
         }
     }
 
     override suspend fun getFaqQuestionList(id: Long): Result<List<FaqQuestion>> {
-        return api.getFaqQuestionsResponse(id).asResult { faqQuestionList ->
+        return api.getFaqQuestionsResponse(id).asDomain { faqQuestionList ->
             faqQuestionList.map { faqQuestionResponseToFaqQuestionMapper.convert(it) }
         }
     }

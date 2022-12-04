@@ -9,7 +9,7 @@ interface ProductRepository {
 
     suspend fun getProductList(pageNumber: Int, size: Int, sortBy: ProductSortBy): Result<List<Product>>
 
-    suspend fun orderProduct(id: Long): Result<Boolean>
+    suspend fun orderProduct(id: Long): Result<Unit>
 
     suspend fun getProductCategoryList(): Result<List<ProductCategory>>
 

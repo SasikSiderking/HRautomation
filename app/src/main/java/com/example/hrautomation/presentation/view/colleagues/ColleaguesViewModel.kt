@@ -23,16 +23,29 @@ class ColleaguesViewModel @Inject constructor(
         get() = _data
     private val _data = MutableLiveData<List<BaseListItem>>()
 
+    val exception: LiveData<Throwable?>
+        get() = _exception
+    private val _exception = MutableLiveData<Throwable?>()
+
     private var reservedData: List<ListEmployee> = emptyList()
 
     init {
         loadData()
     }
 
+    fun clearExceptionState() {
+        _exception.postValue(null)
+    }
+
     private fun loadData() {
         viewModelScope.launch(dispatchers.io) {
-            reservedData = repo.getEmployeeList(PAGE_NUMBER, PAGE_SIZE, ColleaguesSortBy.NAME)
-            _data.postValue(reservedData.map { employeesToColleagueItemMapper.convert(it) })
+            repo.getEmployeeList(PAGE_NUMBER, PAGE_SIZE, ColleaguesSortBy.NAME)
+                .onSuccess { employeeList ->
+                    _data.postValue(employeeList.map { employeesToColleagueItemMapper.convert(it) })
+                }
+                .onFailure { exception: Throwable ->
+                    _exception.postValue(exception)
+                }
         }
     }
 
@@ -51,7 +64,7 @@ class ColleaguesViewModel @Inject constructor(
     }
 
     private companion object {
-        const val PAGE_SIZE = 20
-        const val PAGE_NUMBER = 1
+        const val PAGE_SIZE = 100
+        const val PAGE_NUMBER = 0
     }
 }

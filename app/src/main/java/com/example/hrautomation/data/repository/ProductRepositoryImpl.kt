@@ -9,7 +9,7 @@ import com.example.hrautomation.domain.model.Product
 import com.example.hrautomation.domain.model.ProductCategory
 import com.example.hrautomation.domain.model.ProductSortBy
 import com.example.hrautomation.domain.repository.ProductRepository
-import com.example.hrautomation.utils.asResult
+import com.example.hrautomation.utils.asDomain
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -21,25 +21,23 @@ class ProductRepositoryImpl @Inject constructor(
 ) : ProductRepository {
 
     override suspend fun getProductList(pageNumber: Int, size: Int, sortBy: ProductSortBy): Result<List<Product>> {
-        return productApi.getProductResponseList(pageNumber, size, sortBy.sortBy).asResult { productList: List<ProductResponse> ->
+        return productApi.getProductResponseList(pageNumber, size, sortBy.sortBy).asDomain { productList: List<ProductResponse> ->
             productList.map { productResponseToProductMapper.convert(it) }
         }
     }
 
-    override suspend fun orderProduct(id: Long): Result<Boolean> {
-        return productApi.orderProduct(id).asResult { isProductOrdered: Boolean ->
-            isProductOrdered
-        }
+    override suspend fun orderProduct(id: Long): Result<Unit> {
+        return productApi.orderProduct(id).asDomain { }
     }
 
     override suspend fun getProductCategoryList(): Result<List<ProductCategory>> {
-        return productApi.getProductCategoriesResponse().asResult { productCategoryList: List<ProductCategoryResponse> ->
+        return productApi.getProductCategoriesResponse().asDomain { productCategoryList: List<ProductCategoryResponse> ->
             productCategoryList.map { productCategoryResponseToProductCategoryMapper.convert(it) }
         }
     }
 
     override suspend fun getProductsByCategory(categoryId: Long): Result<List<Product>> {
-        return productApi.getProductsByCategory(categoryId).asResult { productList: List<ProductResponse> ->
+        return productApi.getProductsByCategory(categoryId).asDomain { productList: List<ProductResponse> ->
             productList.map { productResponseToProductMapper.convert(it) }
         }
     }

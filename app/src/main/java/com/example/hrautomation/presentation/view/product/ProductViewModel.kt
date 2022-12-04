@@ -111,7 +111,7 @@ class ProductViewModel @Inject constructor(
     }
 
     private companion object {
-        const val PAGE_SIZE = 999
-        const val PAGE_NUMBER = 1
+        const val PAGE_SIZE = 100
+        const val PAGE_NUMBER = 0
     }
 }
