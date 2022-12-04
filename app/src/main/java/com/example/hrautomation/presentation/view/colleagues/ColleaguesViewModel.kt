@@ -41,6 +41,7 @@ class ColleaguesViewModel @Inject constructor(
         viewModelScope.launch(dispatchers.io) {
             repo.getEmployeeList(PAGE_NUMBER, PAGE_SIZE, ColleaguesSortBy.NAME)
                 .onSuccess { employeeList ->
+                    reservedData = employeeList
                     _data.postValue(employeeList.map { employeesToColleagueItemMapper.convert(it) })
                 }
                 .onFailure { exception: Throwable ->
