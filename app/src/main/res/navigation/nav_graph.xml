@@ -3,18 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/meetingRoomFragment">
-
-    <fragment
-        android:id="@+id/meetingRoomFragment"
-        android:name="com.example.hrautomation.presentation.view.meeting_room.MeetingRoomFragment"
-        android:label="@string/meeting_room"
-        tools:layout="@layout/fragment_meeting_room" />
-    <fragment
-        android:id="@+id/eatingFragment"
-        android:name="com.example.hrautomation.presentation.view.eating.EatingFragment"
-        android:label="@string/eating"
-        tools:layout="@layout/fragment_eating" />
+    app:startDestination="@id/colleaguesFragment">
     <fragment
         android:id="@+id/faqFragment"
         android:name="com.example.hrautomation.presentation.view.faq.FaqFragment"

@@ -40,10 +40,8 @@ class MainActivity : AppCompatActivity() {
         val appBarConfiguration =
             AppBarConfiguration(
                 setOf(
-                    R.id.meetingRoomFragment,
                     R.id.colleaguesFragment,
                     R.id.productFragment,
-                    R.id.eatingFragment,
                     R.id.faqFragment
                 )
             )
