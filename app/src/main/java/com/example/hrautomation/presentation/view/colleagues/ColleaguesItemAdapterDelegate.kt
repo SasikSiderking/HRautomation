@@ -32,7 +32,7 @@ class ColleaguesItemAdapterDelegate(private val onColleagueClickListener: OnColl
         holder.post.text = item.post
 
         Glide.with(holder.img)
-            .load("https://cdn.mos.cms.futurecdn.net/PzPq6Pbn5RqgrWunhEx6rg.jpg")
+            .load(item.img)
             .centerCrop()
             .placeholder(R.drawable.ic_launcher_foreground)
             .into(holder.img)

@@ -8,9 +8,10 @@ data class ListedColleagueItem(
     override val id: Long,
     val name: String,
     val post: String,
+    val img: String
 ) : BaseListItem
 
 class EmployeeToColleagueItemMapper : Mapper<ListEmployee, ListedColleagueItem> {
     override fun convert(model: ListEmployee): ListedColleagueItem =
-        ListedColleagueItem(model.id, model.username, model.post)
+        ListedColleagueItem(model.id, model.username, model.post, model.img)
 }

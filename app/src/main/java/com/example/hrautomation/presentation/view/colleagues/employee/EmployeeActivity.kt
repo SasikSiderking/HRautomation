@@ -66,7 +66,7 @@ class EmployeeActivity : AppCompatActivity() {
     private val selectedEmployeeObserver = Observer<EmployeeItem> { colleague ->
         with(binding) {
             Glide.with(employeeImageView)
-                .load("https://cdn.mos.cms.futurecdn.net/PzPq6Pbn5RqgrWunhEx6rg.jpg")
+                .load(colleague.img)
                 .centerCrop()
                 .placeholder(R.drawable.ic_launcher_foreground)
                 .into(employeeImageView)
