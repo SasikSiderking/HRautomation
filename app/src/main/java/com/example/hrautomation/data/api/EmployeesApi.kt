@@ -12,8 +12,8 @@ interface EmployeesApi {
         @Query("pageNumber") pageNumber: Int,
         @Query("size") size: Int,
         @Query("sortBy") sortBy: String
-    ): Result<List<ListEmployeeResponse>>
+    ): List<ListEmployeeResponse>
 
     @GET("/users/{id}")
-    suspend fun getEmployeeResponse(@Path("id") id: Long): Result<EmployeeResponse>
+    suspend fun getEmployeeResponse(@Path("id") id: Long): EmployeeResponse
 }

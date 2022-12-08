@@ -7,11 +7,11 @@ import com.example.hrautomation.domain.model.ProductSortBy
 
 interface ProductRepository {
 
-    suspend fun getProductList(pageNumber: Int, size: Int, sortBy: ProductSortBy): Result<List<Product>>
+    suspend fun getProductList(pageNumber: Int, size: Int, sortBy: ProductSortBy): List<Product>
 
-    suspend fun orderProduct(id: Long): Result<Unit>
+    suspend fun orderProduct(id: Long)
 
-    suspend fun getProductCategoryList(): Result<List<ProductCategory>>
+    suspend fun getProductCategoryList(): List<ProductCategory>
 
-    suspend fun getProductsByCategory(categoryId: Long): Result<List<Product>>
+    suspend fun getProductsByCategory(categoryId: Long): List<Product>
 }

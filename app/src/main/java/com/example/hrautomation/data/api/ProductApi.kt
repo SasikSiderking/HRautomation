@@ -8,18 +8,18 @@ import retrofit2.http.Query
 
 interface ProductApi {
     @GET("/products/order/{id}")
-    suspend fun orderProduct(@Path("id") id: Long): Result<Unit>
+    suspend fun orderProduct(@Path("id") id: Long)
 
     @GET("/products")
     suspend fun getProductResponseList(
         @Query("pageNumber") pageNumber: Int,
         @Query("size") size: Int,
         @Query("sortBy") sortBy: String
-    ): Result<List<ProductResponse>>
+    ): List<ProductResponse>
 
     @GET("/products/categories/{id}")
-    suspend fun getProductsByCategory(@Path("id") id: Long): Result<List<ProductResponse>>
+    suspend fun getProductsByCategory(@Path("id") id: Long): List<ProductResponse>
 
     @GET("/products/categories")
-    suspend fun getProductCategoriesResponse(): Result<List<ProductCategoryResponse>>
+    suspend fun getProductCategoriesResponse(): List<ProductCategoryResponse>
 }

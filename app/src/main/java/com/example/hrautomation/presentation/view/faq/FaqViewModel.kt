@@ -5,11 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.hrautomation.data.dispatcher.CoroutineDispatchers
-import com.example.hrautomation.domain.model.FaqCategory
 import com.example.hrautomation.domain.repository.FaqRepository
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.model.FaqCategoryToFaqCategoryItemMapper
-import kotlinx.coroutines.launch
+import com.example.hrautomation.utils.tryLaunch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -40,17 +39,15 @@ class FaqViewModel @Inject constructor(
     }
 
     private fun loadData() {
-        viewModelScope.launch(dispatchers.io) {
-            _isLoading.postValue(true)
-            val result = faqRepo.getFaqCategoryList()
-            result.onSuccess { listFaqCategory: List<FaqCategory> ->
-                _data.postValue(listFaqCategory.map { faqCategoryToFaqCategoryItemMapper.convert(it) })
+        viewModelScope.tryLaunch(
+            contextPiece = dispatchers.io,
+            doOnLaunch = {
+                _data.postValue(faqRepo.getFaqCategoryList().map { faqCategoryToFaqCategoryItemMapper.convert(it) })
+            },
+            doOnError = { error ->
+                Timber.e(error)
+                _exception.postValue(error)
             }
-            result.onFailure { exception: Throwable ->
-                Timber.e(exception)
-                _exception.postValue(exception)
-            }
-            _isLoading.postValue(false)
-        }
+        )
     }
 }

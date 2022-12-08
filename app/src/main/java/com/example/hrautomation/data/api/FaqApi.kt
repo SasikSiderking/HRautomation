@@ -7,8 +7,8 @@ import retrofit2.http.Path
 
 interface FaqApi {
     @GET("/faq/categories")
-    suspend fun getFaqCategoriesResponse(): Result<List<FaqCategoryResponse>>
+    suspend fun getFaqCategoriesResponse(): List<FaqCategoryResponse>
 
     @GET("/faq/categories/{id}")
-    suspend fun getFaqQuestionsResponse(@Path("id") id: Long): Result<List<FaqQuestionResponse>>
+    suspend fun getFaqQuestionsResponse(@Path("id") id: Long): List<FaqQuestionResponse>
 }

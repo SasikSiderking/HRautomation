@@ -5,14 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.hrautomation.data.dispatcher.CoroutineDispatchers
-import com.example.hrautomation.domain.model.Product
 import com.example.hrautomation.domain.model.ProductSortBy
 import com.example.hrautomation.domain.repository.ProductRepository
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.model.ProductCategoryItem
 import com.example.hrautomation.presentation.model.ProductCategoryToProductCategoryItemMapper
 import com.example.hrautomation.presentation.model.ProductToListedProductItemMapper
-import kotlinx.coroutines.launch
+import com.example.hrautomation.utils.tryLaunch
+import kotlinx.coroutines.Job
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -57,57 +57,72 @@ class ProductViewModel @Inject constructor(
     }
 
     fun loadProductsByCategory(categoryId: Long?) {
-        viewModelScope.launch(dispatchers.io) {
-            _isLoading.postValue(true)
-            categoryId?.let {
-                loadProducts(productRepo.getProductsByCategory(it))
-            } ?: run {
-                loadProducts(productRepo.getProductList(PAGE_NUMBER, PAGE_SIZE, ProductSortBy.ID))
-            }
-            _isLoading.postValue(false)
+        categoryId?.let {
+            viewModelScope.tryLaunch(
+                contextPiece = dispatchers.io,
+                doOnLaunch = {
+                    _data.postValue(
+                        productRepo.getProductsByCategory(categoryId)
+                            .map { productToListedProductItemMapper.convert(it) })
+                },
+                doOnError = { error ->
+                    Timber.e(error)
+                    _exception.postValue(error)
+                }
+            )
         }
+            ?: run {
+                loadProductsJooba()
+            }
     }
 
     fun orderProduct(id: Long) {
-        viewModelScope.launch(dispatchers.io) {
-            _isLoading.postValue(true)
-            productRepo.orderProduct(id)
-                .onSuccess {
-                    _message.postValue("Продукт заказан")
-                }
-                .onFailure { exception: Throwable ->
-                    Timber.e(exception)
-                    _exception.postValue(exception)
-                }
-            _isLoading.postValue(false)
-        }
+        viewModelScope.tryLaunch(
+            contextPiece = dispatchers.io,
+            doOnLaunch = {
+                productRepo.orderProduct(id)
+                _message.postValue("Продукт заказан")
+            },
+            doOnError = { error ->
+                Timber.e(error)
+                _exception.postValue(error)
+            }
+        )
     }
 
     private fun loadData() {
-        viewModelScope.launch(dispatchers.io) {
-            _isLoading.postValue(true)
-            loadProducts(productRepo.getProductList(PAGE_NUMBER, PAGE_SIZE, ProductSortBy.ID))
 
-            productRepo.getProductCategoryList()
-                .onSuccess { categoryList ->
-                    _categories.postValue(categoryList.map { productCategoryToProductCategoryItemMapper.convert(it) })
-                }
-                .onFailure { exception: Throwable ->
-                    Timber.e(exception)
-                    _exception.postValue(exception)
-                }
-            _isLoading.postValue(false)
-        }
+        loadProductsJooba()
+
+        viewModelScope.tryLaunch(
+            contextPiece = dispatchers.io,
+            doOnLaunch = {
+                _categories.postValue(
+                    productRepo.getProductCategoryList()
+                        .map { productCategoryToProductCategoryItemMapper.convert(it) })
+            },
+            doOnError = { error ->
+                Timber.e(error)
+                _exception.postValue(error)
+            }
+        )
     }
 
-    private fun loadProducts(result: Result<List<Product>>) {
-        result
-            .onSuccess { productList ->
-                _data.postValue(productList.map { productToListedProductItemMapper.convert(it) })
-            }.onFailure { exception: Throwable ->
-                Timber.e(exception)
-                _exception.postValue(exception)
+    private fun loadProductsJooba(): Job {
+        return viewModelScope.tryLaunch(
+            contextPiece = dispatchers.io,
+            doOnLaunch = {
+                _data.postValue(productRepo.getProductList(
+                    PAGE_NUMBER,
+                    PAGE_SIZE,
+                    ProductSortBy.ID
+                ).map { productToListedProductItemMapper.convert(it) })
+            },
+            doOnError = { error ->
+                Timber.e(error)
+                _exception.postValue(error)
             }
+        )
     }
 
     private companion object {
