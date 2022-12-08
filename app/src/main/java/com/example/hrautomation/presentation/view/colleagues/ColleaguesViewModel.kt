@@ -32,10 +32,8 @@ class ColleaguesViewModel @Inject constructor(
 
     private fun loadData() {
         viewModelScope.tryLaunch(
-            contextPiece = dispatchers.io,
             doOnLaunch = {
                 reservedData = repo.getEmployeeList(PAGE_NUMBER, PAGE_SIZE, ColleaguesSortBy.NAME)
-                Timber.i(reservedData.toString())
                 _data.postValue(reservedData.map { employeesToColleagueItemMapper.convert(it) })
             },
             doOnError = { error -> Timber.e(error) }

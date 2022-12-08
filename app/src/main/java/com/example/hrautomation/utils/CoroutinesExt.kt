@@ -8,9 +8,10 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.job
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.EmptyCoroutineContext
 
 fun CoroutineScope.tryLaunch(
-    contextPiece: CoroutineContext,
+    contextPiece: CoroutineContext = EmptyCoroutineContext,
     doOnLaunch: suspend () -> Unit,
     doOnError: (Throwable) -> Unit = {},
     doOnComplete: () -> Unit = {},
