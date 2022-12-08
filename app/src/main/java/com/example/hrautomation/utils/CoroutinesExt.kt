@@ -1,10 +1,16 @@
 package com.example.hrautomation.utils
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.job
+import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
 fun CoroutineScope.tryLaunch(
-    coroutineContext: CoroutineContext,
+    contextPiece: CoroutineContext,
     doOnLaunch: suspend () -> Unit,
     doOnError: (Throwable) -> Unit = {},
     doOnComplete: () -> Unit = {},
@@ -12,7 +18,7 @@ fun CoroutineScope.tryLaunch(
     val wrapperJob = SupervisorJob(coroutineContext.job)
     val coroutineExceptionHandler = CoroutineExceptionHandler { _, error -> doOnError(error) }
 
-    return launch(coroutineContext + wrapperJob + coroutineExceptionHandler) {
+    return launch(contextPiece + wrapperJob + coroutineExceptionHandler) {
         doOnLaunch()
     }.apply {
         invokeOnCompletion {

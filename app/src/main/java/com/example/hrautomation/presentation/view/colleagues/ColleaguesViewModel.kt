@@ -32,9 +32,10 @@ class ColleaguesViewModel @Inject constructor(
 
     private fun loadData() {
         viewModelScope.tryLaunch(
-            coroutineContext = dispatchers.io,
+            contextPiece = dispatchers.io,
             doOnLaunch = {
                 reservedData = repo.getEmployeeList(PAGE_NUMBER, PAGE_SIZE, ColleaguesSortBy.NAME)
+                Timber.i(reservedData.toString())
                 _data.postValue(reservedData.map { employeesToColleagueItemMapper.convert(it) })
             },
             doOnError = { error -> Timber.e(error) }
@@ -43,7 +44,7 @@ class ColleaguesViewModel @Inject constructor(
 
     fun performSearch(name: String) {
         viewModelScope.tryLaunch(
-            coroutineContext = dispatchers.default,
+            contextPiece = dispatchers.default,
             doOnLaunch = {
                 if (name.isNotEmpty()) {
                     _data.postValue(
