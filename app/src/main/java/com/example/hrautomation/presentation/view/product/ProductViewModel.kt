@@ -71,9 +71,7 @@ class ProductViewModel @Inject constructor(
                 }
             )
         }
-            ?: run {
-                loadProductsJooba()
-            }
+            ?: loadProductsJooba()
     }
 
     fun orderProduct(id: Long) {
