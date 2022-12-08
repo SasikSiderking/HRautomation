@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/meetingRoomFragment"
-        android:enabled="true"
-        android:icon="@drawable/ic_baseline_card_travel_24"
-        android:title="@string/meeting_room" />
-    <item
         android:id="@+id/colleaguesFragment"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_emoji_people_24"
@@ -15,11 +10,6 @@
         android:enabled="true"
         android:icon="@drawable/ic_baseline_fastfood_24"
         android:title="@string/products" />
-    <item
-        android:id="@+id/eatingFragment"
-        android:enabled="true"
-        android:icon="@drawable/ic_baseline_food_bank_24"
-        android:title="@string/eating" />
     <item
         android:id="@+id/faqFragment"
         android:enabled="true"
