@@ -1,6 +1,5 @@
 package com.example.hrautomation.utils.retrofit_adapter
 
-import okio.IOException
 import okio.Timeout
 import retrofit2.Call
 import retrofit2.Callback
@@ -40,12 +39,7 @@ internal class ResultCall<T>(proxy: Call<T>) : CallDelegate<T, Result<T>>(proxy)
         }
 
         override fun onFailure(call: Call<T>, error: Throwable) {
-            val result: Result<T> = when (error) {
-                is HttpException -> Result.failure(error)
-                is IOException -> Result.failure(IOException(error.message, error.cause))
-                else -> Result.failure(error)
-            }
-            callback.onResponse(proxy, Response.success(result))
+            callback.onResponse(proxy, Response.success(Result.failure(error)))
         }
     }
 
