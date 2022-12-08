@@ -26,12 +26,12 @@ class FaqViewModel @Inject constructor(
         get() = _exception
     private val _exception = MutableLiveData<Throwable?>()
 
-    val isLoading: LiveData<Boolean>
-        get() = _isLoading
-    private val _isLoading = MutableLiveData<Boolean>(true)
-
     fun clearExceptionState() {
         _exception.postValue(null)
+    }
+
+    fun reload() {
+        loadData()
     }
 
     init {

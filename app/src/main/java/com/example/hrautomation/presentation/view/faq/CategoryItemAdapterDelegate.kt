@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.example.hrautomation.databinding.FaqRecyclerviewItemBinding
+import com.example.hrautomation.databinding.ItemFaqRecyclerviewBinding
 import com.example.hrautomation.presentation.base.delegates.BaseItemAdapterDelegate
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.base.delegates.ClickableViewHolder
@@ -20,7 +20,7 @@ class CategoryItemAdapterDelegate(private val onFaqCategoryClickListener: OnFaqC
     }
 
     override fun onCreateViewHolder(parent: ViewGroup): FaqCategoryItemViewHolder {
-        val binding = FaqRecyclerviewItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemFaqRecyclerviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return FaqCategoryItemViewHolder(binding, this)
     }
 
@@ -33,7 +33,7 @@ class CategoryItemAdapterDelegate(private val onFaqCategoryClickListener: OnFaqC
         onFaqCategoryClickListener.onClick(item.id, item.name)
     }
 
-    class FaqCategoryItemViewHolder(binding: FaqRecyclerviewItemBinding, clickListener: OnViewHolderClickListener<FaqCategoryItemViewHolder>) :
+    class FaqCategoryItemViewHolder(binding: ItemFaqRecyclerviewBinding, clickListener: OnViewHolderClickListener<FaqCategoryItemViewHolder>) :
         ClickableViewHolder<FaqCategoryItemViewHolder>(binding.root, clickListener) {
         val name: TextView
 

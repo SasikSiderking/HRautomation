@@ -38,6 +38,10 @@ class ColleaguesViewModel @Inject constructor(
         _exception.postValue(null)
     }
 
+    fun reload() {
+        loadData()
+    }
+
     private fun loadData() {
         viewModelScope.tryLaunch(
             contextPiece = dispatchers.io,

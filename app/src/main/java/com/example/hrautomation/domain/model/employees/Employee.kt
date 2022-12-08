@@ -6,6 +6,7 @@ data class Employee(
     val email: String,
     val project: String,
     val post: String,
-    val info: String
+    val info: String,
+    val img: String
 )
 

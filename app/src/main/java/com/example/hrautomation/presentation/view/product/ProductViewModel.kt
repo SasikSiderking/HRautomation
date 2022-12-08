@@ -40,16 +40,16 @@ class ProductViewModel @Inject constructor(
         get() = _categories
     private val _categories = MutableLiveData<List<ProductCategoryItem>>()
 
-    val isLoading: LiveData<Boolean>
-        get() = _isLoading
-    private val _isLoading = MutableLiveData<Boolean>(true)
-
     init {
         loadData()
     }
 
     fun clearExceptionState() {
         _exception.postValue(null)
+    }
+
+    fun reload() {
+        loadData()
     }
 
     fun clearMessageState() {
