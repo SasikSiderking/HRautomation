@@ -7,7 +7,7 @@ import com.example.hrautomation.data.api.FaqApi
 import com.example.hrautomation.data.api.ProductApi
 import com.example.hrautomation.data.api.UserApi
 import com.example.hrautomation.data.repository.TokenRepositoryImpl
-import com.example.hrautomation.utils.retrofit_adapter.ResultAdapterFactory
+import com.example.hrautomation.utils.retrofit_adapter.CustomAdapterFactory
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -40,7 +40,7 @@ class RetrofitProvider @Inject constructor(private val tokenRepositoryImpl: Toke
     private val retrofitBuilder by lazy {
         Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)
-            .addCallAdapterFactory(ResultAdapterFactory())
+            .addCallAdapterFactory(CustomAdapterFactory())
             .addConverterFactory(GsonConverterFactory.create(gson))
     }
 
