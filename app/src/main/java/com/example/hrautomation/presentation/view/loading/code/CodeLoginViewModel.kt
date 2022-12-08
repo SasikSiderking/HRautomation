@@ -5,10 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.hrautomation.data.dispatcher.CoroutineDispatchers
-import com.example.hrautomation.domain.model.Token
 import com.example.hrautomation.domain.repository.TokenRepository
 import com.example.hrautomation.domain.repository.UserRepository
-import kotlinx.coroutines.launch
+import com.example.hrautomation.utils.tryLaunch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -31,21 +30,22 @@ class CodeLoginViewModel @Inject constructor(
     }
 
     fun checkCode(email: String, code: String) {
-        viewModelScope.launch(dispatchers.io) {
-            userRepo.confirmEmail(email, code)
-                .onSuccess { token: Token ->
-                    _isCodeCheckSuccess.postValue(true)
-                    with(tokenRepo) {
-                        saveAccessToken(token.accessToken)
-                        saveRefreshToken(token.refreshToken)
-                        saveUserId(token.userId)
-                    }
+        viewModelScope.tryLaunch(
+            contextPiece = dispatchers.io,
+            doOnLaunch = {
+                val token = userRepo.confirmEmail(email, code)
+                _isCodeCheckSuccess.postValue(true)
+                with(tokenRepo) {
+                    saveAccessToken(token.accessToken)
+                    saveRefreshToken(token.refreshToken)
+                    saveUserId(token.userId)
                 }
-                .onFailure { exception: Throwable ->
-                    _isCodeCheckSuccess.postValue(false)
-                    _exception.postValue(exception)
-                    Timber.e(exception)
-                }
-        }
+            },
+            doOnError = { error ->
+                _isCodeCheckSuccess.postValue(false)
+                _exception.postValue(error)
+                Timber.e(error)
+            }
+        )
     }
 }

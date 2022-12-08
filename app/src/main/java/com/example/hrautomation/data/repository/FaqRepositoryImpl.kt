@@ -6,7 +6,6 @@ import com.example.hrautomation.data.model.FaqQuestionResponseToFaqQuestionMappe
 import com.example.hrautomation.domain.model.FaqCategory
 import com.example.hrautomation.domain.model.FaqQuestion
 import com.example.hrautomation.domain.repository.FaqRepository
-import com.example.hrautomation.utils.asResult
 import javax.inject.Inject
 
 class FaqRepositoryImpl @Inject constructor(
@@ -15,15 +14,11 @@ class FaqRepositoryImpl @Inject constructor(
     private val faqQuestionResponseToFaqQuestionMapper: FaqQuestionResponseToFaqQuestionMapper
 ) : FaqRepository {
 
-    override suspend fun getFaqCategoryList(): Result<List<FaqCategory>> {
-        return api.getFaqCategoriesResponse().asResult { faqCategoryList ->
-            faqCategoryList.map { faqCategoryResponseToFaqCategoryMapper.convert(it) }
-        }
+    override suspend fun getFaqCategoryList(): List<FaqCategory> {
+        return api.getFaqCategoriesResponse().map { faqCategoryResponseToFaqCategoryMapper.convert(it) }
     }
 
-    override suspend fun getFaqQuestionList(id: Long): Result<List<FaqQuestion>> {
-        return api.getFaqQuestionsResponse(id).asResult { faqQuestionList ->
-            faqQuestionList.map { faqQuestionResponseToFaqQuestionMapper.convert(it) }
-        }
+    override suspend fun getFaqQuestionList(id: Long): List<FaqQuestion> {
+        return api.getFaqQuestionsResponse(id).map { faqQuestionResponseToFaqQuestionMapper.convert(it) }
     }
 }

@@ -24,19 +24,31 @@ class ColleaguesViewModel @Inject constructor(
         get() = _data
     private val _data = MutableLiveData<List<BaseListItem>>()
 
+    val exception: LiveData<Throwable?>
+        get() = _exception
+    private val _exception = MutableLiveData<Throwable?>()
+
     private var reservedData: List<ListEmployee> = emptyList()
 
     init {
         loadData()
     }
 
+    fun clearExceptionState() {
+        _exception.postValue(null)
+    }
+
     private fun loadData() {
         viewModelScope.tryLaunch(
+            contextPiece = dispatchers.io,
             doOnLaunch = {
                 reservedData = repo.getEmployeeList(PAGE_NUMBER, PAGE_SIZE, ColleaguesSortBy.NAME)
                 _data.postValue(reservedData.map { employeesToColleagueItemMapper.convert(it) })
             },
-            doOnError = { error -> Timber.e(error) }
+            doOnError = { error ->
+                Timber.e(error)
+                _exception.postValue(error)
+            }
         )
     }
 
@@ -54,12 +66,15 @@ class ColleaguesViewModel @Inject constructor(
                     _data.postValue(reservedData.map { employeesToColleagueItemMapper.convert(it) })
                 }
             },
-            doOnError = { error -> Timber.e(error) }
+            doOnError = { error ->
+                Timber.e(error)
+                _exception.postValue(error)
+            }
         )
     }
 
     private companion object {
-        const val PAGE_SIZE = 20
-        const val PAGE_NUMBER = 1
+        const val PAGE_SIZE = 100
+        const val PAGE_NUMBER = 0
     }
 }
