@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -64,10 +63,15 @@ class FaqFragment : Fragment() {
             contentLoadingSwitcher.setup(
                 ContentLoadingSettings(
                     contentViews = listOf(faqRecyclerview),
-                    loadingViews = listOf(progressBar),
+                    errorViews = listOf(reusableReload.reusableReload),
+                    loadingViews = listOf(reusableLoading.progressBar),
                     initState = ContentLoadingState.LOADING
                 )
             )
+            reusableReload.reloadButton.setOnClickListener {
+                viewModel.reload()
+                contentLoadingSwitcher.switchState(ContentLoadingState.LOADING, SwitchAnimationParams(delay = 500L))
+            }
         }
         adapter = FaqAdapter(OnFaqCategoryClickListener { id: Long, name: String ->
             startActivity(QuestionActivity.createIntent(requireContext(), id, name))
@@ -76,7 +80,6 @@ class FaqFragment : Fragment() {
 
         viewModel.data.observe(viewLifecycleOwner, categoryObserver)
         viewModel.exception.observe(viewLifecycleOwner, exceptionObserver)
-        viewModel.isLoading.observe(viewLifecycleOwner, isLoadingObserver)
     }
 
     private val categoryObserver = Observer<List<BaseListItem>> { newItems ->
@@ -88,10 +91,7 @@ class FaqFragment : Fragment() {
         exception?.let {
             Toast.makeText(requireContext(), R.string.toast_overall_error, Toast.LENGTH_LONG).show()
             viewModel.clearExceptionState()
+            contentLoadingSwitcher.switchState(ContentLoadingState.ERROR, SwitchAnimationParams(delay = 500L))
         }
-    }
-
-    private val isLoadingObserver = Observer<Boolean> { isLoading ->
-        binding.progressBar.isVisible = isLoading
     }
 }

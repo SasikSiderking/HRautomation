@@ -8,10 +8,11 @@ class EmployeeItem(
     val email: String,
     val project: String,
     val post: String,
-    val info: String
+    val info: String,
+    val img: String
 )
 
 class EmployeeToEmployeeItemMapper : Mapper<Employee, EmployeeItem> {
     override fun convert(model: Employee): EmployeeItem =
-        EmployeeItem(model.name, model.email, model.project, model.post, model.info)
+        EmployeeItem(model.name, model.email, model.project, model.post, model.info, model.img)
 }

@@ -83,6 +83,7 @@ class ColleaguesFragment : Fragment() {
         exception?.let {
             Toast.makeText(context, R.string.toast_overall_error, Toast.LENGTH_SHORT).show()
             viewModel.clearExceptionState()
+            contentLoadingSwitcher.switchState(ContentLoadingState.ERROR, SwitchAnimationParams(delay = 500L))
         }
     }
 
@@ -96,7 +97,8 @@ class ColleaguesFragment : Fragment() {
             contentLoadingSwitcher.setup(
                 ContentLoadingSettings(
                     contentViews = listOf(colleaguesRecyclerview, searchContainer),
-                    loadingViews = listOf(progressBar),
+                    errorViews = listOf(reusableReload.reusableReload),
+                    loadingViews = listOf(reusableLoading.progressBar),
                     initState = ContentLoadingState.LOADING
                 )
             )
@@ -116,6 +118,11 @@ class ColleaguesFragment : Fragment() {
             })
 
             editSearch.addTextChangedListener(textWatcher)
+
+            reusableReload.reloadButton.setOnClickListener {
+                viewModel.reload()
+                contentLoadingSwitcher.switchState(ContentLoadingState.LOADING, SwitchAnimationParams(delay = 500L))
+            }
 
             clearText.setOnClickListener(View.OnClickListener { editSearch.text.clear() })
             viewModel.data.observe(viewLifecycleOwner, colleaguesObserver)

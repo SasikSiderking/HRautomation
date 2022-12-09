@@ -6,9 +6,11 @@ import com.example.hrautomation.utils.Mapper
 data class ListEmployeeResponse(
     val id: Long,
     val username: String,
-    val post: String
+    val post: String,
+    val img: String?
 )
 
 class ListEmployeeResponseToListEmployeeMapper : Mapper<ListEmployeeResponse, ListEmployee> {
-    override fun convert(model: ListEmployeeResponse): ListEmployee = ListEmployee(model.id, model.username, model.post)
+    override fun convert(model: ListEmployeeResponse): ListEmployee =
+        ListEmployee(model.id, model.username, model.post, "https://cdn.mos.cms.futurecdn.net/PzPq6Pbn5RqgrWunhEx6rg.jpg")
 }

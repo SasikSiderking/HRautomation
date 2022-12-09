@@ -32,16 +32,16 @@ class ProfileViewModel @Inject constructor(
         get() = _message
     private val _message = MutableLiveData<Int?>()
 
-    val isLoading: LiveData<Boolean>
-        get() = _isLoading
-    private val _isLoading = MutableLiveData<Boolean>(true)
-
     fun clearExceptionState() {
         _exception.postValue(null)
     }
 
     fun clearMessageState() {
         _message.postValue(null)
+    }
+
+    fun reload() {
+        loadData()
     }
 
     init {
