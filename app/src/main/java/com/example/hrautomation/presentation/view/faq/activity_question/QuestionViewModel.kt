@@ -5,11 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.hrautomation.data.dispatcher.CoroutineDispatchers
-import com.example.hrautomation.domain.model.FaqQuestion
 import com.example.hrautomation.domain.repository.FaqRepository
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.model.FaqQuestionToFaqQuestionItemMapper
-import kotlinx.coroutines.launch
+import com.example.hrautomation.utils.tryLaunch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -27,25 +26,25 @@ class QuestionViewModel @Inject constructor(
         get() = _exception
     private val _exception = MutableLiveData<Throwable?>()
 
-    val isLoading: LiveData<Boolean>
-        get() = _isLoading
-    private val _isLoading = MutableLiveData<Boolean>(true)
-
     fun clearExceptionState() {
         _exception.postValue(null)
     }
 
+    fun reload(id: Long) {
+        loadData(id)
+    }
+
     fun loadData(id: Long) {
-        viewModelScope.launch(dispatchers.io) {
-            _isLoading.postValue(true)
-            val result = faqRepo.getFaqQuestionList(id)
-            result.onSuccess { listFaqQuestion: List<FaqQuestion> ->
-                _data.postValue(listFaqQuestion.map { faqQuestionToFaqQuestionItemMapper.convert(it) })
-            }.onFailure { exception: Throwable ->
-                Timber.e(exception)
-                _exception.postValue(exception)
+
+        viewModelScope.tryLaunch(
+            contextPiece = dispatchers.io,
+            doOnLaunch = {
+                _data.postValue(faqRepo.getFaqQuestionList(id).map { faqQuestionToFaqQuestionItemMapper.convert(it) })
+            },
+            doOnError = { error ->
+                Timber.e(error)
+                _exception.postValue(error)
             }
-            _isLoading.postValue(false)
-        }
+        )
     }
 }

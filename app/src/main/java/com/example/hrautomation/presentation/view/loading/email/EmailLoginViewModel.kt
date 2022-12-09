@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.hrautomation.data.dispatcher.CoroutineDispatchers
 import com.example.hrautomation.domain.repository.UserRepository
-import kotlinx.coroutines.launch
+import com.example.hrautomation.utils.tryLaunch
 import javax.inject.Inject
 
 class EmailLoginViewModel @Inject constructor(private val userRepo: UserRepository, private val dispatchers: CoroutineDispatchers) : ViewModel() {
@@ -24,15 +24,16 @@ class EmailLoginViewModel @Inject constructor(private val userRepo: UserReposito
     }
 
     fun checkEmail(email: String) {
-        viewModelScope.launch(dispatchers.io) {
-            userRepo.checkEmail(email)
-                .onSuccess {
-                    _isEmailCheckSuccess.postValue(true)
-                }
-                .onFailure { exception: Throwable ->
-                    _exception.postValue(exception)
-                    _isEmailCheckSuccess.postValue(false)
-                }
-        }
+        viewModelScope.tryLaunch(
+            contextPiece = dispatchers.io,
+            doOnLaunch = {
+                userRepo.checkEmail(email)
+                _isEmailCheckSuccess.postValue(true)
+            },
+            doOnError = { error ->
+                _exception.postValue(error)
+                _isEmailCheckSuccess.postValue(false)
+            }
+        )
     }
 }

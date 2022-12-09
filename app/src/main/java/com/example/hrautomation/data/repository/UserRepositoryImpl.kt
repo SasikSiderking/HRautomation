@@ -1,15 +1,12 @@
 package com.example.hrautomation.data.repository
 
 import com.example.hrautomation.data.api.UserApi
-import com.example.hrautomation.data.model.TokenResponse
 import com.example.hrautomation.data.model.TokenResponseToTokenMapper
-import com.example.hrautomation.data.model.employee.EmployeeResponse
 import com.example.hrautomation.data.model.employee.EmployeesResponseToEmployeesMapper
 import com.example.hrautomation.domain.model.Employee
 import com.example.hrautomation.domain.model.Token
 import com.example.hrautomation.domain.repository.TokenRepository
 import com.example.hrautomation.domain.repository.UserRepository
-import com.example.hrautomation.utils.asResult
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -21,32 +18,25 @@ class UserRepositoryImpl @Inject constructor(
     private val tokenRepo: TokenRepository
 ) : UserRepository {
 
-    override suspend fun checkEmail(email: String): Result<Unit> {
-        return userApi.checkEmail(email).asResult { }
+    override suspend fun checkEmail(email: String) {
+        return userApi.checkEmail(email)
     }
 
-    override suspend fun confirmEmail(email: String, code: String): Result<Token> {
-        return userApi.confirmEmail(email, code).asResult { tokenResponse: TokenResponse ->
-            tokenResponseToTokenMapper.convert(tokenResponse)
-        }
+    override suspend fun confirmEmail(email: String, code: String): Token {
+        return tokenResponseToTokenMapper.convert(userApi.confirmEmail(email, code))
     }
 
-    override suspend fun getUser(id: Long): Result<Employee> {
-        return userApi.getUser(id).asResult { employeeResponse: EmployeeResponse ->
-            employeesResponseToEmployeesMapper.convert(employeeResponse)
-        }
+    override suspend fun getUser(id: Long): Employee {
+        return employeesResponseToEmployeesMapper.convert(userApi.getUser(id))
     }
 
-    override suspend fun saveUser(project: String, info: String): Result<Unit> {
-        return tokenRepo.getUserId()?.let { userId: Long ->
-            val userResult = userApi.getUser(userId).asResult { it }
-            if (userResult.isSuccess) {
-                val oldUser = userResult.getOrThrow()
-                val newUser = oldUser.copy(project = project, about = info)
-                userApi.saveUser(newUser).asResult { }
-            } else {
-                Result.failure(userResult.exceptionOrNull()!!)
-            }
-        } ?: Result.failure(IllegalStateException("No auth token"))
+    override suspend fun saveUser(project: String, info: String) {
+        tokenRepo.getUserId()?.let { userId: Long ->
+
+            val oldUser = userApi.getUser(userId)
+            val newUser = oldUser.copy(project = project, about = info)
+
+            return userApi.saveUser(newUser)
+        } ?: throw IllegalStateException("User id is null")
     }
 }

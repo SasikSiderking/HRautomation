@@ -7,5 +7,5 @@ import com.example.hrautomation.domain.model.employees.ListEmployee
 interface EmployeesRepository {
     suspend fun getEmployeeList(pageNumber: Int, size: Int, sortBy: ColleaguesSortBy): List<ListEmployee>
 
-    suspend fun getEmployee(id: Long): Result<Employee>
+    suspend fun getEmployee(id: Long): Employee
 }

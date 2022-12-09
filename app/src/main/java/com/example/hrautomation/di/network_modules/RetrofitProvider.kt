@@ -4,11 +4,10 @@ import com.example.hrautomation.BuildConfig
 import com.example.hrautomation.data.api.AuthInterceptor
 import com.example.hrautomation.data.api.EmployeesApi
 import com.example.hrautomation.data.api.FaqApi
-import com.example.hrautomation.data.api.FaqApi2
 import com.example.hrautomation.data.api.ProductApi
 import com.example.hrautomation.data.api.UserApi
-import com.example.hrautomation.data.api.UserApi2
 import com.example.hrautomation.data.repository.TokenRepositoryImpl
+import com.example.hrautomation.utils.retrofit_adapter.CustomAdapterFactory
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -41,6 +40,7 @@ class RetrofitProvider @Inject constructor(private val tokenRepositoryImpl: Toke
     private val retrofitBuilder by lazy {
         Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)
+            .addCallAdapterFactory(CustomAdapterFactory())
             .addConverterFactory(GsonConverterFactory.create(gson))
     }
 
@@ -50,8 +50,6 @@ class RetrofitProvider @Inject constructor(private val tokenRepositoryImpl: Toke
             .build()
             .create()
     }
-
-    val userApi2: UserApi2 by lazy { UserApi2() }
 
     val employeesApi: EmployeesApi by lazy {
         retrofitBuilder
@@ -66,8 +64,6 @@ class RetrofitProvider @Inject constructor(private val tokenRepositoryImpl: Toke
             .build()
             .create()
     }
-
-    val faqApi2: FaqApi2 by lazy { FaqApi2() }
 
     val productApi: ProductApi by lazy {
         retrofitBuilder

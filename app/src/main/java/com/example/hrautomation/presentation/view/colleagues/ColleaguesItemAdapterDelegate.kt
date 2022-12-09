@@ -3,7 +3,10 @@ package com.example.hrautomation.presentation.view.colleagues
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
+import com.example.hrautomation.R
 import com.example.hrautomation.databinding.ItemEmployeeBinding
 import com.example.hrautomation.presentation.base.delegates.BaseItemAdapterDelegate
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
@@ -27,6 +30,12 @@ class ColleaguesItemAdapterDelegate(private val onColleagueClickListener: OnColl
     override fun onBind(item: ListedColleagueItem, holder: ColleagueViewHolder, payloads: List<Any>) {
         holder.name.text = item.name
         holder.post.text = item.post
+
+        Glide.with(holder.img)
+            .load(item.img)
+            .centerCrop()
+            .placeholder(R.drawable.ic_launcher_foreground)
+            .into(holder.img)
     }
 
     override fun onViewHolderClick(view: View, holder: ColleagueViewHolder) {
@@ -38,10 +47,12 @@ class ColleaguesItemAdapterDelegate(private val onColleagueClickListener: OnColl
         ClickableViewHolder<ColleagueViewHolder>(binding.root, clickListener) {
         val name: TextView
         val post: TextView
+        val img: ImageView
 
         init {
             name = binding.employeeName
             post = binding.employeePost
+            img = binding.employeeImage
         }
     }
 }

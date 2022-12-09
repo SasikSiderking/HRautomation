@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.example.hrautomation.databinding.FaqQuestionItemBinding
+import com.example.hrautomation.databinding.ItemFaqQuestionBinding
 import com.example.hrautomation.presentation.base.delegates.BaseItemAdapterDelegate
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.base.delegates.ClickableViewHolder
@@ -18,7 +18,7 @@ class QuestionAdapterDelegate : BaseItemAdapterDelegate<FaqQuestionItem, FaqQues
     }
 
     override fun onCreateViewHolder(parent: ViewGroup): FaqQuestionItemViewHolder {
-        val binding = FaqQuestionItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemFaqQuestionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return FaqQuestionItemViewHolder(binding, this)
     }
 
@@ -30,7 +30,7 @@ class QuestionAdapterDelegate : BaseItemAdapterDelegate<FaqQuestionItem, FaqQues
     override fun onViewHolderClick(view: View, holder: FaqQuestionItemViewHolder) {
     }
 
-    class FaqQuestionItemViewHolder(binding: FaqQuestionItemBinding, clickListener: OnViewHolderClickListener<FaqQuestionItemViewHolder>) :
+    class FaqQuestionItemViewHolder(binding: ItemFaqQuestionBinding, clickListener: OnViewHolderClickListener<FaqQuestionItemViewHolder>) :
         ClickableViewHolder<FaqQuestionItemViewHolder>(binding.root, clickListener) {
         val title: TextView
         val description: TextView

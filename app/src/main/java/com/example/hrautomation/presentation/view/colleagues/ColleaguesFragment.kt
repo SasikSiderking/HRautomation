@@ -8,10 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView.OnEditorActionListener
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.example.hrautomation.R
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.FragmentColleaguesBinding
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
@@ -54,7 +56,6 @@ class ColleaguesFragment : Fragment() {
 
         initUi()
 
-        viewModel.data.observe(viewLifecycleOwner, colleaguesObserver)
         return binding.root
     }
 
@@ -78,6 +79,14 @@ class ColleaguesFragment : Fragment() {
         contentLoadingSwitcher.switchState(ContentLoadingState.CONTENT, SwitchAnimationParams(delay = 500L))
     }
 
+    private val exceptionObserver = Observer<Throwable?> { exception ->
+        exception?.let {
+            Toast.makeText(context, R.string.toast_overall_error, Toast.LENGTH_SHORT).show()
+            viewModel.clearExceptionState()
+            contentLoadingSwitcher.switchState(ContentLoadingState.ERROR, SwitchAnimationParams(delay = 500L))
+        }
+    }
+
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
@@ -88,7 +97,8 @@ class ColleaguesFragment : Fragment() {
             contentLoadingSwitcher.setup(
                 ContentLoadingSettings(
                     contentViews = listOf(colleaguesRecyclerview, searchContainer),
-                    loadingViews = listOf(progressBar),
+                    errorViews = listOf(reusableReload.reusableReload),
+                    loadingViews = listOf(reusableLoading.progressBar),
                     initState = ContentLoadingState.LOADING
                 )
             )
@@ -109,7 +119,14 @@ class ColleaguesFragment : Fragment() {
 
             editSearch.addTextChangedListener(textWatcher)
 
+            reusableReload.reloadButton.setOnClickListener {
+                viewModel.reload()
+                contentLoadingSwitcher.switchState(ContentLoadingState.LOADING, SwitchAnimationParams(delay = 500L))
+            }
+
             clearText.setOnClickListener(View.OnClickListener { editSearch.text.clear() })
+            viewModel.data.observe(viewLifecycleOwner, colleaguesObserver)
+            viewModel.exception.observe(viewLifecycleOwner, exceptionObserver)
         }
     }
 }

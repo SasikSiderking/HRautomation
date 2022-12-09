@@ -10,7 +10,7 @@ import com.example.hrautomation.domain.repository.TokenRepository
 import com.example.hrautomation.domain.repository.UserRepository
 import com.example.hrautomation.presentation.model.colleagues.EmployeeItem
 import com.example.hrautomation.presentation.model.colleagues.EmployeeToEmployeeItemMapper
-import kotlinx.coroutines.launch
+import com.example.hrautomation.utils.tryLaunch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -32,10 +32,6 @@ class ProfileViewModel @Inject constructor(
         get() = _message
     private val _message = MutableLiveData<Int?>()
 
-    val isLoading: LiveData<Boolean>
-        get() = _isLoading
-    private val _isLoading = MutableLiveData<Boolean>(true)
-
     fun clearExceptionState() {
         _exception.postValue(null)
     }
@@ -44,41 +40,41 @@ class ProfileViewModel @Inject constructor(
         _message.postValue(null)
     }
 
+    fun reload() {
+        loadData()
+    }
+
     init {
         loadData()
     }
 
     private fun loadData() {
-        viewModelScope.launch(dispatchers.io) {
-            _isLoading.postValue(true)
-            tokenRepo.getUserId()?.let { userId: Long ->
-                userRepo.getUser(userId)
-                    .onSuccess { user ->
-                        _data.postValue(employeeToEmployeeItemMapper.convert(user))
-                    }
-                    .onFailure { exception: Throwable ->
-                        Timber.e(exception)
-                        _exception.postValue(exception)
-                    }
-            } ?: run {
-                throw IllegalStateException("No auth token")
+        viewModelScope.tryLaunch(
+            contextPiece = dispatchers.io,
+            doOnLaunch = {
+                tokenRepo.getUserId()?.let { userId ->
+                    val user = userRepo.getUser(userId)
+                    _data.postValue(employeeToEmployeeItemMapper.convert(user))
+                } ?: throw IllegalStateException("No auth token")
+            },
+            doOnError = { error ->
+                Timber.e(error)
+                _exception.postValue(error)
             }
-            _isLoading.postValue(false)
-        }
+        )
     }
 
     fun saveData(project: String, info: String) {
-        viewModelScope.launch(dispatchers.io) {
-            _isLoading.postValue(true)
-            userRepo.saveUser(project, info)
-                .onSuccess {
-                    _message.postValue(R.string.profile_save_success)
-                }
-                .onFailure { exception ->
-                    _message.postValue(R.string.toast_overall_error)
-                    Timber.e(exception)
-                }
-            _isLoading.postValue(false)
-        }
+        viewModelScope.tryLaunch(
+            contextPiece = dispatchers.io,
+            doOnLaunch = {
+                userRepo.saveUser(project, info)
+                _message.postValue(R.string.profile_save_success)
+            },
+            doOnError = { error ->
+                Timber.e(error)
+                _exception.postValue(error)
+            }
+        )
     }
 }

@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -73,7 +72,8 @@ class ProductFragment : Fragment() {
             contentLoadingSwitcher.setup(
                 ContentLoadingSettings(
                     contentViews = listOf(productRecyclerview),
-                    loadingViews = listOf(progressBar),
+                    errorViews = listOf(reusableReload.reusableReload),
+                    loadingViews = listOf(reusableLoading.progressBar),
                     initState = ContentLoadingState.LOADING
                 )
             )
@@ -83,13 +83,18 @@ class ProductFragment : Fragment() {
             })
             binding.productRecyclerview.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             binding.productRecyclerview.adapter = adapter
+
+            reusableReload.reloadButton.setOnClickListener {
+                viewModel.reload()
+                contentLoadingSwitcher.switchState(ContentLoadingState.LOADING, SwitchAnimationParams(delay = 500L))
+            }
+
         }
 
         viewModel.data.observe(viewLifecycleOwner, productObserver)
         viewModel.categories.observe(viewLifecycleOwner, categoriesObserver)
         viewModel.exception.observe(viewLifecycleOwner, exceptionObserver)
         viewModel.message.observe(viewLifecycleOwner, messageObserver)
-        viewModel.isLoading.observe(viewLifecycleOwner, isLoadingObserver)
     }
 
     private val productObserver = Observer<List<BaseListItem>> { newItems ->
@@ -126,6 +131,7 @@ class ProductFragment : Fragment() {
         exception?.let {
             Toast.makeText(requireContext(), R.string.toast_overall_error, Toast.LENGTH_LONG).show()
             viewModel.clearExceptionState()
+            contentLoadingSwitcher.switchState(ContentLoadingState.ERROR, SwitchAnimationParams(delay = 500L))
         }
     }
 
@@ -134,10 +140,6 @@ class ProductFragment : Fragment() {
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
             viewModel.clearMessageState()
         }
-    }
-
-    private val isLoadingObserver = Observer<Boolean> { isLoading ->
-        binding.progressBar.isVisible = isLoading
     }
 
     private fun showOrderDialog(id: Long, name: String) {

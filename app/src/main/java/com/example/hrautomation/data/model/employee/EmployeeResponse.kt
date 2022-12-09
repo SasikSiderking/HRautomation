@@ -13,10 +13,19 @@ data class EmployeeResponse(
     val about: String,
     val admin: String,
     val birthDate: Date,
+    val img: String?
 )
 
 class EmployeesResponseToEmployeesMapper : Mapper<EmployeeResponse, Employee> {
     override fun convert(model: EmployeeResponse): Employee {
-        return Employee(model.id, model.username, model.email, model.project, model.post, model.about)
+        return Employee(
+            model.id,
+            model.username,
+            model.email,
+            model.project,
+            model.post,
+            model.about,
+            "https://cdn.mos.cms.futurecdn.net/PzPq6Pbn5RqgrWunhEx6rg.jpg"
+        )
     }
 }
