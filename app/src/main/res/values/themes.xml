@@ -26,18 +26,6 @@
         <item name="android:layout_marginBottom">10dp</item>
     </style>
 
-    <!--Custom Search View Style-->
-    <style name="CustomSearchViewStyle">
-        <!--        <item name="android:imeOptions">actionSearch</item>-->
-        <item name="android:padding">10dp</item>
-        <item name="android:layout_margin">20dp</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/custom_search_shape</item>
-        <item name="android:drawableRight">@drawable/ic_baseline_search_24</item>
-        <item name="android:inputType">text</item>
-    </style>
-
     <style name="Widget.MyApp.Chip.Choice" parent="Widget.MaterialComponents.Chip.Choice">
         ...
         <item name="materialThemeOverlay">@style/ThemeOverlay.MyApp.Chip.Choice</item>

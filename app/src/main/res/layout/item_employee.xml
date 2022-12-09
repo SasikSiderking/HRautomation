@@ -2,38 +2,45 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/SelectableViewItemStyle"
-    android:padding="10dp">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/employeeImage"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_margin="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/roundedImageViewRounded" />
+        app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+        tools:src="@drawable/ic_tinkoff" />
 
     <TextView
         android:id="@+id/employeeName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginHorizontal="12dp"
         android:textColor="@color/main_text"
-        android:textSize="26sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/employeeImage"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@id/employeePost"
+        app:layout_constraintTop_toTopOf="@+id/employeeImage"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="Alexandrino Siderkinio" />
 
     <TextView
         android:id="@+id/employeePost"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        android:textSize="18sp"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/employeeImage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/employeeImage"
-        app:layout_constraintTop_toBottomOf="@id/employeeName" />
+        app:layout_constraintTop_toBottomOf="@id/employeeName"
+        tools:text="Babaji IkesBokes enjoyer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

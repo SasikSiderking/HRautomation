@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.hrautomation.R
@@ -14,6 +15,8 @@ import com.example.hrautomation.databinding.FragmentFaqBinding
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.view.faq.activity_question.QuestionActivity
 import com.example.hrautomation.utils.ViewModelFactory
+import com.example.hrautomation.utils.ui.Dp
+import com.example.hrautomation.utils.ui.dpToPx
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingSettings
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingState
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingStateSwitcher
@@ -48,6 +51,7 @@ class FaqFragment : Fragment() {
     ): View {
         _binding = FragmentFaqBinding.inflate(inflater, container, false)
 
+        initToolbar()
         initUi()
 
         return binding.root
@@ -56,6 +60,12 @@ class FaqFragment : Fragment() {
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    private fun initToolbar() {
+        (activity as? AppCompatActivity)?.supportActionBar?.let {
+            it.elevation = requireContext().dpToPx(TOOLBAR_ELEVATION).toFloat()
+        }
     }
 
     private fun initUi() {
@@ -93,5 +103,11 @@ class FaqFragment : Fragment() {
             viewModel.clearExceptionState()
             contentLoadingSwitcher.switchState(ContentLoadingState.ERROR, SwitchAnimationParams(delay = 500L))
         }
+    }
+
+    private companion object {
+
+        @Dp
+        const val TOOLBAR_ELEVATION = 4F
     }
 }
