@@ -12,7 +12,7 @@ import kotlin.coroutines.EmptyCoroutineContext
 
 fun CoroutineScope.tryLaunch(
     contextPiece: CoroutineContext = EmptyCoroutineContext,
-    doOnLaunch: suspend () -> Unit,
+    doOnLaunch: suspend CoroutineScope.() -> Unit,
     doOnError: (Throwable) -> Unit = {},
     doOnComplete: () -> Unit = {},
 ): Job {

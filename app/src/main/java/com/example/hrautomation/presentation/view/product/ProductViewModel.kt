@@ -13,6 +13,7 @@ import com.example.hrautomation.presentation.model.ProductCategoryToProductCateg
 import com.example.hrautomation.presentation.model.ProductToListedProductItemMapper
 import com.example.hrautomation.utils.tryLaunch
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -91,15 +92,26 @@ class ProductViewModel @Inject constructor(
     }
 
     private fun loadData() {
-
-        loadProductsJooba()
-
         viewModelScope.tryLaunch(
             contextPiece = dispatchers.io,
             doOnLaunch = {
-                _categories.postValue(
+                val productsDeferred = async(dispatchers.io) {
+                    productRepo.getProductList(
+                        PAGE_NUMBER,
+                        PAGE_SIZE,
+                        ProductSortBy.ID
+                    ).map { productToListedProductItemMapper.convert(it) }
+                }
+                val categoriesDeferred = async {
                     productRepo.getProductCategoryList()
-                        .map { productCategoryToProductCategoryItemMapper.convert(it) })
+                        .map { productCategoryToProductCategoryItemMapper.convert(it) }
+                }
+
+                val products = productsDeferred.await()
+                val categories = categoriesDeferred.await()
+
+                _data.postValue(products)
+                _categories.postValue(categories)
             },
             doOnError = { error ->
                 Timber.e(error)

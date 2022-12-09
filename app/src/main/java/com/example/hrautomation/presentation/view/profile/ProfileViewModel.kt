@@ -55,9 +55,7 @@ class ProfileViewModel @Inject constructor(
                 tokenRepo.getUserId()?.let { userId ->
                     val user = userRepo.getUser(userId)
                     _data.postValue(employeeToEmployeeItemMapper.convert(user))
-                } ?: run {
-                    throw IllegalStateException("No auth token")
-                }
+                } ?: throw IllegalStateException("No auth token")
             },
             doOnError = { error ->
                 Timber.e(error)

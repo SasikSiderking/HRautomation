@@ -4,7 +4,6 @@ import okio.Timeout
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import timber.log.Timber
 
 internal class CustomCall<T>(proxy: Call<T>) : CallDelegate<T, T>(proxy) {
 
@@ -22,7 +21,6 @@ internal class CustomCall<T>(proxy: Call<T>) : CallDelegate<T, T>(proxy) {
     ) : Callback<T> {
 
         override fun onResponse(call: Call<T>, response: Response<T>) {
-            Timber.i("CUSTOM CALL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
             if (response.isSuccessful) {
                 callback.onResponse(proxy, Response.success(response.body()))
             } else {
