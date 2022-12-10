@@ -19,7 +19,6 @@ class EmailLoginViewModel @Inject constructor(
     private val _isEmailCheckSuccess = MutableLiveData<Boolean>()
 
     fun checkEmail(email: String) {
-        jobs.add(
             viewModelScope.tryLaunch(
                 contextPiece = dispatchers.io,
                 doOnLaunch = {
@@ -31,6 +30,5 @@ class EmailLoginViewModel @Inject constructor(
                     _isEmailCheckSuccess.postValue(false)
                 }
             )
-        )
     }
 }

@@ -3,7 +3,8 @@ package com.example.hrautomation.presentation.base.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.Job
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.cancelChildren
 
 abstract class BaseViewModel : ViewModel() {
 
@@ -11,14 +12,12 @@ abstract class BaseViewModel : ViewModel() {
         get() = _exception
     protected val _exception = MutableLiveData<Throwable?>()
 
-    protected var jobs: MutableList<Job> = mutableListOf()
-
     fun clearExceptionState() {
         _exception.postValue(null)
     }
 
     override fun onCleared() {
-        jobs.forEach { job -> job.cancel() }
+        viewModelScope.coroutineContext.cancelChildren()
         super.onCleared()
     }
 }

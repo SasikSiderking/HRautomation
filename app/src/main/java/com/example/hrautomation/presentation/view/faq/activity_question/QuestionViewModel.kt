@@ -9,6 +9,7 @@ import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
 import com.example.hrautomation.presentation.model.FaqQuestionToFaqQuestionItemMapper
 import com.example.hrautomation.utils.tryLaunch
+import kotlinx.coroutines.cancelChildren
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -23,13 +24,12 @@ class QuestionViewModel @Inject constructor(
     private val _data = MutableLiveData<List<BaseListItem>>()
 
     fun reload(id: Long) {
+        viewModelScope.coroutineContext.cancelChildren()
         clearExceptionState()
-        jobs.clear()
         loadData(id)
     }
 
     fun loadData(id: Long) {
-        jobs.add(
             viewModelScope.tryLaunch(
                 contextPiece = dispatchers.io,
                 doOnLaunch = {
@@ -40,6 +40,5 @@ class QuestionViewModel @Inject constructor(
                     _exception.postValue(error)
                 }
             )
-        )
     }
 }

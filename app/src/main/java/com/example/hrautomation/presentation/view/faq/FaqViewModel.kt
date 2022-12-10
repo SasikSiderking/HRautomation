@@ -9,6 +9,7 @@ import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
 import com.example.hrautomation.presentation.model.FaqCategoryToFaqCategoryItemMapper
 import com.example.hrautomation.utils.tryLaunch
+import kotlinx.coroutines.cancelChildren
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -27,13 +28,12 @@ class FaqViewModel @Inject constructor(
     }
 
     fun reload() {
+        viewModelScope.coroutineContext.cancelChildren()
         clearExceptionState()
-        jobs.clear()
         loadData()
     }
 
     private fun loadData() {
-        jobs.add(
             viewModelScope.tryLaunch(
                 contextPiece = dispatchers.io,
                 doOnLaunch = {
@@ -44,6 +44,5 @@ class FaqViewModel @Inject constructor(
                     _exception.postValue(error)
                 }
             )
-        )
     }
 }

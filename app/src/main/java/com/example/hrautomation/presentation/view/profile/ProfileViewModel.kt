@@ -12,6 +12,7 @@ import com.example.hrautomation.presentation.model.colleagues.EmployeeItem
 import com.example.hrautomation.presentation.model.colleagues.EmployeeToEmployeeItemMapper
 import com.example.hrautomation.utils.tryLaunch
 import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
@@ -35,8 +36,8 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun reload() {
+        viewModelScope.coroutineContext.cancelChildren()
         clearExceptionState()
-        jobs.clear()
         loadData()
     }
 
@@ -45,38 +46,34 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun loadData() {
-        jobs.add(
-            viewModelScope.tryLaunch(
-                contextPiece = dispatchers.io,
-                doOnLaunch = {
-                    tokenRepo.getUserId()?.let { userId ->
-                        val user = userRepo.getUser(userId)
-                        _data.postValue(employeeToEmployeeItemMapper.convert(user))
-                    } ?: throw IllegalStateException("No auth token")
-                },
-                doOnError = { error ->
-                    Timber.e(error)
-                    _exception.postValue(error)
-                }
-            )
+        viewModelScope.tryLaunch(
+            contextPiece = dispatchers.io,
+            doOnLaunch = {
+                tokenRepo.getUserId()?.let { userId ->
+                    val user = userRepo.getUser(userId)
+                    _data.postValue(employeeToEmployeeItemMapper.convert(user))
+                } ?: throw IllegalStateException("No auth token")
+            },
+            doOnError = { error ->
+                Timber.e(error)
+                _exception.postValue(error)
+            }
         )
     }
 
     fun saveData(project: String, info: String) {
-        jobs.add(
-            viewModelScope.tryLaunch(
-                contextPiece = dispatchers.io,
-                doOnLaunch = {
-                    withContext(NonCancellable) {
-                        userRepo.saveUser(project, info)
-                        _message.postValue(R.string.profile_save_success)
-                    }
-                },
-                doOnError = { error ->
-                    Timber.e(error)
-                    _exception.postValue(error)
+        viewModelScope.tryLaunch(
+            contextPiece = dispatchers.io,
+            doOnLaunch = {
+                withContext(NonCancellable) {
+                    userRepo.saveUser(project, info)
+                    _message.postValue(R.string.profile_save_success)
                 }
-            )
+            },
+            doOnError = { error ->
+                Timber.e(error)
+                _exception.postValue(error)
+            }
         )
     }
 }

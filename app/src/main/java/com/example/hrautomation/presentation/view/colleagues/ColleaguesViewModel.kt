@@ -11,6 +11,7 @@ import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
 import com.example.hrautomation.presentation.model.colleagues.EmployeeToColleagueItemMapper
 import com.example.hrautomation.utils.tryLaunch
+import kotlinx.coroutines.cancelChildren
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -31,49 +32,45 @@ class ColleaguesViewModel @Inject constructor(
     }
 
     fun reload() {
+        viewModelScope.coroutineContext.cancelChildren()
         clearExceptionState()
-        jobs.clear()
         loadData()
     }
 
     private fun loadData() {
-        jobs.add(
-            viewModelScope.tryLaunch(
-                contextPiece = dispatchers.io,
-                doOnLaunch = {
-                    reservedData = repo.getEmployeeList(PAGE_NUMBER, PAGE_SIZE, ColleaguesSortBy.NAME)
-                    _data.postValue(reservedData.map { employeesToColleagueItemMapper.convert(it) })
-                },
-                doOnError = { error ->
-                    Timber.e(error)
-                    _exception.postValue(error)
-                }
-            )
+        viewModelScope.tryLaunch(
+            contextPiece = dispatchers.io,
+            doOnLaunch = {
+                reservedData = repo.getEmployeeList(PAGE_NUMBER, PAGE_SIZE, ColleaguesSortBy.NAME)
+                _data.postValue(reservedData.map { employeesToColleagueItemMapper.convert(it) })
+            },
+            doOnError = { error ->
+                Timber.e(error)
+                _exception.postValue(error)
+            }
         )
     }
 
     fun performSearch(name: String) {
-        jobs.add(
-            viewModelScope.tryLaunch(
-                contextPiece = dispatchers.default,
-                doOnLaunch = {
-                    if (name.isNotEmpty()) {
-                        _data.postValue(
-                            reservedData.filter { employee ->
-                                employee.username.contains(name, ignoreCase = true)
-                            }.map { employeesToColleagueItemMapper.convert(it) }
-                        )
-                    } else {
-                        if (reservedData.isNotEmpty()) {
-                            _data.postValue(reservedData.map { employeesToColleagueItemMapper.convert(it) })
-                        }
+        viewModelScope.tryLaunch(
+            contextPiece = dispatchers.default,
+            doOnLaunch = {
+                if (name.isNotEmpty()) {
+                    _data.postValue(
+                        reservedData.filter { employee ->
+                            employee.username.contains(name, ignoreCase = true)
+                        }.map { employeesToColleagueItemMapper.convert(it) }
+                    )
+                } else {
+                    if (reservedData.isNotEmpty()) {
+                        _data.postValue(reservedData.map { employeesToColleagueItemMapper.convert(it) })
                     }
-                },
-                doOnError = { error ->
-                    Timber.e(error)
-                    _exception.postValue(error)
                 }
-            )
+            },
+            doOnError = { error ->
+                Timber.e(error)
+                _exception.postValue(error)
+            }
         )
     }
 

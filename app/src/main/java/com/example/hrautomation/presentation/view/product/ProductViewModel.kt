@@ -15,6 +15,7 @@ import com.example.hrautomation.utils.tryLaunch
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.async
+import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
@@ -44,8 +45,8 @@ class ProductViewModel @Inject constructor(
     }
 
     fun reload() {
+        viewModelScope.coroutineContext.cancelChildren()
         clearExceptionState()
-        jobs.clear()
         loadData()
     }
 
@@ -54,7 +55,6 @@ class ProductViewModel @Inject constructor(
     }
 
     fun loadProductsByCategory(categoryId: Long?) {
-        jobs.add(
             categoryId?.let {
                 viewModelScope.tryLaunch(
                     contextPiece = dispatchers.io,
@@ -72,11 +72,9 @@ class ProductViewModel @Inject constructor(
                 ?: run {
                     loadProductsJooba()
                 }
-        )
     }
 
     fun orderProduct(id: Long) {
-        jobs.add(
             viewModelScope.tryLaunch(
                 contextPiece = dispatchers.io,
                 doOnLaunch = {
@@ -90,11 +88,9 @@ class ProductViewModel @Inject constructor(
                     _exception.postValue(error)
                 }
             )
-        )
     }
 
     private fun loadData() {
-        jobs.add(
             viewModelScope.tryLaunch(
                 contextPiece = dispatchers.io,
                 doOnLaunch = {
@@ -121,7 +117,6 @@ class ProductViewModel @Inject constructor(
                     _exception.postValue(error)
                 }
             )
-        )
     }
 
     private fun loadProductsJooba(): Job {

@@ -22,7 +22,6 @@ class CodeLoginViewModel @Inject constructor(
     private val _isCodeCheckSuccess = MutableLiveData<Boolean>()
 
     fun checkCode(email: String, code: String) {
-        jobs.add(
             viewModelScope.tryLaunch(
                 contextPiece = dispatchers.io,
                 doOnLaunch = {
@@ -40,6 +39,5 @@ class CodeLoginViewModel @Inject constructor(
                     Timber.e(error)
                 }
             )
-        )
     }
 }
