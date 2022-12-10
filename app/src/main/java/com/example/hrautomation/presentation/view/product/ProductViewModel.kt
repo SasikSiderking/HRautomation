@@ -3,6 +3,7 @@ package com.example.hrautomation.presentation.view.product
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.hrautomation.R
 import com.example.hrautomation.data.dispatcher.CoroutineDispatchers
 import com.example.hrautomation.domain.model.ProductSortBy
 import com.example.hrautomation.domain.repository.ProductRepository
@@ -28,9 +29,9 @@ class ProductViewModel @Inject constructor(
     private val productCategoryToProductCategoryItemMapper: ProductCategoryToProductCategoryItemMapper
 ) : BaseViewModel() {
 
-    val message: LiveData<String?>
+    val message: LiveData<Int?>
         get() = _message
-    private var _message = MutableLiveData<String?>()
+    private var _message = MutableLiveData<Int?>()
 
     val data: LiveData<List<BaseListItem>>
         get() = _data
@@ -55,68 +56,67 @@ class ProductViewModel @Inject constructor(
     }
 
     fun loadProductsByCategory(categoryId: Long?) {
-            categoryId?.let {
-                viewModelScope.tryLaunch(
-                    contextPiece = dispatchers.io,
-                    doOnLaunch = {
-                        _data.postValue(
-                            productRepo.getProductsByCategory(categoryId)
-                                .map { productToListedProductItemMapper.convert(it) })
-                    },
-                    doOnError = { error ->
-                        Timber.e(error)
-                        _exception.postValue(error)
-                    }
-                )
-            }
-                ?: run {
-                    loadProductsJooba()
+        if (categoryId != null) {
+            viewModelScope.tryLaunch(
+                contextPiece = dispatchers.io,
+                doOnLaunch = {
+                    _data.postValue(
+                        productRepo.getProductsByCategory(categoryId)
+                            .map { productToListedProductItemMapper.convert(it) })
+                },
+                doOnError = { error ->
+                    Timber.e(error)
+                    _exception.postValue(error)
                 }
+            )
+        } else {
+            loadProductsJooba()
+        }
     }
 
     fun orderProduct(id: Long) {
-            viewModelScope.tryLaunch(
-                contextPiece = dispatchers.io,
-                doOnLaunch = {
-                    withContext(NonCancellable) {
-                        productRepo.orderProduct(id)
-                        _message.postValue("Продукт заказан")
-                    }
-                },
-                doOnError = { error ->
-                    Timber.e(error)
-                    _exception.postValue(error)
+        viewModelScope.tryLaunch(
+            contextPiece = dispatchers.io,
+            doOnLaunch = {
+                withContext(NonCancellable) {
+                    productRepo.orderProduct(id)
+                    _message.postValue(R.string.order_product_ordered)
                 }
-            )
+            },
+            doOnError = { error ->
+                Timber.e(error)
+                _message.postValue(R.string.toast_overall_error)
+            }
+        )
     }
 
     private fun loadData() {
-            viewModelScope.tryLaunch(
-                contextPiece = dispatchers.io,
-                doOnLaunch = {
-                    val productsDeferred = async(dispatchers.io) {
-                        productRepo.getProductList(
-                            PAGE_NUMBER,
-                            PAGE_SIZE,
-                            ProductSortBy.ID
-                        ).map { productToListedProductItemMapper.convert(it) }
-                    }
-                    val categoriesDeferred = async {
-                        productRepo.getProductCategoryList()
-                            .map { productCategoryToProductCategoryItemMapper.convert(it) }
-                    }
-
-                    val products = productsDeferred.await()
-                    val categories = categoriesDeferred.await()
-
-                    _data.postValue(products)
-                    _categories.postValue(categories)
-                },
-                doOnError = { error ->
-                    Timber.e(error)
-                    _exception.postValue(error)
+        viewModelScope.tryLaunch(
+            contextPiece = dispatchers.io,
+            doOnLaunch = {
+                val productsDeferred = async(dispatchers.io) {
+                    productRepo.getProductList(
+                        PAGE_NUMBER,
+                        PAGE_SIZE,
+                        ProductSortBy.ID
+                    ).map { productToListedProductItemMapper.convert(it) }
                 }
-            )
+                val categoriesDeferred = async {
+                    productRepo.getProductCategoryList()
+                        .map { productCategoryToProductCategoryItemMapper.convert(it) }
+                }
+
+                val products = productsDeferred.await()
+                val categories = categoriesDeferred.await()
+
+                _data.postValue(products)
+                _categories.postValue(categories)
+            },
+            doOnError = { error ->
+                Timber.e(error)
+                _exception.postValue(error)
+            }
+        )
     }
 
     private fun loadProductsJooba(): Job {

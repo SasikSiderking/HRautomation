@@ -72,7 +72,7 @@ class ProfileViewModel @Inject constructor(
             },
             doOnError = { error ->
                 Timber.e(error)
-                _exception.postValue(error)
+                _message.postValue(R.string.toast_overall_error)
             }
         )
     }

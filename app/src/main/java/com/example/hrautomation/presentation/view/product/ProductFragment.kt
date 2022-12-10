@@ -143,9 +143,9 @@ class ProductFragment : Fragment() {
         }
     }
 
-    private val messageObserver = Observer<String?> { message ->
-        message?.let {
-            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    private val messageObserver = Observer<Int?> { stringId ->
+        stringId?.let {
+            Toast.makeText(requireContext(), getString(stringId), Toast.LENGTH_SHORT).show()
             viewModel.clearMessageState()
         }
     }
