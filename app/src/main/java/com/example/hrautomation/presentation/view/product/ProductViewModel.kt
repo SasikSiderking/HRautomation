@@ -2,18 +2,20 @@ package com.example.hrautomation.presentation.view.product
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.hrautomation.data.dispatcher.CoroutineDispatchers
 import com.example.hrautomation.domain.model.ProductSortBy
 import com.example.hrautomation.domain.repository.ProductRepository
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
+import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
 import com.example.hrautomation.presentation.model.ProductCategoryItem
 import com.example.hrautomation.presentation.model.ProductCategoryToProductCategoryItemMapper
 import com.example.hrautomation.presentation.model.ProductToListedProductItemMapper
 import com.example.hrautomation.utils.tryLaunch
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.async
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -23,11 +25,7 @@ class ProductViewModel @Inject constructor(
     private val dispatchers: CoroutineDispatchers,
     private val productToListedProductItemMapper: ProductToListedProductItemMapper,
     private val productCategoryToProductCategoryItemMapper: ProductCategoryToProductCategoryItemMapper
-) : ViewModel() {
-
-    val exception: LiveData<Throwable?>
-        get() = _exception
-    private val _exception = MutableLiveData<Throwable?>()
+) : BaseViewModel() {
 
     val message: LiveData<String?>
         get() = _message
@@ -45,11 +43,8 @@ class ProductViewModel @Inject constructor(
         loadData()
     }
 
-    fun clearExceptionState() {
-        _exception.postValue(null)
-    }
-
     fun reload() {
+        jobs.clear()
         loadData()
     }
 
@@ -58,65 +53,73 @@ class ProductViewModel @Inject constructor(
     }
 
     fun loadProductsByCategory(categoryId: Long?) {
-        categoryId?.let {
+        jobs.add(
+            categoryId?.let {
+                viewModelScope.tryLaunch(
+                    contextPiece = dispatchers.io,
+                    doOnLaunch = {
+                        _data.postValue(
+                            productRepo.getProductsByCategory(categoryId)
+                                .map { productToListedProductItemMapper.convert(it) })
+                    },
+                    doOnError = { error ->
+                        Timber.e(error)
+                        _exception.postValue(error)
+                    }
+                )
+            }
+                ?: run {
+                    loadProductsJooba()
+                }
+        )
+    }
+
+    fun orderProduct(id: Long) {
+        jobs.add(
             viewModelScope.tryLaunch(
                 contextPiece = dispatchers.io,
                 doOnLaunch = {
-                    _data.postValue(
-                        productRepo.getProductsByCategory(categoryId)
-                            .map { productToListedProductItemMapper.convert(it) })
+                    withContext(NonCancellable) {
+                        productRepo.orderProduct(id)
+                        _message.postValue("Продукт заказан")
+                    }
                 },
                 doOnError = { error ->
                     Timber.e(error)
                     _exception.postValue(error)
                 }
             )
-        }
-            ?: run {
-                loadProductsJooba()
-            }
-    }
-
-    fun orderProduct(id: Long) {
-        viewModelScope.tryLaunch(
-            contextPiece = dispatchers.io,
-            doOnLaunch = {
-                productRepo.orderProduct(id)
-                _message.postValue("Продукт заказан")
-            },
-            doOnError = { error ->
-                Timber.e(error)
-                _exception.postValue(error)
-            }
         )
     }
 
     private fun loadData() {
-        viewModelScope.tryLaunch(
-            contextPiece = dispatchers.io,
-            doOnLaunch = {
-                val productsDeferred = async(dispatchers.io) {
-                    productRepo.getProductList(
-                        PAGE_NUMBER,
-                        PAGE_SIZE,
-                        ProductSortBy.ID
-                    ).map { productToListedProductItemMapper.convert(it) }
-                }
-                val categoriesDeferred = async {
-                    productRepo.getProductCategoryList()
-                        .map { productCategoryToProductCategoryItemMapper.convert(it) }
-                }
+        jobs.add(
+            viewModelScope.tryLaunch(
+                contextPiece = dispatchers.io,
+                doOnLaunch = {
+                    val productsDeferred = async(dispatchers.io) {
+                        productRepo.getProductList(
+                            PAGE_NUMBER,
+                            PAGE_SIZE,
+                            ProductSortBy.ID
+                        ).map { productToListedProductItemMapper.convert(it) }
+                    }
+                    val categoriesDeferred = async {
+                        productRepo.getProductCategoryList()
+                            .map { productCategoryToProductCategoryItemMapper.convert(it) }
+                    }
 
-                val products = productsDeferred.await()
-                val categories = categoriesDeferred.await()
+                    val products = productsDeferred.await()
+                    val categories = categoriesDeferred.await()
 
-                _data.postValue(products)
-                _categories.postValue(categories)
-            },
-            doOnError = { error ->
-                Timber.e(error)
-                _exception.postValue(error)
-            }
+                    _data.postValue(products)
+                    _categories.postValue(categories)
+                },
+                doOnError = { error ->
+                    Timber.e(error)
+                    _exception.postValue(error)
+                }
+            )
         )
     }
 
