@@ -4,6 +4,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="primary">#fad827</color>
+    <color name="primary_deep">#fcd703</color>
     <color name="background">#fcfcfb</color>
     <color name="onSurface">#454545</color>
     <color name="main_text">#222222</color>

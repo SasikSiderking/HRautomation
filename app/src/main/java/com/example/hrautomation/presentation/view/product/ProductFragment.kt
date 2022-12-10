@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -18,6 +19,8 @@ import com.example.hrautomation.databinding.FragmentProductBinding
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.model.ProductCategoryItem
 import com.example.hrautomation.utils.ViewModelFactory
+import com.example.hrautomation.utils.ui.Dp
+import com.example.hrautomation.utils.ui.dpToPx
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingSettings
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingState
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingStateSwitcher
@@ -55,6 +58,7 @@ class ProductFragment : Fragment() {
     ): View {
         _binding = FragmentProductBinding.inflate(inflater, container, false)
 
+        initToolbar()
         initUi()
 
         binding.chipGroup.setOnCheckedStateChangeListener { group, checkedIds -> chooseCategory(group, checkedIds) }
@@ -65,6 +69,12 @@ class ProductFragment : Fragment() {
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    private fun initToolbar() {
+        (activity as? AppCompatActivity)?.supportActionBar?.let {
+            it.elevation = requireContext().dpToPx(TOOLBAR_ELEVATION).toFloat()
+        }
     }
 
     private fun initUi() {
@@ -161,5 +171,11 @@ class ProductFragment : Fragment() {
             .setMessage(getString(R.string.order_product_dialog_message, name))
             .setTitle(getString(R.string.order_product_dialog_title))
         builder.show()
+    }
+
+    private companion object {
+
+        @Dp
+        const val TOOLBAR_ELEVATION = 4F
     }
 }
