@@ -11,7 +11,6 @@ import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
 import com.example.hrautomation.presentation.model.colleagues.EmployeeItem
 import com.example.hrautomation.presentation.model.colleagues.EmployeeToEmployeeItemMapper
 import com.example.hrautomation.utils.tryLaunch
-import kotlinx.coroutines.async
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -36,6 +35,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun reload() {
+        clearExceptionState()
         jobs.clear()
         loadData()
     }

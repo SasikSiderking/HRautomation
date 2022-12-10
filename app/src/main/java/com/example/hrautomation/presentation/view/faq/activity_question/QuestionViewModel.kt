@@ -23,6 +23,7 @@ class QuestionViewModel @Inject constructor(
     private val _data = MutableLiveData<List<BaseListItem>>()
 
     fun reload(id: Long) {
+        clearExceptionState()
         jobs.clear()
         loadData(id)
     }

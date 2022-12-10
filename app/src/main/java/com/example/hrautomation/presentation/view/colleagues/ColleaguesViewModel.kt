@@ -31,6 +31,7 @@ class ColleaguesViewModel @Inject constructor(
     }
 
     fun reload() {
+        clearExceptionState()
         jobs.clear()
         loadData()
     }

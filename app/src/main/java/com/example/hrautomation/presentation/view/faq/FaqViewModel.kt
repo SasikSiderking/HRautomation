@@ -27,6 +27,7 @@ class FaqViewModel @Inject constructor(
     }
 
     fun reload() {
+        clearExceptionState()
         jobs.clear()
         loadData()
     }

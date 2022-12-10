@@ -27,6 +27,7 @@ class EmployeeViewModel @Inject constructor(
     }
 
     fun reload(id: Long) {
+        clearExceptionState()
         jobs.clear()
         loadData(id)
     }
