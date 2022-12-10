@@ -11,6 +11,7 @@ import com.example.hrautomation.domain.repository.UserRepository
 import com.example.hrautomation.presentation.model.colleagues.EmployeeItem
 import com.example.hrautomation.presentation.model.colleagues.EmployeeToEmployeeItemMapper
 import com.example.hrautomation.utils.tryLaunch
+import kotlinx.coroutines.async
 import timber.log.Timber
 import javax.inject.Inject
 

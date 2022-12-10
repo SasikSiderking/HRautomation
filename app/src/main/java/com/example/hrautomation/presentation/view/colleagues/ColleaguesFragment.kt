@@ -9,16 +9,20 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView.OnEditorActionListener
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.RecyclerView
 import com.example.hrautomation.R
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.FragmentColleaguesBinding
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.view.colleagues.employee.EmployeeActivity
 import com.example.hrautomation.utils.ViewModelFactory
+import com.example.hrautomation.utils.ui.Dp
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingSettings
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingState
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingStateSwitcher
@@ -54,6 +58,7 @@ class ColleaguesFragment : Fragment() {
     ): View {
         _binding = FragmentColleaguesBinding.inflate(inflater, container, false)
 
+        initToolbar()
         initUi()
 
         return binding.root
@@ -92,6 +97,13 @@ class ColleaguesFragment : Fragment() {
         super.onDestroyView()
     }
 
+    @Dp
+    private fun initToolbar() {
+        (activity as? AppCompatActivity)?.supportActionBar?.let {
+            it.elevation = 0F
+        }
+    }
+
     private fun initUi() {
         with(binding) {
             contentLoadingSwitcher.setup(
@@ -107,6 +119,7 @@ class ColleaguesFragment : Fragment() {
                 startActivity(EmployeeActivity.createIntent(requireContext(), colleague.id))
             })
             colleaguesRecyclerview.adapter = adapter
+            colleaguesRecyclerview.addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))
 
             editSearch.setOnEditorActionListener(OnEditorActionListener { v, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
