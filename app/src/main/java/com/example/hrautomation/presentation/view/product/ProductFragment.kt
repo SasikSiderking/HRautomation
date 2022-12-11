@@ -37,7 +37,6 @@ class ProductFragment : Fragment() {
 
     private lateinit var adapter: ProductAdapter
 
-
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
@@ -81,7 +80,7 @@ class ProductFragment : Fragment() {
         with(binding) {
             contentLoadingSwitcher.setup(
                 ContentLoadingSettings(
-                    contentViews = listOf(productRecyclerview),
+                    contentViews = listOf(chipGroup, productRecyclerview),
                     errorViews = listOf(reusableReload.reusableReload),
                     loadingViews = listOf(reusableLoading.progressBar),
                     initState = ContentLoadingState.LOADING
@@ -116,6 +115,7 @@ class ProductFragment : Fragment() {
     }
 
     private fun fillChipGroup(list: List<ProductCategoryItem>) {
+        binding.chipGroup.removeAllViews()
         list.forEach { category ->
             val chip = Chip(context).apply {
                 id = category.id.toInt()
@@ -139,15 +139,13 @@ class ProductFragment : Fragment() {
 
     private val exceptionObserver = Observer<Throwable?> { exception ->
         exception?.let {
-            Toast.makeText(requireContext(), R.string.toast_overall_error, Toast.LENGTH_LONG).show()
-            viewModel.clearExceptionState()
             contentLoadingSwitcher.switchState(ContentLoadingState.ERROR, SwitchAnimationParams(delay = 500L))
         }
     }
 
-    private val messageObserver = Observer<String?> { message ->
-        message?.let {
-            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    private val messageObserver = Observer<Int?> { stringId ->
+        stringId?.let {
+            Toast.makeText(requireContext(), getString(stringId), Toast.LENGTH_SHORT).show()
             viewModel.clearMessageState()
         }
     }
@@ -174,7 +172,6 @@ class ProductFragment : Fragment() {
     }
 
     private companion object {
-
         @Dp
         const val TOOLBAR_ELEVATION = 4F
     }

@@ -79,8 +79,6 @@ class ProfileActivity : AppCompatActivity() {
 
     private val exceptionObserver = Observer<Throwable?> { exception ->
         exception?.let {
-            Toast.makeText(this, R.string.toast_overall_error, Toast.LENGTH_SHORT).show()
-            viewModel.clearExceptionState()
             contentLoadingSwitcher.switchState(ContentLoadingState.ERROR, SwitchAnimationParams(delay = 500L))
         }
     }

@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -76,6 +75,7 @@ class EmployeeActivity : AppCompatActivity() {
             employeeFullProject.setText(colleague.project)
             employeeFullAbout.setText(colleague.info)
         }
+
         supportActionBar?.title = colleague.name
 
         contentLoadingSwitcher.switchState(ContentLoadingState.CONTENT, SwitchAnimationParams(delay = 500L))
@@ -83,8 +83,6 @@ class EmployeeActivity : AppCompatActivity() {
 
     private val exceptionObserver = Observer<Throwable?> { exception ->
         exception?.let {
-            Toast.makeText(this, R.string.toast_overall_error, Toast.LENGTH_LONG).show()
-            viewModel.clearExceptionState()
             contentLoadingSwitcher.switchState(ContentLoadingState.ERROR, SwitchAnimationParams(delay = 500L))
         }
     }

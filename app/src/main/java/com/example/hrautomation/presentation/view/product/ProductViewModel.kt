@@ -2,18 +2,22 @@ package com.example.hrautomation.presentation.view.product
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.hrautomation.R
 import com.example.hrautomation.data.dispatcher.CoroutineDispatchers
 import com.example.hrautomation.domain.model.ProductSortBy
 import com.example.hrautomation.domain.repository.ProductRepository
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
+import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
 import com.example.hrautomation.presentation.model.ProductCategoryItem
 import com.example.hrautomation.presentation.model.ProductCategoryToProductCategoryItemMapper
 import com.example.hrautomation.presentation.model.ProductToListedProductItemMapper
 import com.example.hrautomation.utils.tryLaunch
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.async
+import kotlinx.coroutines.cancelChildren
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -23,15 +27,11 @@ class ProductViewModel @Inject constructor(
     private val dispatchers: CoroutineDispatchers,
     private val productToListedProductItemMapper: ProductToListedProductItemMapper,
     private val productCategoryToProductCategoryItemMapper: ProductCategoryToProductCategoryItemMapper
-) : ViewModel() {
+) : BaseViewModel() {
 
-    val exception: LiveData<Throwable?>
-        get() = _exception
-    private val _exception = MutableLiveData<Throwable?>()
-
-    val message: LiveData<String?>
+    val message: LiveData<Int?>
         get() = _message
-    private var _message = MutableLiveData<String?>()
+    private var _message = MutableLiveData<Int?>()
 
     val data: LiveData<List<BaseListItem>>
         get() = _data
@@ -45,11 +45,9 @@ class ProductViewModel @Inject constructor(
         loadData()
     }
 
-    fun clearExceptionState() {
-        _exception.postValue(null)
-    }
-
     fun reload() {
+        viewModelScope.coroutineContext.cancelChildren()
+        clearExceptionState()
         loadData()
     }
 
@@ -58,7 +56,7 @@ class ProductViewModel @Inject constructor(
     }
 
     fun loadProductsByCategory(categoryId: Long?) {
-        categoryId?.let {
+        if (categoryId != null) {
             viewModelScope.tryLaunch(
                 contextPiece = dispatchers.io,
                 doOnLaunch = {
@@ -71,22 +69,23 @@ class ProductViewModel @Inject constructor(
                     _exception.postValue(error)
                 }
             )
+        } else {
+            loadProductsJooba()
         }
-            ?: run {
-                loadProductsJooba()
-            }
     }
 
     fun orderProduct(id: Long) {
         viewModelScope.tryLaunch(
             contextPiece = dispatchers.io,
             doOnLaunch = {
-                productRepo.orderProduct(id)
-                _message.postValue("Продукт заказан")
+                withContext(NonCancellable) {
+                    productRepo.orderProduct(id)
+                    _message.postValue(R.string.order_product_ordered)
+                }
             },
             doOnError = { error ->
                 Timber.e(error)
-                _exception.postValue(error)
+                _message.postValue(R.string.toast_overall_error)
             }
         )
     }

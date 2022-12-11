@@ -20,12 +20,11 @@ import javax.inject.Inject
 
 class RetrofitProvider @Inject constructor(private val tokenRepositoryImpl: TokenRepositoryImpl) {
 
-
     private val httpClient: OkHttpClient by lazy {
         OkHttpClient.Builder()
-            .connectTimeout(20, TimeUnit.SECONDS)
-            .readTimeout(20, TimeUnit.SECONDS)
-            .writeTimeout(20, TimeUnit.SECONDS)
+            .connectTimeout(10, TimeUnit.SECONDS)
+            .readTimeout(10, TimeUnit.SECONDS)
+            .writeTimeout(10, TimeUnit.SECONDS)
             .addInterceptor(AuthInterceptor(tokenRepositoryImpl.getAccessToken() ?: ""))
             .addInterceptor(logging)
             .build()

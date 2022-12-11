@@ -2,15 +2,16 @@ package com.example.hrautomation.presentation.view.colleagues
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.hrautomation.data.dispatcher.CoroutineDispatchers
 import com.example.hrautomation.domain.model.employees.ColleaguesSortBy
 import com.example.hrautomation.domain.model.employees.ListEmployee
 import com.example.hrautomation.domain.repository.EmployeesRepository
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
+import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
 import com.example.hrautomation.presentation.model.colleagues.EmployeeToColleagueItemMapper
 import com.example.hrautomation.utils.tryLaunch
+import kotlinx.coroutines.cancelChildren
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -18,15 +19,11 @@ class ColleaguesViewModel @Inject constructor(
     private val repo: EmployeesRepository,
     private val dispatchers: CoroutineDispatchers,
     private val employeesToColleagueItemMapper: EmployeeToColleagueItemMapper
-) : ViewModel() {
+) : BaseViewModel() {
 
     val data: LiveData<List<BaseListItem>>
         get() = _data
     private val _data = MutableLiveData<List<BaseListItem>>()
-
-    val exception: LiveData<Throwable?>
-        get() = _exception
-    private val _exception = MutableLiveData<Throwable?>()
 
     private var reservedData: List<ListEmployee> = emptyList()
 
@@ -34,11 +31,9 @@ class ColleaguesViewModel @Inject constructor(
         loadData()
     }
 
-    fun clearExceptionState() {
-        _exception.postValue(null)
-    }
-
     fun reload() {
+        viewModelScope.coroutineContext.cancelChildren()
+        clearExceptionState()
         loadData()
     }
 
@@ -67,7 +62,9 @@ class ColleaguesViewModel @Inject constructor(
                         }.map { employeesToColleagueItemMapper.convert(it) }
                     )
                 } else {
-                    _data.postValue(reservedData.map { employeesToColleagueItemMapper.convert(it) })
+                    if (reservedData.isNotEmpty()) {
+                        _data.postValue(reservedData.map { employeesToColleagueItemMapper.convert(it) })
+                    }
                 }
             },
             doOnError = { error ->

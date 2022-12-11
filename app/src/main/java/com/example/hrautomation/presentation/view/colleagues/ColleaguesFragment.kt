@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView.OnEditorActionListener
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -16,7 +15,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
-import com.example.hrautomation.R
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.FragmentColleaguesBinding
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
@@ -86,8 +84,6 @@ class ColleaguesFragment : Fragment() {
 
     private val exceptionObserver = Observer<Throwable?> { exception ->
         exception?.let {
-            Toast.makeText(context, R.string.toast_overall_error, Toast.LENGTH_SHORT).show()
-            viewModel.clearExceptionState()
             contentLoadingSwitcher.switchState(ContentLoadingState.ERROR, SwitchAnimationParams(delay = 500L))
         }
     }
