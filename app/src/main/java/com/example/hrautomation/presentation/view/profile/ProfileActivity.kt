@@ -1,12 +1,22 @@
 package com.example.hrautomation.presentation.view.profile
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.hrautomation.R
@@ -18,7 +28,9 @@ import com.example.hrautomation.utils.ui.switcher.ContentLoadingSettings
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingState
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingStateSwitcher
 import com.example.hrautomation.utils.ui.switcher.base.SwitchAnimationParams
+import java.io.IOException
 import javax.inject.Inject
+
 
 class ProfileActivity : AppCompatActivity() {
 
@@ -62,11 +74,14 @@ class ProfileActivity : AppCompatActivity() {
 
     private val employeeObserver = Observer<EmployeeItem> { employeeItem ->
         with(binding) {
-            Glide.with(employeeImageView)
-                .load("https://cdn.mos.cms.futurecdn.net/PzPq6Pbn5RqgrWunhEx6rg.jpg")
-                .centerCrop()
-                .placeholder(R.drawable.ic_launcher_foreground)
-                .into(employeeImageView)
+            if (employeeItem.img != null) {
+                employeeImageView.setImageBitmap(employeeItem.img)
+            } else {
+                Glide.with(employeeImageView)
+                    .asDrawable()
+                    .load(R.drawable.ic_tinkoff)
+                    .into(employeeImageView)
+            }
             employeeFullName.setText(employeeItem.name)
             employeeFullEmail.setText(employeeItem.email)
             employeeFullPost.setText(employeeItem.post)
@@ -101,7 +116,7 @@ class ProfileActivity : AppCompatActivity() {
                 )
             )
 
-            saveButton.setOnClickListener { _ ->
+            saveButton.setOnClickListener {
                 viewModel.saveData(
                     employeeFullProject.text.toString(),
                     employeeFullAbout.text.toString()
@@ -112,15 +127,72 @@ class ProfileActivity : AppCompatActivity() {
                 viewModel.reload()
                 contentLoadingSwitcher.switchState(ContentLoadingState.LOADING, SwitchAnimationParams(delay = 500L))
             }
+
+            employeeImageView.setOnClickListener { chooseImage() }
         }
         viewModel.data.observe(this, employeeObserver)
         viewModel.exception.observe(this, exceptionObserver)
         viewModel.message.observe(this, messageObserver)
     }
 
+    private fun isStoragePermissionGranted(): Boolean {
+        return if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            true
+        } else {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), READ_EXTERNAL_STORAGE_REQUEST_CODE
+            )
+            false
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (requestCode == READ_EXTERNAL_STORAGE_REQUEST_CODE && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            chooseImage()
+        }
+    }
+
+    private fun chooseImage() {
+        if (isStoragePermissionGranted()) {
+            val i = Intent()
+            i.type = "image/*"
+            i.action = Intent.ACTION_GET_CONTENT
+            activityResultLauncher.launch(i)
+        }
+    }
+
+    private var activityResultLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result: ActivityResult ->
+        if (result.resultCode == RESULT_OK) {
+            val data = result.data
+            if (data != null && data.data != null) {
+                val selectedImageUri: Uri = data.data!!
+                val selectedImageBitmap: Bitmap
+                try {
+                    selectedImageBitmap = if (Build.VERSION.SDK_INT < 28) {
+                        MediaStore.Images.Media.getBitmap(this.contentResolver, selectedImageUri)
+                    } else {
+                        val source: ImageDecoder.Source = ImageDecoder.createSource(contentResolver, selectedImageUri)
+                        ImageDecoder.decodeBitmap(source)
+                    }
+
+                    viewModel.setImage(selectedImageBitmap)
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+            }
+        }
+    }
+
     companion object {
         fun createIntent(context: Context): Intent {
             return Intent(context, ProfileActivity::class.java)
         }
+
+        private const val READ_EXTERNAL_STORAGE_REQUEST_CODE = 1707
     }
 }
