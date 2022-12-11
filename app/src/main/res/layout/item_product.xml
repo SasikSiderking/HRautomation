@@ -2,25 +2,31 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/SelectableViewItemStyle"
-    android:padding="10dp">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?selectableItemBackground">
 
     <com.google.android.material.imageview.ShapeableImageView
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/productImage"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_margin="12dp"
+        tools:src="@drawable/ic_tinkoff"
         app:shapeAppearanceOverlay="@style/roundedImageViewRounded" />
 
     <TextView
+        android:layout_marginHorizontal="12dp"
         android:id="@+id/productName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
+        android:textSize="18sp"
         android:textColor="@color/main_text"
-        android:textSize="26sp"
+        tools:text="Potato crisps"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/productImage"

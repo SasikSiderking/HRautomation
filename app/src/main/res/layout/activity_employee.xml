@@ -21,14 +21,13 @@
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:orientation="vertical">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/employeeImageView"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:layout_marginVertical="25dp"
+                android:layout_marginVertical="24dp"
                 android:src="@mipmap/ic_launcher"
                 app:shapeAppearanceOverlay="@style/roundedImageViewRounded" />
 
@@ -36,8 +35,8 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="15dp"
-                android:layout_marginBottom="15dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="16dp"
                 android:hint="@string/employee_name">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -54,8 +53,8 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="15dp"
-                android:layout_marginBottom="15dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="16dp"
                 android:hint="@string/employee_email">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -72,8 +71,8 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="15dp"
-                android:layout_marginBottom="15dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="16dp"
                 android:hint="@string/employee_project">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -90,8 +89,8 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="15dp"
-                android:layout_marginBottom="15dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="16dp"
                 android:hint="@string/employee_post">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -108,7 +107,8 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="15dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="16dp"
                 android:hint="@string/about_employee">
 
                 <com.google.android.material.textfield.TextInputEditText

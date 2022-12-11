@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.RecyclerView
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.FragmentFaqBinding
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
@@ -80,6 +82,7 @@ class FaqFragment : Fragment() {
                 viewModel.reload()
                 contentLoadingSwitcher.switchState(ContentLoadingState.LOADING, SwitchAnimationParams(delay = 500L))
             }
+            faqRecyclerview.addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))
         }
         adapter = FaqAdapter(OnFaqCategoryClickListener { id: Long, name: String ->
             startActivity(QuestionActivity.createIntent(requireContext(), id, name))
@@ -102,7 +105,6 @@ class FaqFragment : Fragment() {
     }
 
     private companion object {
-
         @Dp
         const val TOOLBAR_ELEVATION = 4F
     }
