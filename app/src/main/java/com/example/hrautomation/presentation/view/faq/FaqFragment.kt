@@ -15,7 +15,6 @@ import com.example.hrautomation.databinding.FragmentFaqBinding
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.view.faq.activity_question.QuestionActivity
 import com.example.hrautomation.utils.ViewModelFactory
-import com.example.hrautomation.utils.ui.Dp
 import com.example.hrautomation.utils.ui.dpToPx
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingSettings
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingState
@@ -106,7 +105,6 @@ class FaqFragment : Fragment() {
 
     private companion object {
 
-        @Dp
         const val TOOLBAR_ELEVATION = 4F
     }
 }

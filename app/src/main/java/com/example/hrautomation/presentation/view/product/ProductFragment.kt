@@ -20,7 +20,6 @@ import com.example.hrautomation.databinding.FragmentProductBinding
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.model.ProductCategoryItem
 import com.example.hrautomation.utils.ViewModelFactory
-import com.example.hrautomation.utils.ui.Dp
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingSettings
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingState
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingStateSwitcher
@@ -70,7 +69,6 @@ class ProductFragment : Fragment() {
         super.onDestroyView()
     }
 
-    @Dp
     private fun initToolbar() {
         (activity as? AppCompatActivity)?.supportActionBar?.let {
             it.elevation = 0F
