@@ -2,24 +2,30 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/SelectableViewItemStyle"
-    android:padding="10dp">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?selectableItemBackground"
+    android:padding="16dp">
 
     <TextView
         android:id="@+id/category"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textColor="@color/main_text"
-        android:textSize="20sp"
+        android:layout_marginEnd="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/imageView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="16sp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="category question" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:minHeight="24dp"
         android:contentDescription="@string/arrow_right_description"
         android:src="@drawable/ic_baseline_arrow_right_24"
         app:layout_constraintBottom_toBottomOf="parent"

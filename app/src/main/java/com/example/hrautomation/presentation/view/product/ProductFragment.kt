@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hrautomation.R
@@ -20,7 +21,6 @@ import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.model.ProductCategoryItem
 import com.example.hrautomation.utils.ViewModelFactory
 import com.example.hrautomation.utils.ui.Dp
-import com.example.hrautomation.utils.ui.dpToPx
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingSettings
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingState
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingStateSwitcher
@@ -70,9 +70,10 @@ class ProductFragment : Fragment() {
         super.onDestroyView()
     }
 
+    @Dp
     private fun initToolbar() {
         (activity as? AppCompatActivity)?.supportActionBar?.let {
-            it.elevation = requireContext().dpToPx(TOOLBAR_ELEVATION).toFloat()
+            it.elevation = 0F
         }
     }
 
@@ -80,7 +81,7 @@ class ProductFragment : Fragment() {
         with(binding) {
             contentLoadingSwitcher.setup(
                 ContentLoadingSettings(
-                    contentViews = listOf(chipGroup, productRecyclerview),
+                    contentViews = listOf(horizontalScrollView, productRecyclerview),
                     errorViews = listOf(reusableReload.reusableReload),
                     loadingViews = listOf(reusableLoading.progressBar),
                     initState = ContentLoadingState.LOADING
@@ -97,7 +98,7 @@ class ProductFragment : Fragment() {
                 viewModel.reload()
                 contentLoadingSwitcher.switchState(ContentLoadingState.LOADING, SwitchAnimationParams(delay = 500L))
             }
-
+            productRecyclerview.addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))
         }
 
         viewModel.data.observe(viewLifecycleOwner, productObserver)
@@ -120,7 +121,7 @@ class ProductFragment : Fragment() {
             val chip = Chip(context).apply {
                 id = category.id.toInt()
                 text = category.name
-                textSize = 22F
+                setChipBackgroundColorResource(R.color.white)
                 isClickable = true
                 isCheckable = true
             }
@@ -169,10 +170,5 @@ class ProductFragment : Fragment() {
             .setMessage(getString(R.string.order_product_dialog_message, name))
             .setTitle(getString(R.string.order_product_dialog_title))
         builder.show()
-    }
-
-    private companion object {
-        @Dp
-        const val TOOLBAR_ELEVATION = 4F
     }
 }
