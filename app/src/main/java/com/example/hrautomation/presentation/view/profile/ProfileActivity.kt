@@ -157,10 +157,11 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun chooseImage() {
         if (isStoragePermissionGranted()) {
-            val i = Intent()
-            i.type = "image/*"
-            i.action = Intent.ACTION_GET_CONTENT
-            activityResultLauncher.launch(i)
+            val intent = Intent().apply {
+                type = "image/*"
+                action = Intent.ACTION_GET_CONTENT
+            }
+            activityResultLauncher.launch(intent)
         }
     }
 
@@ -179,7 +180,6 @@ class ProfileActivity : AppCompatActivity() {
                         val source: ImageDecoder.Source = ImageDecoder.createSource(contentResolver, selectedImageUri)
                         ImageDecoder.decodeBitmap(source)
                     }
-
                     viewModel.setImage(selectedImageBitmap)
                 } catch (e: IOException) {
                     e.printStackTrace()

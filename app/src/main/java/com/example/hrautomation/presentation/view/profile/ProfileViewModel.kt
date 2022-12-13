@@ -38,14 +38,8 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun setImage(bitmap: Bitmap) {
-        with(_data.value) {
-            this?.let {
-                _data.postValue(
-                    EmployeeItem(
-                        name, email, project, post, info, bitmap
-                    )
-                )
-            }
+        _data.value?.let { employeeItem ->
+            _data.postValue(employeeItem.copy(img = bitmap))
         }
     }
 

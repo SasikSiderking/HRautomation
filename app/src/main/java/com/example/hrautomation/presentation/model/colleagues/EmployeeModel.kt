@@ -4,7 +4,7 @@ import android.graphics.Bitmap
 import com.example.hrautomation.domain.model.Employee
 import com.example.hrautomation.utils.Mapper
 
-class EmployeeItem(
+data class EmployeeItem(
     val name: String,
     val email: String,
     val project: String,
