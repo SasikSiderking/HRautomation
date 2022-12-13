@@ -4,7 +4,7 @@ import com.example.hrautomation.domain.model.ProductCategory
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.utils.Mapper
 
-class ProductCategoryItem(
+data class ProductCategoryItem(
     override val id: Long,
     val name: String
 ) : BaseListItem

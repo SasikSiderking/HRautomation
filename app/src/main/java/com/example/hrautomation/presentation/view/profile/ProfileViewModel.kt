@@ -1,5 +1,6 @@
 package com.example.hrautomation.presentation.view.profile
 
+import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -17,6 +18,7 @@ import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
 
+
 class ProfileViewModel @Inject constructor(
     private val userRepo: UserRepository,
     private val tokenRepo: TokenRepository,
@@ -33,6 +35,12 @@ class ProfileViewModel @Inject constructor(
 
     fun clearMessageState() {
         _message.postValue(null)
+    }
+
+    fun setImage(bitmap: Bitmap) {
+        _data.value?.let { employeeItem ->
+            _data.postValue(employeeItem.copy(img = bitmap))
+        }
     }
 
     fun reload() {
