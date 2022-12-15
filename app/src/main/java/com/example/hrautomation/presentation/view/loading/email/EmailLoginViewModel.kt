@@ -19,16 +19,16 @@ class EmailLoginViewModel @Inject constructor(
     private val _isEmailCheckSuccess = MutableLiveData<Boolean>()
 
     fun checkEmail(email: String) {
-            viewModelScope.tryLaunch(
-                contextPiece = dispatchers.io,
-                doOnLaunch = {
-                    userRepo.checkEmail(email)
-                    _isEmailCheckSuccess.postValue(true)
-                },
-                doOnError = { error ->
-                    _exception.postValue(error)
-                    _isEmailCheckSuccess.postValue(false)
-                }
-            )
+        viewModelScope.tryLaunch(
+            contextPiece = dispatchers.io,
+            doOnLaunch = {
+                userRepo.checkEmail(email)
+                _isEmailCheckSuccess.postValue(true)
+            },
+            doOnError = { error ->
+                _exception.postValue(error)
+                _isEmailCheckSuccess.postValue(false)
+            }
+        )
     }
 }
