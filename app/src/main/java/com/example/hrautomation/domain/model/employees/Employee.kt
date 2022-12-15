@@ -7,6 +7,6 @@ data class Employee(
     val project: String,
     val post: String,
     val info: String,
-    val img: String
+    val pictureUrl: String
 )
 

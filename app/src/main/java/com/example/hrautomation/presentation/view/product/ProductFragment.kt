@@ -18,7 +18,7 @@ import com.example.hrautomation.R
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.FragmentProductBinding
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
-import com.example.hrautomation.presentation.model.ProductCategoryItem
+import com.example.hrautomation.presentation.model.products.ProductCategoryItem
 import com.example.hrautomation.utils.ViewModelFactory
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingSettings
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingState

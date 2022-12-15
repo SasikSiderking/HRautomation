@@ -12,7 +12,7 @@ import com.example.hrautomation.presentation.base.delegates.BaseItemAdapterDeleg
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.base.delegates.ClickableViewHolder
 import com.example.hrautomation.presentation.base.delegates.OnViewHolderClickListener
-import com.example.hrautomation.presentation.model.ProductItem
+import com.example.hrautomation.presentation.model.products.ProductItem
 import com.example.hrautomation.presentation.view.product.ProductItemAdapterDelegate.ProductViewHolder
 
 class ProductItemAdapterDelegate(private val onProductClickListener: OnProductClickListener) : BaseItemAdapterDelegate<ProductItem, ProductViewHolder>(),

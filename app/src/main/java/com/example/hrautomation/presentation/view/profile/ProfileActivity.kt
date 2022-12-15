@@ -19,7 +19,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
-import com.example.hrautomation.R
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.ActivityProfileBinding
 import com.example.hrautomation.presentation.model.colleagues.EmployeeItem
@@ -74,14 +73,17 @@ class ProfileActivity : AppCompatActivity() {
 
     private val employeeObserver = Observer<EmployeeItem> { employeeItem ->
         with(binding) {
-            if (employeeItem.img != null) {
-                employeeImageView.setImageBitmap(employeeItem.img)
-            } else {
-                Glide.with(employeeImageView)
-                    .asDrawable()
-                    .load(R.drawable.ic_tinkoff)
-                    .into(employeeImageView)
-            }
+//            if (employeeItem.img != null) {
+//                employeeImageView.setImageBitmap(employeeItem.img)
+//            } else {
+//                Glide.with(employeeImageView)
+//                    .asDrawable()
+//                    .load(R.drawable.ic_tinkoff)
+//                    .into(employeeImageView)
+//            }
+            Glide.with(employeeImageView)
+                .load(employeeItem.pictureUrl)
+                .into(employeeImageView)
             employeeFullName.setText(employeeItem.name)
             employeeFullEmail.setText(employeeItem.email)
             employeeFullPost.setText(employeeItem.post)
@@ -180,7 +182,7 @@ class ProfileActivity : AppCompatActivity() {
                         val source: ImageDecoder.Source = ImageDecoder.createSource(contentResolver, selectedImageUri)
                         ImageDecoder.decodeBitmap(source)
                     }
-                    viewModel.setImage(selectedImageBitmap)
+                    binding.employeeImageView.setImageBitmap(selectedImageBitmap)
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }

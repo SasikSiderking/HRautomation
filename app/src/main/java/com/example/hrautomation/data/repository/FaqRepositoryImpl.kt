@@ -1,10 +1,10 @@
 package com.example.hrautomation.data.repository
 
 import com.example.hrautomation.data.api.FaqApi
-import com.example.hrautomation.data.model.FaqCategoryResponseToFaqCategoryMapper
-import com.example.hrautomation.data.model.FaqQuestionResponseToFaqQuestionMapper
-import com.example.hrautomation.domain.model.FaqCategory
-import com.example.hrautomation.domain.model.FaqQuestion
+import com.example.hrautomation.data.model.faq.FaqCategoryResponseToFaqCategoryMapper
+import com.example.hrautomation.data.model.faq.FaqQuestionResponseToFaqQuestionMapper
+import com.example.hrautomation.domain.model.faq.FaqCategory
+import com.example.hrautomation.domain.model.faq.FaqQuestion
 import com.example.hrautomation.domain.repository.FaqRepository
 import javax.inject.Inject
 

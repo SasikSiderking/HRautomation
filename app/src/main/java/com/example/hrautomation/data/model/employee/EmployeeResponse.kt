@@ -13,7 +13,7 @@ data class EmployeeResponse(
     val about: String,
     val admin: String,
     val birthDate: Date,
-    val img: String?
+    val pictureUrl: String?
 )
 
 class EmployeesResponseToEmployeesMapper : Mapper<EmployeeResponse, Employee> {
@@ -25,7 +25,7 @@ class EmployeesResponseToEmployeesMapper : Mapper<EmployeeResponse, Employee> {
             model.project,
             model.post,
             model.about,
-            "https://cdn.mos.cms.futurecdn.net/PzPq6Pbn5RqgrWunhEx6rg.jpg"
+            model.pictureUrl ?: "https://cdn.mos.cms.futurecdn.net/PzPq6Pbn5RqgrWunhEx6rg.jpg"
         )
     }
 }

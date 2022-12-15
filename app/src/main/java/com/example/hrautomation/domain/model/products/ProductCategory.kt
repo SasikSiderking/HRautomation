@@ -1,4 +1,4 @@
-package com.example.hrautomation.domain.model
+package com.example.hrautomation.domain.model.products
 
 data class ProductCategory(
     val id: Long,

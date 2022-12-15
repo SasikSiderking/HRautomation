@@ -1,6 +1,6 @@
-package com.example.hrautomation.data.model
+package com.example.hrautomation.data.model.faq
 
-import com.example.hrautomation.domain.model.FaqQuestion
+import com.example.hrautomation.domain.model.faq.FaqQuestion
 import com.example.hrautomation.utils.Mapper
 
 data class FaqQuestionResponse(

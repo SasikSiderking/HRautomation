@@ -1,6 +1,6 @@
-package com.example.hrautomation.data.model
+package com.example.hrautomation.data.model.products
 
-import com.example.hrautomation.domain.model.Product
+import com.example.hrautomation.domain.model.products.Product
 import com.example.hrautomation.utils.Mapper
 
 data class ProductResponse(

@@ -1,11 +1,11 @@
 package com.example.hrautomation.data.repository
 
 import com.example.hrautomation.data.api.ProductApi
-import com.example.hrautomation.data.model.ProductCategoryResponseToProductCategoryMapper
-import com.example.hrautomation.data.model.ProductResponseToProductMapper
-import com.example.hrautomation.domain.model.Product
-import com.example.hrautomation.domain.model.ProductCategory
-import com.example.hrautomation.domain.model.ProductSortBy
+import com.example.hrautomation.data.model.products.ProductCategoryResponseToProductCategoryMapper
+import com.example.hrautomation.data.model.products.ProductResponseToProductMapper
+import com.example.hrautomation.domain.model.products.Product
+import com.example.hrautomation.domain.model.products.ProductCategory
+import com.example.hrautomation.domain.model.products.ProductSortBy
 import com.example.hrautomation.domain.repository.ProductRepository
 import javax.inject.Inject
 import javax.inject.Singleton
