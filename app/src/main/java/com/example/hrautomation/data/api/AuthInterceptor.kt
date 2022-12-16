@@ -11,7 +11,7 @@ class AuthInterceptor constructor(private val token: String) : Interceptor {
                 .newBuilder()
                 .addHeader("appid", "hrautomation")
                 .addHeader("deviceplatform", "android")
-                .addHeader("Authorization", "Bearer$token")
+                .addHeader("Authorization", token)
                 .build()
         )
     }

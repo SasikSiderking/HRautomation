@@ -1,7 +1,7 @@
 package com.example.hrautomation.domain.repository
 
-import com.example.hrautomation.domain.model.Employee
 import com.example.hrautomation.domain.model.employees.ColleaguesSortBy
+import com.example.hrautomation.domain.model.employees.Employee
 import com.example.hrautomation.domain.model.employees.ListEmployee
 
 interface EmployeesRepository {

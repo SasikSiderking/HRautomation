@@ -3,8 +3,8 @@ package com.example.hrautomation.data.repository
 import com.example.hrautomation.data.api.UserApi
 import com.example.hrautomation.data.model.TokenResponseToTokenMapper
 import com.example.hrautomation.data.model.employee.EmployeesResponseToEmployeesMapper
-import com.example.hrautomation.domain.model.Employee
 import com.example.hrautomation.domain.model.Token
+import com.example.hrautomation.domain.model.employees.Employee
 import com.example.hrautomation.domain.repository.TokenRepository
 import com.example.hrautomation.domain.repository.UserRepository
 import javax.inject.Inject

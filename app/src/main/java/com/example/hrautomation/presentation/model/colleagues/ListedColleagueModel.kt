@@ -8,7 +8,7 @@ data class ListedColleagueItem(
     override val id: Long,
     val name: String,
     val post: String,
-    val pictureUrl: String
+    val pictureUrl: String?
 ) : BaseListItem
 
 class EmployeeToColleagueItemMapper : Mapper<ListEmployee, ListedColleagueItem> {

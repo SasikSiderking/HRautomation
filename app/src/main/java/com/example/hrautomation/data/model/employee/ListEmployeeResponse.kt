@@ -17,5 +17,10 @@ data class ListEmployeeResponse(
 
 class ListEmployeeResponseToListEmployeeMapper : Mapper<ListEmployeeResponse, ListEmployee> {
     override fun convert(model: ListEmployeeResponse): ListEmployee =
-        ListEmployee(model.id, model.username, model.post, model.pictureUrl ?: "https://cdn.mos.cms.futurecdn.net/PzPq6Pbn5RqgrWunhEx6rg.jpg")
+        ListEmployee(
+            model.id,
+            model.username,
+            model.post,
+            model.pictureUrl
+        )
 }
