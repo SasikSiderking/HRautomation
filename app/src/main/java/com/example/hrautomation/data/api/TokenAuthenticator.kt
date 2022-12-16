@@ -7,6 +7,7 @@ import okhttp3.Authenticator
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.Route
+import timber.log.Timber
 import javax.inject.Inject
 
 class TokenAuthenticator @Inject constructor(
@@ -34,6 +35,7 @@ class TokenAuthenticator @Inject constructor(
             try {
                 tokenApi.refreshToken(it)
             } catch (exception: Exception) {
+                Timber.e(exception)
                 null
             }
         }
