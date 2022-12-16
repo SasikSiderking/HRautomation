@@ -1,7 +1,7 @@
 package com.example.hrautomation.data.api
 
-import com.example.hrautomation.data.model.FaqCategoryResponse
-import com.example.hrautomation.data.model.FaqQuestionResponse
+import com.example.hrautomation.data.model.faq.FaqCategoryResponse
+import com.example.hrautomation.data.model.faq.FaqQuestionResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 

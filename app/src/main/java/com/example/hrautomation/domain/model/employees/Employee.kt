@@ -1,4 +1,4 @@
-package com.example.hrautomation.domain.model
+package com.example.hrautomation.domain.model.employees
 
 data class Employee(
     val id: Long,
@@ -7,6 +7,6 @@ data class Employee(
     val project: String,
     val post: String,
     val info: String,
-    val img: String
+    val pictureUrl: String?
 )
 

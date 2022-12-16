@@ -1,6 +1,6 @@
-package com.example.hrautomation.presentation.model
+package com.example.hrautomation.presentation.model.faq
 
-import com.example.hrautomation.domain.model.FaqQuestion
+import com.example.hrautomation.domain.model.faq.FaqQuestion
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.utils.Mapper
 

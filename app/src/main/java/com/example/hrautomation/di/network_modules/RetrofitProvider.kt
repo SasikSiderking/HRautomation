@@ -51,7 +51,7 @@ class RetrofitProvider @Inject constructor(private val tokenRepository: TokenRep
     }
 
     private val logging: HttpLoggingInterceptor by lazy {
-        HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC)
+        HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
     }
 
     private val gson: Gson = GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX").create()

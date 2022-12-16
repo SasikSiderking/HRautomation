@@ -9,7 +9,7 @@ import com.example.hrautomation.presentation.base.delegates.BaseItemAdapterDeleg
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.base.delegates.ClickableViewHolder
 import com.example.hrautomation.presentation.base.delegates.OnViewHolderClickListener
-import com.example.hrautomation.presentation.model.FaqCategoryItem
+import com.example.hrautomation.presentation.model.faq.FaqCategoryItem
 import com.example.hrautomation.presentation.view.faq.CategoryItemAdapterDelegate.FaqCategoryItemViewHolder
 
 class CategoryItemAdapterDelegate(private val onFaqCategoryClickListener: OnFaqCategoryClickListener) :
