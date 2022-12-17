@@ -3,6 +3,7 @@ package com.example.hrautomation.di.network_modules
 import com.example.hrautomation.data.api.EmployeesApi
 import com.example.hrautomation.data.api.FaqApi
 import com.example.hrautomation.data.api.ProductApi
+import com.example.hrautomation.data.api.TokenApi
 import com.example.hrautomation.data.api.UserApi
 import dagger.Module
 import dagger.Provides
@@ -10,6 +11,12 @@ import javax.inject.Singleton
 
 @Module
 class ApiModule {
+
+    @Provides
+    @Singleton
+    fun provideTokenApi(retrofitProvider: RetrofitProvider): TokenApi {
+        return retrofitProvider.tokenApi
+    }
 
     @Provides
     @Singleton

@@ -68,8 +68,11 @@ class EmailLoginFragment : Fragment() {
     }
 
     private fun setFieldsVisibility(flag: Boolean) {
-        binding.email.isEnabled = flag
-        binding.progressBar.isVisible = !flag
+        with(binding) {
+            email.isEnabled = flag
+            okEmailButton.isEnabled = flag
+            progressBar.isVisible = !flag
+        }
     }
 
     private fun initUi() {

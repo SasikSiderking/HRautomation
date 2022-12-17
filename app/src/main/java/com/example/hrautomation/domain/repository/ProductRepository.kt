@@ -1,8 +1,8 @@
 package com.example.hrautomation.domain.repository
 
-import com.example.hrautomation.domain.model.Product
-import com.example.hrautomation.domain.model.ProductCategory
-import com.example.hrautomation.domain.model.ProductSortBy
+import com.example.hrautomation.domain.model.products.Product
+import com.example.hrautomation.domain.model.products.ProductCategory
+import com.example.hrautomation.domain.model.products.ProductSortBy
 
 
 interface ProductRepository {

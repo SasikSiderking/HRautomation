@@ -1,18 +1,18 @@
 package com.example.hrautomation.di
 
-import com.example.hrautomation.data.model.FaqCategoryResponseToFaqCategoryMapper
-import com.example.hrautomation.data.model.FaqQuestionResponseToFaqQuestionMapper
-import com.example.hrautomation.data.model.ProductCategoryResponseToProductCategoryMapper
-import com.example.hrautomation.data.model.ProductResponseToProductMapper
 import com.example.hrautomation.data.model.TokenResponseToTokenMapper
 import com.example.hrautomation.data.model.employee.EmployeesResponseToEmployeesMapper
 import com.example.hrautomation.data.model.employee.ListEmployeeResponseToListEmployeeMapper
-import com.example.hrautomation.presentation.model.FaqCategoryToFaqCategoryItemMapper
-import com.example.hrautomation.presentation.model.FaqQuestionToFaqQuestionItemMapper
-import com.example.hrautomation.presentation.model.ProductCategoryToProductCategoryItemMapper
-import com.example.hrautomation.presentation.model.ProductToListedProductItemMapper
+import com.example.hrautomation.data.model.faq.FaqCategoryResponseToFaqCategoryMapper
+import com.example.hrautomation.data.model.faq.FaqQuestionResponseToFaqQuestionMapper
+import com.example.hrautomation.data.model.products.ProductCategoryResponseToProductCategoryMapper
+import com.example.hrautomation.data.model.products.ProductResponseToProductMapper
 import com.example.hrautomation.presentation.model.colleagues.EmployeeToColleagueItemMapper
 import com.example.hrautomation.presentation.model.colleagues.EmployeeToEmployeeItemMapper
+import com.example.hrautomation.presentation.model.faq.FaqCategoryToFaqCategoryItemMapper
+import com.example.hrautomation.presentation.model.faq.FaqQuestionToFaqQuestionItemMapper
+import com.example.hrautomation.presentation.model.products.ProductCategoryToProductCategoryItemMapper
+import com.example.hrautomation.presentation.model.products.ProductToListedProductItemMapper
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable

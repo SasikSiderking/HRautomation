@@ -5,13 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.hrautomation.R
 import com.example.hrautomation.data.dispatcher.CoroutineDispatchers
-import com.example.hrautomation.domain.model.ProductSortBy
+import com.example.hrautomation.domain.model.products.ProductSortBy
 import com.example.hrautomation.domain.repository.ProductRepository
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
-import com.example.hrautomation.presentation.model.ProductCategoryItem
-import com.example.hrautomation.presentation.model.ProductCategoryToProductCategoryItemMapper
-import com.example.hrautomation.presentation.model.ProductToListedProductItemMapper
+import com.example.hrautomation.presentation.model.products.ProductCategoryItem
+import com.example.hrautomation.presentation.model.products.ProductCategoryToProductCategoryItemMapper
+import com.example.hrautomation.presentation.model.products.ProductToListedProductItemMapper
 import com.example.hrautomation.utils.tryLaunch
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.NonCancellable

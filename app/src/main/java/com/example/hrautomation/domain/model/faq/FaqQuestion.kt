@@ -1,4 +1,4 @@
-package com.example.hrautomation.domain.model
+package com.example.hrautomation.domain.model.faq
 
 data class FaqQuestion(
     val id: Long,

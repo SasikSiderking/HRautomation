@@ -5,5 +5,5 @@ data class ListEmployee(
     val id: Long,
     val username: String,
     val post: String,
-    val img: String
+    val pictureUrl: String?
 )
