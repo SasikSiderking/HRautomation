@@ -15,18 +15,14 @@ class TokenRepositoryImpl @Inject constructor(private val context: Context) : To
     }
 
     override fun saveAccessToken(token: String) {
-
         preferences.edit().putString(ACC_TOKEN, token).apply()
     }
 
     override fun getRefreshToken(): String? {
-        val res = preferences.getString(REF_TOKEN, null)
-//        Timber.i(res)
-        return res
+        return preferences.getString(REF_TOKEN, null)
     }
 
     override fun saveRefreshToken(refToken: String) {
-//        Timber.i(refToken)
         preferences.edit().putString(REF_TOKEN, refToken).apply()
     }
 
