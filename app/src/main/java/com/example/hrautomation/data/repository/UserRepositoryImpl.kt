@@ -7,6 +7,9 @@ import com.example.hrautomation.domain.model.Token
 import com.example.hrautomation.domain.model.employees.Employee
 import com.example.hrautomation.domain.repository.TokenRepository
 import com.example.hrautomation.domain.repository.UserRepository
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -38,5 +41,12 @@ class UserRepositoryImpl @Inject constructor(
 
             return userApi.saveUser(newUser)
         } ?: throw IllegalStateException("User id is null")
+    }
+
+    override suspend fun uploadProfileImage(file: ByteArray, userId: Long) {
+        userApi.uploadProfileImage(
+            userId,
+            MultipartBody.Part.createFormData("file", "androidProfilePic.png", file.toRequestBody("image/*".toMediaType()))
+        )
     }
 }

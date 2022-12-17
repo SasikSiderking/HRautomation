@@ -1,5 +1,11 @@
 package com.example.hrautomation.presentation.view.profile
 
+import android.content.ContentResolver
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
+import android.net.Uri
+import android.os.Build
+import android.provider.MediaStore
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -15,6 +21,7 @@ import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.withContext
 import timber.log.Timber
+import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 
 
@@ -22,7 +29,8 @@ class ProfileViewModel @Inject constructor(
     private val userRepo: UserRepository,
     private val tokenRepo: TokenRepository,
     private val dispatchers: CoroutineDispatchers,
-    private val employeeToEmployeeItemMapper: EmployeeToEmployeeItemMapper
+    private val employeeToEmployeeItemMapper: EmployeeToEmployeeItemMapper,
+    private val contentResolver: ContentResolver
 ) : BaseViewModel() {
     val data: LiveData<EmployeeItem>
         get() = _data
@@ -50,16 +58,20 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.tryLaunch(
             contextPiece = dispatchers.io,
             doOnLaunch = {
-                tokenRepo.getUserId()?.let { userId ->
-                    val user = userRepo.getUser(userId)
-                    _data.postValue(employeeToEmployeeItemMapper.convert(user))
-                } ?: throw IllegalStateException("No auth token")
+                loadUserData()
             },
             doOnError = { error ->
                 Timber.e(error)
                 _exception.postValue(error)
             }
         )
+    }
+
+    private suspend fun loadUserData() {
+        tokenRepo.getUserId()?.let { userId ->
+            val user = userRepo.getUser(userId)
+            _data.postValue(employeeToEmployeeItemMapper.convert(user))
+        } ?: throw IllegalStateException("No auth token")
     }
 
     fun saveData(project: String, info: String) {
@@ -70,6 +82,33 @@ class ProfileViewModel @Inject constructor(
                     userRepo.saveUser(project, info)
                     _message.postValue(R.string.profile_save_success)
                 }
+            },
+            doOnError = { error ->
+                Timber.e(error)
+                _message.postValue(R.string.toast_overall_error)
+            }
+        )
+    }
+
+    fun uploadImage(selectedImageUri: Uri) {
+        viewModelScope.tryLaunch(
+            contextPiece = dispatchers.io,
+            doOnLaunch = {
+                withContext(NonCancellable) {
+                    val selectedImageBitmap: Bitmap = if (Build.VERSION.SDK_INT < 28) {
+                        MediaStore.Images.Media.getBitmap(contentResolver, selectedImageUri)
+                    } else {
+                        val source: ImageDecoder.Source = ImageDecoder.createSource(contentResolver, selectedImageUri)
+                        ImageDecoder.decodeBitmap(source)
+                    }
+
+                    val byteArray = ByteArrayOutputStream().use {
+                        selectedImageBitmap.compress(Bitmap.CompressFormat.PNG, 0, it)
+                        it.toByteArray()
+                    }
+                    data.value?.let { userRepo.uploadProfileImage(byteArray, it.id) }
+                }
+                loadUserData()
             },
             doOnError = { error ->
                 Timber.e(error)

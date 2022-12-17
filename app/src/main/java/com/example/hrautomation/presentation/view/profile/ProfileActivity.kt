@@ -4,12 +4,8 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.ImageDecoder
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
@@ -28,7 +24,6 @@ import com.example.hrautomation.utils.ui.switcher.ContentLoadingSettings
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingState
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingStateSwitcher
 import com.example.hrautomation.utils.ui.switcher.base.SwitchAnimationParams
-import java.io.IOException
 import javax.inject.Inject
 
 
@@ -46,6 +41,7 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private val contentLoadingSwitcher: ContentLoadingStateSwitcher = ContentLoadingStateSwitcher()
+    private val imageLoadingSwitcher: ContentLoadingStateSwitcher = ContentLoadingStateSwitcher()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,6 +82,7 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         contentLoadingSwitcher.switchState(ContentLoadingState.CONTENT, SwitchAnimationParams(delay = 500L))
+        imageLoadingSwitcher.switchState(ContentLoadingState.CONTENT, SwitchAnimationParams(delay = 500L))
     }
 
     private val exceptionObserver = Observer<Throwable?> { exception ->
@@ -109,6 +106,15 @@ class ProfileActivity : AppCompatActivity() {
                     errorViews = listOf(reusableReload.reusableReload),
                     loadingViews = listOf(reusableLoading.progressBar),
                     initState = ContentLoadingState.LOADING
+                )
+            )
+
+            imageLoadingSwitcher.setup(
+                ContentLoadingSettings(
+                    contentViews = listOf(employeeImageView),
+                    errorViews = listOf(reusableReload.reusableReload),
+                    loadingViews = listOf(imageLoading.progressBar),
+                    initState = ContentLoadingState.NONE
                 )
             )
 
@@ -164,22 +170,14 @@ class ProfileActivity : AppCompatActivity() {
     private var activityResultLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result: ActivityResult ->
+
+        imageLoadingSwitcher.switchState(ContentLoadingState.LOADING, SwitchAnimationParams(delay = 500L))
+
         if (result.resultCode == RESULT_OK) {
             val data = result.data
             if (data != null && data.data != null) {
                 val selectedImageUri: Uri = data.data!!
-                val selectedImageBitmap: Bitmap
-                try {
-                    selectedImageBitmap = if (Build.VERSION.SDK_INT < 28) {
-                        MediaStore.Images.Media.getBitmap(this.contentResolver, selectedImageUri)
-                    } else {
-                        val source: ImageDecoder.Source = ImageDecoder.createSource(contentResolver, selectedImageUri)
-                        ImageDecoder.decodeBitmap(source)
-                    }
-                    binding.employeeImageView.setImageBitmap(selectedImageBitmap)
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                }
+                viewModel.uploadImage(selectedImageUri)
             }
         }
     }

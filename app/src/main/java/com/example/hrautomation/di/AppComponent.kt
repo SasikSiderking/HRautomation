@@ -25,7 +25,8 @@ import javax.inject.Singleton
         ViewModelFactoryModule::class,
         ViewModelModule::class,
         MapperModule::class,
-        DispatchersModule::class
+        DispatchersModule::class,
+        ContentResolverModule::class
     ]
 )
 @Singleton
