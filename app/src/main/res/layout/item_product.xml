@@ -16,7 +16,6 @@
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_margin="12dp"
-        tools:src="@drawable/ic_tinkoff"
         app:shapeAppearanceOverlay="@style/roundedImageViewRounded" />
 
     <TextView

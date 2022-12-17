@@ -4,7 +4,9 @@ import com.example.hrautomation.data.model.TokenResponse
 import com.example.hrautomation.domain.repository.TokenRepository
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.Request
+import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import okhttp3.Route
 import timber.log.Timber
@@ -21,7 +23,7 @@ class TokenAuthenticator @Inject constructor(
                     tokenRepo.saveAccessToken(accessToken)
                     tokenRepo.saveRefreshToken(refreshToken)
                     response.request.newBuilder()
-                        .header("Authorization", "Bearer $accessToken")
+                        .header("Authorization", accessToken)
                         .build()
                 } else {
                     null
@@ -33,7 +35,7 @@ class TokenAuthenticator @Inject constructor(
     private suspend fun getUpdatedToken(): TokenResponse? {
         return tokenRepo.getRefreshToken()?.let {
             try {
-                tokenApi.refreshToken(it)
+                tokenApi.refreshToken(it.toRequestBody("application/json".toMediaType()))
             } catch (exception: Exception) {
                 Timber.e(exception)
                 null
