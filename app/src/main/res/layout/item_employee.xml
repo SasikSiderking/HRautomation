@@ -15,8 +15,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
-        tools:src="@drawable/ic_tinkoff" />
+        app:shapeAppearanceOverlay="@style/roundedImageViewRounded" />
 
     <TextView
         android:id="@+id/employeeName"

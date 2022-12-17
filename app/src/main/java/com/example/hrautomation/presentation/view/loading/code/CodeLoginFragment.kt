@@ -76,8 +76,11 @@ class CodeLoginFragment : Fragment() {
     }
 
     private fun setFieldsVisibility(flag: Boolean) {
-        binding.code.isEnabled = flag
-        binding.progressBar.isVisible = !flag
+        with(binding) {
+            code.isEnabled = flag
+            okCodeButton.isEnabled = flag
+            progressBar.isVisible = !flag
+        }
     }
 
     private fun initUi() {
