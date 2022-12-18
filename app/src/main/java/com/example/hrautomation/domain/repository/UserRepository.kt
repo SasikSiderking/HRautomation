@@ -8,4 +8,5 @@ interface UserRepository {
     suspend fun confirmEmail(email: String, code: String): Token
     suspend fun getUser(id: Long): Employee
     suspend fun saveUser(project: String, info: String)
+    suspend fun uploadProfileImage(file: ByteArray, userId: Long)
 }
