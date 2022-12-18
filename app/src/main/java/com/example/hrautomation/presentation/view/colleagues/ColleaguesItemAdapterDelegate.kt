@@ -34,7 +34,7 @@ class ColleaguesItemAdapterDelegate(private val onColleagueClickListener: OnColl
         Glide.with(holder.img)
             .load(item.pictureUrl)
             .centerCrop()
-            .placeholder(R.drawable.confused)
+            .placeholder(R.drawable.ic_confused)
             .into(holder.img)
     }
 
