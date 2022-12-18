@@ -10,6 +10,8 @@ import com.example.hrautomation.domain.repository.EmployeesRepository
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
 import com.example.hrautomation.presentation.model.colleagues.EmployeeToColleagueItemMapper
+import com.example.hrautomation.utils.publisher.Event
+import com.example.hrautomation.utils.publisher.Publisher
 import com.example.hrautomation.utils.tryLaunch
 import kotlinx.coroutines.cancelChildren
 import timber.log.Timber
@@ -18,7 +20,8 @@ import javax.inject.Inject
 class ColleaguesViewModel @Inject constructor(
     private val repo: EmployeesRepository,
     private val dispatchers: CoroutineDispatchers,
-    private val employeesToColleagueItemMapper: EmployeeToColleagueItemMapper
+    private val employeesToColleagueItemMapper: EmployeeToColleagueItemMapper,
+    private val publisher: Publisher
 ) : BaseViewModel() {
 
     val data: LiveData<List<BaseListItem>>
@@ -29,6 +32,24 @@ class ColleaguesViewModel @Inject constructor(
 
     init {
         loadData()
+        viewModelScope.tryLaunch(
+            contextPiece = dispatchers.io,
+            doOnLaunch = {
+                publisher.eventFlow.collect { event ->
+                    when (event) {
+                        is Event.Update -> {
+                            reload()
+                        }
+                        is Event.None -> {
+                        }
+                    }
+                }
+            },
+            doOnError = { error ->
+                Timber.e(error)
+                _exception.postValue(error)
+            }
+        )
     }
 
     fun reload() {

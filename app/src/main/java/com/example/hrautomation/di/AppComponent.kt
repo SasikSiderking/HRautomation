@@ -1,6 +1,7 @@
 package com.example.hrautomation.di
 
 import com.example.hrautomation.di.network_modules.ApiModule
+import com.example.hrautomation.di.view_model_modules.PublisherModule
 import com.example.hrautomation.di.view_model_modules.ViewModelFactoryModule
 import com.example.hrautomation.di.view_model_modules.ViewModelModule
 import com.example.hrautomation.presentation.view.activity.MainActivity
@@ -26,7 +27,8 @@ import javax.inject.Singleton
         ViewModelModule::class,
         MapperModule::class,
         DispatchersModule::class,
-        ContentResolverModule::class
+        ContentResolverModule::class,
+        PublisherModule::class
     ]
 )
 @Singleton
