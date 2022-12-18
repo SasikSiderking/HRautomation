@@ -1,5 +1,8 @@
 package com.example.hrautomation.presentation.view.activity
 
+import com.example.hrautomation.domain.repository.TokenRepository
+import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
+import javax.inject.Inject
 import androidx.lifecycle.viewModelScope
 import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
 import com.example.hrautomation.utils.publisher.Event
@@ -8,7 +11,14 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class MainViewModel @Inject constructor(private val publisher: Publisher) : BaseViewModel() {
+class MainViewModel @Inject constructor(private val tokenRepository: TokenRepository, private val publisher: Publisher) : BaseViewModel() {
+    fun logout() {
+        with(tokenRepository) {
+            setAccessToken(null)
+            setRefreshToken(null)
+        }
+    }
+
     fun updateColleagues() {
         viewModelScope.launch {
             publisher._eventFlow.emit(Event.Update)

@@ -1,5 +1,7 @@
 package com.example.hrautomation.presentation.view.activity
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -8,6 +10,7 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -18,6 +21,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.hrautomation.R
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.ActivityMainBinding
+import com.example.hrautomation.presentation.view.loading.LoadingActivity
 import com.example.hrautomation.presentation.view.profile.ProfileActivity
 import com.example.hrautomation.utils.ViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -92,9 +96,17 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_profile -> openProfile()
+            R.id.action_exit -> logout()
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun logout() {
+        viewModel.logout()
+        val intent = LoadingActivity.createIntent(this)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
     }
 
     private fun openProfile() {
@@ -105,5 +117,11 @@ class MainActivity : AppCompatActivity() {
         ActivityResultContracts.StartActivityForResult()
     ) { _: ActivityResult ->
         viewModel.updateColleagues()
+    }
+
+    companion object {
+        fun createIntent(context: Context): Intent {
+            return Intent(context, MainActivity::class.java)
+        }
     }
 }

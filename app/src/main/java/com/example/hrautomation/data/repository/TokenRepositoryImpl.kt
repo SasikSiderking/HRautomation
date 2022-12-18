@@ -14,7 +14,7 @@ class TokenRepositoryImpl @Inject constructor(private val context: Context) : To
         return preferences.getString(ACC_TOKEN, null)
     }
 
-    override fun saveAccessToken(token: String) {
+    override fun setAccessToken(token: String?) {
         preferences.edit().putString(ACC_TOKEN, token).apply()
     }
 
@@ -22,7 +22,7 @@ class TokenRepositoryImpl @Inject constructor(private val context: Context) : To
         return preferences.getString(REF_TOKEN, null)
     }
 
-    override fun saveRefreshToken(refToken: String) {
+    override fun setRefreshToken(refToken: String?) {
         preferences.edit().putString(REF_TOKEN, refToken).apply()
     }
 
@@ -30,7 +30,7 @@ class TokenRepositoryImpl @Inject constructor(private val context: Context) : To
         return preferences.getString(USER_ID, null)?.toLong()
     }
 
-    override fun saveUserId(userId: Long) {
+    override fun setUserId(userId: Long) {
         preferences.edit().putString(USER_ID, userId.toString()).apply()
     }
 

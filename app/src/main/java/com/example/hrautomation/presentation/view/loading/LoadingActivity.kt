@@ -1,5 +1,6 @@
 package com.example.hrautomation.presentation.view.loading
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -30,14 +31,20 @@ class LoadingActivity : AppCompatActivity() {
 
     private val tokenObserver = Observer<Boolean> { isTokenExist ->
         if (isTokenExist) {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = MainActivity.createIntent(this)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
         } else {
-            val intent = Intent(this, LoginActivity::class.java)
+            val intent = LoginActivity.createIntent(this)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
         }
         finish()
+    }
+
+    companion object {
+        fun createIntent(context: Context): Intent {
+            return Intent(context, LoadingActivity::class.java)
+        }
     }
 }
