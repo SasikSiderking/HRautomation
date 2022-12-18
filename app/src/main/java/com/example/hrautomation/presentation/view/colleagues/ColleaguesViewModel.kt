@@ -13,6 +13,8 @@ import com.example.hrautomation.presentation.model.colleagues.EmployeeToColleagu
 import com.example.hrautomation.utils.publisher.Event
 import com.example.hrautomation.utils.publisher.Publisher
 import com.example.hrautomation.utils.tryLaunch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -31,24 +33,15 @@ class ColleaguesViewModel @Inject constructor(
 
     init {
         loadData()
-        viewModelScope.tryLaunch(
-            contextPiece = dispatchers.io,
-            doOnLaunch = {
-                publisher.eventFlow.collect { event ->
-                    when (event) {
-                        is Event.Update -> {
-                            reload()
-                        }
-                        is Event.None -> {
-                        }
+        publisher.eventFlow
+            .onEach { event ->
+                when (event) {
+                    is Event.Update -> {
+                        reload()
                     }
                 }
-            },
-            doOnError = { error ->
-                Timber.e(error)
-                _exception.postValue(error)
             }
-        )
+            .launchIn(viewModelScope)
     }
 
     fun reload() {
