@@ -20,8 +20,8 @@ class TokenAuthenticator @Inject constructor(
         return runBlocking {
             with(getUpdatedToken()) {
                 if (this != null) {
-                    tokenRepo.saveAccessToken(accessToken)
-                    tokenRepo.saveRefreshToken(refreshToken)
+                    tokenRepo.setAccessToken(accessToken)
+                    tokenRepo.setRefreshToken(refreshToken)
                     response.request.newBuilder()
                         .header("Authorization", accessToken)
                         .build()
