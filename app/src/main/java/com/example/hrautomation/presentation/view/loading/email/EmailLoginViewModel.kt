@@ -4,13 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.hrautomation.data.dispatcher.CoroutineDispatchers
-import com.example.hrautomation.domain.repository.UserRepository
+import com.example.hrautomation.domain.repository.TokenRepository
 import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
 import com.example.hrautomation.utils.tryLaunch
 import javax.inject.Inject
 
 class EmailLoginViewModel @Inject constructor(
-    private val userRepo: UserRepository,
+    private val tokenRepo: TokenRepository,
     private val dispatchers: CoroutineDispatchers
 ) : BaseViewModel() {
 
@@ -22,7 +22,7 @@ class EmailLoginViewModel @Inject constructor(
         viewModelScope.tryLaunch(
             contextPiece = dispatchers.io,
             doOnLaunch = {
-                userRepo.checkEmail(email)
+                tokenRepo.checkEmail(email)
                 _isEmailCheckSuccess.postValue(true)
             },
             doOnError = { error ->
