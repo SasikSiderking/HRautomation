@@ -28,7 +28,7 @@ class RetrofitProvider @Inject constructor(private val tokenRepository: TokenRep
             .connectTimeout(15, TimeUnit.SECONDS)
             .readTimeout(15, TimeUnit.SECONDS)
             .writeTimeout(15, TimeUnit.SECONDS)
-            .addInterceptor(AuthInterceptor(tokenRepository.getAccessToken() ?: "booooooooba"))
+            .addInterceptor(AuthInterceptor(tokenRepository.getAccessToken() ?: ""))
             .also {
                 Timber.i("Token in interceptor: " + tokenRepository.getAccessToken())
             }
