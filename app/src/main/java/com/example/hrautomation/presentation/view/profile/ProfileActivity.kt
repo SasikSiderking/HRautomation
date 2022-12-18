@@ -72,7 +72,7 @@ class ProfileActivity : AppCompatActivity() {
         with(binding) {
             Glide.with(employeeImageView)
                 .load(employeeItem.pictureUrl)
-                .placeholder(R.drawable.confused)
+                .placeholder(R.drawable.ic_confused)
                 .into(employeeImageView)
             employeeFullName.setText(employeeItem.name)
             employeeFullEmail.setText(employeeItem.email)

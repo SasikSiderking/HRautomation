@@ -1,6 +1,7 @@
 package com.example.hrautomation.di.view_model_modules
 
 import androidx.lifecycle.ViewModel
+import com.example.hrautomation.presentation.view.activity.MainViewModel
 import com.example.hrautomation.presentation.view.colleagues.ColleaguesViewModel
 import com.example.hrautomation.presentation.view.colleagues.employee.EmployeeViewModel
 import com.example.hrautomation.presentation.view.faq.FaqViewModel
@@ -66,4 +67,9 @@ interface ViewModelModule {
     @IntoMap
     @ViewModelKey(ProfileViewModel::class)
     fun bindProfileViewModel(profileViewModel: ProfileViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MainViewModel::class)
+    fun bindMainViewModel(mainViewModel: MainViewModel): ViewModel
 }
