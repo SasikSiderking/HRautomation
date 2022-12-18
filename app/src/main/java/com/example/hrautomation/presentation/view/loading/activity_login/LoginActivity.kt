@@ -1,5 +1,7 @@
 package com.example.hrautomation.presentation.view.loading.activity_login
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -24,5 +26,11 @@ class LoginActivity : AppCompatActivity() {
 
         val binding = ActivityLoadingBinding.inflate(layoutInflater)
         setContentView(binding.root)
+    }
+
+    companion object {
+        fun createIntent(context: Context): Intent {
+            return Intent(context, LoginActivity::class.java)
+        }
     }
 }

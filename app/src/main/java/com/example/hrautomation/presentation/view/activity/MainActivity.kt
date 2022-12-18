@@ -1,5 +1,6 @@
 package com.example.hrautomation.presentation.view.activity
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -97,12 +98,18 @@ class MainActivity : AppCompatActivity() {
 
     private fun logout() {
         viewModel.logout()
-        val intent = Intent(this, LoadingActivity::class.java)
+        val intent = LoadingActivity.createIntent(this)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
     }
 
     private fun openProfile() {
         startActivity(ProfileActivity.createIntent(this))
+    }
+
+    companion object {
+        fun createIntent(context: Context): Intent {
+            return Intent(context, MainActivity::class.java)
+        }
     }
 }
