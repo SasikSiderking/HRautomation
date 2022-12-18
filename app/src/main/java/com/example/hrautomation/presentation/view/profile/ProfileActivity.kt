@@ -72,7 +72,7 @@ class ProfileActivity : AppCompatActivity() {
         with(binding) {
             Glide.with(employeeImageView)
                 .load(employeeItem.pictureUrl)
-                .placeholder(R.drawable.ic_launcher_foreground)
+                .placeholder(R.drawable.confused)
                 .into(employeeImageView)
             employeeFullName.setText(employeeItem.name)
             employeeFullEmail.setText(employeeItem.email)
@@ -170,10 +170,10 @@ class ProfileActivity : AppCompatActivity() {
     private var activityResultLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result: ActivityResult ->
-
-        imageLoadingSwitcher.switchState(ContentLoadingState.LOADING, SwitchAnimationParams(delay = 500L))
-
         if (result.resultCode == RESULT_OK) {
+
+            imageLoadingSwitcher.switchState(ContentLoadingState.LOADING, SwitchAnimationParams(delay = 500L))
+
             val data = result.data
             if (data != null && data.data != null) {
                 val selectedImageUri: Uri = data.data!!
