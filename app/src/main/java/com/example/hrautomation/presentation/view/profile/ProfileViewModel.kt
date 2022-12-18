@@ -107,8 +107,8 @@ class ProfileViewModel @Inject constructor(
                         it.toByteArray()
                     }
                     data.value?.let { userRepo.uploadProfileImage(byteArray, it.id) }
+                    loadUserData()
                 }
-                loadUserData()
             },
             doOnError = { error ->
                 Timber.e(error)
