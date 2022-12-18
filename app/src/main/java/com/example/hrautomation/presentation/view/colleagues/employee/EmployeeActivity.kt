@@ -67,7 +67,7 @@ class EmployeeActivity : AppCompatActivity() {
             Glide.with(employeeImageView)
                 .load(colleague.pictureUrl)
                 .centerCrop()
-                .placeholder(R.drawable.ic_launcher_foreground)
+                .placeholder(R.drawable.confused)
                 .into(employeeImageView)
             employeeFullName.setText(colleague.name)
             employeeFullEmail.setText(colleague.email)
