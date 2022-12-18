@@ -2,13 +2,29 @@ package com.example.hrautomation.data.repository
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.example.hrautomation.data.api.TokenApi
+import com.example.hrautomation.data.model.TokenResponseToTokenMapper
+import com.example.hrautomation.domain.model.Token
 import com.example.hrautomation.domain.repository.TokenRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TokenRepositoryImpl @Inject constructor(private val context: Context) : TokenRepository {
+class TokenRepositoryImpl @Inject constructor(
+    private val context: Context,
+    private val tokenApi: TokenApi,
+    private val tokenResponseToTokenMapper: TokenResponseToTokenMapper
+) : TokenRepository {
+
     private val preferences: SharedPreferences by lazy { context.getSharedPreferences(PREF_ACCESS, Context.MODE_PRIVATE) }
+
+    override suspend fun checkEmail(email: String) {
+        return tokenApi.checkEmail(email)
+    }
+
+    override suspend fun confirmEmail(email: String, code: String): Token {
+        return tokenResponseToTokenMapper.convert(tokenApi.confirmEmail(email, code))
+    }
 
     override fun getAccessToken(): String? {
         return preferences.getString(ACC_TOKEN, null)

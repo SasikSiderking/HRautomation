@@ -14,8 +14,8 @@ class ApiModule {
 
     @Provides
     @Singleton
-    fun provideTokenApi(retrofitProvider: RetrofitProvider): TokenApi {
-        return retrofitProvider.tokenApi
+    fun provideTokenApi(tokenApiProvider: TokenApiProvider): TokenApi {
+        return tokenApiProvider.tokenApi
     }
 
     @Provides

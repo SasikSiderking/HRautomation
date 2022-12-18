@@ -1,9 +1,7 @@
 package com.example.hrautomation.presentation.view.activity
 
-import com.example.hrautomation.domain.repository.TokenRepository
-import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
-import javax.inject.Inject
 import androidx.lifecycle.viewModelScope
+import com.example.hrautomation.domain.repository.TokenRepository
 import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
 import com.example.hrautomation.utils.publisher.Event
 import com.example.hrautomation.utils.publisher.Publisher

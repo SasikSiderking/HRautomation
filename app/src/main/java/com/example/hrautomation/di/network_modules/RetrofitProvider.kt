@@ -17,31 +17,22 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class RetrofitProvider @Inject constructor(private val tokenRepository: TokenRepository) {
+class RetrofitProvider @Inject constructor(private val tokenRepository: TokenRepository, private val tokenApi: TokenApi) {
 
     private val authorizedHttpClient: OkHttpClient by lazy {
         OkHttpClient.Builder()
-            .connectTimeout(10, TimeUnit.SECONDS)
-            .readTimeout(10, TimeUnit.SECONDS)
-            .writeTimeout(10, TimeUnit.SECONDS)
+            .connectTimeout(15, TimeUnit.SECONDS)
+            .readTimeout(15, TimeUnit.SECONDS)
+            .writeTimeout(15, TimeUnit.SECONDS)
             .addInterceptor(AuthInterceptor(tokenRepository.getAccessToken() ?: ""))
-            .authenticator(TokenAuthenticator(tokenApi, tokenRepository))
             .also {
-                if (BuildConfig.DEBUG) {
-                    it.addInterceptor(logging)
-                }
+                Timber.i("Token in interceptor: " + tokenRepository.getAccessToken())
             }
-            .build()
-    }
-
-    private val unauthorizedHttpClient: OkHttpClient by lazy {
-        OkHttpClient.Builder()
-            .connectTimeout(10, TimeUnit.SECONDS)
-            .readTimeout(10, TimeUnit.SECONDS)
-            .writeTimeout(10, TimeUnit.SECONDS)
+            .authenticator(TokenAuthenticator(tokenApi, tokenRepository))
             .also {
                 if (BuildConfig.DEBUG) {
                     it.addInterceptor(logging)
@@ -60,13 +51,6 @@ class RetrofitProvider @Inject constructor(private val tokenRepository: TokenRep
             .baseUrl(BuildConfig.BASE_URL)
             .addCallAdapterFactory(CustomAdapterFactory())
             .addConverterFactory(GsonConverterFactory.create(gson))
-    }
-
-    val tokenApi: TokenApi by lazy {
-        retrofitBuilder
-            .client(unauthorizedHttpClient)
-            .build()
-            .create()
     }
 
     val userApi: UserApi by lazy {

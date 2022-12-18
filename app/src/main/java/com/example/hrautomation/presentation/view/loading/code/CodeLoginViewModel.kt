@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.hrautomation.data.dispatcher.CoroutineDispatchers
 import com.example.hrautomation.domain.repository.TokenRepository
-import com.example.hrautomation.domain.repository.UserRepository
 import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
 import com.example.hrautomation.utils.tryLaunch
 import timber.log.Timber
@@ -13,7 +12,6 @@ import javax.inject.Inject
 
 class CodeLoginViewModel @Inject constructor(
     private val tokenRepo: TokenRepository,
-    private val userRepo: UserRepository,
     private val dispatchers: CoroutineDispatchers
 ) : BaseViewModel() {
 
@@ -25,7 +23,7 @@ class CodeLoginViewModel @Inject constructor(
             viewModelScope.tryLaunch(
                 contextPiece = dispatchers.io,
                 doOnLaunch = {
-                    val token = userRepo.confirmEmail(email, code)
+                    val token = tokenRepo.confirmEmail(email, code)
                     _isCodeCheckSuccess.postValue(true)
                     with(tokenRepo) {
                         setAccessToken(token.accessToken)
