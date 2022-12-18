@@ -13,7 +13,6 @@ import com.example.hrautomation.presentation.model.colleagues.EmployeeToColleagu
 import com.example.hrautomation.utils.publisher.Event
 import com.example.hrautomation.utils.publisher.Publisher
 import com.example.hrautomation.utils.tryLaunch
-import kotlinx.coroutines.cancelChildren
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -53,7 +52,7 @@ class ColleaguesViewModel @Inject constructor(
     }
 
     fun reload() {
-        viewModelScope.coroutineContext.cancelChildren()
+//        viewModelScope.coroutineContext.cancelChildren()
         clearExceptionState()
         loadData()
     }
