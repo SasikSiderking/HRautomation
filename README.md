@@ -3,27 +3,34 @@ This app is a simple HR helper which provides the following functions to employe
 
 1)Log in with your work email
 
-![image](https://user-images.githubusercontent.com/101384226/208440923-e0612e56-93f6-41c5-b855-d9817f28b1b4.png)
+![1](https://user-images.githubusercontent.com/101384226/208444717-cbbae2fa-084f-465d-9b30-750df75e1a19.jpg)
 
 2)View employees
 
-![image](https://user-images.githubusercontent.com/101384226/208441223-13fc4ad4-c53f-4de1-b871-b250b407ee78.png)
-![image](https://user-images.githubusercontent.com/101384226/208441250-e3eebfd9-b202-4ba1-8e3b-6a217c1fa970.png)
+![2](https://user-images.githubusercontent.com/101384226/208444852-c7a4ed58-343c-4ca3-9332-38f9c73e2456.jpg)
+![2 5](https://user-images.githubusercontent.com/101384226/208444862-a701fc70-f852-4c1c-b179-56291e9671a8.jpg)
 
 3)Edit your profile
 
-![image](https://user-images.githubusercontent.com/101384226/208441516-054670e6-b422-4a53-991f-76185f09acca.png)
+![3](https://user-images.githubusercontent.com/101384226/208444932-f821b5f9-bfd2-47fb-9094-69282a203518.jpg)
 
 4)View for food and send order request
 
-![image](https://user-images.githubusercontent.com/101384226/208441583-9622a126-b3bf-4086-946f-74dbe4427b47.png)
-![image](https://user-images.githubusercontent.com/101384226/208441623-ec6e611e-ebc8-4a3b-83d9-76f2dc5698dc.png)
+![4](https://user-images.githubusercontent.com/101384226/208444971-6dd003c3-d95a-4522-9d4c-d463b4852668.jpg)
+![5](https://user-images.githubusercontent.com/101384226/208445051-4f7192c5-9f87-47fe-80de-bea8174194f4.jpg)
 
 5)View answers to frequently asked questions
 
-![image](https://user-images.githubusercontent.com/101384226/208441683-f4b31b0e-45d2-4e04-8801-3edba41c40e3.png)
-![image](https://user-images.githubusercontent.com/101384226/208441700-1816f287-15de-4291-84f4-8565d41c771d.png)
+![6](https://user-images.githubusercontent.com/101384226/208445096-66498b73-50b7-4120-94aa-94335bd36e8d.jpg)
+![7](https://user-images.githubusercontent.com/101384226/208445105-f2b5623d-40fd-4075-a086-9b8ca153d2ae.jpg)
 
 6)Log out
 
-![image](https://user-images.githubusercontent.com/101384226/208441759-7ccbe33d-7001-437c-9ced-5372319b4ef3.png)
+![8](https://user-images.githubusercontent.com/101384226/208445132-a76f145b-9aaf-43a3-8392-de564bf030bf.jpg)
+
+#Technologies:
+Clean Architecture
+MVVM
+Dagger2
+Coroutines
+Retrofit
