@@ -28,9 +28,10 @@ This app is a simple HR helper which provides the following functions to employe
 
 ![8](https://user-images.githubusercontent.com/101384226/208445132-a76f145b-9aaf-43a3-8392-de564bf030bf.jpg)
 
-#Technologies:
-Clean Architecture
-MVVM
-Dagger2
-Coroutines
-Retrofit
+### Technologies:
+
+* Clean Architecture
+* MVVM
+* Dagger2
+* Coroutines
+* Retrofit
