@@ -1,16 +1,13 @@
 package com.example.hrautomation.presentation.view.profile
 
-import android.content.ContentResolver
 import android.graphics.Bitmap
-import android.graphics.ImageDecoder
 import android.net.Uri
-import android.os.Build
-import android.provider.MediaStore
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.hrautomation.R
 import com.example.hrautomation.data.dispatcher.CoroutineDispatchers
+import com.example.hrautomation.domain.repository.MediaContentRepository
 import com.example.hrautomation.domain.repository.TokenRepository
 import com.example.hrautomation.domain.repository.UserRepository
 import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
@@ -30,7 +27,7 @@ class ProfileViewModel @Inject constructor(
     private val tokenRepo: TokenRepository,
     private val dispatchers: CoroutineDispatchers,
     private val employeeToEmployeeItemMapper: EmployeeToEmployeeItemMapper,
-    private val contentResolver: ContentResolver
+    private val mediaContentRepository: MediaContentRepository
 ) : BaseViewModel() {
     val data: LiveData<EmployeeItem>
         get() = _data
@@ -95,19 +92,16 @@ class ProfileViewModel @Inject constructor(
             contextPiece = dispatchers.io,
             doOnLaunch = {
                 withContext(NonCancellable) {
-                    val selectedImageBitmap: Bitmap = if (Build.VERSION.SDK_INT < 28) {
-                        MediaStore.Images.Media.getBitmap(contentResolver, selectedImageUri)
-                    } else {
-                        val source: ImageDecoder.Source = ImageDecoder.createSource(contentResolver, selectedImageUri)
-                        ImageDecoder.decodeBitmap(source)
-                    }
 
-                    val byteArray = ByteArrayOutputStream().use {
-                        selectedImageBitmap.compress(Bitmap.CompressFormat.PNG, 0, it)
-                        it.toByteArray()
+                    val bitmap = mediaContentRepository.getBitmapByUri(selectedImageUri)
+
+                    val byteArray = convertBitmapToByteArray(bitmap)
+
+                    data.value?.let {
+                        userRepo.uploadProfileImage(byteArray, it.id)
                     }
-                    data.value?.let { userRepo.uploadProfileImage(byteArray, it.id) }
                     loadUserData()
+
                 }
             },
             doOnError = { error ->
@@ -116,5 +110,12 @@ class ProfileViewModel @Inject constructor(
                 _exception.postValue(error)
             }
         )
+    }
+
+    private fun convertBitmapToByteArray(bitmap: Bitmap): ByteArray {
+        return ByteArrayOutputStream().use {
+            bitmap.compress(Bitmap.CompressFormat.PNG, 0, it)
+            it.toByteArray()
+        }
     }
 }
