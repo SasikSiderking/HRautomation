@@ -11,7 +11,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
@@ -61,7 +60,8 @@ class MainActivity : AppCompatActivity() {
                 setOf(
                     R.id.colleaguesFragment,
                     R.id.productFragment,
-                    R.id.faqFragment
+                    R.id.faqFragment,
+                    R.id.restaurantsFragment
                 )
             )
         setupActionBarWithNavController(navController, appBarConfiguration)

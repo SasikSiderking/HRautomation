@@ -15,4 +15,9 @@
         android:enabled="true"
         android:icon="@drawable/ic_baseline_help_24"
         android:title="@string/faq" />
+    <item
+        android:id="@+id/restaurantsFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_food_bank_24"
+        android:title="@string/where_to_eat" />
 </menu>
