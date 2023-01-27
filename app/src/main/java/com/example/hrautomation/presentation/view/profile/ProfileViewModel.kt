@@ -114,8 +114,12 @@ class ProfileViewModel @Inject constructor(
 
     private fun convertBitmapToByteArray(bitmap: Bitmap): ByteArray {
         return ByteArrayOutputStream().use {
-            bitmap.compress(Bitmap.CompressFormat.PNG, 0, it)
+            bitmap.compress(Bitmap.CompressFormat.PNG, COMPRESSION_QUALITY, it)
             it.toByteArray()
         }
+    }
+
+    private companion object {
+        const val COMPRESSION_QUALITY = 0
     }
 }
