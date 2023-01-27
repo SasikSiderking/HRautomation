@@ -47,4 +47,9 @@
     <!--Profile-->
     <string name="profile_save_success">Профиль успешно сохранен</string>
     <string name="try_again">Что-то пошло не так, попробуйте еще раз</string>
+
+    <!--Restaurants-->
+    <string name="where_to_eat">Где поесть</string>
+    <string name="tab_map">Карта</string>
+    <string name="tab_list">Список</string>
 </resources>

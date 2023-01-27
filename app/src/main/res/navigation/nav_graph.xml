@@ -13,11 +13,16 @@
         android:id="@+id/colleaguesFragment"
         android:name="com.example.hrautomation.presentation.view.colleagues.ColleaguesFragment"
         android:label="@string/colleagues"
-        tools:layout="@layout/fragment_colleagues">
-    </fragment>
+        tools:layout="@layout/fragment_colleagues" />
     <fragment
         android:id="@+id/productFragment"
         android:name="com.example.hrautomation.presentation.view.product.ProductFragment"
         android:label="@string/products"
         tools:layout="@layout/fragment_product" />
+    <fragment
+        android:id="@+id/restaurantsFragment"
+        android:name="com.example.hrautomation.presentation.view.restaurants.RestaurantsFragment"
+        android:label="@string/where_to_eat"
+        tools:layout="@layout/fragment_restaurants" />
+
 </navigation>
