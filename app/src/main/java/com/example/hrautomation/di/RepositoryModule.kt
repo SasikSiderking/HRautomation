@@ -1,15 +1,7 @@
 package com.example.hrautomation.di
 
-import com.example.hrautomation.data.repository.EmployeesRepositoryImpl
-import com.example.hrautomation.data.repository.FaqRepositoryImpl
-import com.example.hrautomation.data.repository.ProductRepositoryImpl
-import com.example.hrautomation.data.repository.TokenRepositoryImpl
-import com.example.hrautomation.data.repository.UserRepositoryImpl
-import com.example.hrautomation.domain.repository.EmployeesRepository
-import com.example.hrautomation.domain.repository.FaqRepository
-import com.example.hrautomation.domain.repository.ProductRepository
-import com.example.hrautomation.domain.repository.TokenRepository
-import com.example.hrautomation.domain.repository.UserRepository
+import com.example.hrautomation.data.repository.*
+import com.example.hrautomation.domain.repository.*
 import dagger.Binds
 import dagger.Module
 import dagger.Reusable
@@ -36,4 +28,8 @@ interface RepositoryModule {
     @Reusable
     @Binds
     fun provideFaqRepository(faqRepositoryImpl: FaqRepositoryImpl): FaqRepository
+
+    @Reusable
+    @Binds
+    fun provideMediaContentRepository(mediaContentRepositoryImpl: MediaContentRepositoryImpl): MediaContentRepository
 }
