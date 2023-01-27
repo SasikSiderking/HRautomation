@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.example.hrautomation.R
 import com.example.hrautomation.databinding.FragmentRestaurantsBinding
 import com.example.hrautomation.utils.ui.Dp
 import com.example.hrautomation.utils.ui.dpToPx
@@ -50,8 +51,8 @@ class RestaurantsFragment : Fragment() {
             viewPager.adapter = pagerAdapter
             TabLayoutMediator(tabLayout, viewPager) { tab, position ->
                 when (position) {
-                    0 -> tab.text = "Карта"
-                    else -> tab.text = "Список"
+                    MAP_FRAGMENT_INT -> tab.text = getString(R.string.tab_map)
+                    else -> tab.text = getString(R.string.tab_list)
                 }
             }.attach()
         }
@@ -60,5 +61,7 @@ class RestaurantsFragment : Fragment() {
     private companion object {
         @Dp
         const val TOOLBAR_ELEVATION = 4F
+
+        const val MAP_FRAGMENT_INT = 0
     }
 }
