@@ -49,6 +49,7 @@ class RestaurantsFragment : Fragment() {
         val pagerAdapter = RestaurantsPagerAdapter(this)
         with(binding) {
             viewPager.adapter = pagerAdapter
+            viewPager.isUserInputEnabled = false
             TabLayoutMediator(tabLayout, viewPager) { tab, position ->
                 when (position) {
                     MAP_FRAGMENT_INT -> tab.text = getString(R.string.tab_map)

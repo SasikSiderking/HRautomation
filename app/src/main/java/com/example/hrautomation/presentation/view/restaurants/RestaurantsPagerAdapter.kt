@@ -4,14 +4,18 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
 class RestaurantsPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
+
+    private val restaurantsMapFragment = RestaurantsMapFragment()
+    private val restaurantsListFragment = RestaurantsListFragment()
+
     override fun getItemCount(): Int {
         return TAB_COUNT
     }
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            MAP_FRAGMENT_INT -> RestaurantsMapFragment()
-            else -> RestaurantsListFragment()
+            MAP_FRAGMENT_INT -> restaurantsMapFragment
+            else -> restaurantsListFragment
         }
     }
 

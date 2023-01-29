@@ -1,13 +1,7 @@
 package com.example.hrautomation.di.network_modules
 
 import com.example.hrautomation.BuildConfig
-import com.example.hrautomation.data.api.AuthInterceptor
-import com.example.hrautomation.data.api.EmployeesApi
-import com.example.hrautomation.data.api.FaqApi
-import com.example.hrautomation.data.api.ProductApi
-import com.example.hrautomation.data.api.TokenApi
-import com.example.hrautomation.data.api.TokenAuthenticator
-import com.example.hrautomation.data.api.UserApi
+import com.example.hrautomation.data.api.*
 import com.example.hrautomation.domain.repository.TokenRepository
 import com.example.hrautomation.utils.retrofit_adapter.CustomAdapterFactory
 import com.google.gson.Gson
@@ -75,6 +69,13 @@ class RetrofitProvider @Inject constructor(private val tokenRepository: TokenRep
     }
 
     val productApi: ProductApi by lazy {
+        retrofitBuilder
+            .client(authorizedHttpClient)
+            .build()
+            .create()
+    }
+
+    val restaurantsApi: RestaurantsApi by lazy {
         retrofitBuilder
             .client(authorizedHttpClient)
             .build()
