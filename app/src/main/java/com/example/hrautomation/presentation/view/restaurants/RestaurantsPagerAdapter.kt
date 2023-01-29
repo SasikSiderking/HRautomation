@@ -10,7 +10,7 @@ class RestaurantsPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragmen
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            MAP_FRAGMENT_INT -> MapFragment()
+            MAP_FRAGMENT_INT -> RestaurantsMapFragment()
             else -> RestaurantsListFragment()
         }
     }
