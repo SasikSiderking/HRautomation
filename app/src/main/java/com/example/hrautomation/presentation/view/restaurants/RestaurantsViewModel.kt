@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.hrautomation.data.dispatcher.CoroutineDispatchers
+import com.example.hrautomation.domain.model.restaurants.ListRestaurant
 import com.example.hrautomation.domain.model.restaurants.RestaurantSortBy
 import com.example.hrautomation.domain.repository.RestaurantsRepository
 import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
@@ -20,7 +21,7 @@ class RestaurantsViewModel @Inject constructor(
 
     val data: LiveData<List<ListRestaurantItem>>
         get() = _data
-    private val _data = MutableLiveData<List<ListRestaurantItem>>()
+    private val _data: MutableLiveData<List<ListRestaurantItem>> = MutableLiveData<List<ListRestaurantItem>>()
 
     init {
         loadData()
@@ -30,15 +31,15 @@ class RestaurantsViewModel @Inject constructor(
         viewModelScope.tryLaunch(
             contextPiece = dispatchers.io,
             doOnLaunch = {
-                _data.postValue(
-                    restaurantsRepository.getRestaurantList(
-                        PAGE_NUMBER,
-                        PAGE_SIZE,
-                        RestaurantSortBy.NAME
-                    ).map {
-                        listRestaurantToListRestaurantItemMapper.convert(it)
-                    }
+                val listOfRestaurants: List<ListRestaurant> = restaurantsRepository.getRestaurantList(
+                    PAGE_NUMBER,
+                    PAGE_SIZE,
+                    RestaurantSortBy.NAME
                 )
+                val listOfRestaurantItems: List<ListRestaurantItem> = listOfRestaurants.map {
+                    listRestaurantToListRestaurantItemMapper.convert(it)
+                }
+                _data.postValue(listOfRestaurantItems)
             }
         )
     }

@@ -33,8 +33,6 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var supportMapFragment: SupportMapFragment
     private lateinit var map: GoogleMap
 
-    private val cityLatLng: LatLng = LatLng(56.4884, 84.9480)
-
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
@@ -74,17 +72,12 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-    private companion object {
-        @Dp
-        const val TOOLBAR_ELEVATION = 4F
-    }
-
     override fun onMapReady(map: GoogleMap) {
         this@RestaurantsMapFragment.map = map
 
         viewModel.data.observe(viewLifecycleOwner, restaurantsObserver)
 
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(cityLatLng, 14F))
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(cityLatLng, MAP_ZOOM))
     }
 
     private val restaurantsObserver = Observer<List<ListRestaurantItem>> { listRestaurants ->
@@ -95,5 +88,14 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
                     .title(restaurant.name)
             )
         }
+    }
+
+    private companion object {
+        @Dp
+        const val TOOLBAR_ELEVATION = 4F
+
+        val cityLatLng: LatLng = LatLng(56.4884, 84.9480)
+
+        const val MAP_ZOOM = 14F
     }
 }

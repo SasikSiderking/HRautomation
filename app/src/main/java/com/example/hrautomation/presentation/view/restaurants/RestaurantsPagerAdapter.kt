@@ -15,7 +15,8 @@ class RestaurantsPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragmen
     override fun createFragment(position: Int): Fragment {
         return when (position) {
             MAP_FRAGMENT_INT -> restaurantsMapFragment
-            else -> restaurantsListFragment
+            LIST_FRAGMENT_INT -> restaurantsListFragment
+            else -> throw IllegalStateException("Incorrect tab position")
         }
     }
 
@@ -23,5 +24,6 @@ class RestaurantsPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragmen
     private companion object {
         const val TAB_COUNT = 2
         const val MAP_FRAGMENT_INT = 0
+        const val LIST_FRAGMENT_INT = 1
     }
 }
