@@ -17,9 +17,11 @@ import com.example.hrautomation.utils.ui.Dp
 import com.example.hrautomation.utils.ui.dpToPx
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import javax.inject.Inject
 
@@ -87,7 +89,25 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
                     .position(LatLng(restaurant.lat, restaurant.lng))
                     .title(restaurant.name)
             )
+            map.setOnMarkerClickListener(markerClickListener)
         }
+    }
+
+    private val markerClickListener: OnMarkerClickListener = OnMarkerClickListener { marker: Marker ->
+        showCard()
+        return@OnMarkerClickListener true
+    }
+
+    private fun showCard() {
+
+//        val dialog = Dialog(requireContext())
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+//        dialog.setContentView(R.layout.fragment_restaurants_bottom_sheet_dialog)
+//
+//        dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT)
+//        dialog.window?.attributes?.windowAnimations = R.style.RestaurantDialogAnimation
+//        dialog.window?.setGravity(Gravity.BOTTOM)
+//        dialog.show()
     }
 
     private companion object {
