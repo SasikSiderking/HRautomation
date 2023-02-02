@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.hrautomation.data.dispatcher.CoroutineDispatchers
-import com.example.hrautomation.domain.model.restaurants.ListRestaurant
 import com.example.hrautomation.domain.model.restaurants.RestaurantSortBy
 import com.example.hrautomation.domain.repository.RestaurantsRepository
 import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
@@ -31,12 +30,12 @@ class RestaurantsViewModel @Inject constructor(
         viewModelScope.tryLaunch(
             contextPiece = dispatchers.io,
             doOnLaunch = {
-                val listOfRestaurants: List<ListRestaurant> = restaurantsRepository.getRestaurantList(
+                val listOfRestaurants = restaurantsRepository.getRestaurantList(
                     PAGE_NUMBER,
                     PAGE_SIZE,
                     RestaurantSortBy.NAME
                 )
-                val listOfRestaurantItems: List<ListRestaurantItem> = listOfRestaurants.map {
+                val listOfRestaurantItems = listOfRestaurants.map {
                     listRestaurantToListRestaurantItemMapper.convert(it)
                 }
                 _data.postValue(listOfRestaurantItems)
