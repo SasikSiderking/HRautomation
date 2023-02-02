@@ -1,10 +1,6 @@
 package com.example.hrautomation.di.network_modules
 
-import com.example.hrautomation.data.api.EmployeesApi
-import com.example.hrautomation.data.api.FaqApi
-import com.example.hrautomation.data.api.ProductApi
-import com.example.hrautomation.data.api.TokenApi
-import com.example.hrautomation.data.api.UserApi
+import com.example.hrautomation.data.api.*
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -40,5 +36,11 @@ class ApiModule {
     @Singleton
     fun provideProductApi(retrofitProvider: RetrofitProvider): ProductApi {
         return retrofitProvider.productApi
+    }
+
+    @Provides
+    @Singleton
+    fun provideRestaurantApi(retrofitProvider: RetrofitProvider): RestaurantsApi {
+        return RestaurantsApi2()
     }
 }

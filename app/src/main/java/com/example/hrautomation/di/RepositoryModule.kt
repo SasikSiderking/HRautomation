@@ -32,4 +32,8 @@ interface RepositoryModule {
     @Reusable
     @Binds
     fun provideMediaContentRepository(mediaContentRepositoryImpl: MediaContentRepositoryImpl): MediaContentRepository
+
+    @Reusable
+    @Binds
+    fun provideRestaurantsRepository(restaurantsRepositoryImpl: RestaurantsRepositoryImpl): RestaurantsRepository
 }

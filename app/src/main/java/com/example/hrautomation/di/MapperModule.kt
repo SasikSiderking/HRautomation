@@ -7,12 +7,14 @@ import com.example.hrautomation.data.model.faq.FaqCategoryResponseToFaqCategoryM
 import com.example.hrautomation.data.model.faq.FaqQuestionResponseToFaqQuestionMapper
 import com.example.hrautomation.data.model.products.ProductCategoryResponseToProductCategoryMapper
 import com.example.hrautomation.data.model.products.ProductResponseToProductMapper
+import com.example.hrautomation.data.model.restaurants.ListRestaurantResponseToListRestaurantMapper
 import com.example.hrautomation.presentation.model.colleagues.EmployeeToColleagueItemMapper
 import com.example.hrautomation.presentation.model.colleagues.EmployeeToEmployeeItemMapper
 import com.example.hrautomation.presentation.model.faq.FaqCategoryToFaqCategoryItemMapper
 import com.example.hrautomation.presentation.model.faq.FaqQuestionToFaqQuestionItemMapper
 import com.example.hrautomation.presentation.model.products.ProductCategoryToProductCategoryItemMapper
 import com.example.hrautomation.presentation.model.products.ProductToListedProductItemMapper
+import com.example.hrautomation.presentation.model.restaurants.ListRestaurantToListRestaurantItemMapper
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
@@ -62,7 +64,8 @@ class MapperModule {
 
     @Reusable
     @Provides
-    fun provideProductCategoryToProductCategoryItemMapper(): ProductCategoryToProductCategoryItemMapper = ProductCategoryToProductCategoryItemMapper()
+    fun provideProductCategoryToProductCategoryItemMapper(): ProductCategoryToProductCategoryItemMapper =
+        ProductCategoryToProductCategoryItemMapper()
 
     @Reusable
     @Provides
@@ -70,5 +73,16 @@ class MapperModule {
 
     @Reusable
     @Provides
-    fun provideListEmployeeResponseToListEmployeeMapper(): ListEmployeeResponseToListEmployeeMapper = ListEmployeeResponseToListEmployeeMapper()
+    fun provideListEmployeeResponseToListEmployeeMapper(): ListEmployeeResponseToListEmployeeMapper =
+        ListEmployeeResponseToListEmployeeMapper()
+
+    @Reusable
+    @Provides
+    fun provideListRestaurantResponseToListRestaurantMapper(): ListRestaurantResponseToListRestaurantMapper =
+        ListRestaurantResponseToListRestaurantMapper()
+
+    @Reusable
+    @Provides
+    fun provideListRestaurantToListRestaurantItemMapper(): ListRestaurantToListRestaurantItemMapper =
+        ListRestaurantToListRestaurantItemMapper()
 }
