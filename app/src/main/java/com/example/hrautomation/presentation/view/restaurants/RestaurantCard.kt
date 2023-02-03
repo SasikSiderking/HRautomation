@@ -57,7 +57,7 @@ class RestaurantCard(
             }
             this.visibility = VISIBLE
         } ?: run {
-            this.visibility = GONE
+            this.visibility = INVISIBLE
         }
     }
 

@@ -23,7 +23,6 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -108,7 +107,6 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
     private val onCardClickListener = OnCardClickListener { cardAction ->
         when (cardAction) {
             CardAction.CrossClicked -> {
-                Timber.e("RightNow")
                 viewModel.choseRestaurant(null)
             }
             CardAction.DetailsClicked -> {
