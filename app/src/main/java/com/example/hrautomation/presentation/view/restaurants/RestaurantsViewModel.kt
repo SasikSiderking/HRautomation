@@ -22,8 +22,16 @@ class RestaurantsViewModel @Inject constructor(
         get() = _data
     private val _data: MutableLiveData<List<ListRestaurantItem>> = MutableLiveData<List<ListRestaurantItem>>()
 
+    val chosenRestaurant: LiveData<ListRestaurantItem?>
+        get() = _chosenRestaurant
+    private val _chosenRestaurant: MutableLiveData<ListRestaurantItem?> = MutableLiveData<ListRestaurantItem?>()
+
     init {
         loadData()
+    }
+
+    fun choseRestaurant(restaurant: ListRestaurantItem?) {
+        _chosenRestaurant.postValue(restaurant)
     }
 
     private fun loadData() {

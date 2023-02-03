@@ -60,6 +60,9 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
         supportMapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         supportMapFragment.getMapAsync(this)
 
+        binding.restaurantCard.setListener(onCardClickListener)
+        viewModel.chosenRestaurant.observe(viewLifecycleOwner, chosenRestaurantObserver)
+
         return binding.root
     }
 
@@ -94,20 +97,26 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private val markerClickListener: OnMarkerClickListener = OnMarkerClickListener { marker: Marker ->
-        showCard()
+        val restaurant = viewModel.data.value?.find { restaurant: ListRestaurantItem ->
+            restaurant.lat == marker.position.latitude && restaurant.lng == marker.position.longitude
+        }
+        viewModel.choseRestaurant(restaurant)
         return@OnMarkerClickListener true
     }
 
-    private fun showCard() {
+    private val onCardClickListener = OnCardClickListener { cardAction ->
+        when (cardAction) {
+            CardAction.CrossClicked -> {
+                viewModel.choseRestaurant(null)
+            }
+            CardAction.DetailsClicked -> {
+//                TODO(Открыть активити с фулл рестораном)
+            }
+        }
+    }
 
-//        val dialog = Dialog(requireContext())
-//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-//        dialog.setContentView(R.layout.fragment_restaurants_bottom_sheet_dialog)
-//
-//        dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT)
-//        dialog.window?.attributes?.windowAnimations = R.style.RestaurantDialogAnimation
-//        dialog.window?.setGravity(Gravity.BOTTOM)
-//        dialog.show()
+    private val chosenRestaurantObserver = Observer<ListRestaurantItem?> { restaurant: ListRestaurantItem? ->
+        binding.restaurantCard.updateViewData(restaurant)
     }
 
     private companion object {
