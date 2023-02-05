@@ -35,6 +35,8 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var supportMapFragment: SupportMapFragment
     private lateinit var map: GoogleMap
 
+    lateinit var restaurantCardAdapter: ViewAdapter<ListRestaurantItem?, RestaurantCard>
+
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
@@ -86,21 +88,23 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private val restaurantsObserver = Observer<List<ListRestaurantItem>> { listRestaurants ->
+
+        restaurantCardAdapter = ViewAdapter(listRestaurants, binding.restaurantCard)
+
         listRestaurants.forEach { restaurant ->
             map.addMarker(
                 MarkerOptions()
                     .position(LatLng(restaurant.lat, restaurant.lng))
                     .title(restaurant.name)
-            )
+            )?.tag = restaurant.id
             map.setOnMarkerClickListener(markerClickListener)
         }
     }
 
     private val markerClickListener: OnMarkerClickListener = OnMarkerClickListener { marker: Marker ->
-        val restaurant = viewModel.data.value?.find { restaurant: ListRestaurantItem ->
-            restaurant.lat == marker.position.latitude && restaurant.lng == marker.position.longitude
-        }
-        viewModel.choseRestaurant(restaurant)
+
+        restaurantCardAdapter.updateView(marker.tag as Long)
+
         return@OnMarkerClickListener true
     }
 
@@ -116,7 +120,7 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private val chosenRestaurantObserver = Observer<ListRestaurantItem?> { restaurant: ListRestaurantItem? ->
-        binding.restaurantCard.updateViewData(restaurant)
+        binding.restaurantCard.update(restaurant)
     }
 
     private companion object {
