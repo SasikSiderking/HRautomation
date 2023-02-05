@@ -92,6 +92,7 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
                     .position(LatLng(restaurant.lat, restaurant.lng))
                     .title(restaurant.name)
             )
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(restaurant.lat, restaurant.lng), MAP_ZOOM))
             map.setOnMarkerClickListener(markerClickListener)
         }
     }

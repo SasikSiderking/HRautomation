@@ -35,7 +35,10 @@ class RetrofitProvider @Inject constructor(private val tokenRepository: TokenRep
         HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
     }
 
+    //    private val contentType = "application/json".toMediaType()
     private val gson: Gson = GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX").create()
+
+    //    @OptIn(ExperimentalSerializationApi::class)
     private val retrofitBuilder by lazy {
         Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)

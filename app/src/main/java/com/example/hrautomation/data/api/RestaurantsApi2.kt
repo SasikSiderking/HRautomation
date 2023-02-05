@@ -1,5 +1,6 @@
 package com.example.hrautomation.data.api
 
+import com.example.hrautomation.data.model.restaurants.CityResponse
 import com.example.hrautomation.data.model.restaurants.ListRestaurantResponse
 
 class RestaurantsApi2 : RestaurantsApi {
@@ -62,6 +63,12 @@ class RestaurantsApi2 : RestaurantsApi {
         sortBy: String
     ): List<ListRestaurantResponse> {
         return list
+    }
+
+    override suspend fun getCitiesResponse(): List<CityResponse> {
+        val city1 = CityResponse(0, "Tomsk")
+        val city2 = CityResponse(1, "Krasnoyarsk")
+        return listOf(city1, city2)
     }
 
 }

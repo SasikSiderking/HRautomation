@@ -7,6 +7,7 @@ import com.example.hrautomation.data.model.faq.FaqCategoryResponseToFaqCategoryM
 import com.example.hrautomation.data.model.faq.FaqQuestionResponseToFaqQuestionMapper
 import com.example.hrautomation.data.model.products.ProductCategoryResponseToProductCategoryMapper
 import com.example.hrautomation.data.model.products.ProductResponseToProductMapper
+import com.example.hrautomation.data.model.restaurants.CityResponseToCityMapper
 import com.example.hrautomation.data.model.restaurants.ListRestaurantResponseToListRestaurantMapper
 import com.example.hrautomation.presentation.model.colleagues.EmployeeToColleagueItemMapper
 import com.example.hrautomation.presentation.model.colleagues.EmployeeToEmployeeItemMapper
@@ -85,4 +86,12 @@ class MapperModule {
     @Provides
     fun provideListRestaurantToListRestaurantItemMapper(): ListRestaurantToListRestaurantItemMapper =
         ListRestaurantToListRestaurantItemMapper()
+
+    @Reusable
+    @Provides
+    fun provideCityResponseToCityMapper(): CityResponseToCityMapper = CityResponseToCityMapper()
+
+    @Reusable
+    @Provides
+    fun provideCityToCityItemMapper(): CityResponseToCityMapper = CityResponseToCityMapper()
 }
