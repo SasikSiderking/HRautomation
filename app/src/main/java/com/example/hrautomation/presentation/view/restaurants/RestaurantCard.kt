@@ -4,18 +4,8 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
-import com.example.hrautomation.R
 import com.example.hrautomation.databinding.FragmentRestaurantsCardBinding
 import com.example.hrautomation.presentation.model.restaurants.ListRestaurantItem
-
-enum class CardAction {
-    CrossClicked,
-    DetailsClicked
-}
-
-fun interface OnCardClickListener {
-    fun onClick(cardAction: CardAction)
-}
 
 class RestaurantCard(
     context: Context,
@@ -39,8 +29,6 @@ class RestaurantCard(
         _binding = FragmentRestaurantsCardBinding.inflate(LayoutInflater.from(context), this)
 
         initListener()
-
-        context.obtainStyledAttributes(attrs, R.styleable.RestaurantCard, defStyleAttrs, defStyleRes).recycle()
     }
 
     fun updateViewData(restaurant: ListRestaurantItem? = null) {
@@ -59,15 +47,24 @@ class RestaurantCard(
 
     private fun initListener() {
         binding.cross.setOnClickListener {
-            this.listener?.onClick(CardAction.CrossClicked)
+            this.listener?.onClick(CardAction.CLOSE)
         }
 
         binding.details.setOnClickListener {
-            this.listener?.onClick(CardAction.DetailsClicked)
+            this.listener?.onClick(CardAction.GO_TO)
         }
     }
 
-    fun setListener(listener: OnCardClickListener) {
+    fun setCardClickListener(listener: OnCardClickListener) {
         this.listener = listener
     }
+}
+
+enum class CardAction {
+    CLOSE,
+    GO_TO
+}
+
+fun interface OnCardClickListener {
+    fun onClick(cardAction: CardAction)
 }

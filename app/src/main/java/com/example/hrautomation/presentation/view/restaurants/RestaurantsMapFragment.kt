@@ -57,7 +57,7 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
 
         initToolbar()
 
-        binding.restaurantCard.setListener(onCardClickListener)
+        binding.restaurantCard.setCardClickListener(onCardClickListener)
         viewModel.chosenRestaurant.observe(viewLifecycleOwner, chosenRestaurantObserver)
 
         supportMapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
@@ -106,10 +106,10 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
 
     private val onCardClickListener = OnCardClickListener { cardAction ->
         when (cardAction) {
-            CardAction.CrossClicked -> {
+            CardAction.CLOSE -> {
                 viewModel.choseRestaurant(null)
             }
-            CardAction.DetailsClicked -> {
+            CardAction.GO_TO -> {
 //                TODO(Открыть активити с фулл рестораном)
             }
         }
