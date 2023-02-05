@@ -6,9 +6,7 @@ import android.view.LayoutInflater
 import android.widget.FrameLayout
 import com.example.hrautomation.R
 import com.example.hrautomation.databinding.FragmentRestaurantsCardBinding
-
 import com.example.hrautomation.presentation.model.restaurants.ListRestaurantItem
-import timber.log.Timber
 
 enum class CardAction {
     CrossClicked,
@@ -47,13 +45,11 @@ class RestaurantCard(
 
     fun updateViewData(restaurant: ListRestaurantItem? = null) {
         restaurant?.let {
-            Timber.e("Restaurant: $restaurant")
             with(binding) {
                 restaurantName.text = restaurant.name
                 restaurantRating.text = restaurant.rating.toString()
                 restaurantAddress.text = restaurant.address
-                restaurantStatus.text = restaurant.status.status
-                restaurantCheck.text = restaurant.check.toString()
+                restaurantStatusCheck.text = restaurant.statusAndCheck
             }
             this.visibility = VISIBLE
         } ?: run {
