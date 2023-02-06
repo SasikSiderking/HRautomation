@@ -122,11 +122,10 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
 
     private val chosenRestaurantObserver = Observer<ListRestaurantItem?> { restaurant: ListRestaurantItem? ->
         restaurant?.let {
-            binding.restaurantCard.update(restaurant)
+            restaurantCardAdapter.updateView(restaurant.id)
         } ?: run {
-            binding.restaurantCard.close()
+            restaurantCardAdapter.closeView()
         }
-
     }
 
     private companion object {
