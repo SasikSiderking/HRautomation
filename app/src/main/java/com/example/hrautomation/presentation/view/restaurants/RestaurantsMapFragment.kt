@@ -3,6 +3,7 @@ package com.example.hrautomation.presentation.view.restaurants
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnClickListener
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -35,6 +36,8 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var supportMapFragment: SupportMapFragment
     private lateinit var map: GoogleMap
 
+    private lateinit var cityFragment: CityFragment
+
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
@@ -60,6 +63,8 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
         binding.restaurantCard.setListener(onCardClickListener)
         viewModel.chosenRestaurant.observe(viewLifecycleOwner, chosenRestaurantObserver)
 
+        binding.choseCityButton.setOnClickListener(choseCityClickListener)
+
         supportMapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         supportMapFragment.getMapAsync(this)
 
@@ -82,7 +87,7 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
 
         viewModel.data.observe(viewLifecycleOwner, restaurantsObserver)
 
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(cityLatLng, MAP_ZOOM))
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLatLng, MAP_ZOOM))
     }
 
     private val restaurantsObserver = Observer<List<ListRestaurantItem>> { listRestaurants ->
@@ -120,11 +125,19 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
         binding.restaurantCard.updateViewData(restaurant)
     }
 
+    private val choseCityClickListener = OnClickListener {
+        cityFragment = CityFragment(OnCityClickListener { latLng ->
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(latLng.latitude, latLng.longitude), MAP_ZOOM))
+            cityFragment.dismiss()
+        })
+        cityFragment.show(childFragmentManager, CityFragment.TAG)
+    }
+
     private companion object {
         @Dp
         const val TOOLBAR_ELEVATION = 4F
 
-        val cityLatLng: LatLng = LatLng(56.4884, 84.9480)
+        val defaultLatLng: LatLng = LatLng(56.4884, 84.9480)
 
         const val MAP_ZOOM = 14F
     }

@@ -15,6 +15,7 @@ import com.example.hrautomation.presentation.model.faq.FaqCategoryToFaqCategoryI
 import com.example.hrautomation.presentation.model.faq.FaqQuestionToFaqQuestionItemMapper
 import com.example.hrautomation.presentation.model.products.ProductCategoryToProductCategoryItemMapper
 import com.example.hrautomation.presentation.model.products.ProductToListedProductItemMapper
+import com.example.hrautomation.presentation.model.restaurants.CityToCityItemMapper
 import com.example.hrautomation.presentation.model.restaurants.ListRestaurantToListRestaurantItemMapper
 import dagger.Module
 import dagger.Provides
@@ -93,5 +94,5 @@ class MapperModule {
 
     @Reusable
     @Provides
-    fun provideCityToCityItemMapper(): CityResponseToCityMapper = CityResponseToCityMapper()
+    fun provideCityToCityItemMapper(): CityToCityItemMapper = CityToCityItemMapper()
 }

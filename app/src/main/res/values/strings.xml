@@ -55,4 +55,6 @@
     <string name="restaurants_map_details">ДЕТАЛИ</string>
     <string name="restaurants_status_check">%1$s · %2$d</string>
     <string name="close_card">close card</string>
+    <string name="city_search">Введите город</string>
+    <string name="chose_city">chose city</string>
 </resources>
