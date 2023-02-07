@@ -11,7 +11,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
-import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -23,9 +22,6 @@ class RetrofitProvider @Inject constructor(private val tokenRepository: TokenRep
             .readTimeout(15, TimeUnit.SECONDS)
             .writeTimeout(15, TimeUnit.SECONDS)
             .addInterceptor(AuthInterceptor(tokenRepository.getAccessToken() ?: ""))
-            .also {
-                Timber.i("Token in interceptor: " + tokenRepository.getAccessToken())
-            }
             .authenticator(TokenAuthenticator(tokenApi, tokenRepository))
             .also {
                 if (BuildConfig.DEBUG) {

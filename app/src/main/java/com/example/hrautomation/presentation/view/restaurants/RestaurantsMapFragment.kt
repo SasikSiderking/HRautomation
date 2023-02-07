@@ -17,9 +17,11 @@ import com.example.hrautomation.utils.ui.Dp
 import com.example.hrautomation.utils.ui.dpToPx
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import javax.inject.Inject
 
@@ -32,6 +34,8 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var supportMapFragment: SupportMapFragment
     private lateinit var map: GoogleMap
+
+    private lateinit var restaurantCardAdapter: UpdatableViewAdapter<ListRestaurantItem, RestaurantCard>
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -54,6 +58,9 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
         _binding = FragmentMapBinding.inflate(inflater, container, false)
 
         initToolbar()
+
+        binding.restaurantCard.setCardClickListener(onCardClickListener)
+        viewModel.chosenRestaurant.observe(viewLifecycleOwner, chosenRestaurantObserver)
 
         supportMapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         supportMapFragment.getMapAsync(this)
@@ -81,12 +88,43 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private val restaurantsObserver = Observer<List<ListRestaurantItem>> { listRestaurants ->
+
+        restaurantCardAdapter = UpdatableViewAdapter(listRestaurants, binding.restaurantCard)
+
         listRestaurants.forEach { restaurant ->
-            map.addMarker(
+            val marker = map.addMarker(
                 MarkerOptions()
                     .position(LatLng(restaurant.lat, restaurant.lng))
                     .title(restaurant.name)
             )
+            marker?.tag = restaurant.id
+            map.setOnMarkerClickListener(markerClickListener)
+        }
+    }
+
+    private val markerClickListener: OnMarkerClickListener = OnMarkerClickListener { marker: Marker ->
+
+        restaurantCardAdapter.updateView(marker.tag as Long)
+
+        return@OnMarkerClickListener true
+    }
+
+    private val onCardClickListener = OnCardClickListener { cardAction ->
+        when (cardAction) {
+            CardAction.CLOSE -> {
+                viewModel.choseRestaurant(null)
+            }
+            CardAction.GO_TO -> {
+//                TODO(Открыть активити с фулл рестораном)
+            }
+        }
+    }
+
+    private val chosenRestaurantObserver = Observer<ListRestaurantItem?> { restaurant: ListRestaurantItem? ->
+        restaurant?.let {
+            restaurantCardAdapter.updateView(restaurant.id)
+        } ?: run {
+            restaurantCardAdapter.closeView()
         }
     }
 

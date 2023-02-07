@@ -7,8 +7,8 @@ data class ListRestaurantResponse(
     val id: Long,
     val name: String,
     val address: String,
-    val status: RestaurantStatusResponse,
-    val check: Float,
+    val status: String,
+    val check: Int,
     val rating: Float,
     val lat: Double,
     val lng: Double
