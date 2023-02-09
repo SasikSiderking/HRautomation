@@ -4,25 +4,17 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
-import com.example.hrautomation.R
 import com.example.hrautomation.databinding.FragmentRestaurantsCardBinding
 import com.example.hrautomation.presentation.model.restaurants.ListRestaurantItem
-
-enum class CardAction {
-    CrossClicked,
-    DetailsClicked
-}
-
-fun interface OnCardClickListener {
-    fun onClick(cardAction: CardAction)
-}
+import com.example.hrautomation.utils.Updatable
+import java.io.Closeable
 
 class RestaurantCard(
     context: Context,
     attrs: AttributeSet?,
     defStyleAttrs: Int = 0,
     defStyleRes: Int = 0
-) : FrameLayout(context, attrs, defStyleAttrs) {
+) : FrameLayout(context, attrs, defStyleAttrs), Updatable<ListRestaurantItem>, Closeable {
 
     private var listener: OnCardClickListener? = null
 
@@ -39,35 +31,44 @@ class RestaurantCard(
         _binding = FragmentRestaurantsCardBinding.inflate(LayoutInflater.from(context), this)
 
         initListener()
-
-        context.obtainStyledAttributes(attrs, R.styleable.RestaurantCard, defStyleAttrs, defStyleRes).recycle()
-    }
-
-    fun updateViewData(restaurant: ListRestaurantItem? = null) {
-        restaurant?.let {
-            with(binding) {
-                restaurantName.text = restaurant.name
-                restaurantRating.text = restaurant.rating.toString()
-                restaurantAddress.text = restaurant.address
-                restaurantStatusCheck.text = restaurant.statusAndCheck
-            }
-            this.visibility = VISIBLE
-        } ?: run {
-            this.visibility = INVISIBLE
-        }
     }
 
     private fun initListener() {
-        binding.cross.setOnClickListener {
-            this.listener?.onClick(CardAction.CrossClicked)
+        binding.closeButton.setOnClickListener {
+            this.listener?.onClick(CardAction.CLOSE)
         }
 
         binding.details.setOnClickListener {
-            this.listener?.onClick(CardAction.DetailsClicked)
+            this.listener?.onClick(CardAction.GO_TO)
         }
     }
 
-    fun setListener(listener: OnCardClickListener) {
+    fun setCardClickListener(listener: OnCardClickListener) {
         this.listener = listener
     }
+
+    override fun update(item: ListRestaurantItem) {
+        item.let {
+            with(binding) {
+                restaurantName.text = item.name
+                restaurantRating.text = item.rating.toString()
+                restaurantAddress.text = item.address
+                restaurantStatusCheck.text = item.statusAndCheck
+            }
+            this.visibility = VISIBLE
+        }
+    }
+
+    override fun close() {
+        this.visibility = INVISIBLE
+    }
+}
+
+enum class CardAction {
+    CLOSE,
+    GO_TO
+}
+
+fun interface OnCardClickListener {
+    fun onClick(cardAction: CardAction)
 }

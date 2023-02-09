@@ -38,6 +38,8 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var cityFragment: CityFragment
 
+    private lateinit var restaurantCardAdapter: UpdatableViewAdapter<ListRestaurantItem, RestaurantCard>
+
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
@@ -60,7 +62,7 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
 
         initToolbar()
 
-        binding.restaurantCard.setListener(onCardClickListener)
+        binding.restaurantCard.setCardClickListener(onCardClickListener)
         viewModel.chosenRestaurant.observe(viewLifecycleOwner, chosenRestaurantObserver)
 
         binding.choseCityButton.setOnClickListener(choseCityClickListener)
@@ -91,38 +93,45 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private val restaurantsObserver = Observer<List<ListRestaurantItem>> { listRestaurants ->
+
+        restaurantCardAdapter = UpdatableViewAdapter(listRestaurants, binding.restaurantCard)
+
         listRestaurants.forEach { restaurant ->
-            map.addMarker(
+            val marker = map.addMarker(
                 MarkerOptions()
                     .position(LatLng(restaurant.lat, restaurant.lng))
                     .title(restaurant.name)
             )
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(restaurant.lat, restaurant.lng), MAP_ZOOM))
+            marker?.tag = restaurant.id
             map.setOnMarkerClickListener(markerClickListener)
         }
     }
 
     private val markerClickListener: OnMarkerClickListener = OnMarkerClickListener { marker: Marker ->
-        val restaurant = viewModel.data.value?.find { restaurant: ListRestaurantItem ->
-            restaurant.lat == marker.position.latitude && restaurant.lng == marker.position.longitude
-        }
-        viewModel.choseRestaurant(restaurant)
+
+        restaurantCardAdapter.updateView(marker.tag as Long)
+
         return@OnMarkerClickListener true
     }
 
     private val onCardClickListener = OnCardClickListener { cardAction ->
         when (cardAction) {
-            CardAction.CrossClicked -> {
+            CardAction.CLOSE -> {
                 viewModel.choseRestaurant(null)
             }
-            CardAction.DetailsClicked -> {
+            CardAction.GO_TO -> {
 //                TODO(Открыть активити с фулл рестораном)
             }
         }
     }
 
     private val chosenRestaurantObserver = Observer<ListRestaurantItem?> { restaurant: ListRestaurantItem? ->
-        binding.restaurantCard.updateViewData(restaurant)
+        restaurant?.let {
+            restaurantCardAdapter.updateView(restaurant.id)
+        } ?: run {
+            restaurantCardAdapter.closeView()
+        }
     }
 
     private val choseCityClickListener = OnClickListener {

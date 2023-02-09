@@ -33,14 +33,14 @@
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/restaurantName"
-            app:layout_constraintEnd_toStartOf="@+id/shapeableImageView2"
+            app:layout_constraintEnd_toStartOf="@+id/star"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/restaurantName"
             app:layout_constraintTop_toTopOf="@+id/restaurantName"
             tools:text="4.5" />
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/shapeableImageView2"
+            android:id="@+id/star"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/ic_baseline_star_rate_24"
@@ -49,7 +49,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/cross"
+            android:id="@+id/closeButton"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="end"
@@ -77,16 +77,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/restaurantAddress"
             tools:layout_editor_absoluteX="32dp"
-            tools:text="Ресторан · 500" />
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/shapeableImageView3"
-            android:layout_width="12dp"
-            android:layout_height="12dp"
-            android:src="@drawable/ic_baseline_currency_ruble_24"
-            app:layout_constraintBottom_toBottomOf="@+id/restaurantStatusCheck"
-            app:layout_constraintStart_toEndOf="@+id/restaurantStatusCheck"
-            app:layout_constraintTop_toTopOf="@id/restaurantStatusCheck" />
+            tools:text="Ресторан · 500 ₽" />
 
         <TextView
             android:id="@+id/details"
