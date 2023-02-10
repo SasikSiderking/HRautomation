@@ -3,7 +3,6 @@ package com.example.hrautomation.presentation.view.restaurants
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import com.example.hrautomation.databinding.ItemCityBinding
 import com.example.hrautomation.presentation.base.delegates.BaseItemAdapterDelegate
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
@@ -26,7 +25,7 @@ class CityItemAdapterDelegate(private val onCityClickListener: OnCityClickListen
     }
 
     override fun onBind(item: CityItem, holder: CityViewHolder, payloads: List<Any>) {
-        holder.cityName.text = item.name
+        holder.binding.city.text = item.name
     }
 
     override fun onViewHolderClick(view: View, holder: CityViewHolder) {
@@ -34,12 +33,6 @@ class CityItemAdapterDelegate(private val onCityClickListener: OnCityClickListen
         onCityClickListener.onClick(LatLng(item.lat, item.lng))
     }
 
-    class CityViewHolder(binding: ItemCityBinding, clickListener: OnViewHolderClickListener<CityViewHolder>) :
-        ClickableViewHolder<CityViewHolder>(binding.root, clickListener) {
-        val cityName: TextView
-
-        init {
-            cityName = binding.city
-        }
-    }
+    class CityViewHolder(val binding: ItemCityBinding, clickListener: OnViewHolderClickListener<CityViewHolder>) :
+        ClickableViewHolder<CityViewHolder>(binding.root, clickListener)
 }

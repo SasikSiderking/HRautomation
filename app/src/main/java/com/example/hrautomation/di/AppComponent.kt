@@ -15,7 +15,7 @@ import com.example.hrautomation.presentation.view.loading.code.CodeLoginFragment
 import com.example.hrautomation.presentation.view.loading.email.EmailLoginFragment
 import com.example.hrautomation.presentation.view.product.ProductFragment
 import com.example.hrautomation.presentation.view.profile.ProfileActivity
-import com.example.hrautomation.presentation.view.restaurants.CityFragment
+import com.example.hrautomation.presentation.view.restaurants.CitiesListFragment
 import com.example.hrautomation.presentation.view.restaurants.RestaurantsMapFragment
 import dagger.Component
 import javax.inject.Singleton
@@ -53,5 +53,5 @@ interface AppComponent {
     fun inject(activity: ProfileActivity)
 
     fun inject(fragment: RestaurantsMapFragment)
-    fun inject(fragment: CityFragment)
+    fun inject(fragment: CitiesListFragment)
 }

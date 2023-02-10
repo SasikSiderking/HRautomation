@@ -9,21 +9,23 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView.OnEditorActionListener
 import androidx.core.view.isVisible
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hrautomation.app.App
-import com.example.hrautomation.databinding.FragmentRestaurantsSearchBottomSheetBinding
+import com.example.hrautomation.databinding.FragmentRestaurantsCitiesBinding
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.utils.ViewModelFactory
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import javax.inject.Inject
 
-class CityFragment(private val onCityClickListener: OnCityClickListener) : BottomSheetDialogFragment() {
+class CitiesListFragment : BottomSheetDialogFragment() {
 
-    private var _binding: FragmentRestaurantsSearchBottomSheetBinding? = null
-    private val binding: FragmentRestaurantsSearchBottomSheetBinding
+    private var _binding: FragmentRestaurantsCitiesBinding? = null
+    private val binding: FragmentRestaurantsCitiesBinding
         get() = _binding!!
 
     @Inject
@@ -41,7 +43,7 @@ class CityFragment(private val onCityClickListener: OnCityClickListener) : Botto
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = FragmentRestaurantsSearchBottomSheetBinding.inflate(inflater, container, false)
+        _binding = FragmentRestaurantsCitiesBinding.inflate(inflater, container, false)
 
         initUi()
         initSearch()
@@ -74,14 +76,20 @@ class CityFragment(private val onCityClickListener: OnCityClickListener) : Botto
     }
 
     private fun initUi() {
-        adapter = CityAdapter(onCityClickListener)
+        adapter = CityAdapter(OnCityClickListener { latLng: LatLng ->
+            val bundle = Bundle()
+            bundle.putDouble(LATITUDE_KEY, latLng.latitude)
+            bundle.putDouble(LONGITUDE_KEY, latLng.longitude)
+            setFragmentResult(CITIES_FRAGMENT_KEY, bundle)
+            this.dismiss()
+        })
         viewModel.data.observe(viewLifecycleOwner, cityObserver)
     }
 
     private fun initSearch() {
         with(binding) {
-            binding.citiesRecyclerview.adapter = adapter
-            binding.citiesRecyclerview.addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))
+            citiesRecyclerview.adapter = adapter
+            citiesRecyclerview.addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))
 
             editSearch.setOnEditorActionListener(OnEditorActionListener { v, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -98,5 +106,13 @@ class CityFragment(private val onCityClickListener: OnCityClickListener) : Botto
 
     companion object {
         const val TAG = "SearchBottomSheet"
+
+        const val CITIES_FRAGMENT_KEY = "CitiesKey"
+
+        const val LATITUDE_KEY = "LatitudeKey"
+
+        const val LONGITUDE_KEY = "LongitudeKey"
+
+        fun newInstance() = CitiesListFragment()
     }
 }

@@ -36,7 +36,7 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var supportMapFragment: SupportMapFragment
     private lateinit var map: GoogleMap
 
-    private lateinit var cityFragment: CityFragment
+    private lateinit var cityFragment: CitiesListFragment
 
     private lateinit var restaurantCardAdapter: UpdatableViewAdapter<ListRestaurantItem, RestaurantCard>
 
@@ -61,9 +61,7 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
         _binding = FragmentMapBinding.inflate(inflater, container, false)
 
         initToolbar()
-
-        binding.restaurantCard.setCardClickListener(onCardClickListener)
-        binding.chooseCityButton.setOnClickListener(chooseCityClickListener)
+        initListeners()
 
         restaurantCardAdapter = UpdatableViewAdapter(binding.restaurantCard)
 
@@ -83,6 +81,21 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
     private fun initToolbar() {
         (activity as? AppCompatActivity)?.supportActionBar?.let {
             it.elevation = requireContext().dpToPx(TOOLBAR_ELEVATION).toFloat()
+        }
+    }
+
+    private fun initListeners() {
+        binding.restaurantCard.setCardClickListener(onCardClickListener)
+        binding.chooseCityButton.setOnClickListener(chooseCityClickListener)
+
+        childFragmentManager.setFragmentResultListener(
+            CitiesListFragment.CITIES_FRAGMENT_KEY,
+            viewLifecycleOwner
+        ) { _: String, bundle: Bundle ->
+            val lat = bundle.getDouble(CitiesListFragment.LATITUDE_KEY)
+            val lng = bundle.getDouble(CitiesListFragment.LONGITUDE_KEY)
+
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(lat, lng), MAP_ZOOM))
         }
     }
 
@@ -137,11 +150,8 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private val chooseCityClickListener = OnClickListener {
-        cityFragment = CityFragment(OnCityClickListener { latLng ->
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(latLng.latitude, latLng.longitude), MAP_ZOOM))
-            cityFragment.dismiss()
-        })
-        cityFragment.show(childFragmentManager, CityFragment.TAG)
+        cityFragment = CitiesListFragment.newInstance()
+        cityFragment.show(childFragmentManager, CitiesListFragment.TAG)
     }
 
     private companion object {

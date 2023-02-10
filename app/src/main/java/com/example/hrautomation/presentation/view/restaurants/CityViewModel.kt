@@ -16,9 +16,8 @@ import javax.inject.Inject
 class CityViewModel @Inject constructor(
     private val restaurantsRepository: RestaurantsRepository,
     private val dispatchers: CoroutineDispatchers,
-    private val cityToCityItemMapper: CityToCityItemMapper,
-
-    ) : BaseViewModel() {
+    private val cityToCityItemMapper: CityToCityItemMapper
+) : BaseViewModel() {
 
     val data: LiveData<List<BaseListItem>>
         get() = _data
@@ -54,11 +53,12 @@ class CityViewModel @Inject constructor(
             contextPiece = dispatchers.default,
             doOnLaunch = {
                 if (name.isNotEmpty()) {
-                    _data.postValue(
-                        reservedData.filter { city ->
-                            city.name.contains(name, ignoreCase = true)
-                        }.map { cityToCityItemMapper.convert(it) }
-                    )
+                    val citiesDomain = reservedData.filter { city ->
+                        city.name.contains(name, ignoreCase = true)
+                    }
+                    val cities = citiesDomain.map { cityToCityItemMapper.convert(it) }
+
+                    _data.postValue(cities)
                 } else {
                     if (reservedData.isNotEmpty()) {
                         _data.postValue(reservedData.map { cityToCityItemMapper.convert(it) })
