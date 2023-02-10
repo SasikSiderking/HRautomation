@@ -76,14 +76,16 @@ class CitiesListFragment : BottomSheetDialogFragment() {
     }
 
     private fun initUi() {
-        adapter = CityAdapter(OnCityClickListener { latLng: LatLng ->
-            val bundle = Bundle()
-            bundle.putDouble(LATITUDE_KEY, latLng.latitude)
-            bundle.putDouble(LONGITUDE_KEY, latLng.longitude)
-            setFragmentResult(CITIES_FRAGMENT_KEY, bundle)
-            this.dismiss()
-        })
+        adapter = CityAdapter(onCityClickListener)
         viewModel.data.observe(viewLifecycleOwner, cityObserver)
+    }
+
+    private val onCityClickListener = OnCityClickListener { latLng: LatLng ->
+        val bundle = Bundle()
+        bundle.putDouble(LATITUDE_KEY, latLng.latitude)
+        bundle.putDouble(LONGITUDE_KEY, latLng.longitude)
+        setFragmentResult(CITIES_FRAGMENT_KEY, bundle)
+        this.dismiss()
     }
 
     private fun initSearch() {

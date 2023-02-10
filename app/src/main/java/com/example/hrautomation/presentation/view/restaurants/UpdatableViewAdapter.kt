@@ -14,7 +14,6 @@ class UpdatableViewAdapter<Item : BaseListItem, View>(
 
     fun updateView(id: Long) {
 
-        //по-сути тут этого делать не надо но концептуально должно быть
         currentItemId = id
 
         val foundItem = items.find {
