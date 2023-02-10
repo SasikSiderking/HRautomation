@@ -38,18 +38,26 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <!--            <intent-filter>-->
+            <!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--            </intent-filter>-->
         </activity>
 
         <activity android:name="com.example.hrautomation.presentation.view.loading.activity_login.LoginActivity" />
 
         <activity
             android:name=".presentation.view.activity.MainActivity"
-            android:exported="true" />
+            android:exported="true">
+<!--            TODO(Вернуть intent-filter)-->
+            <!--            Меня Лиза забанила :/ токенов пока не будет-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <activity android:name="com.example.hrautomation.presentation.view.colleagues.employee.EmployeeActivity" />
 

@@ -8,7 +8,7 @@ data class ListRestaurantResponse(
     val name: String,
     val address: String,
     val status: String,
-    val check: Int,
+    val average: Int,
     val rating: Float,
     val lat: Double,
     val lng: Double
@@ -22,7 +22,7 @@ class ListRestaurantResponseToListRestaurantMapper : Mapper<ListRestaurantRespon
             model.name,
             model.address,
             model.status,
-            model.check,
+            model.average,
             model.rating,
             model.lat,
             model.lng
