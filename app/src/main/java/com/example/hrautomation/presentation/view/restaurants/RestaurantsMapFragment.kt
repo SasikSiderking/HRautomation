@@ -63,9 +63,11 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
         initToolbar()
 
         binding.restaurantCard.setCardClickListener(onCardClickListener)
-        viewModel.chosenRestaurant.observe(viewLifecycleOwner, chosenRestaurantObserver)
+        binding.chooseCityButton.setOnClickListener(chooseCityClickListener)
 
-        binding.choseCityButton.setOnClickListener(choseCityClickListener)
+        restaurantCardAdapter = UpdatableViewAdapter(binding.restaurantCard)
+
+        viewModel.chosenRestaurantId.observe(viewLifecycleOwner, chosenRestaurantObserver)
 
         supportMapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         supportMapFragment.getMapAsync(this)
@@ -94,7 +96,7 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
 
     private val restaurantsObserver = Observer<List<ListRestaurantItem>> { listRestaurants ->
 
-        restaurantCardAdapter = UpdatableViewAdapter(listRestaurants, binding.restaurantCard)
+        restaurantCardAdapter.setItems(listRestaurants)
 
         listRestaurants.forEach { restaurant ->
             val marker = map.addMarker(
@@ -108,6 +110,14 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
+    private val chosenRestaurantObserver = Observer<Long?> { chosenRestaurantId ->
+        if (chosenRestaurantId != null) {
+            restaurantCardAdapter.updateView(chosenRestaurantId)
+        } else {
+            restaurantCardAdapter.closeView()
+        }
+    }
+
     private val markerClickListener: OnMarkerClickListener = OnMarkerClickListener { marker: Marker ->
 
         restaurantCardAdapter.updateView(marker.tag as Long)
@@ -118,7 +128,7 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
     private val onCardClickListener = OnCardClickListener { cardAction ->
         when (cardAction) {
             CardAction.CLOSE -> {
-                viewModel.choseRestaurant(null)
+                viewModel.chooseRestaurant(null)
             }
             CardAction.GO_TO -> {
 //                TODO(Открыть активити с фулл рестораном)
@@ -126,15 +136,7 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-    private val chosenRestaurantObserver = Observer<ListRestaurantItem?> { restaurant: ListRestaurantItem? ->
-        restaurant?.let {
-            restaurantCardAdapter.updateView(restaurant.id)
-        } ?: run {
-            restaurantCardAdapter.closeView()
-        }
-    }
-
-    private val choseCityClickListener = OnClickListener {
+    private val chooseCityClickListener = OnClickListener {
         cityFragment = CityFragment(OnCityClickListener { latLng ->
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(latLng.latitude, latLng.longitude), MAP_ZOOM))
             cityFragment.dismiss()
