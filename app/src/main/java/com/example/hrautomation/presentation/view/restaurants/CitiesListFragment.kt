@@ -6,7 +6,9 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
+import android.widget.FrameLayout
 import android.widget.TextView.OnEditorActionListener
 import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResult
@@ -49,6 +51,15 @@ class CitiesListFragment : BottomSheetDialogFragment() {
         initSearch()
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val dialog = dialog
+        if (dialog != null) {
+            val bottomSheet: FrameLayout = dialog.findViewById(com.google.android.material.R.id.design_bottom_sheet)
+            bottomSheet.layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT
+        }
     }
 
     override fun onDestroyView() {

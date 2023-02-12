@@ -13,6 +13,6 @@ interface RestaurantsApi {
         @Query("sortBy") sortBy: String
     ): List<ListRestaurantResponse>
 
-    @GET("/cities")
+    @GET("/cities/get/all")
     suspend fun getCitiesResponse(): List<CityResponse>
 }

@@ -160,6 +160,6 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
 
         val defaultLatLng: LatLng = LatLng(56.4884, 84.9480)
 
-        const val MAP_ZOOM = 14F
+        const val MAP_ZOOM = 12F
     }
 }
