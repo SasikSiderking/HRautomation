@@ -1,5 +1,8 @@
 package com.example.hrautomation.presentation.view.restaurants
 
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,9 +24,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import javax.inject.Inject
 
 
@@ -39,6 +40,8 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var cityFragment: CitiesListFragment
 
     private lateinit var restaurantCardAdapter: UpdatableViewAdapter<ListRestaurantItem, RestaurantCard>
+
+    private lateinit var chosenMarker: Marker
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -111,16 +114,31 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
 
         restaurantCardAdapter.setItems(listRestaurants)
 
+//        TODO(Разобраться что там ему нужена за тема)
+        val markerDrawable = resources.getDrawable(R.drawable.ic_restaurants_marker_24)
+        val markerIcon = getMarkerIconFromDrawable(markerDrawable)
+
         listRestaurants.forEach { restaurant ->
             val marker = map.addMarker(
                 MarkerOptions()
                     .position(LatLng(restaurant.lat, restaurant.lng))
-                    .title(restaurant.name)
+                    .icon(markerIcon)
             )
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(restaurant.lat, restaurant.lng), MAP_ZOOM))
-            marker?.tag = restaurant.id
             map.setOnMarkerClickListener(markerClickListener)
+
+            marker?.tag = restaurant.id
+//            marker?.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.restaurants_map))
         }
+    }
+
+    private fun getMarkerIconFromDrawable(drawable: Drawable): BitmapDescriptor {
+        val canvas = Canvas()
+        val bitmap = Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
+        canvas.setBitmap(bitmap)
+        drawable.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
+        drawable.draw(canvas)
+        return BitmapDescriptorFactory.fromBitmap(bitmap)
     }
 
     private val chosenRestaurantObserver = Observer<Long?> { chosenRestaurantId ->
@@ -133,7 +151,9 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
 
     private val markerClickListener: OnMarkerClickListener = OnMarkerClickListener { marker: Marker ->
 
-        restaurantCardAdapter.updateView(marker.tag as Long)
+        marker.setIcon(BitmapDescriptorFactory.defaultMarker(50f))
+
+        viewModel.chooseRestaurant(marker.tag as Long)
 
         return@OnMarkerClickListener true
     }
