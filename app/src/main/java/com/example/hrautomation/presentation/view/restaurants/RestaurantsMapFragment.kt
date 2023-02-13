@@ -2,7 +2,6 @@ package com.example.hrautomation.presentation.view.restaurants
 
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +15,7 @@ import com.example.hrautomation.R
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.FragmentMapBinding
 import com.example.hrautomation.presentation.model.restaurants.ListRestaurantItem
+import com.example.hrautomation.presentation.view.restaurants.сity.CitiesListFragment
 import com.example.hrautomation.utils.ViewModelFactory
 import com.example.hrautomation.utils.ui.Dp
 import com.example.hrautomation.utils.ui.dpToPx
@@ -37,11 +37,14 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var supportMapFragment: SupportMapFragment
     private lateinit var map: GoogleMap
 
+    private lateinit var markerIcon: BitmapDescriptor
+    private lateinit var markerIconChosen: BitmapDescriptor
+
     private lateinit var cityFragment: CitiesListFragment
 
     private lateinit var restaurantCardAdapter: UpdatableViewAdapter<ListRestaurantItem, RestaurantCard>
 
-    private lateinit var chosenMarker: Marker
+    private var state: RestaurantsMapState = RestaurantsMapState(null, null, null)
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -60,15 +63,18 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentMapBinding.inflate(inflater, container, false)
 
         initToolbar()
         initListeners()
 
+        markerIcon = prepareIcon(R.drawable.ic_restaurants_marker_24)
+        markerIconChosen = prepareIcon(R.drawable.ic_restaurant_marker_chosen_24)
+
         restaurantCardAdapter = UpdatableViewAdapter(binding.restaurantCard)
 
-        viewModel.chosenRestaurantId.observe(viewLifecycleOwner, chosenRestaurantObserver)
+
+        viewModel.restaurantsMapState.observe(viewLifecycleOwner, stateObserver)
 
         supportMapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         supportMapFragment.getMapAsync(this)
@@ -79,6 +85,82 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    override fun onMapReady(map: GoogleMap) {
+        this@RestaurantsMapFragment.map = map
+
+        viewModel.data.observe(viewLifecycleOwner, restaurantsObserver)
+        state.chosenCityLatLng?.let {
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(it, MAP_ZOOM))
+        } ?: run {
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLatLng, MAP_ZOOM))
+        }
+    }
+
+    private val markerClickListener: OnMarkerClickListener = OnMarkerClickListener { marker: Marker ->
+
+        viewModel.chooseRestaurant(marker.tag as Long, marker)
+
+        return@OnMarkerClickListener true
+    }
+
+    private val onCardClickListener = OnCardClickListener { cardAction ->
+        when (cardAction) {
+            CardAction.CLOSE -> {
+                viewModel.chooseRestaurant(null, null)
+            }
+            CardAction.GO_TO -> {
+//                TODO(Открыть активити с фулл рестораном)
+            }
+        }
+    }
+
+    private val chooseCityClickListener = OnClickListener {
+        cityFragment = CitiesListFragment.newInstance()
+        cityFragment.show(childFragmentManager, CitiesListFragment.TAG)
+    }
+
+    private val stateObserver = Observer<RestaurantsMapState> { newState ->
+        state.chosenMarker?.setIcon(markerIcon)
+        newState.chosenMarker?.setIcon(markerIconChosen)
+
+        state = newState
+
+        with(state) {
+            chosenRestaurantId?.let {
+                restaurantCardAdapter.updateView(it)
+            } ?: run {
+                restaurantCardAdapter.closeView()
+            }
+        }
+    }
+
+    private val restaurantsObserver = Observer<List<ListRestaurantItem>> { listRestaurants ->
+        restaurantCardAdapter.setItems(listRestaurants)
+
+        listRestaurants.forEach { restaurant ->
+            val marker = map.addMarker(
+                MarkerOptions()
+                    .position(LatLng(restaurant.lat, restaurant.lng))
+                    .icon(markerIcon)
+            )
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(restaurant.lat, restaurant.lng), MAP_ZOOM))
+            map.setOnMarkerClickListener(markerClickListener)
+
+            marker?.tag = restaurant.id
+        }
+    }
+
+    private fun prepareIcon(int: Int): BitmapDescriptor {
+        //        TODO(Разобраться что там ему нужена за тема)
+        val drawable = resources.getDrawable(int)
+        val canvas = Canvas()
+        val bitmap = Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
+        canvas.setBitmap(bitmap)
+        drawable.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
+        drawable.draw(canvas)
+        return BitmapDescriptorFactory.fromBitmap(bitmap)
     }
 
     private fun initToolbar() {
@@ -100,78 +182,6 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
 
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(lat, lng), MAP_ZOOM))
         }
-    }
-
-    override fun onMapReady(map: GoogleMap) {
-        this@RestaurantsMapFragment.map = map
-
-        viewModel.data.observe(viewLifecycleOwner, restaurantsObserver)
-
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLatLng, MAP_ZOOM))
-    }
-
-    private val restaurantsObserver = Observer<List<ListRestaurantItem>> { listRestaurants ->
-
-        restaurantCardAdapter.setItems(listRestaurants)
-
-//        TODO(Разобраться что там ему нужена за тема)
-        val markerDrawable = resources.getDrawable(R.drawable.ic_restaurants_marker_24)
-        val markerIcon = getMarkerIconFromDrawable(markerDrawable)
-
-        listRestaurants.forEach { restaurant ->
-            val marker = map.addMarker(
-                MarkerOptions()
-                    .position(LatLng(restaurant.lat, restaurant.lng))
-                    .icon(markerIcon)
-            )
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(restaurant.lat, restaurant.lng), MAP_ZOOM))
-            map.setOnMarkerClickListener(markerClickListener)
-
-            marker?.tag = restaurant.id
-//            marker?.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.restaurants_map))
-        }
-    }
-
-    private fun getMarkerIconFromDrawable(drawable: Drawable): BitmapDescriptor {
-        val canvas = Canvas()
-        val bitmap = Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
-        canvas.setBitmap(bitmap)
-        drawable.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
-        drawable.draw(canvas)
-        return BitmapDescriptorFactory.fromBitmap(bitmap)
-    }
-
-    private val chosenRestaurantObserver = Observer<Long?> { chosenRestaurantId ->
-        if (chosenRestaurantId != null) {
-            restaurantCardAdapter.updateView(chosenRestaurantId)
-        } else {
-            restaurantCardAdapter.closeView()
-        }
-    }
-
-    private val markerClickListener: OnMarkerClickListener = OnMarkerClickListener { marker: Marker ->
-
-        marker.setIcon(BitmapDescriptorFactory.defaultMarker(50f))
-
-        viewModel.chooseRestaurant(marker.tag as Long)
-
-        return@OnMarkerClickListener true
-    }
-
-    private val onCardClickListener = OnCardClickListener { cardAction ->
-        when (cardAction) {
-            CardAction.CLOSE -> {
-                viewModel.chooseRestaurant(null)
-            }
-            CardAction.GO_TO -> {
-//                TODO(Открыть активити с фулл рестораном)
-            }
-        }
-    }
-
-    private val chooseCityClickListener = OnClickListener {
-        cityFragment = CitiesListFragment.newInstance()
-        cityFragment.show(childFragmentManager, CitiesListFragment.TAG)
     }
 
     private companion object {

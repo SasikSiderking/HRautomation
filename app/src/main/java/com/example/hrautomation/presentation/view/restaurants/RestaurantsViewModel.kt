@@ -10,6 +10,8 @@ import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
 import com.example.hrautomation.presentation.model.restaurants.ListRestaurantItem
 import com.example.hrautomation.presentation.model.restaurants.ListRestaurantToListRestaurantItemMapper
 import com.example.hrautomation.utils.tryLaunch
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import javax.inject.Inject
 
 class RestaurantsViewModel @Inject constructor(
@@ -20,18 +22,31 @@ class RestaurantsViewModel @Inject constructor(
 
     val data: LiveData<List<ListRestaurantItem>>
         get() = _data
-    private val _data: MutableLiveData<List<ListRestaurantItem>> = MutableLiveData<List<ListRestaurantItem>>()
+    private val _data: MutableLiveData<List<ListRestaurantItem>> = MutableLiveData()
 
-    val chosenRestaurantId: LiveData<Long?>
-        get() = _chosenRestaurantId
-    private val _chosenRestaurantId: MutableLiveData<Long?> = MutableLiveData<Long?>()
+    val restaurantsMapState: LiveData<RestaurantsMapState>
+        get() = _restaurantMapState
+    private val _restaurantMapState: MutableLiveData<RestaurantsMapState> =
+        MutableLiveData(RestaurantsMapState(null, null, null))
 
     init {
         loadData()
     }
 
-    fun chooseRestaurant(restaurantId: Long?) {
-        _chosenRestaurantId.postValue(restaurantId)
+    fun chooseCity(cityLatLng: LatLng?) {
+        with(restaurantsMapState) {
+            _restaurantMapState.postValue(
+                value?.setCurrentCity(cityLatLng)
+            )
+        }
+    }
+
+    fun chooseRestaurant(restaurantId: Long?, marker: Marker?) {
+        with(restaurantsMapState) {
+            _restaurantMapState.postValue(
+                value?.setChosenRestaurant(restaurantId, marker)
+            )
+        }
     }
 
     private fun loadData() {

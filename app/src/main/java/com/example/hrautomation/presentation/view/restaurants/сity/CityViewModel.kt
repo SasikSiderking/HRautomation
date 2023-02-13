@@ -1,4 +1,4 @@
-package com.example.hrautomation.presentation.view.restaurants
+package com.example.hrautomation.presentation.view.restaurants.сity
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
