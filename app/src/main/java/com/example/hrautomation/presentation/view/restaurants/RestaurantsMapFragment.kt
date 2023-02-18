@@ -1,7 +1,5 @@
 package com.example.hrautomation.presentation.view.restaurants
 
-import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +14,7 @@ import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.FragmentMapBinding
 import com.example.hrautomation.presentation.model.restaurants.ListRestaurantItem
 import com.example.hrautomation.presentation.view.restaurants.сity.CitiesListFragment
+import com.example.hrautomation.utils.BitmapUtils.DrawableToBitmapDescriptor
 import com.example.hrautomation.utils.ViewModelFactory
 import com.example.hrautomation.utils.ui.Dp
 import com.example.hrautomation.utils.ui.dpToPx
@@ -24,7 +23,10 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.*
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
 import javax.inject.Inject
 
 
@@ -68,8 +70,13 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
         initToolbar()
         initListeners()
 
-        markerIcon = prepareIcon(R.drawable.ic_restaurants_marker_24)
-        markerIconChosen = prepareIcon(R.drawable.ic_restaurant_marker_chosen_24)
+        //        TODO(Разобраться что там ему нужена за тема)
+        markerIcon = DrawableToBitmapDescriptor.convert(
+            resources.getDrawable(R.drawable.ic_restaurants_marker_24)
+        )
+        markerIconChosen = DrawableToBitmapDescriptor.convert(
+            resources.getDrawable(R.drawable.ic_restaurant_marker_chosen_24)
+        )
 
         restaurantCardAdapter = UpdatableViewAdapter(binding.restaurantCard)
 
@@ -128,9 +135,9 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
         state = newState
 
         with(state) {
-            chosenRestaurantId?.let {
-                restaurantCardAdapter.updateView(it)
-            } ?: run {
+            if (chosenRestaurantId != null) {
+                restaurantCardAdapter.updateView(chosenRestaurantId!!)
+            } else {
                 restaurantCardAdapter.closeView()
             }
         }
@@ -150,17 +157,6 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
 
             marker?.tag = restaurant.id
         }
-    }
-
-    private fun prepareIcon(int: Int): BitmapDescriptor {
-        //        TODO(Разобраться что там ему нужена за тема)
-        val drawable = resources.getDrawable(int)
-        val canvas = Canvas()
-        val bitmap = Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
-        canvas.setBitmap(bitmap)
-        drawable.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
-        drawable.draw(canvas)
-        return BitmapDescriptorFactory.fromBitmap(bitmap)
     }
 
     private fun initToolbar() {
