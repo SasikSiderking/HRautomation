@@ -25,4 +25,12 @@
 
     </androidx.viewpager2.widget.ViewPager2>
 
+    <include
+        android:id="@+id/reusableLoading"
+        layout="@layout/reusable_loading" />
+
+    <include
+        android:id="@+id/reusableReload"
+        layout="@layout/reusable_reload" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
