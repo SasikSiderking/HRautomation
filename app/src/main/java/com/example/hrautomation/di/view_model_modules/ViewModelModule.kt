@@ -16,6 +16,7 @@ import com.example.hrautomation.presentation.view.restaurants.RestaurantsViewMod
 import com.example.hrautomation.presentation.view.restaurants.сity.CityViewModel
 import dagger.Binds
 import dagger.Module
+import dagger.Reusable
 import dagger.multibindings.IntoMap
 
 @Module
@@ -77,6 +78,7 @@ interface ViewModelModule {
 
     @Binds
     @IntoMap
+    @Reusable
     @ViewModelKey(RestaurantsViewModel::class)
     fun bindRestaurantsViewModel(restaurantsViewModel: RestaurantsViewModel): ViewModel
 
