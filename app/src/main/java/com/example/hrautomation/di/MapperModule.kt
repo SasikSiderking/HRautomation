@@ -19,13 +19,12 @@ import com.example.hrautomation.presentation.model.products.ProductToListedProdu
 import com.example.hrautomation.presentation.model.restaurants.BuildingToBuildingItemMapper
 import com.example.hrautomation.presentation.model.restaurants.CityToCityItemMapper
 import com.example.hrautomation.presentation.model.restaurants.ListRestaurantToListRestaurantItemMapper
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
 
 @Module
-interface MapperModule {
+class MapperModule {
     @Reusable
     @Provides
     fun provideProductResponseToProductMapper(): ProductResponseToProductMapper = ProductResponseToProductMapper()
@@ -36,7 +35,8 @@ interface MapperModule {
 
     @Reusable
     @Provides
-    fun provideEmployeesResponseToEmployeesMapper(): EmployeesResponseToEmployeesMapper = EmployeesResponseToEmployeesMapper()
+    fun provideEmployeesResponseToEmployeesMapper(): EmployeesResponseToEmployeesMapper =
+        EmployeesResponseToEmployeesMapper()
 
     @Reusable
     @Provides
@@ -48,19 +48,23 @@ interface MapperModule {
 
     @Reusable
     @Provides
-    fun provideFaqCategoryResponseToFaqCategoryMapper(): FaqCategoryResponseToFaqCategoryMapper = FaqCategoryResponseToFaqCategoryMapper()
+    fun provideFaqCategoryResponseToFaqCategoryMapper(): FaqCategoryResponseToFaqCategoryMapper =
+        FaqCategoryResponseToFaqCategoryMapper()
 
     @Reusable
     @Provides
-    fun provideFaqCategoryToFaqCategoryItemMapper(): FaqCategoryToFaqCategoryItemMapper = FaqCategoryToFaqCategoryItemMapper()
+    fun provideFaqCategoryToFaqCategoryItemMapper(): FaqCategoryToFaqCategoryItemMapper =
+        FaqCategoryToFaqCategoryItemMapper()
 
     @Reusable
     @Provides
-    fun provideFaqQuestionResponseToFaqQuestionMapper(): FaqQuestionResponseToFaqQuestionMapper = FaqQuestionResponseToFaqQuestionMapper()
+    fun provideFaqQuestionResponseToFaqQuestionMapper(): FaqQuestionResponseToFaqQuestionMapper =
+        FaqQuestionResponseToFaqQuestionMapper()
 
     @Reusable
     @Provides
-    fun provideFaqQuestionToFaqQuestionItemMapper(): FaqQuestionToFaqQuestionItemMapper = FaqQuestionToFaqQuestionItemMapper()
+    fun provideFaqQuestionToFaqQuestionItemMapper(): FaqQuestionToFaqQuestionItemMapper =
+        FaqQuestionToFaqQuestionItemMapper()
 
     @Reusable
     @Provides
@@ -100,10 +104,12 @@ interface MapperModule {
     fun provideCityToCityItemMapper(): CityToCityItemMapper = CityToCityItemMapper()
 
     @Reusable
-    @Binds
-    fun provideBuildingResponseToBuildingMapper(buildingsResponseToBuildingsMapper: BuildingsResponseToBuildingsMapper): BuildingsResponseToBuildingsMapper
+    @Provides
+    fun provideBuildingResponseToBuildingMapper(): BuildingsResponseToBuildingsMapper =
+        BuildingsResponseToBuildingsMapper(provideListRestaurantResponseToListRestaurantMapper())
 
     @Reusable
-    @Binds
-    fun provideBuildingToBuildingItemMapper(buildingToBuildingItemMapper: BuildingToBuildingItemMapper): BuildingToBuildingItemMapper
+    @Provides
+    fun provideBuildingToBuildingItemMapper(): BuildingToBuildingItemMapper =
+        BuildingToBuildingItemMapper(provideListRestaurantToListRestaurantItemMapper())
 }

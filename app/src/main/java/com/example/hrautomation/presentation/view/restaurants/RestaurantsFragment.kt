@@ -54,7 +54,7 @@ class RestaurantsFragment : Fragment() {
 
         initUi()
 
-        viewModel.data.observe(viewLifecycleOwner, restaurantsObserver)
+        viewModel.restaurants.observe(viewLifecycleOwner, restaurantsObserver)
         viewModel.exception.observe(viewLifecycleOwner, exceptionObserver)
 
         return binding.root

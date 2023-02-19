@@ -4,17 +4,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.hrautomation.data.dispatcher.CoroutineDispatchers
-import com.example.hrautomation.domain.model.restaurants.RestaurantSortBy
 import com.example.hrautomation.domain.repository.CachedCityLatLngRepository
 import com.example.hrautomation.domain.repository.RestaurantsRepository
 import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
 import com.example.hrautomation.presentation.model.restaurants.BuildingItem
 import com.example.hrautomation.presentation.model.restaurants.BuildingToBuildingItemMapper
+import com.example.hrautomation.presentation.model.restaurants.ListRestaurantItem
 import com.example.hrautomation.presentation.model.restaurants.ListRestaurantToListRestaurantItemMapper
 import com.example.hrautomation.utils.tryLaunch
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
-import kotlinx.coroutines.async
 import kotlinx.coroutines.cancelChildren
 import timber.log.Timber
 import javax.inject.Inject
@@ -30,6 +29,10 @@ class RestaurantsViewModel @Inject constructor(
     val data: LiveData<List<BuildingItem>>
         get() = _data
     private val _data: MutableLiveData<List<BuildingItem>> = MutableLiveData()
+
+    val restaurants: LiveData<List<ListRestaurantItem>>
+        get() = _restaurants
+    private val _restaurants: MutableLiveData<List<ListRestaurantItem>> = MutableLiveData()
 
     val restaurantsMapState: LiveData<RestaurantsMapState>
         get() = _restaurantsMapState
@@ -71,32 +74,25 @@ class RestaurantsViewModel @Inject constructor(
         }
     }
 
-    private fun getPreferredCityLatLng(): LatLng {
-        return cachedCityLatLngRepository.getLatLng() ?: defaultCityLatLng
-    }
-
     private fun loadData() {
         viewModelScope.tryLaunch(
             contextPiece = dispatchers.io,
             doOnLaunch = {
-                val listOfRestaurantsDeferred = async(dispatchers.io) {
-                    restaurantsRepository.getRestaurantList(
-                        PAGE_NUMBER,
-                        PAGE_SIZE,
-                        RestaurantSortBy.NAME
-                    ).map {
-                        listRestaurantToListRestaurantItemMapper.convert(it)
-                    }
-                }
-                val preferredCityLatLngDeferred = async(dispatchers.io) {
-                    cachedCityLatLngRepository.getLatLng() ?: defaultCityLatLng
+                val preferredCityLatLng = cachedCityLatLngRepository.getLatLng() ?: defaultCityLatLng
+                val preferredCityId = cachedCityLatLngRepository.getCityId() ?: DEFAULT_CITY_ID
+
+                val listOfBuildingItems: List<BuildingItem>
+                val listOfBuildings = restaurantsRepository.getBuildingsByCity(preferredCityId)
+                listOfBuildingItems = listOfBuildings.map {
+                    buildingToBuildingItemMapper.convert(it)
                 }
 
-                val listOfRestaurantItems = listOfRestaurantsDeferred.await()
-                val preferredCityLatLng = preferredCityLatLngDeferred.await()
-
-                _data.postValue(listOfRestaurantItems)
+                _data.postValue(listOfBuildingItems)
                 _restaurantsMapState.postValue(RestaurantsMapState(preferredCityLatLng))
+
+                val listRestaurantItems: List<ListRestaurantItem> = emptyList()
+                listOfBuildingItems.forEach { listRestaurantItems.plus(it.restaurants) }
+                _restaurants.postValue(listRestaurantItems)
             },
             doOnError = { error ->
                 Timber.e(error)
@@ -106,8 +102,7 @@ class RestaurantsViewModel @Inject constructor(
     }
 
     private companion object {
-        const val PAGE_SIZE = 100
-        const val PAGE_NUMBER = 0
         val defaultCityLatLng: LatLng = LatLng(56.4884, 84.9480)
+        const val DEFAULT_CITY_ID: Long = 1
     }
 }

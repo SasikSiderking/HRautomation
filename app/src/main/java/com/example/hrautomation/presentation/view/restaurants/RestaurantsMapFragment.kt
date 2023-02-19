@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import com.example.hrautomation.R
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.FragmentMapBinding
+import com.example.hrautomation.presentation.model.restaurants.BuildingItem
 import com.example.hrautomation.presentation.model.restaurants.ListRestaurantItem
 import com.example.hrautomation.presentation.view.restaurants.сity.CitiesListFragment
 import com.example.hrautomation.utils.BitmapUtils.DrawableToBitmapDescriptor
@@ -91,7 +92,8 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(map: GoogleMap) {
         this@RestaurantsMapFragment.map = map
 
-        viewModel.data.observe(viewLifecycleOwner, restaurantsObserver)
+        viewModel.data.observe(viewLifecycleOwner, buildingsObserver)
+        viewModel.restaurants.observe(viewLifecycleOwner, restaurantsObserver)
         viewModel.restaurantsMapState.observe(viewLifecycleOwner, stateObserver)
     }
 
@@ -137,18 +139,21 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-    private val restaurantsObserver = Observer<List<ListRestaurantItem>> { listRestaurants ->
-        restaurantCardAdapter.setItems(listRestaurants)
+    private val restaurantsObserver = Observer<List<ListRestaurantItem>> { restaurants ->
+        restaurantCardAdapter.setItems(restaurants)
+    }
 
-        listRestaurants.forEach { restaurant ->
+    private val buildingsObserver = Observer<List<BuildingItem>> { buildings ->
+
+        buildings.forEach { building ->
             val marker = map.addMarker(
                 MarkerOptions()
-                    .position(LatLng(restaurant.lat, restaurant.lng))
+                    .position(LatLng(building.lat, building.lng))
                     .icon(markerIcon)
             )
             map.setOnMarkerClickListener(markerClickListener)
 
-            marker?.tag = restaurant.id
+            marker?.tag = building.id
         }
     }
 

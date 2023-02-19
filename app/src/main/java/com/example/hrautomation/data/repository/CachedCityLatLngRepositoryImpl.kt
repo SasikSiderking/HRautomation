@@ -33,9 +33,18 @@ class CachedCityLatLngRepositoryImpl @Inject constructor(private val context: Co
         }
     }
 
+    override fun setCityId(cityId: Long) {
+        preferences.edit().putString(CITY_ID, cityId.toString()).apply()
+    }
+
+    override fun getCityId(): Long? {
+        return preferences.getString(CITY_ID, null)?.toLong()
+    }
+
     private companion object {
         const val PREF_ACCESS = "cityLatLng"
         const val LATITUDE = "latitude"
         const val LONGITUDE = "longitude"
+        const val CITY_ID = "cityId"
     }
 }
