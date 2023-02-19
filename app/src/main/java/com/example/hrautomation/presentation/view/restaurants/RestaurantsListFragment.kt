@@ -31,6 +31,14 @@ class RestaurantsListFragment : Fragment() {
         viewModelFactory
     }
 
+    private val restaurantsObserver = Observer<List<BaseListItem>> { restaurantList ->
+        adapter.update(restaurantList)
+    }
+
+    private val onRestaurantClickListener = OnRestaurantClickListener { restaurantId: Long ->
+//        TODO(клик на ресторан)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (requireContext().applicationContext as App).appComponent.inject(this)
@@ -51,12 +59,10 @@ class RestaurantsListFragment : Fragment() {
         return binding.root
     }
 
-    private val restaurantsObserver = Observer<List<BaseListItem>> { restaurantList ->
-        adapter.update(restaurantList)
-    }
-
-    private val onRestaurantClickListener = OnRestaurantClickListener { restaurantId: Long ->
-
+    private fun initUi() {
+        adapter = RestaurantsAdapter(onRestaurantClickListener)
+        binding.restaurantRecyclerView.adapter = adapter
+        viewModel.data.observe(viewLifecycleOwner, restaurantsObserver)
     }
 
     override fun onDestroyView() {
@@ -68,12 +74,6 @@ class RestaurantsListFragment : Fragment() {
         (activity as? AppCompatActivity)?.supportActionBar?.let {
             it.elevation = requireContext().dpToPx(TOOLBAR_ELEVATION).toFloat()
         }
-    }
-
-    fun initUi() {
-        adapter = RestaurantsAdapter(onRestaurantClickListener)
-        binding.restaurantRecyclerView.adapter = adapter
-        viewModel.data.observe(viewLifecycleOwner, restaurantsObserver)
     }
 
     private companion object {

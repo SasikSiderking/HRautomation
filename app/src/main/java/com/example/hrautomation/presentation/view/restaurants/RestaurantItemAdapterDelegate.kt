@@ -24,10 +24,12 @@ class RestaurantItemAdapterDelegate(private val onRestaurantClickListener: OnRes
     }
 
     override fun onBind(item: ListRestaurantItem, holder: RestaurantViewHolder, payloads: List<Any>) {
-        holder.binding.restaurantName.text = item.name
-        holder.binding.restaurantRating.text = item.rating.toString()
-        holder.binding.restaurantAddress.text = item.address
-        holder.binding.restaurantStatusCheck.text = item.statusAndCheck
+        with(holder.binding) {
+            restaurantName.text = item.name
+            restaurantRating.text = item.rating.toString()
+            restaurantAddress.text = item.address
+            restaurantStatusCheck.text = item.statusAndCheck
+        }
     }
 
     override fun onViewHolderClick(view: View, holder: RestaurantViewHolder) {
