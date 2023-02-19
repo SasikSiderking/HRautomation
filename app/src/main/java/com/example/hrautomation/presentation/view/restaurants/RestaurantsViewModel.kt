@@ -8,7 +8,8 @@ import com.example.hrautomation.domain.model.restaurants.RestaurantSortBy
 import com.example.hrautomation.domain.repository.CachedCityLatLngRepository
 import com.example.hrautomation.domain.repository.RestaurantsRepository
 import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
-import com.example.hrautomation.presentation.model.restaurants.ListRestaurantItem
+import com.example.hrautomation.presentation.model.restaurants.BuildingItem
+import com.example.hrautomation.presentation.model.restaurants.BuildingToBuildingItemMapper
 import com.example.hrautomation.presentation.model.restaurants.ListRestaurantToListRestaurantItemMapper
 import com.example.hrautomation.utils.tryLaunch
 import com.google.android.gms.maps.model.LatLng
@@ -21,12 +22,13 @@ class RestaurantsViewModel @Inject constructor(
     private val dispatchers: CoroutineDispatchers,
     private val restaurantsRepository: RestaurantsRepository,
     private val listRestaurantToListRestaurantItemMapper: ListRestaurantToListRestaurantItemMapper,
+    private val buildingToBuildingItemMapper: BuildingToBuildingItemMapper,
     private val cachedCityLatLngRepository: CachedCityLatLngRepository
 ) : BaseViewModel() {
 
-    val data: LiveData<List<ListRestaurantItem>>
+    val data: LiveData<List<BuildingItem>>
         get() = _data
-    private val _data: MutableLiveData<List<ListRestaurantItem>> = MutableLiveData()
+    private val _data: MutableLiveData<List<BuildingItem>> = MutableLiveData()
 
     val restaurantsMapState: LiveData<RestaurantsMapState>
         get() = _restaurantsMapState
@@ -77,12 +79,12 @@ class RestaurantsViewModel @Inject constructor(
         viewModelScope.tryLaunch(
             contextPiece = dispatchers.io,
             doOnLaunch = {
-                val listOfRestaurants = restaurantsRepository.getBuildingsByCity(
+                val listOfBuildings = restaurantsRepository.getBuildingsByCity(
                     PAGE_NUMBER,
                     PAGE_SIZE,
                     RestaurantSortBy.NAME
                 )
-                val listOfRestaurantItems = listOfRestaurants.map {
+                val listOfRestaurantItems = listOfBuildings.map {
                     listRestaurantToListRestaurantItemMapper.convert(it)
                 }
                 _data.postValue(listOfRestaurantItems)

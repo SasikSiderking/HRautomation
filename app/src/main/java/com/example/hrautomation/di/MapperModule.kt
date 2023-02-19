@@ -16,6 +16,7 @@ import com.example.hrautomation.presentation.model.faq.FaqCategoryToFaqCategoryI
 import com.example.hrautomation.presentation.model.faq.FaqQuestionToFaqQuestionItemMapper
 import com.example.hrautomation.presentation.model.products.ProductCategoryToProductCategoryItemMapper
 import com.example.hrautomation.presentation.model.products.ProductToListedProductItemMapper
+import com.example.hrautomation.presentation.model.restaurants.BuildingToBuildingItemMapper
 import com.example.hrautomation.presentation.model.restaurants.CityToCityItemMapper
 import com.example.hrautomation.presentation.model.restaurants.ListRestaurantToListRestaurantItemMapper
 import dagger.Binds
@@ -101,4 +102,8 @@ interface MapperModule {
     @Reusable
     @Binds
     fun provideBuildingResponseToBuildingMapper(buildingsResponseToBuildingsMapper: BuildingsResponseToBuildingsMapper): BuildingsResponseToBuildingsMapper
+
+    @Reusable
+    @Binds
+    fun provideBuildingToBuildingItemMapper(buildingToBuildingItemMapper: BuildingToBuildingItemMapper): BuildingToBuildingItemMapper
 }

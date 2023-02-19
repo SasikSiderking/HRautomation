@@ -19,6 +19,7 @@ data class ListRestaurantResponse(
     val status: String,
     val average: Int,
     val rating: Float,
+    val address: String
 )
 
 class ListRestaurantResponseToListRestaurantMapper : Mapper<ListRestaurantResponse, ListRestaurant> {
@@ -30,6 +31,7 @@ class ListRestaurantResponseToListRestaurantMapper : Mapper<ListRestaurantRespon
             model.status,
             model.average,
             model.rating,
+            model.address
         )
 
 }

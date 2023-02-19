@@ -14,4 +14,5 @@ data class ListRestaurant(
     val status: String,
     val check: Int,
     val rating: Float,
+    val address: String
 )
