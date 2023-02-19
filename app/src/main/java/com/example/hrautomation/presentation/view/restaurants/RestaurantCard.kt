@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 import com.example.hrautomation.databinding.FragmentRestaurantsCardBinding
-import com.example.hrautomation.presentation.model.restaurants.ListRestaurantItem
+import com.example.hrautomation.presentation.model.restaurants.BuildingItem
 import com.example.hrautomation.utils.Updatable
 import java.io.Closeable
 
@@ -14,7 +14,7 @@ class RestaurantCard(
     attrs: AttributeSet?,
     defStyleAttrs: Int = 0,
     defStyleRes: Int = 0
-) : FrameLayout(context, attrs, defStyleAttrs), Updatable<ListRestaurantItem>, Closeable {
+) : FrameLayout(context, attrs, defStyleAttrs), Updatable<BuildingItem>, Closeable {
 
     private var listener: OnCardClickListener? = null
 
@@ -47,13 +47,13 @@ class RestaurantCard(
         this.listener = listener
     }
 
-    override fun update(item: ListRestaurantItem) {
+    override fun update(item: BuildingItem) {
         item.let {
             with(binding) {
-                restaurantName.text = item.name
-                restaurantRating.text = item.rating.toString()
+                restaurantName.text = item.restaurants.toString()
+                restaurantRating.text = item.javaClass.toString()
                 restaurantAddress.text = item.address
-                restaurantStatusCheck.text = item.statusAndCheck
+                restaurantStatusCheck.text = item.address
             }
             this.visibility = VISIBLE
         }

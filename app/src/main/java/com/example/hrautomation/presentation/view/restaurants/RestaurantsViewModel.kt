@@ -10,7 +10,6 @@ import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
 import com.example.hrautomation.presentation.model.restaurants.BuildingItem
 import com.example.hrautomation.presentation.model.restaurants.BuildingToBuildingItemMapper
 import com.example.hrautomation.presentation.model.restaurants.ListRestaurantItem
-import com.example.hrautomation.presentation.model.restaurants.ListRestaurantToListRestaurantItemMapper
 import com.example.hrautomation.utils.tryLaunch
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
@@ -21,7 +20,6 @@ import javax.inject.Inject
 class RestaurantsViewModel @Inject constructor(
     private val dispatchers: CoroutineDispatchers,
     private val restaurantsRepository: RestaurantsRepository,
-    private val listRestaurantToListRestaurantItemMapper: ListRestaurantToListRestaurantItemMapper,
     private val buildingToBuildingItemMapper: BuildingToBuildingItemMapper,
     private val cachedCityLatLngRepository: CachedCityLatLngRepository
 ) : BaseViewModel() {
@@ -90,8 +88,10 @@ class RestaurantsViewModel @Inject constructor(
                 _data.postValue(listOfBuildingItems)
                 _restaurantsMapState.postValue(RestaurantsMapState(preferredCityLatLng))
 
-                val listRestaurantItems: List<ListRestaurantItem> = emptyList()
-                listOfBuildingItems.forEach { listRestaurantItems.plus(it.restaurants) }
+                var listRestaurantItems: List<ListRestaurantItem> = emptyList()
+                listOfBuildingItems.forEach {
+                    listRestaurantItems = listRestaurantItems.plus(it.restaurants)
+                }
                 _restaurants.postValue(listRestaurantItems)
             },
             doOnError = { error ->

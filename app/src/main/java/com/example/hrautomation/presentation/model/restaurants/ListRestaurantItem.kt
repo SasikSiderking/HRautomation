@@ -7,12 +7,12 @@ import com.example.hrautomation.utils.Mapper
 import javax.inject.Inject
 
 data class BuildingItem(
-    val id: Long,
+    override val id: Long,
     val address: String,
     val lat: Double,
     val lng: Double,
     val restaurants: List<ListRestaurantItem>
-)
+) : BaseListItem
 
 data class ListRestaurantItem(
     override val id: Long,
