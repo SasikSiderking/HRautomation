@@ -6,11 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.example.hrautomation.R
+import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.FragmentRestaurantsBinding
+import com.example.hrautomation.presentation.model.restaurants.ListRestaurantItem
+import com.example.hrautomation.utils.ViewModelFactory
 import com.example.hrautomation.utils.ui.Dp
 import com.example.hrautomation.utils.ui.dpToPx
+import com.example.hrautomation.utils.ui.switcher.ContentLoadingSettings
+import com.example.hrautomation.utils.ui.switcher.ContentLoadingState
+import com.example.hrautomation.utils.ui.switcher.ContentLoadingStateSwitcher
+import com.example.hrautomation.utils.ui.switcher.base.SwitchAnimationParams
 import com.google.android.material.tabs.TabLayoutMediator
+import javax.inject.Inject
 
 class RestaurantsFragment : Fragment() {
 
@@ -18,6 +28,19 @@ class RestaurantsFragment : Fragment() {
     private val binding: FragmentRestaurantsBinding
         get() = _binding!!
 
+    private val contentLoadingSwitcher: ContentLoadingStateSwitcher = ContentLoadingStateSwitcher()
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private val viewModel: RestaurantsViewModel by viewModels {
+        viewModelFactory
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        (requireContext().applicationContext as App).appComponent.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,12 +54,25 @@ class RestaurantsFragment : Fragment() {
 
         initUi()
 
+        viewModel.data.observe(viewLifecycleOwner, restaurantsObserver)
+        viewModel.exception.observe(viewLifecycleOwner, exceptionObserver)
+
         return binding.root
     }
 
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    private val restaurantsObserver = Observer<List<ListRestaurantItem>> { _ ->
+        contentLoadingSwitcher.switchState(ContentLoadingState.CONTENT, SwitchAnimationParams(delay = 500L))
+    }
+
+    private val exceptionObserver = Observer<Throwable?> { exception ->
+        exception?.let {
+            contentLoadingSwitcher.switchState(ContentLoadingState.ERROR, SwitchAnimationParams(delay = 500L))
+        }
     }
 
     private fun initToolbar() {
@@ -46,6 +82,23 @@ class RestaurantsFragment : Fragment() {
     }
 
     private fun initUi() {
+
+        with(binding) {
+            contentLoadingSwitcher.setup(
+                ContentLoadingSettings(
+                    contentViews = listOf(tabLayout, viewPager),
+                    errorViews = listOf(reusableReload.reusableReload),
+                    loadingViews = listOf(reusableLoading.progressBar),
+                    initState = ContentLoadingState.LOADING
+                )
+            )
+
+            reusableReload.reloadButton.setOnClickListener {
+                viewModel.reload()
+                contentLoadingSwitcher.switchState(ContentLoadingState.LOADING, SwitchAnimationParams(delay = 500L))
+            }
+        }
+
         val pagerAdapter = RestaurantsPagerAdapter(this)
         with(binding) {
             viewPager.adapter = pagerAdapter
