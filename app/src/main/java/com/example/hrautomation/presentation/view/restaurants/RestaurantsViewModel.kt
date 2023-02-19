@@ -77,7 +77,7 @@ class RestaurantsViewModel @Inject constructor(
         viewModelScope.tryLaunch(
             contextPiece = dispatchers.io,
             doOnLaunch = {
-                val listOfRestaurants = restaurantsRepository.getRestaurantList(
+                val listOfRestaurants = restaurantsRepository.getBuildingsByCity(
                     PAGE_NUMBER,
                     PAGE_SIZE,
                     RestaurantSortBy.NAME

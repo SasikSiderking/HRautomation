@@ -6,12 +6,17 @@ import com.example.hrautomation.utils.Mapper
 data class ListRestaurantResponse(
     val id: Long,
     val name: String,
-    val address: String,
     val status: String,
     val average: Int,
     val rating: Float,
+)
+
+data class Building(
+    val id: Long,
+    val address: String,
     val lat: Double,
-    val lng: Double
+    val lng: Double,
+    val restaurants: List<ListRestaurantResponse>
 )
 
 class ListRestaurantResponseToListRestaurantMapper : Mapper<ListRestaurantResponse, ListRestaurant> {

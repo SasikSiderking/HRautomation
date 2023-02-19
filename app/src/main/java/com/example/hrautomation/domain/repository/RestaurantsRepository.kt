@@ -1,12 +1,11 @@
 package com.example.hrautomation.domain.repository
 
+import com.example.hrautomation.data.model.restaurants.Building
 import com.example.hrautomation.domain.model.restaurants.City
-import com.example.hrautomation.domain.model.restaurants.ListRestaurant
-import com.example.hrautomation.domain.model.restaurants.RestaurantSortBy
 
 interface RestaurantsRepository {
 
-    suspend fun getRestaurantList(pageNumber: Int, size: Int, sortBy: RestaurantSortBy): List<ListRestaurant>
+    suspend fun getBuildingsByCity(cityId: Long): List<Building>
 
     suspend fun getCitiesResponse(): List<City>
 }

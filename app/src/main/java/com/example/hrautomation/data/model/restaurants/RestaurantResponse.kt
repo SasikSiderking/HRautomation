@@ -6,7 +6,7 @@ data class RestaurantResponse(
     val rating: Float,
     val status: String,
     val average: Int,
-    val city: City,
+    val city: CityResponse,
     val address: String,
     val lat: Double,
     val lng: Double,

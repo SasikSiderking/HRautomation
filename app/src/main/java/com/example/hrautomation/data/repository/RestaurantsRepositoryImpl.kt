@@ -15,7 +15,7 @@ class RestaurantsRepositoryImpl @Inject constructor(
     private val cityResponseToCityMapper: CityResponseToCityMapper
 ) : RestaurantsRepository {
 
-    override suspend fun getRestaurantList(pageNumber: Int, size: Int, sortBy: RestaurantSortBy): List<ListRestaurant> {
+    override suspend fun getBuildingsByCity(pageNumber: Int, size: Int, sortBy: RestaurantSortBy): List<ListRestaurant> {
         return restaurantsApi.getListRestaurantResponse(pageNumber, size, sortBy.sortBy)
             .map { listRestaurantResponseToListRestaurantMapper.convert(it) }
     }
