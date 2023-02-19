@@ -15,6 +15,7 @@ import com.example.hrautomation.presentation.view.loading.code.CodeLoginFragment
 import com.example.hrautomation.presentation.view.loading.email.EmailLoginFragment
 import com.example.hrautomation.presentation.view.product.ProductFragment
 import com.example.hrautomation.presentation.view.profile.ProfileActivity
+import com.example.hrautomation.presentation.view.restaurants.RestaurantsListFragment
 import com.example.hrautomation.presentation.view.restaurants.RestaurantsFragment
 import com.example.hrautomation.presentation.view.restaurants.RestaurantsMapFragment
 import com.example.hrautomation.presentation.view.restaurants.сity.CitiesListFragment
@@ -56,4 +57,5 @@ interface AppComponent {
     fun inject(fragment: RestaurantsMapFragment)
     fun inject(fragment: CitiesListFragment)
     fun inject(fragment: RestaurantsFragment)
+    fun inject(fragment: RestaurantsListFragment)
 }
