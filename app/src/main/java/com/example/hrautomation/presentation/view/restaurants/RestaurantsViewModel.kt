@@ -14,6 +14,7 @@ import com.example.hrautomation.presentation.model.restaurants.ListRestaurantToL
 import com.example.hrautomation.utils.tryLaunch
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
+import kotlinx.coroutines.async
 import kotlinx.coroutines.cancelChildren
 import timber.log.Timber
 import javax.inject.Inject
@@ -32,8 +33,7 @@ class RestaurantsViewModel @Inject constructor(
 
     val restaurantsMapState: LiveData<RestaurantsMapState>
         get() = _restaurantsMapState
-    private val _restaurantsMapState: MutableLiveData<RestaurantsMapState> =
-        MutableLiveData(RestaurantsMapState(getPreferredCityLatLng(), null, null))
+    private val _restaurantsMapState: MutableLiveData<RestaurantsMapState> = MutableLiveData()
 
     init {
         loadData()
@@ -79,15 +79,24 @@ class RestaurantsViewModel @Inject constructor(
         viewModelScope.tryLaunch(
             contextPiece = dispatchers.io,
             doOnLaunch = {
-                val listOfBuildings = restaurantsRepository.getBuildingsByCity(
-                    PAGE_NUMBER,
-                    PAGE_SIZE,
-                    RestaurantSortBy.NAME
-                )
-                val listOfRestaurantItems = listOfBuildings.map {
-                    listRestaurantToListRestaurantItemMapper.convert(it)
+                val listOfRestaurantsDeferred = async(dispatchers.io) {
+                    restaurantsRepository.getRestaurantList(
+                        PAGE_NUMBER,
+                        PAGE_SIZE,
+                        RestaurantSortBy.NAME
+                    ).map {
+                        listRestaurantToListRestaurantItemMapper.convert(it)
+                    }
                 }
+                val preferredCityLatLngDeferred = async(dispatchers.io) {
+                    cachedCityLatLngRepository.getLatLng() ?: defaultCityLatLng
+                }
+
+                val listOfRestaurantItems = listOfRestaurantsDeferred.await()
+                val preferredCityLatLng = preferredCityLatLngDeferred.await()
+
                 _data.postValue(listOfRestaurantItems)
+                _restaurantsMapState.postValue(RestaurantsMapState(preferredCityLatLng))
             },
             doOnError = { error ->
                 Timber.e(error)
