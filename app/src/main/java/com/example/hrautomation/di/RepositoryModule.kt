@@ -36,4 +36,8 @@ interface RepositoryModule {
     @Reusable
     @Binds
     fun provideRestaurantsRepository(restaurantsRepositoryImpl: RestaurantsRepositoryImpl): RestaurantsRepository
+
+    @Reusable
+    @Binds
+    fun provideCachedCityLatLngRepository(cachedCityLatLngRepositoryImpl: CachedCityLatLngRepositoryImpl): CachedCityLatLngRepository
 }

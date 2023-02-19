@@ -21,7 +21,8 @@ class RetrofitProvider @Inject constructor(private val tokenRepository: TokenRep
             .connectTimeout(15, TimeUnit.SECONDS)
             .readTimeout(15, TimeUnit.SECONDS)
             .writeTimeout(15, TimeUnit.SECONDS)
-            .addInterceptor(AuthInterceptor(tokenRepository.getAccessToken() ?: ""))
+            .addInterceptor(AuthInterceptor(tokenRepository.getAccessToken() ?: "FakeToken"))
+//                TODO(Remove fake token)
             .authenticator(TokenAuthenticator(tokenApi, tokenRepository))
             .also {
                 if (BuildConfig.DEBUG) {

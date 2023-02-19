@@ -1,4 +1,4 @@
-package com.example.hrautomation.presentation.view.restaurants
+package com.example.hrautomation.presentation.view.restaurants.сity
 
 import com.google.android.gms.maps.model.LatLng
 

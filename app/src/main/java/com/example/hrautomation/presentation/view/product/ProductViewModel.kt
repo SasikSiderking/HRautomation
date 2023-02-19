@@ -13,11 +13,7 @@ import com.example.hrautomation.presentation.model.products.ProductCategoryItem
 import com.example.hrautomation.presentation.model.products.ProductCategoryToProductCategoryItemMapper
 import com.example.hrautomation.presentation.model.products.ProductToListedProductItemMapper
 import com.example.hrautomation.utils.tryLaunch
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.NonCancellable
-import kotlinx.coroutines.async
-import kotlinx.coroutines.cancelChildren
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -101,7 +97,7 @@ class ProductViewModel @Inject constructor(
                         ProductSortBy.ID
                     ).map { productToListedProductItemMapper.convert(it) }
                 }
-                val categoriesDeferred = async {
+                val categoriesDeferred = async(dispatchers.io) {
                     productRepo.getProductCategoryList()
                         .map { productCategoryToProductCategoryItemMapper.convert(it) }
                 }

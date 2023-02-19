@@ -23,6 +23,4 @@ class RestaurantsRepositoryImpl @Inject constructor(
     override suspend fun getCitiesResponse(): List<City> {
         return restaurantsApi.getCitiesResponse().map { cityResponseToCityMapper.convert(it) }
     }
-
-
 }
