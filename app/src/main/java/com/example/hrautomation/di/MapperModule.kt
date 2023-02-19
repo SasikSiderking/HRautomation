@@ -7,6 +7,7 @@ import com.example.hrautomation.data.model.faq.FaqCategoryResponseToFaqCategoryM
 import com.example.hrautomation.data.model.faq.FaqQuestionResponseToFaqQuestionMapper
 import com.example.hrautomation.data.model.products.ProductCategoryResponseToProductCategoryMapper
 import com.example.hrautomation.data.model.products.ProductResponseToProductMapper
+import com.example.hrautomation.data.model.restaurants.BuildingsResponseToBuildingsMapper
 import com.example.hrautomation.data.model.restaurants.CityResponseToCityMapper
 import com.example.hrautomation.data.model.restaurants.ListRestaurantResponseToListRestaurantMapper
 import com.example.hrautomation.presentation.model.colleagues.EmployeeToColleagueItemMapper
@@ -17,12 +18,13 @@ import com.example.hrautomation.presentation.model.products.ProductCategoryToPro
 import com.example.hrautomation.presentation.model.products.ProductToListedProductItemMapper
 import com.example.hrautomation.presentation.model.restaurants.CityToCityItemMapper
 import com.example.hrautomation.presentation.model.restaurants.ListRestaurantToListRestaurantItemMapper
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
 
 @Module
-class MapperModule {
+interface MapperModule {
     @Reusable
     @Provides
     fun provideProductResponseToProductMapper(): ProductResponseToProductMapper = ProductResponseToProductMapper()
@@ -95,4 +97,8 @@ class MapperModule {
     @Reusable
     @Provides
     fun provideCityToCityItemMapper(): CityToCityItemMapper = CityToCityItemMapper()
+
+    @Reusable
+    @Binds
+    fun provideBuildingResponseToBuildingMapper(buildingsResponseToBuildingsMapper: BuildingsResponseToBuildingsMapper): BuildingsResponseToBuildingsMapper
 }

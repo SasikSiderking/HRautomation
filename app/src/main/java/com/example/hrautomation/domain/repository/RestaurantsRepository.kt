@@ -1,6 +1,6 @@
 package com.example.hrautomation.domain.repository
 
-import com.example.hrautomation.data.model.restaurants.Building
+import com.example.hrautomation.domain.model.restaurants.Building
 import com.example.hrautomation.domain.model.restaurants.City
 
 interface RestaurantsRepository {
