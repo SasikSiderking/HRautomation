@@ -1,4 +1,4 @@
-package com.example.hrautomation.presentation.view.restaurants
+package com.example.hrautomation.presentation.view.restaurants.map
 
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.utils.Updatable

@@ -1,4 +1,4 @@
-package com.example.hrautomation.presentation.view.restaurants
+package com.example.hrautomation.presentation.view.restaurants.map
 
 import android.content.Context
 import android.util.AttributeSet
@@ -50,8 +50,8 @@ class RestaurantCard(
     override fun update(item: BuildingItem) {
         item.let {
             with(binding) {
-                restaurantName.text = item.restaurants.toString()
-                restaurantRating.text = item.javaClass.toString()
+                restaurantName.text = item.address
+                restaurantRating.text = item.address
                 restaurantAddress.text = item.address
                 restaurantStatusCheck.text = item.address
             }

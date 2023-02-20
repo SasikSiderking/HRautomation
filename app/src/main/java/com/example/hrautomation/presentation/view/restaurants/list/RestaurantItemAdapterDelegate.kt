@@ -1,4 +1,4 @@
-package com.example.hrautomation.presentation.view.restaurants
+package com.example.hrautomation.presentation.view.restaurants.list
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +9,7 @@ import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.base.delegates.ClickableViewHolder
 import com.example.hrautomation.presentation.base.delegates.OnViewHolderClickListener
 import com.example.hrautomation.presentation.model.restaurants.ListRestaurantItem
-import com.example.hrautomation.presentation.view.restaurants.RestaurantItemAdapterDelegate.RestaurantViewHolder
+import com.example.hrautomation.presentation.view.restaurants.list.RestaurantItemAdapterDelegate.RestaurantViewHolder
 
 class RestaurantItemAdapterDelegate(private val onRestaurantClickListener: OnRestaurantClickListener) :
     BaseItemAdapterDelegate<ListRestaurantItem, RestaurantViewHolder>(), OnViewHolderClickListener<RestaurantViewHolder> {

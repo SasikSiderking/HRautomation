@@ -2,6 +2,8 @@ package com.example.hrautomation.presentation.view.restaurants
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.example.hrautomation.presentation.view.restaurants.list.RestaurantsListFragment
+import com.example.hrautomation.presentation.view.restaurants.map.RestaurantsMapFragment
 
 class RestaurantsPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 

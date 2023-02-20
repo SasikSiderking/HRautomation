@@ -1,4 +1,4 @@
-package com.example.hrautomation.presentation.view.restaurants
+package com.example.hrautomation.presentation.view.restaurants.map
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,20 +13,16 @@ import com.example.hrautomation.R
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.FragmentMapBinding
 import com.example.hrautomation.presentation.model.restaurants.BuildingItem
+import com.example.hrautomation.presentation.view.restaurants.RestaurantsViewModel
 import com.example.hrautomation.presentation.view.restaurants.сity.CitiesListFragment
-import com.example.hrautomation.utils.BitmapUtils.DrawableToBitmapDescriptor
 import com.example.hrautomation.utils.ViewModelFactory
 import com.example.hrautomation.utils.ui.Dp
 import com.example.hrautomation.utils.ui.dpToPx
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -37,16 +33,12 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
         get() = _binding!!
 
     private lateinit var supportMapFragment: SupportMapFragment
-    private lateinit var map: GoogleMap
-
-    private lateinit var markerIcon: BitmapDescriptor
-    private lateinit var markerIconChosen: BitmapDescriptor
+    private lateinit var mapAdapter: MapAdapter
 
     private lateinit var cityFragment: CitiesListFragment
 
     private lateinit var restaurantCardAdapter: UpdatableViewAdapter<BuildingItem, RestaurantCard>
 
-    private var chosenMarker: Marker? = null
     private var chosenCityLatLng: LatLng? = null
 
     @Inject
@@ -72,14 +64,6 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
         initListeners()
         initUi()
 
-        //        TODO(Разобраться что там ему нужена за тема)
-        markerIcon = DrawableToBitmapDescriptor.convert(
-            resources.getDrawable(R.drawable.ic_restaurants_marker_24)
-        )
-        markerIconChosen = DrawableToBitmapDescriptor.convert(
-            resources.getDrawable(R.drawable.ic_restaurant_marker_chosen_24)
-        )
-
         return binding.root
     }
 
@@ -89,18 +73,16 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
     }
 
     override fun onMapReady(map: GoogleMap) {
-        this@RestaurantsMapFragment.map = map
+        mapAdapter = MapAdapter(map)
 
-//        viewModel.restaurants.observe(viewLifecycleOwner, restaurantsObserver)
-        viewModel.restaurantsMapState.observe(viewLifecycleOwner, stateObserver)
+        viewModel.data.observe(viewLifecycleOwner, buildingsObserver)
     }
 
-    private val markerClickListener: OnMarkerClickListener = OnMarkerClickListener { marker: Marker ->
-
-        viewModel.chooseRestaurant(marker.tag as Long, marker)
-
-        return@OnMarkerClickListener true
-    }
+    private val markerClickListener: OnMarkerDelegateClickListener =
+        OnMarkerDelegateClickListener { markerDelegate: MarkerDelegate ->
+            Timber.e("$markerDelegate")
+            viewModel.chooseRestaurant(markerDelegate.marker?.tag as Long, markerDelegate)
+        }
 
     private val onCardClickListener = OnCardClickListener { cardAction ->
         when (cardAction) {
@@ -121,14 +103,14 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
     private val stateObserver = Observer<RestaurantsMapState> { newState ->
         if (chosenCityLatLng != newState.chosenCityLatLng) {
             chosenCityLatLng = newState.chosenCityLatLng
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(chosenCityLatLng!!, MAP_ZOOM))
+            mapAdapter.moveCamera(chosenCityLatLng!!, MAP_ZOOM)
         }
-
-        chosenMarker?.setIcon(markerIcon)
-        chosenMarker = newState.chosenMarker
-        newState.chosenMarker?.setIcon(markerIconChosen)
-
-        viewModel.data.observe(viewLifecycleOwner, buildingsObserver)
+        val del = newState.chosenMarker?.id
+        if (newState.chosenMarker != null) {
+            mapAdapter.chooseMarker(newState.chosenMarker.id)
+        } else {
+            mapAdapter.unChooseMarker()
+        }
 
         with(newState) {
             if (chosenBuildingId != null) {
@@ -141,22 +123,20 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
 
     private val buildingsObserver = Observer<List<BuildingItem>> { buildings ->
         restaurantCardAdapter.setItems(buildings)
+        val listOfDelegateMarkers: MutableList<MarkerDelegate> = mutableListOf()
 
         buildings.forEach { building ->
-            val markerOptions = MarkerOptions().position(LatLng(building.lat, building.lng))
-            val marker: Marker?
-
-            if (building.id == chosenMarker?.tag) {
-                markerOptions.icon(markerIconChosen)
-                marker = map.addMarker(markerOptions)
-                chosenMarker = marker
+            val marker: MarkerDelegate = if (building.restaurants.size > 1) {
+                MultipleMarker(requireContext(), LatLng(building.lat, building.lng), building.id)
             } else {
-                markerOptions.icon(markerIcon)
-                marker = map.addMarker(markerOptions)
+                SingleMarker(requireContext(), LatLng(building.lat, building.lng), building.id)
             }
-            marker?.tag = building.id
+            listOfDelegateMarkers.add(marker)
         }
-        map.setOnMarkerClickListener(markerClickListener)
+        mapAdapter.setMarkers(listOfDelegateMarkers)
+        mapAdapter.setMarkerClickListener(markerClickListener)
+
+        viewModel.restaurantsMapState.observe(viewLifecycleOwner, stateObserver)
     }
 
     private fun initUi() {
