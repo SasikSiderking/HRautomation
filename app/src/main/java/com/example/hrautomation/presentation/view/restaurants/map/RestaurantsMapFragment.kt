@@ -22,7 +22,6 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -80,7 +79,6 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
 
     private val markerClickListener: OnMarkerDelegateClickListener =
         OnMarkerDelegateClickListener { markerDelegate: MarkerDelegate ->
-            Timber.e("$markerDelegate")
             viewModel.chooseRestaurant(markerDelegate.marker?.tag as Long, markerDelegate)
         }
 
@@ -105,7 +103,7 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
             chosenCityLatLng = newState.chosenCityLatLng
             mapAdapter.moveCamera(chosenCityLatLng!!, MAP_ZOOM)
         }
-        val del = newState.chosenMarker?.id
+
         if (newState.chosenMarker != null) {
             mapAdapter.chooseMarker(newState.chosenMarker.id)
         } else {
@@ -123,17 +121,15 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
 
     private val buildingsObserver = Observer<List<BuildingItem>> { buildings ->
         restaurantCardAdapter.setItems(buildings)
-        val listOfDelegateMarkers: MutableList<MarkerDelegate> = mutableListOf()
-
-        buildings.forEach { building ->
-            val marker: MarkerDelegate = if (building.restaurants.size > 1) {
+        val markerDelegates = buildings.map { building ->
+            if (building.restaurants.size > 1) {
                 MultipleMarker(requireContext(), LatLng(building.lat, building.lng), building.id)
             } else {
                 SingleMarker(requireContext(), LatLng(building.lat, building.lng), building.id)
             }
-            listOfDelegateMarkers.add(marker)
         }
-        mapAdapter.setMarkers(listOfDelegateMarkers)
+
+        mapAdapter.setMarkers(markerDelegates)
         mapAdapter.setMarkerClickListener(markerClickListener)
 
         viewModel.restaurantsMapState.observe(viewLifecycleOwner, stateObserver)
