@@ -57,8 +57,6 @@ class RestaurantsListFragment : Fragment() {
         initToolbar()
 
         return binding.root
-
-
     }
 
     private fun initUi() {

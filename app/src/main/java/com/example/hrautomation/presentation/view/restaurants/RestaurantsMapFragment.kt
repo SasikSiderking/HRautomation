@@ -91,7 +91,6 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(map: GoogleMap) {
         this@RestaurantsMapFragment.map = map
 
-//        viewModel.restaurants.observe(viewLifecycleOwner, restaurantsObserver)
         viewModel.restaurantsMapState.observe(viewLifecycleOwner, stateObserver)
     }
 
