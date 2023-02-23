@@ -3,7 +3,10 @@ package com.example.hrautomation.presentation.view.restaurants.map
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils.loadAnimation
 import android.widget.FrameLayout
+import com.example.hrautomation.R
 import com.example.hrautomation.databinding.FragmentRestaurantsCardBinding
 import com.example.hrautomation.presentation.model.restaurants.BuildingItem
 import com.example.hrautomation.utils.Updatable
@@ -26,7 +29,12 @@ class RestaurantCard(
     private val binding: FragmentRestaurantsCardBinding
         get() = _binding!!
 
+    private lateinit var animationVisible: Animation
+    private lateinit var animationInvisible: Animation
+
     init {
+        animationVisible = loadAnimation(context, R.anim.card_visible)
+        animationInvisible = loadAnimation(context, R.anim.card_invisible)
 
         _binding = FragmentRestaurantsCardBinding.inflate(LayoutInflater.from(context), this)
 
@@ -55,12 +63,14 @@ class RestaurantCard(
                 restaurantAddress.text = item.address
                 restaurantStatusCheck.text = item.address
             }
+            startAnimation(animationVisible)
             this.visibility = VISIBLE
         }
     }
 
     override fun close() {
         this.visibility = INVISIBLE
+        startAnimation(animationInvisible)
     }
 }
 
