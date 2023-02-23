@@ -8,7 +8,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 
-abstract class MarkerDelegate(var marker: Marker? = null, latLng: LatLng, val id: Long) {
+sealed class MarkerDelegate(var marker: Marker? = null, latLng: LatLng, val id: Long) {
 
     protected abstract val iconDefault: BitmapDescriptor
 
