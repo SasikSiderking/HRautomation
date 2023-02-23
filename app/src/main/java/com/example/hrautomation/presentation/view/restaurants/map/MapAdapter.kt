@@ -1,5 +1,7 @@
 package com.example.hrautomation.presentation.view.restaurants.map
 
+import android.content.Context
+import com.example.hrautomation.presentation.model.restaurants.BuildingItem
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
@@ -29,7 +31,10 @@ class MapAdapter(private val map: GoogleMap) {
         chosenMarker?.setDefaultIcon()
     }
 
-    fun setMarkers(markerDelegates: List<MarkerDelegate>) {
+    fun setMarkers(buildings: List<BuildingItem>, context: Context) {
+
+        val markerDelegates = createMarkers(buildings, context)
+
         markerDelegates.forEach { markerDelegate ->
             markerDelegate.setDefaultIcon()
             val marker = map.addMarker(markerDelegate.markerOptions)
@@ -54,6 +59,16 @@ class MapAdapter(private val map: GoogleMap) {
                 this.listener?.onClick(foundItem)
             }
             true
+        }
+    }
+
+    private fun createMarkers(buildings: List<BuildingItem>, context: Context): List<MarkerDelegate> {
+        return buildings.map { building ->
+            if (building.restaurants.size > 1) {
+                MultipleMarker(context, LatLng(building.lat, building.lng), building.id)
+            } else {
+                SingleMarker(context, LatLng(building.lat, building.lng), building.id)
+            }
         }
     }
 }

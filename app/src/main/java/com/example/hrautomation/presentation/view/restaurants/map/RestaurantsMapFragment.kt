@@ -38,8 +38,6 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var restaurantCardAdapter: UpdatableViewAdapter<BuildingItem, RestaurantCard>
 
-    private var chosenCityLatLng: LatLng? = null
-
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
@@ -99,10 +97,7 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private val stateObserver = Observer<RestaurantsMapState> { newState ->
-        if (chosenCityLatLng != newState.chosenCityLatLng) {
-            chosenCityLatLng = newState.chosenCityLatLng
-            mapAdapter.moveCamera(chosenCityLatLng!!, MAP_ZOOM)
-        }
+        mapAdapter.moveCamera(newState.chosenCityLatLng, MAP_ZOOM)
 
         if (newState.chosenMarker != null) {
             mapAdapter.chooseMarker(newState.chosenMarker.id)
@@ -121,15 +116,8 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
 
     private val buildingsObserver = Observer<List<BuildingItem>> { buildings ->
         restaurantCardAdapter.setItems(buildings)
-        val markerDelegates = buildings.map { building ->
-            if (building.restaurants.size > 1) {
-                MultipleMarker(requireContext(), LatLng(building.lat, building.lng), building.id)
-            } else {
-                SingleMarker(requireContext(), LatLng(building.lat, building.lng), building.id)
-            }
-        }
+        mapAdapter.setMarkers(buildings, requireContext())
 
-        mapAdapter.setMarkers(markerDelegates)
         mapAdapter.setMarkerClickListener(markerClickListener)
 
         viewModel.restaurantsMapState.observe(viewLifecycleOwner, stateObserver)
