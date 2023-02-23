@@ -1,19 +1,18 @@
-package com.example.hrautomation.presentation.view.restaurants
+package com.example.hrautomation.presentation.view.restaurants.map
 
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
 
 data class RestaurantsMapState(
     val chosenCityLatLng: LatLng,
     val chosenBuildingId: Long? = null,
-    val chosenMarker: Marker? = null
+    val chosenMarker: MarkerDelegate? = null
 ) {
 
     fun setCurrentCity(cityLatLng: LatLng): RestaurantsMapState {
         return this.copy(chosenCityLatLng = cityLatLng)
     }
 
-    fun setChosenRestaurant(restaurantId: Long?, marker: Marker?): RestaurantsMapState {
+    fun setChosenRestaurant(restaurantId: Long?, marker: MarkerDelegate?): RestaurantsMapState {
         return this.copy(chosenBuildingId = restaurantId, chosenMarker = marker)
     }
 }

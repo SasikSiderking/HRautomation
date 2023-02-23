@@ -26,7 +26,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout="@layout/fragment_restaurants_card" />
 
-    <com.example.hrautomation.presentation.view.restaurants.RestaurantCard
+    <com.example.hrautomation.presentation.view.restaurants.map.RestaurantCard
         android:visibility="invisible"
         android:id="@+id/restaurantCard"
         android:layout_width="match_parent"

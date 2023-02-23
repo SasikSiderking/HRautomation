@@ -10,9 +10,10 @@ import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
 import com.example.hrautomation.presentation.model.restaurants.BuildingItem
 import com.example.hrautomation.presentation.model.restaurants.BuildingToBuildingItemMapper
 import com.example.hrautomation.presentation.model.restaurants.ListRestaurantItem
+import com.example.hrautomation.presentation.view.restaurants.map.MarkerDelegate
+import com.example.hrautomation.presentation.view.restaurants.map.RestaurantsMapState
 import com.example.hrautomation.utils.tryLaunch
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
 import kotlinx.coroutines.cancelChildren
 import timber.log.Timber
 import javax.inject.Inject
@@ -56,7 +57,7 @@ class RestaurantsViewModel @Inject constructor(
         }
     }
 
-    fun chooseRestaurant(restaurantId: Long, marker: Marker) {
+    fun chooseRestaurant(restaurantId: Long, marker: MarkerDelegate) {
         with(_restaurantsMapState) {
             postValue(
                 value?.setChosenRestaurant(restaurantId, marker)

@@ -1,4 +1,4 @@
-package com.example.hrautomation.presentation.view.restaurants
+package com.example.hrautomation.presentation.view.restaurants.list
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.FragmentRestaurantsListBinding
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
+import com.example.hrautomation.presentation.view.restaurants.RestaurantsViewModel
 import com.example.hrautomation.utils.ViewModelFactory
 import com.example.hrautomation.utils.ui.Dp
 import com.example.hrautomation.utils.ui.dpToPx
