@@ -5,7 +5,7 @@ import com.google.android.gms.maps.model.Marker
 
 data class RestaurantsMapState(
     val chosenCityLatLng: LatLng,
-    val chosenRestaurantId: Long? = null,
+    val chosenBuildingId: Long? = null,
     val chosenMarker: Marker? = null
 ) {
 
@@ -14,6 +14,6 @@ data class RestaurantsMapState(
     }
 
     fun setChosenRestaurant(restaurantId: Long?, marker: Marker?): RestaurantsMapState {
-        return this.copy(chosenRestaurantId = restaurantId, chosenMarker = marker)
+        return this.copy(chosenBuildingId = restaurantId, chosenMarker = marker)
     }
 }

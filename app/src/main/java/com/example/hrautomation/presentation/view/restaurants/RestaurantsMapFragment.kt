@@ -12,7 +12,7 @@ import androidx.lifecycle.Observer
 import com.example.hrautomation.R
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.FragmentMapBinding
-import com.example.hrautomation.presentation.model.restaurants.ListRestaurantItem
+import com.example.hrautomation.presentation.model.restaurants.BuildingItem
 import com.example.hrautomation.presentation.view.restaurants.сity.CitiesListFragment
 import com.example.hrautomation.utils.BitmapUtils.DrawableToBitmapDescriptor
 import com.example.hrautomation.utils.ViewModelFactory
@@ -44,7 +44,7 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var cityFragment: CitiesListFragment
 
-    private lateinit var restaurantCardAdapter: UpdatableViewAdapter<ListRestaurantItem, RestaurantCard>
+    private lateinit var restaurantCardAdapter: UpdatableViewAdapter<BuildingItem, RestaurantCard>
 
     private var chosenMarker: Marker? = null
     private var chosenCityLatLng: LatLng? = null
@@ -91,7 +91,6 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(map: GoogleMap) {
         this@RestaurantsMapFragment.map = map
 
-        viewModel.data.observe(viewLifecycleOwner, restaurantsObserver)
         viewModel.restaurantsMapState.observe(viewLifecycleOwner, stateObserver)
     }
 
@@ -128,28 +127,35 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
         chosenMarker = newState.chosenMarker
         newState.chosenMarker?.setIcon(markerIconChosen)
 
+        viewModel.data.observe(viewLifecycleOwner, buildingsObserver)
+
         with(newState) {
-            if (chosenRestaurantId != null) {
-                restaurantCardAdapter.updateView(chosenRestaurantId)
+            if (chosenBuildingId != null) {
+                restaurantCardAdapter.updateView(chosenBuildingId)
             } else {
                 restaurantCardAdapter.closeView()
             }
         }
     }
 
-    private val restaurantsObserver = Observer<List<ListRestaurantItem>> { listRestaurants ->
-        restaurantCardAdapter.setItems(listRestaurants)
+    private val buildingsObserver = Observer<List<BuildingItem>> { buildings ->
+        restaurantCardAdapter.setItems(buildings)
 
-        listRestaurants.forEach { restaurant ->
-            val marker = map.addMarker(
-                MarkerOptions()
-                    .position(LatLng(restaurant.lat, restaurant.lng))
-                    .icon(markerIcon)
-            )
-            map.setOnMarkerClickListener(markerClickListener)
+        buildings.forEach { building ->
+            val markerOptions = MarkerOptions().position(LatLng(building.lat, building.lng))
+            val marker: Marker?
 
-            marker?.tag = restaurant.id
+            if (building.id == chosenMarker?.tag) {
+                markerOptions.icon(markerIconChosen)
+                marker = map.addMarker(markerOptions)
+                chosenMarker = marker
+            } else {
+                markerOptions.icon(markerIcon)
+                marker = map.addMarker(markerOptions)
+            }
+            marker?.tag = building.id
         }
+        map.setOnMarkerClickListener(markerClickListener)
     }
 
     private fun initUi() {

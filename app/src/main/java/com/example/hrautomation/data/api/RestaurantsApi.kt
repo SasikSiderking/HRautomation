@@ -1,17 +1,13 @@
 package com.example.hrautomation.data.api
 
+import com.example.hrautomation.data.model.restaurants.BuildingResponse
 import com.example.hrautomation.data.model.restaurants.CityResponse
-import com.example.hrautomation.data.model.restaurants.ListRestaurantResponse
 import retrofit2.http.GET
-import retrofit2.http.Query
+import retrofit2.http.Path
 
 interface RestaurantsApi {
-    @GET("/restaurants/get/all")
-    suspend fun getListRestaurantResponse(
-        @Query("pageNumber") pageNumber: Int,
-        @Query("size") size: Int,
-        @Query("sortBy") sortBy: String
-    ): List<ListRestaurantResponse>
+    @GET("/restaurants/get/city/{cityId}")
+    suspend fun getBuildingsResponseByCity(@Path("cityId") cityId: Long): List<BuildingResponse>
 
     @GET("/cities/get/all")
     suspend fun getCitiesResponse(): List<CityResponse>

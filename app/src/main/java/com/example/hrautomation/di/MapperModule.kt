@@ -7,6 +7,7 @@ import com.example.hrautomation.data.model.faq.FaqCategoryResponseToFaqCategoryM
 import com.example.hrautomation.data.model.faq.FaqQuestionResponseToFaqQuestionMapper
 import com.example.hrautomation.data.model.products.ProductCategoryResponseToProductCategoryMapper
 import com.example.hrautomation.data.model.products.ProductResponseToProductMapper
+import com.example.hrautomation.data.model.restaurants.BuildingsResponseToBuildingsMapper
 import com.example.hrautomation.data.model.restaurants.CityResponseToCityMapper
 import com.example.hrautomation.data.model.restaurants.ListRestaurantResponseToListRestaurantMapper
 import com.example.hrautomation.presentation.model.colleagues.EmployeeToColleagueItemMapper
@@ -15,6 +16,7 @@ import com.example.hrautomation.presentation.model.faq.FaqCategoryToFaqCategoryI
 import com.example.hrautomation.presentation.model.faq.FaqQuestionToFaqQuestionItemMapper
 import com.example.hrautomation.presentation.model.products.ProductCategoryToProductCategoryItemMapper
 import com.example.hrautomation.presentation.model.products.ProductToListedProductItemMapper
+import com.example.hrautomation.presentation.model.restaurants.BuildingToBuildingItemMapper
 import com.example.hrautomation.presentation.model.restaurants.CityToCityItemMapper
 import com.example.hrautomation.presentation.model.restaurants.ListRestaurantToListRestaurantItemMapper
 import dagger.Module
@@ -33,7 +35,8 @@ class MapperModule {
 
     @Reusable
     @Provides
-    fun provideEmployeesResponseToEmployeesMapper(): EmployeesResponseToEmployeesMapper = EmployeesResponseToEmployeesMapper()
+    fun provideEmployeesResponseToEmployeesMapper(): EmployeesResponseToEmployeesMapper =
+        EmployeesResponseToEmployeesMapper()
 
     @Reusable
     @Provides
@@ -45,19 +48,23 @@ class MapperModule {
 
     @Reusable
     @Provides
-    fun provideFaqCategoryResponseToFaqCategoryMapper(): FaqCategoryResponseToFaqCategoryMapper = FaqCategoryResponseToFaqCategoryMapper()
+    fun provideFaqCategoryResponseToFaqCategoryMapper(): FaqCategoryResponseToFaqCategoryMapper =
+        FaqCategoryResponseToFaqCategoryMapper()
 
     @Reusable
     @Provides
-    fun provideFaqCategoryToFaqCategoryItemMapper(): FaqCategoryToFaqCategoryItemMapper = FaqCategoryToFaqCategoryItemMapper()
+    fun provideFaqCategoryToFaqCategoryItemMapper(): FaqCategoryToFaqCategoryItemMapper =
+        FaqCategoryToFaqCategoryItemMapper()
 
     @Reusable
     @Provides
-    fun provideFaqQuestionResponseToFaqQuestionMapper(): FaqQuestionResponseToFaqQuestionMapper = FaqQuestionResponseToFaqQuestionMapper()
+    fun provideFaqQuestionResponseToFaqQuestionMapper(): FaqQuestionResponseToFaqQuestionMapper =
+        FaqQuestionResponseToFaqQuestionMapper()
 
     @Reusable
     @Provides
-    fun provideFaqQuestionToFaqQuestionItemMapper(): FaqQuestionToFaqQuestionItemMapper = FaqQuestionToFaqQuestionItemMapper()
+    fun provideFaqQuestionToFaqQuestionItemMapper(): FaqQuestionToFaqQuestionItemMapper =
+        FaqQuestionToFaqQuestionItemMapper()
 
     @Reusable
     @Provides
@@ -95,4 +102,14 @@ class MapperModule {
     @Reusable
     @Provides
     fun provideCityToCityItemMapper(): CityToCityItemMapper = CityToCityItemMapper()
+
+    @Reusable
+    @Provides
+    fun provideBuildingResponseToBuildingMapper(): BuildingsResponseToBuildingsMapper =
+        BuildingsResponseToBuildingsMapper(provideListRestaurantResponseToListRestaurantMapper())
+
+    @Reusable
+    @Provides
+    fun provideBuildingToBuildingItemMapper(): BuildingToBuildingItemMapper =
+        BuildingToBuildingItemMapper(provideListRestaurantToListRestaurantItemMapper())
 }

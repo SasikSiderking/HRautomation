@@ -13,7 +13,6 @@ class UpdatableViewAdapter<Item : BaseListItem, View>(
     private var currentItemId: Long? = null
 
     fun updateView(id: Long) {
-
         currentItemId = id
 
         val foundItem = items.find {

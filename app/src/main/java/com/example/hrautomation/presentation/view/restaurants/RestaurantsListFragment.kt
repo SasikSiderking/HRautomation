@@ -62,7 +62,7 @@ class RestaurantsListFragment : Fragment() {
     private fun initUi() {
         adapter = RestaurantsAdapter(onRestaurantClickListener)
         binding.restaurantRecyclerView.adapter = adapter
-        viewModel.data.observe(viewLifecycleOwner, restaurantsObserver)
+        viewModel.restaurants.observe(viewLifecycleOwner, restaurantsObserver)
     }
 
     override fun onDestroyView() {

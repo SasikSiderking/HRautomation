@@ -5,4 +5,7 @@ import com.google.android.gms.maps.model.LatLng
 interface CachedCityLatLngRepository {
     fun setLatLng(latLng: LatLng)
     fun getLatLng(): LatLng?
+
+    fun setCityId(cityId: Long)
+    fun getCityId(): Long?
 }
