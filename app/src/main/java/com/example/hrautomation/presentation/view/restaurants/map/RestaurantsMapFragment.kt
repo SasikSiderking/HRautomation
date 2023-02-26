@@ -22,7 +22,6 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -38,8 +37,6 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var cityFragment: CitiesListFragment
 
     private lateinit var restaurantCardAdapter: UpdatableViewAdapter<BuildingItem, RestaurantCard>
-
-    private var chosenCityLatLng: LatLng? = null
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -80,7 +77,6 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
 
     private val markerClickListener: OnMarkerDelegateClickListener =
         OnMarkerDelegateClickListener { markerDelegate: MarkerDelegate ->
-            Timber.e("$markerDelegate")
             viewModel.chooseRestaurant(markerDelegate.marker?.tag as Long, markerDelegate)
         }
 
@@ -101,11 +97,8 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private val stateObserver = Observer<RestaurantsMapState> { newState ->
-        if (chosenCityLatLng != newState.chosenCityLatLng) {
-            chosenCityLatLng = newState.chosenCityLatLng
-            mapAdapter.moveCamera(chosenCityLatLng!!, MAP_ZOOM)
-        }
-        val del = newState.chosenMarker?.id
+        mapAdapter.moveCamera(newState.chosenCityLatLng, MAP_ZOOM)
+
         if (newState.chosenMarker != null) {
             mapAdapter.chooseMarker(newState.chosenMarker.id)
         } else {
@@ -123,17 +116,8 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
 
     private val buildingsObserver = Observer<List<BuildingItem>> { buildings ->
         restaurantCardAdapter.setItems(buildings)
-        val listOfDelegateMarkers: MutableList<MarkerDelegate> = mutableListOf()
+        mapAdapter.setMarkers(buildings, requireContext())
 
-        buildings.forEach { building ->
-            val marker: MarkerDelegate = if (building.restaurants.size > 1) {
-                MultipleMarker(requireContext(), LatLng(building.lat, building.lng), building.id)
-            } else {
-                SingleMarker(requireContext(), LatLng(building.lat, building.lng), building.id)
-            }
-            listOfDelegateMarkers.add(marker)
-        }
-        mapAdapter.setMarkers(listOfDelegateMarkers)
         mapAdapter.setMarkerClickListener(markerClickListener)
 
         viewModel.restaurantsMapState.observe(viewLifecycleOwner, stateObserver)

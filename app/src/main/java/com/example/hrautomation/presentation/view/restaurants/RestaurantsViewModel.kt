@@ -79,20 +79,15 @@ class RestaurantsViewModel @Inject constructor(
             doOnLaunch = {
                 val preferredCityLatLng = cachedCityLatLngRepository.getLatLng() ?: defaultCityLatLng
                 val preferredCityId = cachedCityLatLngRepository.getCityId() ?: DEFAULT_CITY_ID
-
-                val listOfBuildingItems: List<BuildingItem>
                 val listOfBuildings = restaurantsRepository.getBuildingsByCity(preferredCityId)
-                listOfBuildingItems = listOfBuildings.map {
+                val listOfBuildingItems = listOfBuildings.map {
                     buildingToBuildingItemMapper.convert(it)
                 }
 
                 _data.postValue(listOfBuildingItems)
                 _restaurantsMapState.postValue(RestaurantsMapState(preferredCityLatLng))
 
-                var listRestaurantItems: List<ListRestaurantItem> = emptyList()
-                listOfBuildingItems.forEach {
-                    listRestaurantItems = listRestaurantItems.plus(it.restaurants)
-                }
+                val listRestaurantItems = listOfBuildingItems.flatMap { it.restaurants }
                 _restaurants.postValue(listRestaurantItems)
             },
             doOnError = { error ->
