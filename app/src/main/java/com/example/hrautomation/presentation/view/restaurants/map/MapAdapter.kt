@@ -65,7 +65,12 @@ class MapAdapter(private val map: GoogleMap) {
     private fun createMarkers(buildings: List<BuildingItem>, context: Context): List<MarkerDelegate> {
         return buildings.map { building ->
             if (building.restaurants.size > 1) {
-                MultipleMarker(context, LatLng(building.lat, building.lng), building.id)
+                MultipleMarker(
+                    context,
+                    LatLng(building.lat, building.lng),
+                    building.id,
+                    building.restaurants.size.toString()
+                )
             } else {
                 SingleMarker(context, LatLng(building.lat, building.lng), building.id)
             }
