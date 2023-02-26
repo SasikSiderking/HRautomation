@@ -1,12 +1,11 @@
 package com.example.hrautomation.presentation.view.restaurants.map
 
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils.loadAnimation
 import android.widget.FrameLayout
-import com.example.hrautomation.R
+import androidx.core.view.marginBottom
 import com.example.hrautomation.databinding.FragmentRestaurantsCardBinding
 import com.example.hrautomation.presentation.model.restaurants.BuildingItem
 import com.example.hrautomation.utils.Updatable
@@ -29,12 +28,7 @@ class RestaurantCard(
     private val binding: FragmentRestaurantsCardBinding
         get() = _binding!!
 
-    private lateinit var animationVisible: Animation
-    private lateinit var animationInvisible: Animation
-
     init {
-        animationVisible = loadAnimation(context, R.anim.card_visible)
-        animationInvisible = loadAnimation(context, R.anim.card_invisible)
 
         _binding = FragmentRestaurantsCardBinding.inflate(LayoutInflater.from(context), this)
 
@@ -56,21 +50,28 @@ class RestaurantCard(
     }
 
     override fun update(item: BuildingItem) {
-        item.let {
-            with(binding) {
-                restaurantName.text = item.address
-                restaurantRating.text = item.address
-                restaurantAddress.text = item.address
-                restaurantStatusCheck.text = item.address
-            }
-            startAnimation(animationVisible)
-            this.visibility = VISIBLE
+        visibility = VISIBLE
+        with(binding) {
+            restaurantName.text = item.address
+            restaurantRating.text = item.address
+            restaurantAddress.text = item.address
+            restaurantStatusCheck.text = item.address
+        }
+        ObjectAnimator.ofFloat(this, "translationY", 0f).apply {
+            duration = ANIMATION_DURATION
+            start()
         }
     }
 
     override fun close() {
-        this.visibility = INVISIBLE
-        startAnimation(animationInvisible)
+        ObjectAnimator.ofFloat(this, "translationY", this.height.toFloat() + this.marginBottom.toFloat()).apply {
+            duration = ANIMATION_DURATION
+            start()
+        }
+    }
+
+    companion object {
+        const val ANIMATION_DURATION = 500L
     }
 }
 
