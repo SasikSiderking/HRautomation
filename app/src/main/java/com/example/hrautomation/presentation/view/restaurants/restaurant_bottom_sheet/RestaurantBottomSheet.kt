@@ -4,14 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.FrameLayout
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.BottomSheetRestaurantsBinding
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
-import com.example.hrautomation.presentation.model.restaurants.GapItem
 import com.example.hrautomation.presentation.view.restaurants.list.OnRestaurantClickListener
 import com.example.hrautomation.utils.ViewModelFactory
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -51,9 +49,22 @@ class RestaurantBottomSheet : BottomSheetDialogFragment() {
         val dialog = dialog
         if (dialog != null) {
             val bottomSheet: FrameLayout = dialog.findViewById(com.google.android.material.R.id.design_bottom_sheet)
-            bottomSheet.layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT
             val behavior = BottomSheetBehavior.from(bottomSheet)
+            behavior.addBottomSheetCallback(callback)
         }
+    }
+
+    val callback = object : BottomSheetBehavior.BottomSheetCallback() {
+        override fun onStateChanged(bottomSheet: View, newState: Int) {
+            when (newState) {
+                BottomSheetBehavior.STATE_EXPANDED -> {
+                    viewModel.loadAllData()
+                }
+            }
+        }
+
+        override fun onSlide(bottomSheet: View, slideOffset: Float) {}
+
     }
 
     private fun initUi() {
@@ -73,7 +84,7 @@ class RestaurantBottomSheet : BottomSheetDialogFragment() {
     }
 
     private val restaurantsObserver = Observer<List<BaseListItem>> { restaurantList ->
-        adapter.update(restaurantList.take(1).plus(GapItem(Long.MAX_VALUE, restaurantList.size - 1)))
+        adapter.update(restaurantList)
     }
 
     private val onRestaurantClickListener = OnRestaurantClickListener {

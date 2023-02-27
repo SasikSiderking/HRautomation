@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/restaurantName"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="6dp"
         android:textColor="@color/black"
@@ -19,6 +19,7 @@
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constrainedWidth="true"
         app:layout_constraintWidth_default="wrap"
         tools:text="Cash flow" />
 
