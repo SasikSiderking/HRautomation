@@ -14,7 +14,8 @@ import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.FragmentMapBinding
 import com.example.hrautomation.presentation.model.restaurants.BuildingItem
 import com.example.hrautomation.presentation.view.restaurants.RestaurantsViewModel
-import com.example.hrautomation.presentation.view.restaurants.сity.CitiesListFragment
+import com.example.hrautomation.presentation.view.restaurants.restaurant_bottom_sheet.RestaurantBottomSheet
+import com.example.hrautomation.presentation.view.restaurants.сity_bottom_sheet.CityBottomSheet
 import com.example.hrautomation.utils.ViewModelFactory
 import com.example.hrautomation.utils.ui.Dp
 import com.example.hrautomation.utils.ui.dpToPx
@@ -36,7 +37,8 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
 
     private var chosenCityLatLng: LatLng? = null
 
-    private lateinit var cityFragment: CitiesListFragment
+    private lateinit var cityFragment: CityBottomSheet
+    private lateinit var restaurantFragment: RestaurantBottomSheet
 
     private lateinit var restaurantCardAdapter: UpdatableViewAdapter<BuildingItem, RestaurantCard>
 
@@ -79,13 +81,13 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
 
     private val markerClickListener: OnMarkerDelegateClickListener =
         OnMarkerDelegateClickListener { markerDelegate: MarkerDelegate ->
-            viewModel.chooseRestaurant(markerDelegate.marker?.tag as Long, markerDelegate)
+            viewModel.chooseBuilding(markerDelegate.marker?.tag as Long, markerDelegate)
         }
 
     private val onCardClickListener = OnCardClickListener { cardAction ->
         when (cardAction) {
             CardAction.CLOSE -> {
-                viewModel.resetChosenRestaurant()
+                viewModel.resetChosenBuilding()
             }
             CardAction.GO_TO -> {
 //                TODO(Открыть активити с фулл рестораном)
@@ -94,8 +96,8 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private val chooseCityClickListener = OnClickListener {
-        cityFragment = CitiesListFragment.newInstance()
-        cityFragment.show(childFragmentManager, CitiesListFragment.TAG)
+        cityFragment = CityBottomSheet.newInstance()
+        cityFragment.show(childFragmentManager, CityBottomSheet.TAG)
     }
 
     private val stateObserver = Observer<RestaurantsMapState> { newState ->
@@ -112,11 +114,24 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
 
         with(newState) {
             if (chosenBuildingId != null) {
-                restaurantCardAdapter.updateView(chosenBuildingId)
+                if (viewModel.isManyRestaurants(chosenBuildingId)) {
+                    restaurantCardAdapter.closeView()
+                    openRestaurantsBottomSheet(chosenBuildingId)
+                } else {
+                    restaurantCardAdapter.updateView(chosenBuildingId)
+                }
             } else {
                 restaurantCardAdapter.closeView()
             }
         }
+    }
+
+    private fun openRestaurantsBottomSheet(buildingId: Long) {
+        restaurantFragment = RestaurantBottomSheet.newInstance()
+        val args = Bundle()
+        args.putLong(RestaurantBottomSheet.ID_KEY, buildingId)
+        restaurantFragment.arguments = args
+        restaurantFragment.show(childFragmentManager, RestaurantBottomSheet.TAG)
     }
 
     private val buildingsObserver = Observer<List<BuildingItem>> { buildings ->
@@ -146,13 +161,20 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
         binding.chooseCityButton.setOnClickListener(chooseCityClickListener)
 
         childFragmentManager.setFragmentResultListener(
-            CitiesListFragment.CITIES_FRAGMENT_KEY,
+            CityBottomSheet.CITIES_FRAGMENT_KEY,
             viewLifecycleOwner
         ) { _: String, bundle: Bundle ->
-            val lat = bundle.getDouble(CitiesListFragment.LATITUDE_KEY)
-            val lng = bundle.getDouble(CitiesListFragment.LONGITUDE_KEY)
+            val lat = bundle.getDouble(CityBottomSheet.LATITUDE_KEY)
+            val lng = bundle.getDouble(CityBottomSheet.LONGITUDE_KEY)
 
             viewModel.chooseCity(LatLng(lat, lng))
+        }
+
+        childFragmentManager.setFragmentResultListener(
+            RestaurantBottomSheet.TAG,
+            viewLifecycleOwner
+        ) { _: String, _: Bundle ->
+            viewModel.resetChosenBuilding()
         }
     }
 

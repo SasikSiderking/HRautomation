@@ -12,7 +12,7 @@ data class RestaurantsMapState(
         return this.copy(chosenCityLatLng = cityLatLng)
     }
 
-    fun setChosenRestaurant(restaurantId: Long?, marker: MarkerDelegate?): RestaurantsMapState {
-        return this.copy(chosenBuildingId = restaurantId, chosenMarker = marker)
+    fun setChosenBuilding(buildingId: Long?, marker: MarkerDelegate?): RestaurantsMapState {
+        return this.copy(chosenBuildingId = buildingId, chosenMarker = marker)
     }
 }

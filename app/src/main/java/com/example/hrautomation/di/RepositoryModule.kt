@@ -40,4 +40,8 @@ interface RepositoryModule {
     @Reusable
     @Binds
     fun provideCachedCityLatLngRepository(cachedCityLatLngRepositoryImpl: CachedCityLatLngRepositoryImpl): CachedCityLatLngRepository
+
+    @Reusable
+    @Binds
+    fun provideCachedBuildingsRepository(cachedBuildingsRepositoryImpl: CachedBuildingsRepositoryImpl): CachedBuildingsRepository
 }

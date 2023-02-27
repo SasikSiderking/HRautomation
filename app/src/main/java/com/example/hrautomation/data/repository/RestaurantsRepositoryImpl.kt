@@ -5,18 +5,21 @@ import com.example.hrautomation.data.model.restaurants.BuildingsResponseToBuildi
 import com.example.hrautomation.data.model.restaurants.CityResponseToCityMapper
 import com.example.hrautomation.domain.model.restaurants.Building
 import com.example.hrautomation.domain.model.restaurants.City
+import com.example.hrautomation.domain.repository.CachedBuildingsRepository
 import com.example.hrautomation.domain.repository.RestaurantsRepository
 import javax.inject.Inject
 
 class RestaurantsRepositoryImpl @Inject constructor(
     private val restaurantsApi: RestaurantsApi,
     private val buildingsResponseToBuildingsMapper: BuildingsResponseToBuildingsMapper,
-    private val cityResponseToCityMapper: CityResponseToCityMapper
+    private val cityResponseToCityMapper: CityResponseToCityMapper,
+    private val cachedBuildingsRepository: CachedBuildingsRepository
 ) : RestaurantsRepository {
 
     override suspend fun getBuildingsByCity(cityId: Long): List<Building> {
-        return restaurantsApi.getBuildingsResponseByCity(cityId)
-            .map { buildingsResponseToBuildingsMapper.convert(it) }
+        val buildingsResponse = restaurantsApi.getBuildingsResponseByCity(cityId)
+        cachedBuildingsRepository.setBuildings(buildingsResponse)
+        return buildingsResponse.map { buildingsResponseToBuildingsMapper.convert(it) }
     }
 
     override suspend fun getCitiesResponse(): List<City> {
