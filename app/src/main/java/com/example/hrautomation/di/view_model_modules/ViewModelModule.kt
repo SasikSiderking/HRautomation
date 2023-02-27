@@ -13,7 +13,8 @@ import com.example.hrautomation.presentation.view.loading.email.EmailLoginViewMo
 import com.example.hrautomation.presentation.view.product.ProductViewModel
 import com.example.hrautomation.presentation.view.profile.ProfileViewModel
 import com.example.hrautomation.presentation.view.restaurants.RestaurantsViewModel
-import com.example.hrautomation.presentation.view.restaurants.сity.CityViewModel
+import com.example.hrautomation.presentation.view.restaurants.restaurant_bottom_sheet.RestaurantBottomSheetViewModel
+import com.example.hrautomation.presentation.view.restaurants.сity_bottom_sheet.CityViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.Reusable
@@ -86,4 +87,9 @@ interface ViewModelModule {
     @IntoMap
     @ViewModelKey(CityViewModel::class)
     fun bindsCityViewModel(cityViewModel: CityViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(RestaurantBottomSheetViewModel::class)
+    fun bindsRestaurantBottomSheetViewModel(restaurantBottomSheetViewModel: RestaurantBottomSheetViewModel): ViewModel
 }

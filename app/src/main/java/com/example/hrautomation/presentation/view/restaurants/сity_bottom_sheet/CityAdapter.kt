@@ -1,4 +1,4 @@
-package com.example.hrautomation.presentation.view.restaurants.сity
+package com.example.hrautomation.presentation.view.restaurants.сity_bottom_sheet
 
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter

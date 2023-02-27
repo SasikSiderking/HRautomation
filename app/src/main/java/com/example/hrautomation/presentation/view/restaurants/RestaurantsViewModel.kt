@@ -57,20 +57,25 @@ class RestaurantsViewModel @Inject constructor(
         }
     }
 
-    fun chooseRestaurant(restaurantId: Long, marker: MarkerDelegate) {
+    fun chooseBuilding(restaurantId: Long, marker: MarkerDelegate) {
         with(_restaurantsMapState) {
             postValue(
-                value?.setChosenRestaurant(restaurantId, marker)
+                value?.setChosenBuilding(restaurantId, marker)
             )
         }
     }
 
-    fun resetChosenRestaurant() {
+    fun resetChosenBuilding() {
         with(_restaurantsMapState) {
             postValue(
-                value?.setChosenRestaurant(null, null)
+                value?.setChosenBuilding(null, null)
             )
         }
+    }
+
+    fun isManyRestaurants(buildingId: Long): Boolean {
+        val building = data.value?.find { it.id == buildingId && it.restaurants.size > 1 }
+        return building != null
     }
 
     private fun loadData() {

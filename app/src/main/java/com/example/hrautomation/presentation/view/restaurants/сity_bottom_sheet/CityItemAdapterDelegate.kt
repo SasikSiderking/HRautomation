@@ -1,4 +1,4 @@
-package com.example.hrautomation.presentation.view.restaurants.сity
+package com.example.hrautomation.presentation.view.restaurants.сity_bottom_sheet
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +9,7 @@ import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.base.delegates.ClickableViewHolder
 import com.example.hrautomation.presentation.base.delegates.OnViewHolderClickListener
 import com.example.hrautomation.presentation.model.restaurants.CityItem
-import com.example.hrautomation.presentation.view.restaurants.сity.CityItemAdapterDelegate.CityViewHolder
+import com.example.hrautomation.presentation.view.restaurants.сity_bottom_sheet.CityItemAdapterDelegate.CityViewHolder
 import com.google.android.gms.maps.model.LatLng
 
 class CityItemAdapterDelegate(private val onCityClickListener: OnCityClickListener) :
