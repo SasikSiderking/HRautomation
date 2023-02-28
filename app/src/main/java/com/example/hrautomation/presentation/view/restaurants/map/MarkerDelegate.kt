@@ -48,8 +48,8 @@ class MultipleMarker(context: Context, latLng: LatLng, buildingId: Long, quantit
         Color.valueOf(context.getColor(R.color.white))
     )
     override val iconChosen = MarkerIconProvider.provideWithText(
-        context.resources.getDrawable(R.drawable.ic_multiple_restaurants_marker_chosen_24),
-        quantity,
-        Color.valueOf(context.getColor(R.color.primary))
+        drawable = context.resources.getDrawable(R.drawable.ic_multiple_restaurants_marker_chosen_24),
+        text = quantity,
+        color = Color.valueOf(context.getColor(R.color.primary))
     )
 }
