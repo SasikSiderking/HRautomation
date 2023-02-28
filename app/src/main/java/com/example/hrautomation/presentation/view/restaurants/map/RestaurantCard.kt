@@ -57,7 +57,7 @@ class RestaurantCard(
             restaurantAddress.text = item.address
             restaurantStatusCheck.text = item.address
         }
-        ObjectAnimator.ofFloat(this, "translationY", 0f).apply {
+        ObjectAnimator.ofFloat(this, "translationY", BASE_POSITION).apply {
             duration = ANIMATION_DURATION
             start()
         }
@@ -72,6 +72,7 @@ class RestaurantCard(
 
     companion object {
         const val ANIMATION_DURATION = 500L
+        const val BASE_POSITION = 0f
     }
 }
 
