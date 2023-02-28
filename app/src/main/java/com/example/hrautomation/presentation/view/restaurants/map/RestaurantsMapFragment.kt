@@ -34,6 +34,8 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var supportMapFragment: SupportMapFragment
     private lateinit var mapAdapter: MapAdapter
 
+    private var chosenCityLatLng: LatLng? = null
+
     private lateinit var cityFragment: CitiesListFragment
 
     private lateinit var restaurantCardAdapter: UpdatableViewAdapter<BuildingItem, RestaurantCard>
@@ -97,7 +99,10 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private val stateObserver = Observer<RestaurantsMapState> { newState ->
-        mapAdapter.moveCamera(newState.chosenCityLatLng, MAP_ZOOM)
+        if (chosenCityLatLng != newState.chosenCityLatLng) {
+            chosenCityLatLng = newState.chosenCityLatLng
+            mapAdapter.moveCamera(chosenCityLatLng!!, MAP_ZOOM)
+        }
 
         if (newState.chosenMarker != null) {
             mapAdapter.chooseMarker(newState.chosenMarker.id)

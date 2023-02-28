@@ -1,9 +1,11 @@
 package com.example.hrautomation.presentation.view.restaurants.map
 
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
+import androidx.core.view.marginBottom
 import com.example.hrautomation.databinding.FragmentRestaurantsCardBinding
 import com.example.hrautomation.presentation.model.restaurants.BuildingItem
 import com.example.hrautomation.utils.Updatable
@@ -48,19 +50,29 @@ class RestaurantCard(
     }
 
     override fun update(item: BuildingItem) {
-        item.let {
-            with(binding) {
-                restaurantName.text = item.address
-                restaurantRating.text = item.address
-                restaurantAddress.text = item.address
-                restaurantStatusCheck.text = item.address
-            }
-            this.visibility = VISIBLE
+        visibility = VISIBLE
+        with(binding) {
+            restaurantName.text = item.address
+            restaurantRating.text = item.address
+            restaurantAddress.text = item.address
+            restaurantStatusCheck.text = item.address
+        }
+        ObjectAnimator.ofFloat(this, "translationY", BASE_POSITION).apply {
+            duration = ANIMATION_DURATION
+            start()
         }
     }
 
     override fun close() {
-        this.visibility = INVISIBLE
+        ObjectAnimator.ofFloat(this, "translationY", this.height.toFloat() + this.marginBottom.toFloat()).apply {
+            duration = ANIMATION_DURATION
+            start()
+        }
+    }
+
+    companion object {
+        const val ANIMATION_DURATION = 500L
+        const val BASE_POSITION = 0f
     }
 }
 
