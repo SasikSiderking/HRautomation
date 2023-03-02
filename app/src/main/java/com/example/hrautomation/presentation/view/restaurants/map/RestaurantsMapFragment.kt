@@ -127,10 +127,8 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun openRestaurantsBottomSheet(buildingId: Long) {
-        restaurantFragment = RestaurantBottomSheet.newInstance()
-        val args = Bundle()
-        args.putLong(RestaurantBottomSheet.ID_KEY, buildingId)
-        restaurantFragment.arguments = args
+        restaurantFragment = RestaurantBottomSheet.newInstance(buildingId)
+
         restaurantFragment.show(childFragmentManager, RestaurantBottomSheet.TAG)
     }
 

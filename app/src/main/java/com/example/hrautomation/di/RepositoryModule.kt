@@ -43,5 +43,5 @@ interface RepositoryModule {
 
     @Reusable
     @Binds
-    fun provideCachedBuildingsRepository(cachedBuildingsRepositoryImpl: CachedBuildingsRepositoryImpl): CachedBuildingsRepository
+    fun provideCachedBuildingsRepository(buildingsCacheManagerImpl: BuildingsCacheManagerImpl): BuildingsCacheManager
 }

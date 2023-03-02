@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.hrautomation.app.App
@@ -17,6 +18,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import javax.inject.Inject
 
 class RestaurantBottomSheet : BottomSheetDialogFragment() {
+
+    private val buildingId: Long by lazy { requireArguments().getLong(BUILDING_ID_BUNDLE_KEY) }
 
     private var _binding: BottomSheetRestaurantsBinding? = null
     private val binding: BottomSheetRestaurantsBinding
@@ -48,27 +51,25 @@ class RestaurantBottomSheet : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         val dialog = dialog
         if (dialog != null) {
-            val bottomSheet: FrameLayout = dialog.findViewById(com.google.android.material.R.id.design_bottom_sheet)
+            val bottomSheet = dialog.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)
             val behavior = BottomSheetBehavior.from(bottomSheet)
             behavior.addBottomSheetCallback(callback)
         }
     }
 
-    val callback = object : BottomSheetBehavior.BottomSheetCallback() {
+    private val callback = object : BottomSheetBehavior.BottomSheetCallback() {
         override fun onStateChanged(bottomSheet: View, newState: Int) {
-            when (newState) {
-                BottomSheetBehavior.STATE_EXPANDED -> {
-                    viewModel.loadAllData()
-                }
+            if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+                viewModel.loadAllData()
             }
         }
 
-        override fun onSlide(bottomSheet: View, slideOffset: Float) {}
+        override fun onSlide(bottomSheet: View, slideOffset: Float) = Unit
 
     }
 
     private fun initUi() {
-        val buildingId = arguments?.getLong(ID_KEY)
+
         if (buildingId != null) {
             viewModel.loadData(buildingId)
         }
@@ -94,9 +95,15 @@ class RestaurantBottomSheet : BottomSheetDialogFragment() {
     companion object {
         const val TAG = "RestaurantBottomSheet"
 
-        const val ID_KEY = "IdKey"
+        private const val BUILDING_ID_BUNDLE_KEY = "IdKey"
 
-        fun newInstance() = RestaurantBottomSheet()
+        fun newInstance(buildingId: Long): RestaurantBottomSheet {
+            return RestaurantBottomSheet().apply {
+                arguments = bundleOf(
+                    BUILDING_ID_BUNDLE_KEY to buildingId
+                )
+            }
+        }
     }
 
 }

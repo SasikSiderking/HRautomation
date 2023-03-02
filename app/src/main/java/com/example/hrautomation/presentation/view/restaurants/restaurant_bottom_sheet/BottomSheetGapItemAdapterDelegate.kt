@@ -3,31 +3,31 @@ package com.example.hrautomation.presentation.view.restaurants.restaurant_bottom
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.hrautomation.databinding.ItemGapBinding
+import com.example.hrautomation.databinding.RestaurantsItemGapBinding
 import com.example.hrautomation.presentation.base.delegates.BaseItemAdapterDelegate
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.base.delegates.ClickableViewHolder
 import com.example.hrautomation.presentation.base.delegates.OnViewHolderClickListener
-import com.example.hrautomation.presentation.model.restaurants.GapItem
+import com.example.hrautomation.presentation.model.restaurants.RestaurantsBottomSheetGapItem
 import com.example.hrautomation.presentation.view.restaurants.list.OnRestaurantClickListener
 import com.example.hrautomation.presentation.view.restaurants.restaurant_bottom_sheet.BottomSheetGapItemAdapterDelegate.BottomSheetGapViewHolder
 
 class BottomSheetGapItemAdapterDelegate(private val onRestaurantClickListener: OnRestaurantClickListener) :
-    BaseItemAdapterDelegate<GapItem, BottomSheetGapViewHolder>(),
+    BaseItemAdapterDelegate<RestaurantsBottomSheetGapItem, BottomSheetGapViewHolder>(),
     OnViewHolderClickListener<BottomSheetGapViewHolder> {
 
     override fun isForViewType(item: BaseListItem): Boolean {
-        return item is GapItem
+        return item is RestaurantsBottomSheetGapItem
     }
 
     override fun onCreateViewHolder(parent: ViewGroup): BottomSheetGapViewHolder {
-        val binding = ItemGapBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = RestaurantsItemGapBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return BottomSheetGapViewHolder(binding, this)
     }
 
-    override fun onBind(item: GapItem, holder: BottomSheetGapViewHolder, payloads: List<Any>) {
+    override fun onBind(item: RestaurantsBottomSheetGapItem, holder: BottomSheetGapViewHolder, payloads: List<Any>) {
         with(holder.binding) {
-            textView.text = item.text
+            restaurantsGapItemText.text = item.text
         }
     }
 
@@ -37,6 +37,6 @@ class BottomSheetGapItemAdapterDelegate(private val onRestaurantClickListener: O
     }
 
     class BottomSheetGapViewHolder(
-        val binding: ItemGapBinding, clickListener: OnViewHolderClickListener<BottomSheetGapViewHolder>
+        val binding: RestaurantsItemGapBinding, clickListener: OnViewHolderClickListener<BottomSheetGapViewHolder>
     ) : ClickableViewHolder<BottomSheetGapViewHolder>(binding.root, clickListener)
 }

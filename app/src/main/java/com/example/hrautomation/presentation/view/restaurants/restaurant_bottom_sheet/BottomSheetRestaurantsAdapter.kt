@@ -6,6 +6,7 @@ import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 
 class BottomSheetRestaurantsAdapter(onRestaurantClickListener: OnRestaurantClickListener) :
     ListDelegationAdapter<List<BaseListItem>>() {
+
     init {
         delegatesManager.addDelegate(BottomSheetRestaurantItemAdapterDelegate(onRestaurantClickListener))
         delegatesManager.addDelegate(BottomSheetGapItemAdapterDelegate(onRestaurantClickListener))

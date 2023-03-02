@@ -1,4 +1,4 @@
-package com.example.hrautomation.di
+package com.example.hrautomation.di.utils_modules
 
 import com.example.hrautomation.data.model.TokenResponseToTokenMapper
 import com.example.hrautomation.data.model.employee.EmployeesResponseToEmployeesMapper
