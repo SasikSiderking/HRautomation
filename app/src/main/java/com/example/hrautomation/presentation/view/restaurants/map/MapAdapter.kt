@@ -66,13 +66,17 @@ class MapAdapter(private val map: GoogleMap) {
         return buildings.map { building ->
             if (building.restaurants.size > 1) {
                 MultipleMarker(
-                    context,
-                    LatLng(building.lat, building.lng),
-                    building.id,
-                    building.restaurants.size.toString()
+                    context = context,
+                    latLng = LatLng(building.lat, building.lng),
+                    buildingId = building.id,
+                    quantity = building.restaurants.size.toString()
                 )
             } else {
-                SingleMarker(context, LatLng(building.lat, building.lng), building.id)
+                SingleMarker(
+                    context = context,
+                    latLng = LatLng(building.lat, building.lng),
+                    buildingId = building.id
+                )
             }
         }
     }
