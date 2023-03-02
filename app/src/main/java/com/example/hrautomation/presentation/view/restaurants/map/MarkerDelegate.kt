@@ -3,7 +3,7 @@ package com.example.hrautomation.presentation.view.restaurants.map
 import android.content.Context
 import android.graphics.Color
 import com.example.hrautomation.R
-import com.example.hrautomation.utils.BitmapUtils.MarkerIconProvider
+import com.example.hrautomation.utils.bitmap_utils.MarkerIconProvider
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker

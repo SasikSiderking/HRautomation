@@ -57,4 +57,5 @@
     <string name="close_card">close card</string>
     <string name="city_search">Введите город</string>
     <string name="choose_city">choose city</string>
+    <string name="restaurants_gap_item_text">И еще %1$d ресторанов</string>
 </resources>

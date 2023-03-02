@@ -8,4 +8,7 @@ interface RestaurantsRepository {
     suspend fun getBuildingsByCity(cityId: Long): List<Building>
 
     suspend fun getCitiesResponse(): List<City>
+
+    suspend fun getBuildingById(buildingId: Long): Building?
+
 }

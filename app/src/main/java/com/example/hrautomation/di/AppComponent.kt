@@ -1,6 +1,8 @@
 package com.example.hrautomation.di
 
 import com.example.hrautomation.di.network_modules.ApiModule
+import com.example.hrautomation.di.utils_modules.MapperModule
+import com.example.hrautomation.di.utils_modules.ResourcesModule
 import com.example.hrautomation.di.view_model_modules.PublisherModule
 import com.example.hrautomation.di.view_model_modules.ViewModelFactoryModule
 import com.example.hrautomation.di.view_model_modules.ViewModelModule
@@ -18,7 +20,8 @@ import com.example.hrautomation.presentation.view.profile.ProfileActivity
 import com.example.hrautomation.presentation.view.restaurants.RestaurantsFragment
 import com.example.hrautomation.presentation.view.restaurants.list.RestaurantsListFragment
 import com.example.hrautomation.presentation.view.restaurants.map.RestaurantsMapFragment
-import com.example.hrautomation.presentation.view.restaurants.сity.CitiesListFragment
+import com.example.hrautomation.presentation.view.restaurants.restaurant_bottom_sheet.RestaurantBottomSheet
+import com.example.hrautomation.presentation.view.restaurants.сity_bottom_sheet.CityBottomSheet
 import dagger.Component
 import javax.inject.Singleton
 
@@ -32,7 +35,8 @@ import javax.inject.Singleton
         MapperModule::class,
         DispatchersModule::class,
         ContentResolverModule::class,
-        PublisherModule::class
+        PublisherModule::class,
+        ResourcesModule::class
     ]
 )
 @Singleton
@@ -55,7 +59,8 @@ interface AppComponent {
     fun inject(activity: ProfileActivity)
 
     fun inject(fragment: RestaurantsMapFragment)
-    fun inject(fragment: CitiesListFragment)
+    fun inject(sheet: CityBottomSheet)
     fun inject(fragment: RestaurantsFragment)
     fun inject(fragment: RestaurantsListFragment)
+    fun inject(sheet: RestaurantBottomSheet)
 }

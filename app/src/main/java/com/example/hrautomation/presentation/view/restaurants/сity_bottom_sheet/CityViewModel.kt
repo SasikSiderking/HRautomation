@@ -1,4 +1,4 @@
-package com.example.hrautomation.presentation.view.restaurants.сity
+package com.example.hrautomation.presentation.view.restaurants.сity_bottom_sheet
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

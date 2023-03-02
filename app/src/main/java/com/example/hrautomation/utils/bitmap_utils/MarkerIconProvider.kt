@@ -1,4 +1,4 @@
-package com.example.hrautomation.utils.BitmapUtils
+package com.example.hrautomation.utils.bitmap_utils
 
 import android.graphics.*
 import android.graphics.drawable.Drawable

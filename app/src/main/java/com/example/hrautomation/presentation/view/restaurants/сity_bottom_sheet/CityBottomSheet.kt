@@ -1,4 +1,4 @@
-package com.example.hrautomation.presentation.view.restaurants.сity
+package com.example.hrautomation.presentation.view.restaurants.сity_bottom_sheet
 
 import android.os.Bundle
 import android.text.Editable
@@ -17,17 +17,17 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hrautomation.app.App
-import com.example.hrautomation.databinding.FragmentRestaurantsCitiesBinding
+import com.example.hrautomation.databinding.BottomSheetCitiesBinding
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.utils.ViewModelFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import javax.inject.Inject
 
-class CitiesListFragment : BottomSheetDialogFragment() {
+class CityBottomSheet : BottomSheetDialogFragment() {
 
-    private var _binding: FragmentRestaurantsCitiesBinding? = null
-    private val binding: FragmentRestaurantsCitiesBinding
+    private var _binding: BottomSheetCitiesBinding? = null
+    private val binding: BottomSheetCitiesBinding
         get() = _binding!!
 
     @Inject
@@ -45,7 +45,7 @@ class CitiesListFragment : BottomSheetDialogFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = FragmentRestaurantsCitiesBinding.inflate(inflater, container, false)
+        _binding = BottomSheetCitiesBinding.inflate(inflater, container, false)
 
         initUi()
         initSearch()
@@ -126,6 +126,6 @@ class CitiesListFragment : BottomSheetDialogFragment() {
 
         const val LONGITUDE_KEY = "LongitudeKey"
 
-        fun newInstance() = CitiesListFragment()
+        fun newInstance() = CityBottomSheet()
     }
 }
