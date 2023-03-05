@@ -1,11 +1,13 @@
 package com.example.hrautomation.presentation.view.restaurants.restaurant_bottom_sheet
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -81,6 +83,12 @@ class RestaurantBottomSheet : BottomSheetDialogFragment() {
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        val bundle = Bundle()
+        setFragmentResult(TAG, bundle)
+        super.onDismiss(dialog)
     }
 
     private val restaurantsObserver = Observer<List<BaseListItem>> { restaurantList ->

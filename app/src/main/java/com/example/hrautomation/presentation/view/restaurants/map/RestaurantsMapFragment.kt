@@ -164,7 +164,7 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
         binding.chooseCityButton.setOnClickListener(chooseCityClickListener)
 
         childFragmentManager.setFragmentResultListener(
-            CityBottomSheet.CITIES_FRAGMENT_KEY,
+            CityBottomSheet.TAG,
             viewLifecycleOwner
         ) { _: String, bundle: Bundle ->
             val lat = bundle.getDouble(CityBottomSheet.LATITUDE_KEY)
