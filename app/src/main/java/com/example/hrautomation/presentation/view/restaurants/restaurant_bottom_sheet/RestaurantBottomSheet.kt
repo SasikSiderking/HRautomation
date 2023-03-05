@@ -8,6 +8,8 @@ import android.widget.FrameLayout
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.RecyclerView
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.BottomSheetRestaurantsBinding
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
@@ -59,20 +61,17 @@ class RestaurantBottomSheet : BottomSheetDialogFragment() {
 
     private val callback = object : BottomSheetBehavior.BottomSheetCallback() {
         override fun onStateChanged(bottomSheet: View, newState: Int) {
-            if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+            if (newState == BottomSheetBehavior.STATE_DRAGGING) {
                 viewModel.loadAllData()
             }
         }
 
         override fun onSlide(bottomSheet: View, slideOffset: Float) = Unit
-
     }
 
     private fun initUi() {
 
-        if (buildingId != null) {
-            viewModel.loadData(buildingId)
-        }
+        viewModel.loadData(buildingId)
 
         adapter = BottomSheetRestaurantsAdapter(onRestaurantClickListener)
         binding.restaurantRecyclerView.adapter = adapter
@@ -86,6 +85,9 @@ class RestaurantBottomSheet : BottomSheetDialogFragment() {
 
     private val restaurantsObserver = Observer<List<BaseListItem>> { restaurantList ->
         adapter.update(restaurantList)
+        if (restaurantList.size > RestaurantBottomSheetViewModel.INITIAL_NUMBER_OF_ITEMS_SHOWN + 1) {
+            binding.restaurantRecyclerView.addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))
+        }
     }
 
     private val onRestaurantClickListener = OnRestaurantClickListener {

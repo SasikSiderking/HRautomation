@@ -53,7 +53,7 @@ class RestaurantBottomSheetViewModel @Inject constructor(
         _data.postValue(accumulator)
     }
 
-    private companion object {
+    companion object {
         const val INITIAL_NUMBER_OF_ITEMS_SHOWN = 1
     }
 }
