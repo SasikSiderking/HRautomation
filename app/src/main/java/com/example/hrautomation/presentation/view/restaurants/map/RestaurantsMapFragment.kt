@@ -13,6 +13,7 @@ import com.example.hrautomation.R
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.FragmentMapBinding
 import com.example.hrautomation.presentation.model.restaurants.BuildingItem
+import com.example.hrautomation.presentation.model.restaurants.ListRestaurantItem
 import com.example.hrautomation.presentation.view.restaurants.RestaurantsViewModel
 import com.example.hrautomation.presentation.view.restaurants.restaurant_bottom_sheet.RestaurantBottomSheet
 import com.example.hrautomation.presentation.view.restaurants.сity_bottom_sheet.CityBottomSheet
@@ -40,7 +41,7 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var cityFragment: CityBottomSheet
     private lateinit var restaurantFragment: RestaurantBottomSheet
 
-    private lateinit var restaurantCardAdapter: UpdatableViewAdapter<BuildingItem, RestaurantCard>
+    private lateinit var restaurantCardAdapter: UpdatableViewAdapter<ListRestaurantItem, RestaurantCard>
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -77,6 +78,7 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
         mapAdapter = MapAdapter(map)
 
         viewModel.data.observe(viewLifecycleOwner, buildingsObserver)
+        viewModel.restaurants.observe(viewLifecycleOwner, restaurantsObserver)
     }
 
     private val markerClickListener: OnMarkerDelegateClickListener =
@@ -114,11 +116,11 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
 
         with(newState) {
             if (chosenBuildingId != null) {
-                if (viewModel.isManyRestaurants(chosenBuildingId)) {
+                viewModel.isManyRestaurants(chosenBuildingId)?.let { chosenRestaurantId ->
+                    restaurantCardAdapter.updateView(chosenRestaurantId)
+                } ?: run {
                     restaurantCardAdapter.closeView()
-                    openRestaurantsBottomSheet(chosenBuildingId)
-                } else {
-                    restaurantCardAdapter.updateView(chosenBuildingId)
+                    openRestaurantsBottomSheet(chosenBuildingId!!)
                 }
             } else {
                 restaurantCardAdapter.closeView()
@@ -133,12 +135,15 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private val buildingsObserver = Observer<List<BuildingItem>> { buildings ->
-        restaurantCardAdapter.setItems(buildings)
         mapAdapter.setMarkers(buildings, requireContext())
 
         mapAdapter.setMarkerClickListener(markerClickListener)
 
         viewModel.restaurantsMapState.observe(viewLifecycleOwner, stateObserver)
+    }
+
+    private val restaurantsObserver = Observer<List<ListRestaurantItem>> { restaurants ->
+        restaurantCardAdapter.setItems(restaurants)
     }
 
     private fun initUi() {

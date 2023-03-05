@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.widget.FrameLayout
 import androidx.core.view.marginBottom
 import com.example.hrautomation.databinding.FragmentRestaurantsCardBinding
-import com.example.hrautomation.presentation.model.restaurants.BuildingItem
+import com.example.hrautomation.presentation.model.restaurants.ListRestaurantItem
 import com.example.hrautomation.utils.Updatable
 import java.io.Closeable
 
@@ -16,7 +16,7 @@ class RestaurantCard(
     attrs: AttributeSet?,
     defStyleAttrs: Int = 0,
     defStyleRes: Int = 0
-) : FrameLayout(context, attrs, defStyleAttrs), Updatable<BuildingItem>, Closeable {
+) : FrameLayout(context, attrs, defStyleAttrs), Updatable<ListRestaurantItem>, Closeable {
 
     private var listener: OnCardClickListener? = null
 
@@ -49,13 +49,13 @@ class RestaurantCard(
         this.listener = listener
     }
 
-    override fun update(item: BuildingItem) {
+    override fun update(item: ListRestaurantItem) {
         visibility = VISIBLE
         with(binding) {
-            restaurantName.text = item.address
-            restaurantRating.text = item.address
+            restaurantName.text = item.name
+            restaurantRating.text = item.rating.toString()
             restaurantAddress.text = item.address
-            restaurantStatusCheck.text = item.address
+            restaurantStatusCheck.text = item.statusAndCheck
         }
         ObjectAnimator.ofFloat(this, "translationY", BASE_POSITION).apply {
             duration = ANIMATION_DURATION
