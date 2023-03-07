@@ -21,6 +21,7 @@ import com.example.hrautomation.presentation.view.restaurants.RestaurantsFragmen
 import com.example.hrautomation.presentation.view.restaurants.list.RestaurantsListFragment
 import com.example.hrautomation.presentation.view.restaurants.map.RestaurantsMapFragment
 import com.example.hrautomation.presentation.view.restaurants.restaurant_bottom_sheet.RestaurantBottomSheet
+import com.example.hrautomation.presentation.view.restaurants.restaurant_details_activity.RestaurantDetails
 import com.example.hrautomation.presentation.view.restaurants.сity_bottom_sheet.CityBottomSheet
 import dagger.Component
 import javax.inject.Singleton
@@ -63,4 +64,5 @@ interface AppComponent {
     fun inject(fragment: RestaurantsFragment)
     fun inject(fragment: RestaurantsListFragment)
     fun inject(sheet: RestaurantBottomSheet)
+    fun inject(activity: RestaurantDetails)
 }

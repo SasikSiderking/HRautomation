@@ -64,6 +64,8 @@
         <activity android:name=".presentation.view.faq.activity_question.QuestionActivity" />
 
         <activity android:name=".presentation.view.profile.ProfileActivity" />
+
+        <activity android:name=".presentation.view.restaurants.restaurant_details_activity.RestaurantDetails" />
     </application>
 
 </manifest>
