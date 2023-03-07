@@ -1,10 +1,13 @@
 package com.example.hrautomation.presentation.model.restaurants
 
+import com.example.hrautomation.R
 import com.example.hrautomation.domain.model.restaurants.Building
 import com.example.hrautomation.domain.model.restaurants.ListRestaurant
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.utils.Mapper
+import com.example.hrautomation.utils.resources_utils.StringResourceProvider
 import javax.inject.Inject
+import kotlin.math.floor
 
 data class BuildingItem(
     override val id: Long,
@@ -19,18 +22,19 @@ data class ListRestaurantItem(
     val name: String,
     val address: String,
     val statusAndCheck: String,
-    val rating: Float,
+    val rating: String,
 ) : BaseListItem
 
-class ListRestaurantToListRestaurantItemMapper : Mapper<ListRestaurant, ListRestaurantItem> {
+class ListRestaurantToListRestaurantItemMapper(private val stringResourceProvider: StringResourceProvider) :
+    Mapper<ListRestaurant, ListRestaurantItem> {
 
     override fun convert(model: ListRestaurant): ListRestaurantItem =
         ListRestaurantItem(
             model.id,
             model.name,
             model.address,
-            "${model.status} · ${model.check}",
-            model.rating
+            stringResourceProvider.getString(R.string.restaurants_status_check, model.status, model.check),
+            (floor(model.rating * 10.0) / 10.0).toString()
         )
 
 }

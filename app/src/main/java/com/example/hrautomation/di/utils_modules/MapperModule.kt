@@ -7,18 +7,15 @@ import com.example.hrautomation.data.model.faq.FaqCategoryResponseToFaqCategoryM
 import com.example.hrautomation.data.model.faq.FaqQuestionResponseToFaqQuestionMapper
 import com.example.hrautomation.data.model.products.ProductCategoryResponseToProductCategoryMapper
 import com.example.hrautomation.data.model.products.ProductResponseToProductMapper
-import com.example.hrautomation.data.model.restaurants.BuildingsResponseToBuildingsMapper
-import com.example.hrautomation.data.model.restaurants.CityResponseToCityMapper
-import com.example.hrautomation.data.model.restaurants.ListRestaurantResponseToListRestaurantMapper
+import com.example.hrautomation.data.model.restaurants.*
 import com.example.hrautomation.presentation.model.colleagues.EmployeeToColleagueItemMapper
 import com.example.hrautomation.presentation.model.colleagues.EmployeeToEmployeeItemMapper
 import com.example.hrautomation.presentation.model.faq.FaqCategoryToFaqCategoryItemMapper
 import com.example.hrautomation.presentation.model.faq.FaqQuestionToFaqQuestionItemMapper
 import com.example.hrautomation.presentation.model.products.ProductCategoryToProductCategoryItemMapper
 import com.example.hrautomation.presentation.model.products.ProductToListedProductItemMapper
-import com.example.hrautomation.presentation.model.restaurants.BuildingToBuildingItemMapper
-import com.example.hrautomation.presentation.model.restaurants.CityToCityItemMapper
-import com.example.hrautomation.presentation.model.restaurants.ListRestaurantToListRestaurantItemMapper
+import com.example.hrautomation.presentation.model.restaurants.*
+import com.example.hrautomation.utils.resources_utils.StringResourceProvider
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
@@ -92,8 +89,8 @@ class MapperModule {
 
     @Reusable
     @Provides
-    fun provideListRestaurantToListRestaurantItemMapper(): ListRestaurantToListRestaurantItemMapper =
-        ListRestaurantToListRestaurantItemMapper()
+    fun provideListRestaurantToListRestaurantItemMapper(stringResourceProvider: StringResourceProvider): ListRestaurantToListRestaurantItemMapper =
+        ListRestaurantToListRestaurantItemMapper(stringResourceProvider)
 
     @Reusable
     @Provides
@@ -110,6 +107,24 @@ class MapperModule {
 
     @Reusable
     @Provides
-    fun provideBuildingToBuildingItemMapper(): BuildingToBuildingItemMapper =
-        BuildingToBuildingItemMapper(provideListRestaurantToListRestaurantItemMapper())
+    fun provideBuildingToBuildingItemMapper(stringResourceProvider: StringResourceProvider): BuildingToBuildingItemMapper =
+        BuildingToBuildingItemMapper(provideListRestaurantToListRestaurantItemMapper(stringResourceProvider))
+
+    @Reusable
+    @Provides
+    fun provideReviewResponseToReviewMapper(): ReviewResponseToReviewMapper = ReviewResponseToReviewMapper()
+
+    @Reusable
+    @Provides
+    fun provideRestaurantResponseToRestaurantMapper(): RestaurantResponseToRestaurantMapper =
+        RestaurantResponseToRestaurantMapper()
+
+    @Reusable
+    @Provides
+    fun provideReviewToReviewItemMapper(): ReviewToReviewItemMapper = ReviewToReviewItemMapper()
+
+    @Reusable
+    @Provides
+    fun provideRestaurantToRestaurantItemMapper(stringResourceProvider: StringResourceProvider): RestaurantToRestaurantItemMapper =
+        RestaurantToRestaurantItemMapper(stringResourceProvider)
 }
