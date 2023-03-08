@@ -95,7 +95,7 @@ class CityBottomSheet : BottomSheetDialogFragment() {
         val bundle = Bundle()
         bundle.putDouble(LATITUDE_KEY, latLng.latitude)
         bundle.putDouble(LONGITUDE_KEY, latLng.longitude)
-        setFragmentResult(CITIES_FRAGMENT_KEY, bundle)
+        setFragmentResult(TAG, bundle)
         this.dismiss()
     }
 
@@ -119,8 +119,6 @@ class CityBottomSheet : BottomSheetDialogFragment() {
 
     companion object {
         const val TAG = "SearchBottomSheet"
-
-        const val CITIES_FRAGMENT_KEY = "CitiesKey"
 
         const val LATITUDE_KEY = "LatitudeKey"
 
