@@ -21,6 +21,8 @@ import javax.inject.Inject
 
 class RestaurantBottomSheet : BottomSheetDialogFragment() {
 
+    private lateinit var behavior: BottomSheetBehavior<FrameLayout>
+
     private val buildingId: Long by lazy { requireArguments().getLong(BUILDING_ID_BUNDLE_KEY) }
 
     private var _binding: BottomSheetRestaurantsBinding? = null
@@ -54,19 +56,21 @@ class RestaurantBottomSheet : BottomSheetDialogFragment() {
         val dialog = dialog
         if (dialog != null) {
             val bottomSheet = dialog.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)
-            val behavior = BottomSheetBehavior.from(bottomSheet)
+            behavior = BottomSheetBehavior.from(bottomSheet)
             behavior.addBottomSheetCallback(callback)
         }
     }
 
     private val callback = object : BottomSheetBehavior.BottomSheetCallback() {
-        override fun onStateChanged(bottomSheet: View, newState: Int) {
-            if (newState == BottomSheetBehavior.STATE_DRAGGING) {
+        override fun onStateChanged(bottomSheet: View, newState: Int) = Unit
+
+        override fun onSlide(bottomSheet: View, slideOffset: Float) {
+            if (
+                slideOffset >= 0 && behavior.state == BottomSheetBehavior.STATE_DRAGGING
+            ) {
                 viewModel.loadAllData()
             }
         }
-
-        override fun onSlide(bottomSheet: View, slideOffset: Float) = Unit
     }
 
     private fun initUi() {
