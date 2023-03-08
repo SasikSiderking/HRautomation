@@ -116,11 +116,12 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
 
         with(newState) {
             if (chosenBuildingId != null) {
-                viewModel.isManyRestaurants(chosenBuildingId)?.let { chosenRestaurantId ->
+                val chosenRestaurantId = viewModel.singleRestaurantIdInBuildingOrNull(chosenBuildingId)
+                if (chosenRestaurantId != null) {
                     restaurantCardAdapter.updateView(chosenRestaurantId)
-                } ?: run {
+                } else {
                     restaurantCardAdapter.closeView()
-                    openRestaurantsBottomSheet(chosenBuildingId!!)
+                    openRestaurantsBottomSheet(chosenBuildingId)
                 }
             } else {
                 restaurantCardAdapter.closeView()

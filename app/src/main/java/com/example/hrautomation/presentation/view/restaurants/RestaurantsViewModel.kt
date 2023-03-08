@@ -73,7 +73,7 @@ class RestaurantsViewModel @Inject constructor(
         }
     }
 
-    fun isManyRestaurants(buildingId: Long): Long? {
+    fun singleRestaurantIdInBuildingOrNull(buildingId: Long): Long? {
         val building = data.value?.find { it.id == buildingId && it.restaurants.size == 1 }
         return building?.restaurants?.first()?.id
     }
