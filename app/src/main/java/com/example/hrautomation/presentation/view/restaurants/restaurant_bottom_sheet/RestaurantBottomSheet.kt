@@ -62,13 +62,13 @@ class RestaurantBottomSheet : BottomSheetDialogFragment() {
     }
 
     private val callback = object : BottomSheetBehavior.BottomSheetCallback() {
+        var isAllDataLoaded = false
         override fun onStateChanged(bottomSheet: View, newState: Int) = Unit
 
         override fun onSlide(bottomSheet: View, slideOffset: Float) {
-            if (
-                slideOffset >= 0 && behavior.state == BottomSheetBehavior.STATE_DRAGGING
-            ) {
+            if (slideOffset >= 0 && (behavior.state == BottomSheetBehavior.STATE_DRAGGING) && !isAllDataLoaded) {
                 viewModel.loadAllData()
+                isAllDataLoaded = true
             }
         }
     }
