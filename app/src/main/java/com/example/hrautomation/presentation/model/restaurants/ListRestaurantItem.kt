@@ -6,8 +6,8 @@ import com.example.hrautomation.domain.model.restaurants.ListRestaurant
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.utils.Mapper
 import com.example.hrautomation.utils.resources_utils.StringResourceProvider
+import com.example.hrautomation.utils.restaurants.RestaurantUtils
 import javax.inject.Inject
-import kotlin.math.floor
 
 data class BuildingItem(
     override val id: Long,
@@ -34,7 +34,7 @@ class ListRestaurantToListRestaurantItemMapper(private val stringResourceProvide
             model.name,
             model.address,
             stringResourceProvider.getString(R.string.restaurants_status_check, model.status, model.check),
-            (floor(model.rating * 10.0) / 10.0).toString()
+            RestaurantUtils.roundRating(model.rating)
         )
 
 }
