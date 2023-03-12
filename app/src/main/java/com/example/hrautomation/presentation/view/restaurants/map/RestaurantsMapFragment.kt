@@ -15,8 +15,9 @@ import com.example.hrautomation.databinding.FragmentMapBinding
 import com.example.hrautomation.presentation.model.restaurants.BuildingItem
 import com.example.hrautomation.presentation.model.restaurants.ListRestaurantItem
 import com.example.hrautomation.presentation.view.restaurants.RestaurantsViewModel
-import com.example.hrautomation.presentation.view.restaurants.restaurant_bottom_sheet.RestaurantBottomSheet
-import com.example.hrautomation.presentation.view.restaurants.сity_bottom_sheet.CityBottomSheet
+import com.example.hrautomation.presentation.view.restaurants.restaurant.RestaurantBottomSheet
+import com.example.hrautomation.presentation.view.restaurants.restaurant_details.RestaurantDetailsActivity
+import com.example.hrautomation.presentation.view.restaurants.сity.CityBottomSheet
 import com.example.hrautomation.utils.ViewModelFactory
 import com.example.hrautomation.utils.ui.Dp
 import com.example.hrautomation.utils.ui.dpToPx
@@ -92,7 +93,10 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
                 viewModel.resetChosenBuilding()
             }
             CardAction.GO_TO -> {
-//                TODO(Открыть активити с фулл рестораном)
+                val chosenRestaurantId = restaurantCardAdapter.getCurrentItemId()
+                if (chosenRestaurantId != null) {
+                    startActivity(RestaurantDetailsActivity.createIntent(requireContext(), chosenRestaurantId))
+                }
             }
         }
     }

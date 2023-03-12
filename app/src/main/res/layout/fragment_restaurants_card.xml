@@ -12,17 +12,17 @@
         android:background="@drawable/restaurants_card_background">
 
         <TextView
-            android:layout_width="wrap_content"
             android:id="@+id/restaurantName"
-            app:layout_constraintHorizontal_bias="0.0"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="6dp"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/restaurantRating"
-            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toStartOf="@+id/restaurantRating"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Cash flow" />
@@ -48,7 +48,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/restaurantRating"
             app:layout_constraintEnd_toStartOf="@+id/closeButton"
             app:layout_constraintStart_toEndOf="@+id/restaurantRating"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/restaurantRating" />
 
         <ImageView
             android:id="@+id/closeButton"
@@ -76,9 +76,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/details"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/restaurantAddress"
-            tools:layout_editor_absoluteX="32dp"
             tools:text="Ресторан · 500 ₽" />
 
         <TextView
@@ -91,7 +93,9 @@
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/restaurantStatusCheck" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

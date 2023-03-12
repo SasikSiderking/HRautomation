@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.hrautomation.app.App
 import com.example.hrautomation.presentation.view.activity.MainActivity
-import com.example.hrautomation.presentation.view.loading.activity_login.LoginActivity
+import com.example.hrautomation.presentation.view.loading.login.LoginActivity
 import com.example.hrautomation.utils.ViewModelFactory
 import javax.inject.Inject
 
