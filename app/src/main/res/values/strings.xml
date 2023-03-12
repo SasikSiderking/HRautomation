@@ -58,4 +58,9 @@
     <string name="city_search">Введите город</string>
     <string name="choose_city">choose city</string>
     <string name="restaurants_gap_item_text">И еще %1$d ресторанов</string>
+    <string name="restaurant_add_review_button_text">ДОБАВИТЬ</string>
+    <string name="restaurant_details_activity_action_bar">Детали ресторана</string>
+    <string name="restaurant_item_name">%1$s  · </string>
+    <string name="restaurnt_item_check">%1$d ₽</string>
+    <string name="number_of_reviews">Отзывы (%1$d)</string>
 </resources>

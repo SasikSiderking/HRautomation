@@ -35,4 +35,8 @@ class UpdatableViewAdapter<Item : BaseListItem, View>(
         }
     }
 
+    fun getCurrentItemId(): Long? {
+        return currentItemId
+    }
+
 }
