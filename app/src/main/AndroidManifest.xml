@@ -45,7 +45,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.example.hrautomation.presentation.view.loading.activity_login.LoginActivity" />
+        <activity android:name="com.example.hrautomation.presentation.view.loading.login.LoginActivity" />
 
         <activity
             android:name=".presentation.view.activity.MainActivity"
@@ -61,11 +61,11 @@
 
         <activity android:name="com.example.hrautomation.presentation.view.colleagues.employee.EmployeeActivity" />
 
-        <activity android:name=".presentation.view.faq.activity_question.QuestionActivity" />
+        <activity android:name=".presentation.view.faq.question.QuestionActivity" />
 
         <activity android:name=".presentation.view.profile.ProfileActivity" />
 
-        <activity android:name=".presentation.view.restaurants.restaurant_details_activity.RestaurantDetails" />
+        <activity android:name=".presentation.view.restaurants.restaurant_details.RestaurantDetailsActivity" />
     </application>
 
 </manifest>

@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.FragmentFaqBinding
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
-import com.example.hrautomation.presentation.view.faq.activity_question.QuestionActivity
+import com.example.hrautomation.presentation.view.faq.question.QuestionActivity
 import com.example.hrautomation.utils.ViewModelFactory
 import com.example.hrautomation.utils.ui.Dp
 import com.example.hrautomation.utils.ui.dpToPx

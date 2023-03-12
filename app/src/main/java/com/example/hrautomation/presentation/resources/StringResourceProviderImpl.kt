@@ -1,7 +1,7 @@
 package com.example.hrautomation.presentation.resources
 
 import android.content.res.Resources
-import com.example.hrautomation.utils.resources_utils.StringResourceProvider
+import com.example.hrautomation.utils.resources.StringResourceProvider
 import javax.inject.Inject
 
 class StringResourceProviderImpl @Inject constructor(private val resources: Resources) : StringResourceProvider {

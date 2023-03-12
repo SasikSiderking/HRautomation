@@ -5,7 +5,7 @@ import com.example.hrautomation.domain.model.restaurants.Building
 import com.example.hrautomation.domain.model.restaurants.ListRestaurant
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.utils.Mapper
-import com.example.hrautomation.utils.resources_utils.StringResourceProvider
+import com.example.hrautomation.utils.resources.StringResourceProvider
 import javax.inject.Inject
 import kotlin.math.floor
 
