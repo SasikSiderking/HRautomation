@@ -17,4 +17,6 @@ interface RestaurantsRepository {
 
     suspend fun getReviewsByRestaurantId(restaurantId: Long): List<Review>
 
+    suspend fun addReview(restaurantId: Long, userId: Long, content: String, check: Int, rating: Float)
+
 }

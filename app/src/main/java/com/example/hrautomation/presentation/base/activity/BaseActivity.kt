@@ -35,6 +35,8 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
         initObserves()
 
+        initListeners()
+
     }
 
     protected abstract val exceptionObserver: Observer<Throwable?>
@@ -44,6 +46,8 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     abstract fun initUI()
 
     abstract fun initObserves()
+
+    abstract fun initListeners()
 
     override fun onDestroy() {
         super.onDestroy()

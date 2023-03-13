@@ -1,10 +1,9 @@
 package com.example.hrautomation.data.api
 
-import com.example.hrautomation.data.model.restaurants.BuildingResponse
-import com.example.hrautomation.data.model.restaurants.CityResponse
-import com.example.hrautomation.data.model.restaurants.RestaurantResponse
-import com.example.hrautomation.data.model.restaurants.ReviewResponse
+import com.example.hrautomation.data.model.restaurants.*
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface RestaurantsApi {
@@ -19,4 +18,11 @@ interface RestaurantsApi {
 
     @GET("/reviews/get/restaurant/{restaurantId}")
     suspend fun getReviewsByRestaurantId(@Path("restaurantId") restaurantId: Long): List<ReviewResponse>
+
+    @POST("/reviews/add/restaurant/{restaurantId}/user/{userId}")
+    suspend fun addReview(
+        @Path("restaurantId") restaurantId: Long,
+        @Path("userId") userId: Long,
+        @Body reviewData: ReviewRequest
+    )
 }

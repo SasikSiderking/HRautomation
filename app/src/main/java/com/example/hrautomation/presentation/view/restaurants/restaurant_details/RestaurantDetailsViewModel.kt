@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.hrautomation.data.dispatcher.CoroutineDispatchers
 import com.example.hrautomation.domain.repository.RestaurantsRepository
+import com.example.hrautomation.domain.repository.TokenRepository
 import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
 import com.example.hrautomation.presentation.model.restaurants.RestaurantToRestaurantItemMapper
 import com.example.hrautomation.presentation.model.restaurants.ReviewToReviewItemMapper
@@ -16,6 +17,7 @@ import javax.inject.Inject
 
 class RestaurantDetailsViewModel @Inject constructor(
     private val restaurantsRepository: RestaurantsRepository,
+    private val tokenRepository: TokenRepository,
     private val dispatchers: CoroutineDispatchers,
     private val restaurantToRestaurantItemMapper: RestaurantToRestaurantItemMapper,
     private val reviewToReviewItemMapper: ReviewToReviewItemMapper
@@ -50,6 +52,22 @@ class RestaurantDetailsViewModel @Inject constructor(
                 val reviews = reviewsDeferred.await()
 
                 _state.postValue(RestaurantDetailsState(restaurant, reviews))
+            },
+            doOnError = { error ->
+                Timber.e(error)
+                _exception.postValue(error)
+            }
+        )
+    }
+
+    fun addReview(restaurantId: Long, content: String, check: Int, rating: Float) {
+        viewModelScope.tryLaunch(
+            contextPiece = dispatchers.io,
+            doOnLaunch = {
+                tokenRepository.getUserId()?.let {
+                    restaurantsRepository.addReview(restaurantId, it, content, check, rating)
+                }
+                loadData(state.value!!.restaurant.id)
             },
             doOnError = { error ->
                 Timber.e(error)
