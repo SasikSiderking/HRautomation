@@ -7,8 +7,7 @@
     android:paddingHorizontal="12dp"
     android:paddingVertical="16dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/mainContent"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -16,152 +15,184 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/restaurantName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="32sp"
-            android:textStyle="bold"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintEnd_toStartOf="@+id/restaurantRating"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Never gonna · " />
-
-        <TextView
-            android:id="@+id/restaurantRating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="@+id/restaurantName"
-            app:layout_constraintEnd_toStartOf="@+id/star"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/restaurantName"
-            app:layout_constraintTop_toTopOf="@+id/restaurantName"
-            tools:text="4.5" />
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/star"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_margin="2dp"
-            android:src="@drawable/ic_baseline_star_rate_24"
-            app:layout_constraintBottom_toBottomOf="@+id/restaurantRating"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/restaurantRating"
-            app:layout_constraintTop_toTopOf="@+id/restaurantRating" />
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/statusImage"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/ic_baseline_fastfood_24"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/restaurantName" />
-
-        <TextView
-            android:id="@+id/restaurantStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@id/statusImage"
-            app:layout_constraintLeft_toRightOf="@id/statusImage"
-            app:layout_constraintTop_toTopOf="@id/statusImage"
-            tools:text="give you up" />
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/checkImage"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/ic_baseline_monetization_on_24"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/statusImage" />
-
-        <TextView
-            android:id="@+id/restaurantCheck"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@id/checkImage"
-            app:layout_constraintLeft_toRightOf="@id/checkImage"
-            app:layout_constraintTop_toTopOf="@id/checkImage"
-            tools:text="let you down: 1337 р" />
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/addressImage"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/ic_baseline_route_24"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/checkImage" />
-
-        <TextView
-            android:id="@+id/restaurantAddress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@id/addressImage"
-            app:layout_constraintLeft_toRightOf="@id/addressImage"
-            app:layout_constraintTop_toTopOf="@id/addressImage"
-            tools:text="run around and desert you" />
-
-        <TextView
-            android:id="@+id/reviewCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toStartOf="@+id/button"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/addressImage"
-            tools:text="Make you cry (993)" />
-
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/restaurant_add_review_button_text"
-            app:layout_constraintBottom_toBottomOf="@id/reviewCount"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/reviewCount"
-            app:layout_constraintTop_toTopOf="@id/reviewCount" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/reviewsRecyclerView"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/mainContent"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="32dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/reviewCount" />
+            app:layout_constraintTop_toTopOf="parent">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/restaurantName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintEnd_toStartOf="@+id/restaurantRating"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Never gonna · " />
+
+            <TextView
+                android:id="@+id/restaurantRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@+id/restaurantName"
+                app:layout_constraintEnd_toStartOf="@+id/star"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/restaurantName"
+                app:layout_constraintTop_toTopOf="@+id/restaurantName"
+                tools:text="4.5" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/star"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_margin="2dp"
+                android:src="@drawable/ic_baseline_star_rate_24"
+                app:layout_constraintBottom_toBottomOf="@+id/restaurantRating"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/restaurantRating"
+                app:layout_constraintTop_toTopOf="@+id/restaurantRating" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/statusImage"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_baseline_fastfood_24"
+                app:layout_constraintBottom_toBottomOf="@id/restaurantStatus"
+                app:layout_constraintEnd_toStartOf="@+id/restaurantStatus"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/restaurantStatus" />
+
+            <TextView
+                android:id="@+id/restaurantStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/statusImage"
+                app:layout_constraintTop_toBottomOf="@id/restaurantName"
+                tools:text="give you up" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/checkImage"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_baseline_monetization_on_24"
+                app:layout_constraintBottom_toBottomOf="@id/restaurantCheck"
+                app:layout_constraintEnd_toStartOf="@+id/restaurantCheck"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/restaurantCheck" />
+
+            <TextView
+                android:id="@+id/restaurantCheck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constrainedHeight="true"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/checkImage"
+                app:layout_constraintTop_toBottomOf="@id/restaurantStatus"
+                tools:text="let you down: 1337 р" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/addressImage"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_baseline_route_24"
+                app:layout_constraintBottom_toBottomOf="@id/restaurantAddress"
+                app:layout_constraintEnd_toStartOf="@+id/restaurantAddress"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/restaurantAddress" />
+
+            <TextView
+                android:id="@+id/restaurantAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/addressImage"
+                app:layout_constraintTop_toBottomOf="@id/restaurantCheck"
+                tools:text="run around and desert you" />
+
+            <TextView
+                android:id="@+id/reviewCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@+id/addReviewButton"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/addressImage"
+                tools:text="Make you cry (993)" />
+
+            <Button
+                android:id="@+id/addReviewButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/restaurant_add_review_button_text"
+                app:layout_constraintBottom_toBottomOf="@id/reviewCount"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/reviewCount"
+                app:layout_constraintTop_toTopOf="@id/reviewCount" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/reviewsRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:layout_marginTop="32dp"
+                android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/reviewCount" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
     <include
         android:id="@+id/reusableLoading"
-        layout="@layout/reusable_loading" />
+        layout="@layout/reusable_loading"
+        tools:visibility="gone" />
 
     <include
         android:id="@+id/reusableReload"
-        layout="@layout/reusable_reload" />
+        layout="@layout/reusable_reload"
+        tools:visibility="gone" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

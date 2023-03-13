@@ -10,8 +10,12 @@
         android:id="@+id/employeeImage"
         android:layout_width="56dp"
         android:layout_height="56dp"
+        app:layout_constraintBottom_toBottomOf="@+id/employeeName"
+        app:layout_constraintEnd_toStartOf="@+id/employeeName"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/employeeName"
         app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
         tools:src="@drawable/ic_confused" />
 
@@ -20,10 +24,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@id/employeeImage"
-        app:layout_constraintStart_toEndOf="@id/employeeImage"
-        app:layout_constraintTop_toTopOf="@id/employeeImage"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/employeeImage"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="Rick Astley" />
 
     <RatingBar
@@ -31,31 +38,38 @@
         style="?android:attr/ratingBarStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:isIndicator="true"
         android:numStars="5"
-        app:layout_constraintStart_toStartOf="@id/employeeImage"
-        app:layout_constraintTop_toBottomOf="@id/employeeImage" />
+        android:theme="@style/RatingBar"
+        app:layout_constraintBottom_toBottomOf="@+id/reviewDate"
+        app:layout_constraintEnd_toStartOf="@+id/reviewDate"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/reviewDate" />
 
     <TextView
         android:id="@+id/reviewDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintBottom_toBottomOf="@id/reviewRating"
-        app:layout_constraintStart_toEndOf="@id/reviewRating"
-        app:layout_constraintTop_toTopOf="@id/reviewRating"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="20dp"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/reviewRating"
+        app:layout_constraintTop_toBottomOf="@+id/employeeName"
         tools:text="10.02.2023" />
 
     <TextView
         android:id="@+id/reviewContent"
+        android:layout_marginTop="12dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/reviewRating"
+        app:layout_constraintTop_toBottomOf="@+id/reviewDate"
         tools:text="Never gonna give you up never gonna let you down never gonna run around and desert you never gonna make you cry never gonna say goodbye" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

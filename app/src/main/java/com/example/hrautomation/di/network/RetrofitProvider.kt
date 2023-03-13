@@ -37,7 +37,7 @@ class RetrofitProvider @Inject constructor(private val tokenRepository: TokenRep
     }
 
     //    private val contentType = "application/json".toMediaType()
-    private val gson: Gson = GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX").create()
+    private val gson: Gson = GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").create()
 
     //    @OptIn(ExperimentalSerializationApi::class)
     private val retrofitBuilder by lazy {

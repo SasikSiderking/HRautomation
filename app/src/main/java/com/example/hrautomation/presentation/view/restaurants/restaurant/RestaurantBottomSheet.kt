@@ -40,6 +40,8 @@ class RestaurantBottomSheet : BottomSheetDialogFragment() {
 
     private lateinit var adapter: BottomSheetRestaurantsAdapter
 
+    private val resultBundle = Bundle()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (requireContext().applicationContext as App).appComponent.inject(this)
@@ -90,8 +92,7 @@ class RestaurantBottomSheet : BottomSheetDialogFragment() {
     }
 
     override fun onDismiss(dialog: DialogInterface) {
-        val bundle = Bundle()
-        setFragmentResult(TAG, bundle)
+        setFragmentResult(TAG, resultBundle)
         super.onDismiss(dialog)
     }
 
@@ -102,12 +103,15 @@ class RestaurantBottomSheet : BottomSheetDialogFragment() {
         }
     }
 
-    private val onRestaurantClickListener = OnRestaurantClickListener {
-//        TODO(Открыть активити с фулл рестораном)
+    private val onRestaurantClickListener = OnRestaurantClickListener { selectedRestaurantId ->
+        resultBundle.putString(SELECTED_RESTAURANT_TAG, selectedRestaurantId.toString())
+        dismiss()
     }
 
     companion object {
         const val TAG = "RestaurantBottomSheet"
+
+        const val SELECTED_RESTAURANT_TAG = "selectedRestaurant"
 
         private const val BUILDING_ID_BUNDLE_KEY = "IdKey"
 

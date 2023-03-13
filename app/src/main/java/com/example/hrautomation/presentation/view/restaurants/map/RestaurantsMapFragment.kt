@@ -70,6 +70,13 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
         return binding.root
     }
 
+    private fun initUi() {
+        restaurantCardAdapter = UpdatableViewAdapter(binding.restaurantCard)
+
+        supportMapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        supportMapFragment.getMapAsync(this)
+    }
+
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
@@ -95,7 +102,7 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
             CardAction.GO_TO -> {
                 val chosenRestaurantId = restaurantCardAdapter.getCurrentItemId()
                 if (chosenRestaurantId != null) {
-                    startActivity(RestaurantDetailsActivity.createIntent(requireContext(), chosenRestaurantId))
+                    openRestaurantDetails(chosenRestaurantId)
                 }
             }
         }
@@ -120,7 +127,7 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
 
         with(newState) {
             if (chosenBuildingId != null) {
-                val chosenRestaurantId = viewModel.singleRestaurantIdInBuildingOrNull(chosenBuildingId)
+                val chosenRestaurantId = viewModel.getSingleRestaurantIdInBuildingOrNull(chosenBuildingId)
                 if (chosenRestaurantId != null) {
                     restaurantCardAdapter.updateView(chosenRestaurantId)
                 } else {
@@ -131,12 +138,6 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
                 restaurantCardAdapter.closeView()
             }
         }
-    }
-
-    private fun openRestaurantsBottomSheet(buildingId: Long) {
-        restaurantFragment = RestaurantBottomSheet.newInstance(buildingId)
-
-        restaurantFragment.show(childFragmentManager, RestaurantBottomSheet.TAG)
     }
 
     private val buildingsObserver = Observer<List<BuildingItem>> { buildings ->
@@ -151,17 +152,20 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
         restaurantCardAdapter.setItems(restaurants)
     }
 
-    private fun initUi() {
-        restaurantCardAdapter = UpdatableViewAdapter(binding.restaurantCard)
-
-        supportMapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-        supportMapFragment.getMapAsync(this)
-    }
-
     private fun initToolbar() {
         (activity as? AppCompatActivity)?.supportActionBar?.let {
             it.elevation = requireContext().dpToPx(TOOLBAR_ELEVATION).toFloat()
         }
+    }
+
+    private fun openRestaurantsBottomSheet(buildingId: Long) {
+        restaurantFragment = RestaurantBottomSheet.newInstance(buildingId)
+
+        restaurantFragment.show(childFragmentManager, RestaurantBottomSheet.TAG)
+    }
+
+    private fun openRestaurantDetails(restaurantId: Long) {
+        startActivity(RestaurantDetailsActivity.createIntent(requireContext(), restaurantId))
     }
 
     private fun initListeners() {
@@ -181,7 +185,11 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
         childFragmentManager.setFragmentResultListener(
             RestaurantBottomSheet.TAG,
             viewLifecycleOwner
-        ) { _: String, _: Bundle ->
+        ) { _: String, bundle: Bundle ->
+            val selectedRestaurantId = bundle.getString(RestaurantBottomSheet.SELECTED_RESTAURANT_TAG)
+            if (selectedRestaurantId != null) {
+                openRestaurantDetails(selectedRestaurantId.toLong())
+            }
             viewModel.resetChosenBuilding()
         }
     }

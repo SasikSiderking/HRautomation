@@ -11,11 +11,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="6dp"
-        android:layout_marginBottom="6dp"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toStartOf="@+id/restaurantRating"
         app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Cash flow" />
@@ -29,6 +31,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/restaurantName"
         app:layout_constraintEnd_toStartOf="@+id/star"
         app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/restaurantName"
         app:layout_constraintTop_toTopOf="@+id/restaurantName"
         tools:text="4.5" />
 
@@ -58,7 +61,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/restaurantAddress"
-        tools:layout_editor_absoluteX="32dp"
         tools:text="Ресторан · 500 ₽" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
