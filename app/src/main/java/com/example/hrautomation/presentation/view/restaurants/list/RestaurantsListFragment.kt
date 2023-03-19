@@ -8,10 +8,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.RecyclerView
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.FragmentRestaurantsListBinding
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.view.restaurants.RestaurantsViewModel
+import com.example.hrautomation.presentation.view.restaurants.restaurant_details.RestaurantDetailsActivity
 import com.example.hrautomation.utils.ViewModelFactory
 import com.example.hrautomation.utils.ui.Dp
 import com.example.hrautomation.utils.ui.dpToPx
@@ -37,7 +40,7 @@ class RestaurantsListFragment : Fragment() {
     }
 
     private val onRestaurantClickListener = OnRestaurantClickListener { restaurantId: Long ->
-//        TODO(клик на ресторан)
+        startActivity(RestaurantDetailsActivity.createIntent(requireContext(), restaurantId))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,6 +66,7 @@ class RestaurantsListFragment : Fragment() {
     private fun initUi() {
         adapter = RestaurantsAdapter(onRestaurantClickListener)
         binding.restaurantRecyclerView.adapter = adapter
+        binding.restaurantRecyclerView.addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))
         viewModel.restaurants.observe(viewLifecycleOwner, restaurantsObserver)
     }
 

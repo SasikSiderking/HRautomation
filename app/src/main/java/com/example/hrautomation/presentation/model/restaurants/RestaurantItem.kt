@@ -22,7 +22,7 @@ class RestaurantToRestaurantItemMapper @Inject constructor(private val stringRes
     override fun convert(model: Restaurant): RestaurantItem {
         return RestaurantItem(
             model.id,
-            stringResourceProvider.getString(R.string.restaurant_item_name, model.name),
+            model.name,
             RestaurantUtils.roundRating(model.rating),
             model.status,
             stringResourceProvider.getString(R.string.restaurnt_item_check, model.check),

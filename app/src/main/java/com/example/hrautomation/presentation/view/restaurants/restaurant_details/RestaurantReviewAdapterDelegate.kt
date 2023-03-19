@@ -35,8 +35,7 @@ class RestaurantReviewAdapterDelegate :
                 .into(employeeImage)
             employeeName.text = item.author
             reviewRating.rating = item.rating
-//            TODO(Date in review)
-            reviewDate.text = "04.05.2021"
+            reviewDate.text = item.date
             reviewContent.text = item.content
         }
     }

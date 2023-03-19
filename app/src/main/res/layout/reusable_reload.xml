@@ -28,6 +28,6 @@
         app:icon="@drawable/ic_baseline_replay_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reusableReloadTextView" />
+        app:layout_constraintTop_toBottomOf="@id/reusableReloadTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

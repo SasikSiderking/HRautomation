@@ -4,19 +4,25 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.example.hrautomation.R
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.ActivityRestaurantDetailsBinding
 import com.example.hrautomation.presentation.base.activity.BaseActivity
+import com.example.hrautomation.presentation.model.restaurants.ReviewDialogResult
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingSettings
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingState
 import com.example.hrautomation.utils.ui.switcher.base.SwitchAnimationParams
+import timber.log.Timber
 
 class RestaurantDetailsActivity : BaseActivity<ActivityRestaurantDetailsBinding>() {
 
-    private val selectedItemId: Long by lazy { intent.getLongExtra(ID_EXTRA, 0L) }
+    private val selectedRestaurantId: Long by lazy { intent.getLongExtra(ID_EXTRA, 0L) }
+
+    private lateinit var selectedRestaurantName: String
 
     override val bindingInflater: (LayoutInflater) -> ActivityRestaurantDetailsBinding
         get() = { ActivityRestaurantDetailsBinding.inflate(layoutInflater) }
@@ -30,9 +36,11 @@ class RestaurantDetailsActivity : BaseActivity<ActivityRestaurantDetailsBinding>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         supportActionBar?.title = getString(R.string.restaurant_details_activity_action_bar)
 
-        viewModel.loadData(selectedItemId)
+        viewModel.loadData(selectedRestaurantId)
     }
 
     override fun initInject() {
@@ -50,7 +58,7 @@ class RestaurantDetailsActivity : BaseActivity<ActivityRestaurantDetailsBinding>
                 )
             )
             reusableReload.reloadButton.setOnClickListener {
-                viewModel.reload(selectedItemId)
+                viewModel.reload(selectedRestaurantId)
                 contentLoadingSwitcher.switchState(ContentLoadingState.LOADING, SwitchAnimationParams(delay = 500L))
             }
 
@@ -64,12 +72,45 @@ class RestaurantDetailsActivity : BaseActivity<ActivityRestaurantDetailsBinding>
         viewModel.exception.observe(this, exceptionObserver)
     }
 
+    override fun initListeners() {
+        binding.addReviewButton.setOnClickListener(View.OnClickListener {
+            val dialog = RestaurantReviewDialog.newInstance(
+                selectedRestaurantName
+            )
+            dialog.show(supportFragmentManager, RestaurantReviewDialog.TAG)
+        })
+
+        supportFragmentManager.setFragmentResultListener(
+            RestaurantReviewDialog.TAG,
+            this
+        ) { _: String, bundle: Bundle ->
+            val reviewDialogResult: ReviewDialogResult =
+                bundle.getSerializable(RestaurantReviewDialog.RESULT) as ReviewDialogResult
+            Timber.e("$selectedRestaurantId")
+            viewModel.addReview(
+                selectedRestaurantId,
+                reviewDialogResult.content,
+                reviewDialogResult.check,
+                reviewDialogResult.rating
+            )
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> finish()
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
     private val stateObserver = Observer<RestaurantDetailsState> { state ->
+        selectedRestaurantName = state.restaurant.name
         val restaurant = state.restaurant
         val reviews = state.reviews
 
         with(binding) {
-            restaurantName.text = restaurant.name
+            restaurantName.text = getString(R.string.restaurant_item_name, restaurant.name)
             restaurantRating.text = restaurant.rating
             restaurantStatus.text = restaurant.status
             restaurantCheck.text = restaurant.check

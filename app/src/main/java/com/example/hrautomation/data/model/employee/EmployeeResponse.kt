@@ -2,7 +2,6 @@ package com.example.hrautomation.data.model.employee
 
 import com.example.hrautomation.domain.model.employees.Employee
 import com.example.hrautomation.utils.Mapper
-import java.util.Date
 
 data class EmployeeResponse(
     val id: Long,
@@ -12,7 +11,6 @@ data class EmployeeResponse(
     val post: String,
     val about: String,
     val admin: String,
-    val birthDate: Date,
     val pictureUrl: String?
 )
 
