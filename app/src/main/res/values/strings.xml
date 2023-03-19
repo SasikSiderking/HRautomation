@@ -19,6 +19,7 @@
     <string name="employee_post">Должность</string>
     <string name="employee_project">Проект</string>
     <string name="employee_email">Почта</string>
+    <string name="profile_save_button">СОХРАНИТЬ</string>
 
     <!--Colleagues-->
     <string name="colleagues">Коллеги</string>
@@ -42,7 +43,8 @@
 
     <!--Common-->
     <string name="toast_overall_error">Что-то пошло не так</string>
-    <string name="profile_save_button">СОХРАНИТЬ</string>
+    <string name="error_user_id_is_null">ID пользователя null</string>
+    <string name="error_no_auth_token">Нет АУФ токена</string>
 
     <!--Profile-->
     <string name="profile_save_success">Профиль успешно сохранен</string>

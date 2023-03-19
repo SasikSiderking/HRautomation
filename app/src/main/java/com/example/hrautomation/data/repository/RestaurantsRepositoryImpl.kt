@@ -2,10 +2,7 @@ package com.example.hrautomation.data.repository
 
 import com.example.hrautomation.data.api.RestaurantsApi
 import com.example.hrautomation.data.model.restaurants.*
-import com.example.hrautomation.domain.model.restaurants.Building
-import com.example.hrautomation.domain.model.restaurants.City
-import com.example.hrautomation.domain.model.restaurants.Restaurant
-import com.example.hrautomation.domain.model.restaurants.Review
+import com.example.hrautomation.domain.model.restaurants.*
 import com.example.hrautomation.domain.repository.BuildingsCacheManager
 import com.example.hrautomation.domain.repository.RestaurantsRepository
 import javax.inject.Inject
@@ -42,7 +39,11 @@ class RestaurantsRepositoryImpl @Inject constructor(
         return restaurantsApi.getReviewsByRestaurantId(restaurantId).map { reviewResponseToReviewMapper.convert(it) }
     }
 
-    override suspend fun addReview(restaurantId: Long, userId: Long, content: String, check: Int, rating: Float) {
-        restaurantsApi.addReview(restaurantId, userId, ReviewRequest(content, check, rating))
+    override suspend fun addReview(restaurantReviewRequest: RestaurantReviewRequest) {
+        restaurantsApi.addReview(
+            restaurantReviewRequest.userId,
+            restaurantReviewRequest.restaurantId,
+            ReviewRequest(restaurantReviewRequest.content, restaurantReviewRequest.check, restaurantReviewRequest.rating)
+        )
     }
 }

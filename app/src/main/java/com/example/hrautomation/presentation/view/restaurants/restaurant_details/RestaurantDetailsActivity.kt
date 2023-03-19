@@ -12,13 +12,17 @@ import com.example.hrautomation.R
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.ActivityRestaurantDetailsBinding
 import com.example.hrautomation.presentation.base.activity.BaseActivity
+import com.example.hrautomation.presentation.model.restaurants.ReviewDialogResult
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingSettings
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingState
 import com.example.hrautomation.utils.ui.switcher.base.SwitchAnimationParams
+import timber.log.Timber
 
 class RestaurantDetailsActivity : BaseActivity<ActivityRestaurantDetailsBinding>() {
 
     private val selectedRestaurantId: Long by lazy { intent.getLongExtra(ID_EXTRA, 0L) }
+
+    private lateinit var selectedRestaurantName: String
 
     override val bindingInflater: (LayoutInflater) -> ActivityRestaurantDetailsBinding
         get() = { ActivityRestaurantDetailsBinding.inflate(layoutInflater) }
@@ -61,7 +65,6 @@ class RestaurantDetailsActivity : BaseActivity<ActivityRestaurantDetailsBinding>
             adapter = RestaurantDetailsAdapter()
             reviewsRecyclerView.adapter = adapter
         }
-        initListeners()
     }
 
     override fun initObserves() {
@@ -72,8 +75,7 @@ class RestaurantDetailsActivity : BaseActivity<ActivityRestaurantDetailsBinding>
     override fun initListeners() {
         binding.addReviewButton.setOnClickListener(View.OnClickListener {
             val dialog = RestaurantReviewDialog.newInstance(
-//                TODO Сделать что-нибудь с этим
-                viewModel.state.value!!.restaurant.name
+                selectedRestaurantName
             )
             dialog.show(supportFragmentManager, RestaurantReviewDialog.TAG)
         })
@@ -82,12 +84,15 @@ class RestaurantDetailsActivity : BaseActivity<ActivityRestaurantDetailsBinding>
             RestaurantReviewDialog.TAG,
             this
         ) { _: String, bundle: Bundle ->
-            val message = bundle.getString(RestaurantReviewDialog.REVIEW_CONTENT)
-            val check = bundle.getInt(RestaurantReviewDialog.REVIEW_CHECK)
-            val rating = bundle.getFloat(RestaurantReviewDialog.REVIEW_RATING)
-            if (message != null) {
-                viewModel.addReview(selectedRestaurantId, message, check, rating)
-            }
+            val reviewDialogResult: ReviewDialogResult =
+                bundle.getSerializable(RestaurantReviewDialog.RESULT) as ReviewDialogResult
+            Timber.e("$selectedRestaurantId")
+            viewModel.addReview(
+                selectedRestaurantId,
+                reviewDialogResult.content,
+                reviewDialogResult.check,
+                reviewDialogResult.rating
+            )
         }
     }
 
@@ -100,6 +105,7 @@ class RestaurantDetailsActivity : BaseActivity<ActivityRestaurantDetailsBinding>
     }
 
     private val stateObserver = Observer<RestaurantDetailsState> { state ->
+        selectedRestaurantName = state.restaurant.name
         val restaurant = state.restaurant
         val reviews = state.reviews
 
