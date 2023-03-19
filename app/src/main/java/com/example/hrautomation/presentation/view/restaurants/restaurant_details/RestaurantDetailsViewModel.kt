@@ -3,11 +3,15 @@ package com.example.hrautomation.presentation.view.restaurants.restaurant_detail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.hrautomation.R
 import com.example.hrautomation.data.dispatcher.CoroutineDispatchers
+import com.example.hrautomation.domain.model.restaurants.RestaurantReviewRequest
 import com.example.hrautomation.domain.repository.RestaurantsRepository
+import com.example.hrautomation.domain.repository.TokenRepository
 import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
 import com.example.hrautomation.presentation.model.restaurants.RestaurantToRestaurantItemMapper
 import com.example.hrautomation.presentation.model.restaurants.ReviewToReviewItemMapper
+import com.example.hrautomation.utils.resources.StringResourceProvider
 import com.example.hrautomation.utils.tryLaunch
 import kotlinx.coroutines.async
 import kotlinx.coroutines.cancelChildren
@@ -16,9 +20,11 @@ import javax.inject.Inject
 
 class RestaurantDetailsViewModel @Inject constructor(
     private val restaurantsRepository: RestaurantsRepository,
+    private val tokenRepository: TokenRepository,
     private val dispatchers: CoroutineDispatchers,
     private val restaurantToRestaurantItemMapper: RestaurantToRestaurantItemMapper,
-    private val reviewToReviewItemMapper: ReviewToReviewItemMapper
+    private val reviewToReviewItemMapper: ReviewToReviewItemMapper,
+    private val stringResourceProvider: StringResourceProvider
 ) : BaseViewModel() {
 
     val state: LiveData<RestaurantDetailsState>
@@ -56,6 +62,39 @@ class RestaurantDetailsViewModel @Inject constructor(
                 _exception.postValue(error)
             }
         )
+    }
+
+    fun addReview(restaurantId: Long, content: String, check: Int, rating: Float) {
+        viewModelScope.tryLaunch(
+            contextPiece = dispatchers.io,
+            doOnLaunch = {
+                val restaurantReviewRequest = prepareReviewRequest(restaurantId, content, check, rating)
+                if (restaurantReviewRequest != null) {
+                    restaurantsRepository.addReview(restaurantReviewRequest)
+                    loadData(restaurantId)
+                } else {
+                    throw IllegalStateException(stringResourceProvider.getString(R.string.error_user_id_is_null))
+                }
+            },
+            doOnError = { error ->
+                Timber.e(error)
+                _exception.postValue(error)
+            }
+        )
+    }
+
+    private fun prepareReviewRequest(
+        restaurantId: Long,
+        content: String,
+        check: Int,
+        rating: Float
+    ): RestaurantReviewRequest? {
+        val userId = tokenRepository.getUserId()
+        return if (userId != null) {
+            RestaurantReviewRequest(userId, restaurantId, content, check, rating)
+        } else {
+            null
+        }
     }
 
 }

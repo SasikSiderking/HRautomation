@@ -1,9 +1,6 @@
 package com.example.hrautomation.domain.repository
 
-import com.example.hrautomation.domain.model.restaurants.Building
-import com.example.hrautomation.domain.model.restaurants.City
-import com.example.hrautomation.domain.model.restaurants.Restaurant
-import com.example.hrautomation.domain.model.restaurants.Review
+import com.example.hrautomation.domain.model.restaurants.*
 
 interface RestaurantsRepository {
 
@@ -16,5 +13,7 @@ interface RestaurantsRepository {
     suspend fun getRestaurantById(restaurantId: Long): Restaurant
 
     suspend fun getReviewsByRestaurantId(restaurantId: Long): List<Review>
+
+    suspend fun addReview(restaurantReviewRequest: RestaurantReviewRequest)
 
 }

@@ -13,6 +13,7 @@ import com.example.hrautomation.domain.repository.UserRepository
 import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
 import com.example.hrautomation.presentation.model.colleagues.EmployeeItem
 import com.example.hrautomation.presentation.model.colleagues.EmployeeToEmployeeItemMapper
+import com.example.hrautomation.utils.resources.StringResourceProvider
 import com.example.hrautomation.utils.tryLaunch
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.cancelChildren
@@ -27,7 +28,8 @@ class ProfileViewModel @Inject constructor(
     private val tokenRepo: TokenRepository,
     private val dispatchers: CoroutineDispatchers,
     private val employeeToEmployeeItemMapper: EmployeeToEmployeeItemMapper,
-    private val mediaContentRepository: MediaContentRepository
+    private val mediaContentRepository: MediaContentRepository,
+    private val stringResourceProvider: StringResourceProvider
 ) : BaseViewModel() {
     val data: LiveData<EmployeeItem>
         get() = _data
@@ -68,7 +70,7 @@ class ProfileViewModel @Inject constructor(
         tokenRepo.getUserId()?.let { userId ->
             val user = userRepo.getUser(userId)
             _data.postValue(employeeToEmployeeItemMapper.convert(user))
-        } ?: throw IllegalStateException("No auth token")
+        } ?: throw IllegalStateException(stringResourceProvider.getString(R.string.error_no_auth_token))
     }
 
     fun saveData(project: String, info: String) {
