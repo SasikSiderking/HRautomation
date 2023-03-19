@@ -70,4 +70,5 @@
     <string name="restaurant_review_check">Ваш чек</string>
     <string name="please_enter_your_check_sum">Пожалуйста, укажите чек</string>
     <string name="review_title">Отзыв - %1$s</string>
+    <string name="item_bottom_sheet_restaurant_arrow_descripton">Переход на детали ресторана</string>
 </resources>

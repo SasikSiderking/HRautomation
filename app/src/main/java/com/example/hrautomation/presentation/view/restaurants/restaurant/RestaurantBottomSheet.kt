@@ -1,6 +1,5 @@
 package com.example.hrautomation.presentation.view.restaurants.restaurant
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -40,8 +39,6 @@ class RestaurantBottomSheet : BottomSheetDialogFragment() {
 
     private lateinit var adapter: BottomSheetRestaurantsAdapter
 
-    private val resultBundle = Bundle()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (requireContext().applicationContext as App).appComponent.inject(this)
@@ -51,6 +48,9 @@ class RestaurantBottomSheet : BottomSheetDialogFragment() {
         _binding = BottomSheetRestaurantsBinding.inflate(inflater, container, false)
 
         initUi()
+
+        val resultBundle = Bundle()
+        setFragmentResult(TAG, resultBundle)
 
         return binding.root
     }
@@ -91,11 +91,6 @@ class RestaurantBottomSheet : BottomSheetDialogFragment() {
         super.onDestroyView()
     }
 
-    override fun onDismiss(dialog: DialogInterface) {
-        setFragmentResult(TAG, resultBundle)
-        super.onDismiss(dialog)
-    }
-
     private val restaurantsObserver = Observer<List<BaseListItem>> { restaurantList ->
         adapter.update(restaurantList)
         if (restaurantList.size > RestaurantBottomSheetViewModel.INITIAL_NUMBER_OF_ITEMS_SHOWN + 1) {
@@ -104,7 +99,9 @@ class RestaurantBottomSheet : BottomSheetDialogFragment() {
     }
 
     private val onRestaurantClickListener = OnRestaurantClickListener { selectedRestaurantId ->
+        val resultBundle = Bundle()
         resultBundle.putString(SELECTED_RESTAURANT_TAG, selectedRestaurantId.toString())
+        setFragmentResult(TAG, resultBundle)
         dismiss()
     }
 
