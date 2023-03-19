@@ -10,12 +10,12 @@
         android:id="@+id/employeeImage"
         android:layout_width="56dp"
         android:layout_height="56dp"
-        app:layout_constraintBottom_toBottomOf="@+id/employeeName"
-        app:layout_constraintEnd_toStartOf="@+id/employeeName"
+        app:layout_constraintBottom_toBottomOf="@id/employeeName"
+        app:layout_constraintEnd_toStartOf="@id/employeeName"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/employeeName"
+        app:layout_constraintTop_toTopOf="@id/employeeName"
         app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
         tools:src="@drawable/ic_confused" />
 
@@ -29,7 +29,7 @@
         app:layout_constrainedWidth="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/employeeImage"
+        app:layout_constraintStart_toEndOf="@id/employeeImage"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Rick Astley" />
 
@@ -41,12 +41,12 @@
         android:isIndicator="true"
         android:numStars="5"
         android:theme="@style/RatingBar"
-        app:layout_constraintBottom_toBottomOf="@+id/reviewDate"
-        app:layout_constraintEnd_toStartOf="@+id/reviewDate"
+        app:layout_constraintBottom_toBottomOf="@id/reviewDate"
+        app:layout_constraintEnd_toStartOf="@id/reviewDate"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/reviewDate" />
+        app:layout_constraintTop_toTopOf="@id/reviewDate" />
 
     <TextView
         android:id="@+id/reviewDate"
@@ -57,8 +57,8 @@
         app:layout_constrainedWidth="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/reviewRating"
-        app:layout_constraintTop_toBottomOf="@+id/employeeName"
+        app:layout_constraintStart_toEndOf="@id/reviewRating"
+        app:layout_constraintTop_toBottomOf="@id/employeeName"
         tools:text="10.02.2023" />
 
     <TextView
@@ -69,7 +69,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reviewDate"
+        app:layout_constraintTop_toBottomOf="@id/reviewDate"
         tools:text="Never gonna give you up never gonna let you down never gonna run around and desert you never gonna make you cry never gonna say goodbye" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

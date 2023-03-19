@@ -16,7 +16,7 @@ object RestaurantUtils {
 
     fun formatDate(date: Date): String {
         val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
-        val sm = Instant.ofEpochMilli(date.time).atZone(ZoneId.systemDefault()).toLocalDate()
-        return sm.format(formatter)
+        val localDate = Instant.ofEpochMilli(date.time).atZone(ZoneId.systemDefault()).toLocalDate()
+        return localDate.format(formatter)
     }
 }

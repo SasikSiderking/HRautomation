@@ -68,7 +68,7 @@
         <item name="cornerSizeTopLeft">20dp</item>
     </style>
 
-    <style name="MyRatingBar" parent="Theme.AppCompat">
+    <style name="RatingBar" parent="Theme.AppCompat">
         <item name="colorControlNormal">@color/primary</item>
     </style>
 </resources>

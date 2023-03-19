@@ -32,7 +32,7 @@
                 android:textSize="32sp"
                 android:textStyle="bold"
                 app:layout_constrainedWidth="true"
-                app:layout_constraintEnd_toStartOf="@+id/restaurantRating"
+                app:layout_constraintEnd_toStartOf="@id/restaurantRating"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
@@ -45,11 +45,11 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 android:textSize="24sp"
-                app:layout_constraintBottom_toBottomOf="@+id/restaurantName"
-                app:layout_constraintEnd_toStartOf="@+id/star"
+                app:layout_constraintBottom_toBottomOf="@id/restaurantName"
+                app:layout_constraintEnd_toStartOf="@id/star"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/restaurantName"
-                app:layout_constraintTop_toTopOf="@+id/restaurantName"
+                app:layout_constraintStart_toEndOf="@id/restaurantName"
+                app:layout_constraintTop_toTopOf="@id/restaurantName"
                 tools:text="4.5" />
 
             <com.google.android.material.imageview.ShapeableImageView
@@ -58,10 +58,10 @@
                 android:layout_height="24dp"
                 android:layout_margin="2dp"
                 android:src="@drawable/ic_baseline_star_rate_24"
-                app:layout_constraintBottom_toBottomOf="@+id/restaurantRating"
+                app:layout_constraintBottom_toBottomOf="@id/restaurantRating"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/restaurantRating"
-                app:layout_constraintTop_toTopOf="@+id/restaurantRating" />
+                app:layout_constraintStart_toEndOf="@id/restaurantRating"
+                app:layout_constraintTop_toTopOf="@id/restaurantRating" />
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/statusImage"
@@ -69,7 +69,7 @@
                 android:layout_height="36dp"
                 android:src="@drawable/ic_baseline_fastfood_24"
                 app:layout_constraintBottom_toBottomOf="@id/restaurantStatus"
-                app:layout_constraintEnd_toStartOf="@+id/restaurantStatus"
+                app:layout_constraintEnd_toStartOf="@id/restaurantStatus"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
@@ -85,7 +85,7 @@
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/statusImage"
+                app:layout_constraintStart_toEndOf="@id/statusImage"
                 app:layout_constraintTop_toBottomOf="@id/restaurantName"
                 tools:text="give you up" />
 
@@ -95,11 +95,11 @@
                 android:layout_height="36dp"
                 android:src="@drawable/ic_baseline_monetization_on_24"
                 app:layout_constraintBottom_toBottomOf="@id/restaurantCheck"
-                app:layout_constraintEnd_toStartOf="@+id/restaurantCheck"
+                app:layout_constraintEnd_toStartOf="@id/restaurantCheck"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/restaurantCheck" />
+                app:layout_constraintTop_toTopOf="@id/restaurantCheck" />
 
             <TextView
                 android:id="@+id/restaurantCheck"
@@ -113,7 +113,7 @@
                 app:layout_constrainedWidth="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/checkImage"
+                app:layout_constraintStart_toEndOf="@id/checkImage"
                 app:layout_constraintTop_toBottomOf="@id/restaurantStatus"
                 tools:text="let you down: 1337 р" />
 
@@ -123,11 +123,11 @@
                 android:layout_height="36dp"
                 android:src="@drawable/ic_baseline_route_24"
                 app:layout_constraintBottom_toBottomOf="@id/restaurantAddress"
-                app:layout_constraintEnd_toStartOf="@+id/restaurantAddress"
+                app:layout_constraintEnd_toStartOf="@id/restaurantAddress"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/restaurantAddress" />
+                app:layout_constraintTop_toTopOf="@id/restaurantAddress" />
 
             <TextView
                 android:id="@+id/restaurantAddress"
@@ -140,7 +140,7 @@
                 app:layout_constrainedWidth="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/addressImage"
+                app:layout_constraintStart_toEndOf="@id/addressImage"
                 app:layout_constraintTop_toBottomOf="@id/restaurantCheck"
                 tools:text="run around and desert you" />
 
@@ -151,7 +151,7 @@
                 android:layout_marginTop="20dp"
                 android:textColor="@color/black"
                 android:textSize="18sp"
-                app:layout_constraintEnd_toStartOf="@+id/addReviewButton"
+                app:layout_constraintEnd_toStartOf="@id/addReviewButton"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintStart_toStartOf="parent"
@@ -166,7 +166,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/reviewCount"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/reviewCount"
+                app:layout_constraintStart_toEndOf="@id/reviewCount"
                 app:layout_constraintTop_toTopOf="@id/reviewCount" />
 
             <androidx.recyclerview.widget.RecyclerView
