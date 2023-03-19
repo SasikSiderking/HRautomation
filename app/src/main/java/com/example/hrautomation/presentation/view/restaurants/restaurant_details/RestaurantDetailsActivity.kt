@@ -16,7 +16,6 @@ import com.example.hrautomation.presentation.model.restaurants.ReviewDialogResul
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingSettings
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingState
 import com.example.hrautomation.utils.ui.switcher.base.SwitchAnimationParams
-import timber.log.Timber
 
 class RestaurantDetailsActivity : BaseActivity<ActivityRestaurantDetailsBinding>() {
 
@@ -86,7 +85,6 @@ class RestaurantDetailsActivity : BaseActivity<ActivityRestaurantDetailsBinding>
         ) { _: String, bundle: Bundle ->
             val reviewDialogResult: ReviewDialogResult =
                 bundle.getSerializable(RestaurantReviewDialog.RESULT) as ReviewDialogResult
-            Timber.e("$selectedRestaurantId")
             viewModel.addReview(
                 selectedRestaurantId,
                 reviewDialogResult.content,
