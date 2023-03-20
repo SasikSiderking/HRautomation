@@ -52,7 +52,7 @@ class RestaurantDetailsActivity : BaseActivity<ActivityRestaurantDetailsBinding>
         with(binding) {
             contentLoadingSwitcher.setup(
                 ContentLoadingSettings(
-                    contentViews = listOf(mainContent),
+                    contentViews = listOf(mainContent, addReviewButton),
                     errorViews = listOf(reusableReload.reusableReload),
                     loadingViews = listOf(reusableLoading.progressBar),
                     initState = ContentLoadingState.LOADING

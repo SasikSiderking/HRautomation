@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View.OnClickListener
+import android.widget.RatingBar.OnRatingBarChangeListener
 import androidx.lifecycle.Observer
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.ActivityRestaurantReviewBinding
@@ -50,6 +51,7 @@ class RestaurantReviewActivity : BaseActivity<ActivityRestaurantReviewBinding>()
             reusableReload.reloadButton.setOnClickListener {
                 contentLoadingSwitcher.switchState(ContentLoadingState.LOADING, SwitchAnimationParams(delay = 500L))
             }
+            binding.addButton.isEnabled = false
         }
     }
 
@@ -58,6 +60,8 @@ class RestaurantReviewActivity : BaseActivity<ActivityRestaurantReviewBinding>()
     override fun initListeners() {
         binding.addButton.setOnClickListener(onAddButtonClickListener)
         binding.cancelButton.setOnClickListener(onCancelButtonClickListener)
+//        Студия предлагает заменить на property access :| поэтому визуально отличается
+        binding.reviewRating.onRatingBarChangeListener = onRatingBarChangeListener
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -74,22 +78,30 @@ class RestaurantReviewActivity : BaseActivity<ActivityRestaurantReviewBinding>()
 
     private val onAddButtonClickListener = OnClickListener {
         with(binding) {
-            if (checkField.text.toString().isNotEmpty()) {
-                val reviewActivityResult = ReviewActivityResult(
-                    contentField.text.toString(),
-                    checkField.text.toString().toFloat().toInt(),
-                    reviewRating.rating
-                )
-                intent.putExtra(RESULT, reviewActivityResult)
-                setResult(RESULT_CODE, intent)
-
-                finish()
+            var check: Int = 0
+            val checkFieldContent = checkField.text.toString()
+            if (checkFieldContent.isNotEmpty()) {
+                check = checkFieldContent.toInt()
             }
+            val reviewActivityResult = ReviewActivityResult(
+                contentField.text.toString(),
+                check,
+                reviewRating.rating
+            )
+            intent.putExtra(RESULT, reviewActivityResult)
+            setResult(RESULT_CODE, intent)
+
+            finish()
         }
     }
 
     private val onCancelButtonClickListener = OnClickListener {
         finish()
+    }
+
+    private val onRatingBarChangeListener = OnRatingBarChangeListener { ratingBar, _, _ ->
+        ratingBar.min = 1
+        binding.addButton.isEnabled = true
     }
 
     companion object {
