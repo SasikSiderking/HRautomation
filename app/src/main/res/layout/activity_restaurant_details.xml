@@ -10,6 +10,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -151,23 +152,10 @@
                 android:layout_marginTop="20dp"
                 android:textColor="@color/black"
                 android:textSize="18sp"
-                app:layout_constraintEnd_toStartOf="@id/addReviewButton"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/addressImage"
                 tools:text="Make you cry (993)" />
-
-            <Button
-                android:id="@+id/addReviewButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/restaurant_add_review_button_text"
-                app:layout_constraintBottom_toBottomOf="@id/reviewCount"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@id/reviewCount"
-                app:layout_constraintTop_toTopOf="@id/reviewCount" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/reviewsRecyclerView"
@@ -175,6 +163,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:nestedScrollingEnabled="false"
+                android:paddingBottom="48dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -184,6 +173,14 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
+
+    <Button
+        android:id="@+id/addReviewButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/restaurant_add_review_button_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <include
         android:id="@+id/reusableLoading"
