@@ -6,13 +6,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.example.hrautomation.R
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.ActivityRestaurantDetailsBinding
 import com.example.hrautomation.presentation.base.activity.BaseActivity
-import com.example.hrautomation.presentation.model.restaurants.ReviewDialogResult
+import com.example.hrautomation.presentation.model.restaurants.ReviewActivityResult
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingSettings
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingState
 import com.example.hrautomation.utils.ui.switcher.base.SwitchAnimationParams
@@ -73,23 +75,21 @@ class RestaurantDetailsActivity : BaseActivity<ActivityRestaurantDetailsBinding>
 
     override fun initListeners() {
         binding.addReviewButton.setOnClickListener(View.OnClickListener {
-            val dialog = RestaurantReviewDialog.newInstance(
-                selectedRestaurantName
-            )
-            dialog.show(supportFragmentManager, RestaurantReviewDialog.TAG)
+            activityResultLauncher.launch(RestaurantReviewActivity.createIntent(this, selectedRestaurantName))
         })
+    }
 
-        supportFragmentManager.setFragmentResultListener(
-            RestaurantReviewDialog.TAG,
-            this
-        ) { _: String, bundle: Bundle ->
-            val reviewDialogResult: ReviewDialogResult =
-                bundle.getSerializable(RestaurantReviewDialog.RESULT) as ReviewDialogResult
+    private var activityResultLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result: ActivityResult ->
+        val reviewActivityResult: ReviewActivityResult? =
+            result.data?.getSerializableExtra(RestaurantReviewActivity.RESULT) as ReviewActivityResult?
+        if (reviewActivityResult != null) {
             viewModel.addReview(
                 selectedRestaurantId,
-                reviewDialogResult.content,
-                reviewDialogResult.check,
-                reviewDialogResult.rating
+                reviewActivityResult.content,
+                reviewActivityResult.check,
+                reviewActivityResult.rating
             )
         }
     }

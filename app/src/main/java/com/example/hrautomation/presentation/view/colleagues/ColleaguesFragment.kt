@@ -67,7 +67,6 @@ class ColleaguesFragment : Fragment() {
 
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
             val searchReq = s.toString().trim()
-
             binding.clearText.isVisible = searchReq.isNotEmpty()
             viewModel.performSearch(searchReq)
         }

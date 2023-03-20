@@ -66,6 +66,8 @@
         <activity android:name=".presentation.view.profile.ProfileActivity" />
 
         <activity android:name=".presentation.view.restaurants.restaurant_details.RestaurantDetailsActivity" />
+
+        <activity android:name=".presentation.view.restaurants.restaurant_details.RestaurantReviewActivity" />
     </application>
 
 </manifest>

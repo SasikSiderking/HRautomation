@@ -39,8 +39,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
     }
 
-    protected abstract val exceptionObserver: Observer<Throwable?>
-
     abstract fun initInject()
 
     abstract fun initUI()
@@ -53,4 +51,6 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         super.onDestroy()
         _binding = null
     }
+
+    protected abstract val exceptionObserver: Observer<Throwable?>
 }
