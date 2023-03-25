@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View.OnClickListener
 import android.widget.RatingBar.OnRatingBarChangeListener
-import androidx.lifecycle.Observer
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.ActivityRestaurantReviewBinding
 import com.example.hrautomation.presentation.base.activity.BaseActivity
@@ -41,10 +40,6 @@ class RestaurantReviewActivity : BaseActivity<ActivityRestaurantReviewBinding>()
                     contentViews = listOf(contentLayout, checkLayout, reviewRating, cancelButton, addButton),
                     errorViews = listOf(reusableReload.reusableReload),
                     loadingViews = listOf(reusableLoading.progressBar),
-                    //                Тут сразу показываю CONTENT потому что в общем-то подгрузок никаких нет
-                    //                и логически свитчить не где
-                    //                btw возможно тогда и лоадер не нужен, оставляю для структурной идентичности
-                    //                с кнопками перезагрузки то же самое
                     initState = ContentLoadingState.CONTENT
                 )
             )
@@ -60,7 +55,6 @@ class RestaurantReviewActivity : BaseActivity<ActivityRestaurantReviewBinding>()
     override fun initListeners() {
         binding.addButton.setOnClickListener(onAddButtonClickListener)
         binding.cancelButton.setOnClickListener(onCancelButtonClickListener)
-//        Студия предлагает заменить на property access :| поэтому визуально отличается
         binding.reviewRating.onRatingBarChangeListener = onRatingBarChangeListener
     }
 
@@ -72,25 +66,16 @@ class RestaurantReviewActivity : BaseActivity<ActivityRestaurantReviewBinding>()
         return super.onOptionsItemSelected(item)
     }
 
-    override val exceptionObserver: Observer<Throwable?>
-        //    Тут можно поругаться на меня
-        get() = Observer {}
-
     private val onAddButtonClickListener = OnClickListener {
         with(binding) {
-            var check: Int = 0
             val checkFieldContent = checkField.text.toString()
-            if (checkFieldContent.isNotEmpty()) {
-                check = checkFieldContent.toInt()
-            }
             val reviewActivityResult = ReviewActivityResult(
                 contentField.text.toString(),
-                check,
+                checkFieldContent.takeIf { it.isNotEmpty() }?.toInt() ?: DEFAULT_CHECK_VALUE,
                 reviewRating.rating
             )
             intent.putExtra(RESULT, reviewActivityResult)
             setResult(RESULT_CODE, intent)
-
             finish()
         }
     }
@@ -100,11 +85,15 @@ class RestaurantReviewActivity : BaseActivity<ActivityRestaurantReviewBinding>()
     }
 
     private val onRatingBarChangeListener = OnRatingBarChangeListener { ratingBar, _, _ ->
-        ratingBar.min = 1
+        ratingBar.min = MINIMUM_RATING_BAR_POINTS
         binding.addButton.isEnabled = true
     }
 
     companion object {
+
+        const val DEFAULT_CHECK_VALUE = 0
+
+        const val MINIMUM_RATING_BAR_POINTS = 1
 
         const val RESULT_CODE = 993
 

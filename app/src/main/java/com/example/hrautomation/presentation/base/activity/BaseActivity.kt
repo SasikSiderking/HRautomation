@@ -3,7 +3,6 @@ package com.example.hrautomation.presentation.base.activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.viewbinding.ViewBinding
 import com.example.hrautomation.utils.ViewModelFactory
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingStateSwitcher
@@ -51,6 +50,4 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         super.onDestroy()
         _binding = null
     }
-
-    protected abstract val exceptionObserver: Observer<Throwable?>
 }

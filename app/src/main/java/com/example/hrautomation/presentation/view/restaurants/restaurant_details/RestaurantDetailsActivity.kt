@@ -120,7 +120,7 @@ class RestaurantDetailsActivity : BaseActivity<ActivityRestaurantDetailsBinding>
         contentLoadingSwitcher.switchState(ContentLoadingState.CONTENT, SwitchAnimationParams(delay = 500L))
     }
 
-    override val exceptionObserver = Observer<Throwable?> { exception ->
+    val exceptionObserver = Observer<Throwable?> { exception ->
         exception?.let {
             contentLoadingSwitcher.switchState(ContentLoadingState.ERROR, SwitchAnimationParams(delay = 500L))
         }
