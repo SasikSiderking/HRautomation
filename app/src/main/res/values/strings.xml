@@ -65,10 +65,9 @@
     <string name="restaurant_item_name">%1$s  · </string>
     <string name="restaurnt_item_check">%1$d ₽</string>
     <string name="number_of_reviews">Отзывы (%1$d)</string>
-    <string name="restaurant_review_content">Содержание отзыва</string>
+    <string name="restaurant_review_content">Содержание отзыва (необязательно)</string>
     <string name="restaurant_review_cancel">ОТМЕНА</string>
-    <string name="restaurant_review_check">Ваш чек</string>
-    <string name="please_enter_your_check_sum">Пожалуйста, укажите чек</string>
+    <string name="restaurant_review_check">Ваш чек (необязательно)</string>
     <string name="review_title">Отзыв - %1$s</string>
     <string name="item_bottom_sheet_restaurant_arrow_descripton">Переход на детали ресторана</string>
 </resources>
