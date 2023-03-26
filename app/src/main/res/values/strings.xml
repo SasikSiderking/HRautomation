@@ -73,4 +73,5 @@
     <string name="restaurant_status">restaurant_status</string>
     <string name="restaurant_check">restaurant_check</string>
     <string name="restaurant_address">restaurant_address</string>
+    <string name="restaurant_review_leave_a_mark">Пожалуйста, оставьте оценку</string>
 </resources>
