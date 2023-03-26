@@ -37,7 +37,7 @@ class RestaurantReviewActivity : BaseActivity<ActivityRestaurantReviewBinding>()
         with(binding) {
             contentLoadingSwitcher.setup(
                 ContentLoadingSettings(
-                    contentViews = listOf(contentLayout, checkLayout, reviewRating, cancelButton, addButton),
+                    contentViews = listOf(contentLayout, checkLayout, reviewRating, addButton),
                     errorViews = listOf(reusableReload.reusableReload),
                     loadingViews = listOf(reusableLoading.progressBar),
                     initState = ContentLoadingState.CONTENT
@@ -54,7 +54,6 @@ class RestaurantReviewActivity : BaseActivity<ActivityRestaurantReviewBinding>()
 
     override fun initListeners() {
         binding.addButton.setOnClickListener(onAddButtonClickListener)
-        binding.cancelButton.setOnClickListener(onCancelButtonClickListener)
         binding.reviewRating.onRatingBarChangeListener = onRatingBarChangeListener
     }
 
@@ -78,10 +77,6 @@ class RestaurantReviewActivity : BaseActivity<ActivityRestaurantReviewBinding>()
             setResult(RESULT_CODE, intent)
             finish()
         }
-    }
-
-    private val onCancelButtonClickListener = OnClickListener {
-        finish()
     }
 
     private val onRatingBarChangeListener = OnRatingBarChangeListener { ratingBar, _, _ ->
