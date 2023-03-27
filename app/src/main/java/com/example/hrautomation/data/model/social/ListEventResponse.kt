@@ -8,7 +8,7 @@ class ListEventResponse(
     val name: String,
     val date: Date,
     val address: String,
-    val pictureUrl: String,
+    val pictureUrl: String?,
     val online: Boolean
 )
 
