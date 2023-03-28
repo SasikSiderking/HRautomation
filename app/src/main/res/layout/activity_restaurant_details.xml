@@ -5,15 +5,55 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/detailsToolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="none"
+        android:layout_height="wrap_content"
+        android:background="@color/primary"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="16dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/homeAsUp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/home_as_up_button_shape"
+                android:foreground="@drawable/home_as_up_button_ripple"
+                android:padding="6dp"
+                android:src="@drawable/ic_baseline_arrow_back_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="28dp"
+                android:textColor="@color/black"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/homeAsUp"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Abobus" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_marginHorizontal="12dp"
+        android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/detailsToolbar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/mainContent"
@@ -25,10 +65,10 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:layout_marginVertical="16dp"
                 android:id="@+id/restaurantName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginVertical="16dp"
                 android:textColor="@color/black"
                 android:textSize="32sp"
                 android:textStyle="bold"
@@ -64,10 +104,11 @@
                 app:layout_constraintStart_toEndOf="@id/restaurantRating"
                 app:layout_constraintTop_toTopOf="@id/restaurantRating" />
 
-            <com.google.android.material.imageview.ShapeableImageView
+            <ImageView
                 android:id="@+id/statusImage"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
+                android:contentDescription="@string/restaurant_status"
                 android:src="@drawable/ic_baseline_fastfood_24"
                 app:layout_constraintBottom_toBottomOf="@id/restaurantStatus"
                 app:layout_constraintEnd_toStartOf="@id/restaurantStatus"
@@ -90,11 +131,12 @@
                 app:layout_constraintTop_toBottomOf="@id/restaurantName"
                 tools:text="give you up" />
 
-            <com.google.android.material.imageview.ShapeableImageView
+            <ImageView
                 android:id="@+id/checkImage"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:src="@drawable/ic_baseline_monetization_on_24"
+                android:contentDescription="@string/restaurant_check"
+                android:src="@drawable/ic_ruble_svgrepo_com"
                 app:layout_constraintBottom_toBottomOf="@id/restaurantCheck"
                 app:layout_constraintEnd_toStartOf="@id/restaurantCheck"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -118,10 +160,11 @@
                 app:layout_constraintTop_toBottomOf="@id/restaurantStatus"
                 tools:text="let you down: 1337 р" />
 
-            <com.google.android.material.imageview.ShapeableImageView
+            <ImageView
                 android:id="@+id/addressImage"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
+                android:contentDescription="@string/restaurant_address"
                 android:src="@drawable/ic_baseline_route_24"
                 app:layout_constraintBottom_toBottomOf="@id/restaurantAddress"
                 app:layout_constraintEnd_toStartOf="@id/restaurantAddress"
@@ -176,13 +219,14 @@
 
     <Button
         android:id="@+id/addReviewButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
         android:text="@string/restaurant_add_review_button_text"
-        android:layout_marginHorizontal="12dp"
-        android:layout_marginVertical="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:shapeAppearanceOverlay="@style/roundedButton" />
 
     <include
         android:id="@+id/reusableLoading"

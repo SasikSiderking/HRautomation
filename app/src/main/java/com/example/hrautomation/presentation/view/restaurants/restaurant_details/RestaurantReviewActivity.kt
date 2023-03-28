@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View.OnClickListener
 import android.widget.RatingBar.OnRatingBarChangeListener
+import com.example.hrautomation.R
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.ActivityRestaurantReviewBinding
 import com.example.hrautomation.presentation.base.activity.BaseActivity
@@ -14,6 +15,7 @@ import com.example.hrautomation.presentation.model.restaurants.ReviewActivityRes
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingSettings
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingState
 import com.example.hrautomation.utils.ui.switcher.base.SwitchAnimationParams
+import com.google.android.material.snackbar.Snackbar
 
 class RestaurantReviewActivity : BaseActivity<ActivityRestaurantReviewBinding>() {
     override val bindingInflater: (LayoutInflater) -> ActivityRestaurantReviewBinding
@@ -37,7 +39,7 @@ class RestaurantReviewActivity : BaseActivity<ActivityRestaurantReviewBinding>()
         with(binding) {
             contentLoadingSwitcher.setup(
                 ContentLoadingSettings(
-                    contentViews = listOf(contentLayout, checkLayout, reviewRating, cancelButton, addButton),
+                    contentViews = listOf(contentLayout, checkLayout, reviewRating, addButton),
                     errorViews = listOf(reusableReload.reusableReload),
                     loadingViews = listOf(reusableLoading.progressBar),
                     initState = ContentLoadingState.CONTENT
@@ -46,7 +48,6 @@ class RestaurantReviewActivity : BaseActivity<ActivityRestaurantReviewBinding>()
             reusableReload.reloadButton.setOnClickListener {
                 contentLoadingSwitcher.switchState(ContentLoadingState.LOADING, SwitchAnimationParams(delay = 500L))
             }
-            binding.addButton.isEnabled = false
         }
     }
 
@@ -54,7 +55,6 @@ class RestaurantReviewActivity : BaseActivity<ActivityRestaurantReviewBinding>()
 
     override fun initListeners() {
         binding.addButton.setOnClickListener(onAddButtonClickListener)
-        binding.cancelButton.setOnClickListener(onCancelButtonClickListener)
         binding.reviewRating.onRatingBarChangeListener = onRatingBarChangeListener
     }
 
@@ -66,27 +66,29 @@ class RestaurantReviewActivity : BaseActivity<ActivityRestaurantReviewBinding>()
         return super.onOptionsItemSelected(item)
     }
 
-    private val onAddButtonClickListener = OnClickListener {
-        with(binding) {
-            val checkFieldContent = checkField.text.toString()
-            val reviewActivityResult = ReviewActivityResult(
-                contentField.text.toString(),
-                checkFieldContent.takeIf { it.isNotEmpty() }?.toInt() ?: DEFAULT_CHECK_VALUE,
-                reviewRating.rating
-            )
-            intent.putExtra(RESULT, reviewActivityResult)
-            setResult(RESULT_CODE, intent)
-            finish()
+    private val onAddButtonClickListener = OnClickListener { button ->
+        if (binding.reviewRating.rating != 0F) {
+            with(binding) {
+                val checkFieldContent = checkField.text.toString()
+                val reviewActivityResult = ReviewActivityResult(
+                    contentField.text.toString(),
+                    checkFieldContent.takeIf { it.isNotEmpty() }?.toInt() ?: DEFAULT_CHECK_VALUE,
+                    reviewRating.rating
+                )
+                intent.putExtra(RESULT, reviewActivityResult)
+                setResult(RESULT_CODE, intent)
+                finish()
+            }
+        } else {
+            Snackbar.make(button, R.string.restaurant_review_leave_a_mark, Snackbar.LENGTH_LONG)
+                .setTextColor(resources.getColor(R.color.primary, theme))
+                .setAnchorView(button)
+                .show()
         }
-    }
-
-    private val onCancelButtonClickListener = OnClickListener {
-        finish()
     }
 
     private val onRatingBarChangeListener = OnRatingBarChangeListener { ratingBar, _, _ ->
         ratingBar.min = MINIMUM_RATING_BAR_POINTS
-        binding.addButton.isEnabled = true
     }
 
     companion object {

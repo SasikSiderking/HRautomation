@@ -1,5 +1,6 @@
 package com.example.hrautomation.presentation.view.restaurants.restaurant
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -49,9 +50,6 @@ class RestaurantBottomSheet : BottomSheetDialogFragment() {
 
         initUi()
 
-        val resultBundle = Bundle()
-        setFragmentResult(TAG, resultBundle)
-
         return binding.root
     }
 
@@ -84,6 +82,12 @@ class RestaurantBottomSheet : BottomSheetDialogFragment() {
         adapter = BottomSheetRestaurantsAdapter(onRestaurantClickListener)
         binding.restaurantRecyclerView.adapter = adapter
         viewModel.data.observe(viewLifecycleOwner, restaurantsObserver)
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        val resultBundle = Bundle()
+        setFragmentResult(TAG, resultBundle)
+        super.onDismiss(dialog)
     }
 
     override fun onDestroyView() {

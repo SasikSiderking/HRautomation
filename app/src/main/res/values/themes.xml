@@ -23,6 +23,11 @@
         <item name="android:dialogTheme">?alertDialogTheme</item>
     </style>
 
+    <style name="NoActionBarTheme" parent="Theme.HRautomation">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
     <!--Recycler View Item Style-->
     <style name="SelectableViewItemStyle">
         <item name="android:foreground">@drawable/recycler_view_item_ripple_shape</item>
