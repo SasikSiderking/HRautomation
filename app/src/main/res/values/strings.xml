@@ -78,6 +78,6 @@
     <!--Social-->
     <string name="events">События</string>
     <string name="event_image">Превью события</string>
-    <string name="format_online">online</string>
-    <string name="format_offline">offline</string>
+    <string name="format_online">Онлайн-формат</string>
+    <string name="format_offline">Офллайн-формат</string>
 </resources>

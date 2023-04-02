@@ -71,6 +71,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="12dp"
                 android:ellipsize="marquee"
                 android:maxLines="1"
                 android:textColor="@color/black"
@@ -80,19 +81,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/eventImage"
                 tools:text="Mobile сходка" />
-
-            <TextView
-                android:id="@+id/eventDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="12dp"
-                android:layout_marginVertical="4dp"
-                android:ellipsize="marquee"
-                android:maxLines="1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/eventName"
-                tools:text="9 апреля" />
 
             <TextView
                 android:id="@+id/eventFormat"
@@ -107,6 +95,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/eventDate"
                 tools:text="offline" />
+
+            <TextView
+                android:id="@+id/eventDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginVertical="4dp"
+                android:ellipsize="marquee"
+                android:maxLines="1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/eventName"
+                tools:text="9 апреля" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
