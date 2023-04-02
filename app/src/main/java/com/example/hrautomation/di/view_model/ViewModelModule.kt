@@ -16,6 +16,7 @@ import com.example.hrautomation.presentation.view.restaurants.RestaurantsViewMod
 import com.example.hrautomation.presentation.view.restaurants.restaurant.RestaurantBottomSheetViewModel
 import com.example.hrautomation.presentation.view.restaurants.restaurant_details.RestaurantDetailsViewModel
 import com.example.hrautomation.presentation.view.restaurants.сity.CityViewModel
+import com.example.hrautomation.presentation.view.social.SocialViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.Reusable
@@ -98,4 +99,9 @@ interface ViewModelModule {
     @IntoMap
     @ViewModelKey(RestaurantDetailsViewModel::class)
     fun bindsRestaurantDetailsViewModel(restaurantDetailsViewModel: RestaurantDetailsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SocialViewModel::class)
+    fun bindsSocialViewModel(socialViewModel: SocialViewModel): ViewModel
 }

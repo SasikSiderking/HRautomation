@@ -43,4 +43,10 @@ class ApiModule {
     fun provideRestaurantApi(retrofitProvider: RetrofitProvider): RestaurantsApi {
         return retrofitProvider.restaurantsApi
     }
+
+    @Provides
+    @Singleton
+    fun provideSocialApi(retrofitProvider: RetrofitProvider): SocialApi {
+        return retrofitProvider.socialApi
+    }
 }

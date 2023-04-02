@@ -2,9 +2,11 @@ package com.example.hrautomation.presentation.view.social
 
 import android.view.LayoutInflater
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.FragmentSocialBinding
+import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.base.fragment.BaseFragment
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingSettings
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingState
@@ -14,7 +16,7 @@ class SocialFragment : BaseFragment<FragmentSocialBinding>() {
     override val bindingInflater: (LayoutInflater) -> FragmentSocialBinding
         get() = { FragmentSocialBinding.inflate(layoutInflater) }
 
-    private val viewModel: SocialFragmentViewModel by viewModels {
+    private val viewModel: SocialViewModel by viewModels {
         viewModelFactory
     }
 
@@ -41,19 +43,18 @@ class SocialFragment : BaseFragment<FragmentSocialBinding>() {
 
             adapter = SocialFragmentAdapter()
             eventRecyclerView.adapter = adapter
-            eventRecyclerView.layoutManager = GridLayoutManager(context, NUMBER_OF_COLUMNS)
+            eventRecyclerView.layoutManager = LinearLayoutManager(context)
         }
     }
 
     override fun initObserves() {
-        TODO("Not yet implemented")
+        viewModel.data.observe(viewLifecycleOwner, eventsObserver)
     }
 
-    override fun initListeners() {
-        TODO("Not yet implemented")
-    }
+    override fun initListeners() = Unit
 
-    companion object {
-        private const val NUMBER_OF_COLUMNS = 2
+    private val eventsObserver = Observer<List<BaseListItem>> { events ->
+        adapter.update(events)
+        contentLoadingSwitcher.switchState(ContentLoadingState.CONTENT, SwitchAnimationParams(delay = 500L))
     }
 }

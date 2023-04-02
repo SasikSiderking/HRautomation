@@ -3,7 +3,7 @@ package com.example.hrautomation.presentation.model.restaurants
 import com.example.hrautomation.domain.model.restaurants.Review
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.utils.Mapper
-import com.example.hrautomation.utils.restaurants.RestaurantUtils
+import com.example.hrautomation.utils.date.DateUtils
 
 data class ReviewItem(
     override val id: Long,
@@ -21,6 +21,6 @@ class ReviewToReviewItemMapper : Mapper<Review, ReviewItem> {
         model.rating,
         model.author,
         model.pictureUrl,
-        RestaurantUtils.formatDate(model.date)
+        DateUtils.formatDate(model.date)
     )
 }

@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.example.hrautomation.R
-import com.example.hrautomation.databinding.ItemEventGridBinding
+import com.example.hrautomation.databinding.ItemEventBinding
 import com.example.hrautomation.presentation.base.delegates.BaseItemAdapterDelegate
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.base.delegates.ClickableViewHolder
@@ -22,7 +22,7 @@ class EventItemAdapterDelegate :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup): EventViewHolder {
-        val binding = ItemEventGridBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemEventBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return EventViewHolder(binding, this)
     }
 
@@ -31,21 +31,19 @@ class EventItemAdapterDelegate :
             Glide.with(eventImage)
                 .load(item.pictureUrl)
                 .centerCrop()
-                .placeholder(R.drawable.ic_confused)
+                .placeholder(R.drawable.ic_hr_splash)
                 .into(eventImage)
             eventName.text = item.name
-            eventDate.text = item.date.toString()
+            eventDate.text = item.date
             eventFormat.text = item.format
             eventAddress.text = item.address
         }
     }
 
-    override fun onViewHolderClick(view: View, holder: EventViewHolder) {
-        val item = getItemForViewHolder(holder)
-    }
+    override fun onViewHolderClick(view: View, holder: EventViewHolder) = Unit
 
     class EventViewHolder(
-        val binding: ItemEventGridBinding,
+        val binding: ItemEventBinding,
         clickListener: OnViewHolderClickListener<EventViewHolder>
     ) : ClickableViewHolder<EventViewHolder>(binding.root, clickListener)
 }

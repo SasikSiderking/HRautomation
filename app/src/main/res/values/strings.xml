@@ -74,5 +74,8 @@
     <string name="restaurant_check">restaurant_check</string>
     <string name="restaurant_address">restaurant_address</string>
     <string name="restaurant_review_leave_a_mark">Пожалуйста, оставьте оценку</string>
+
+    <!--Social-->
     <string name="events">События</string>
+    <string name="event_image">Превью события</string>
 </resources>

@@ -3,11 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/recycler_view_item_shape"
     android:foreground="@drawable/recycler_view_item_ripple_shape">
 
     <ImageView
+        android:contentDescription="@string/event_image"
         android:id="@+id/eventImage"
         android:layout_width="match_parent"
         android:layout_height="0dp"
