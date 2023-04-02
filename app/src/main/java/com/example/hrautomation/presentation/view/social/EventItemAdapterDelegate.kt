@@ -3,6 +3,7 @@ package com.example.hrautomation.presentation.view.social
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.hrautomation.R
 import com.example.hrautomation.databinding.ItemEventBinding
@@ -31,12 +32,12 @@ class EventItemAdapterDelegate :
             Glide.with(eventImage)
                 .load(item.pictureUrl)
                 .centerCrop()
-                .placeholder(R.drawable.ic_hr_splash)
+                .placeholder(R.drawable.img)
                 .into(eventImage)
+            timelineIcon.setImageDrawable(ContextCompat.getDrawable(root.context, R.drawable.ic_baseline_event_available_24))
             eventName.text = item.name
             eventDate.text = item.date
             eventFormat.text = item.format
-            eventAddress.text = item.address
         }
     }
 

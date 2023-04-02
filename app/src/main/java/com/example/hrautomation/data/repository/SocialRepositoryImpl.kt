@@ -14,19 +14,19 @@ class SocialRepositoryImpl @Inject constructor(private val socialApi: SocialApi)
         return coroutineScope {
             val pastEventsDeferred = async {
                 socialApi.getPastEvents(pageNumber, size, sortBy.sortBy).map {
-                    it.toListEvent()
+                    it.toListEvent(false)
                 }
             }
             val currentEventsDeferred = async {
                 socialApi.getCurrentEvents(pageNumber, size, sortBy.sortBy).map {
-                    it.toListEvent()
+                    it.toListEvent(true)
                 }
             }
 
             val pastEvents = pastEventsDeferred.await()
             val currentEvents = currentEventsDeferred.await()
 
-            return@coroutineScope pastEvents + currentEvents
+            return@coroutineScope currentEvents + pastEvents
         }
     }
 }
