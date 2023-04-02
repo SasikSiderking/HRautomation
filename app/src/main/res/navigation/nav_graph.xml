@@ -27,7 +27,7 @@
     <fragment
         android:id="@+id/socialFragment"
         android:name="com.example.hrautomation.presentation.view.social.SocialFragment"
-        android:label="SocialFragment"
+        android:label="@string/events"
         tools:layout="@layout/fragment_social" />
 
 </navigation>
