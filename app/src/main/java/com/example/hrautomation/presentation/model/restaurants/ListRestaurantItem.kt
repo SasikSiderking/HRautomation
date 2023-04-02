@@ -36,7 +36,6 @@ class ListRestaurantToListRestaurantItemMapper(private val stringResourceProvide
             stringResourceProvider.getString(R.string.restaurants_status_check, model.status, model.check),
             RestaurantUtils.roundRating(model.rating)
         )
-
 }
 
 class BuildingToBuildingItemMapper @Inject constructor(private val listRestaurantToListRestaurantItemMapper: ListRestaurantToListRestaurantItemMapper) :

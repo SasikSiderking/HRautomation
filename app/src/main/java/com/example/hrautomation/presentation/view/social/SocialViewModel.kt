@@ -8,7 +8,8 @@ import com.example.hrautomation.domain.model.social.EventSortBy
 import com.example.hrautomation.domain.repository.SocialRepository
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
-import com.example.hrautomation.presentation.model.social.ListEventItem
+import com.example.hrautomation.presentation.model.social.toListEventItem
+import com.example.hrautomation.utils.resources.StringResourceProvider
 import com.example.hrautomation.utils.tryLaunch
 import kotlinx.coroutines.cancelChildren
 import timber.log.Timber
@@ -17,6 +18,7 @@ import javax.inject.Inject
 class SocialViewModel @Inject constructor(
     private val dispatchers: CoroutineDispatchers,
     private val socialRepository: SocialRepository,
+    private val stringResourceProvider: StringResourceProvider
 ) : BaseViewModel() {
 
     val data: LiveData<List<BaseListItem>>
@@ -38,7 +40,7 @@ class SocialViewModel @Inject constructor(
             contextPiece = dispatchers.io,
             doOnLaunch = {
                 val events = socialRepository.getAllEvents(PAGE_NUMBER, PAGE_SIZE, EventSortBy.ID)
-                val eventItems = events.map { ListEventItem.createFrom(it) }
+                val eventItems = events.map { it.toListEventItem(stringResourceProvider) }
 
                 _data.postValue(eventItems)
             },

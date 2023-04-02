@@ -8,5 +8,4 @@ class StringResourceProviderImpl @Inject constructor(private val resources: Reso
     override fun getString(resourceId: Int, vararg parameter: Any): String {
         return resources.getString(resourceId, *parameter)
     }
-
 }
