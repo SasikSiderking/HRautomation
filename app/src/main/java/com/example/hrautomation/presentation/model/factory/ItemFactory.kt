@@ -8,11 +8,15 @@ import com.example.hrautomation.utils.date.DateUtils
 import com.example.hrautomation.utils.resources.StringResourceProvider
 import javax.inject.Inject
 
+interface ItemFactory {
+    fun createListEventItems(listEvents: List<ListEvent>): List<BaseListItem>
+}
+
 class ItemFactoryImpl @Inject constructor(
     private val stringResourceProvider: StringResourceProvider
 ) : ItemFactory {
-    override fun createListEventItems(domainModelList: List<ListEvent>): List<BaseListItem> {
-        return domainModelList.map { listEvent ->
+    override fun createListEventItems(listEvents: List<ListEvent>): List<BaseListItem> {
+        return listEvents.map { listEvent ->
             val format = if (listEvent.online) {
                 stringResourceProvider.getString(R.string.format_online)
             } else {
@@ -28,8 +32,4 @@ class ItemFactoryImpl @Inject constructor(
             )
         }
     }
-}
-
-interface ItemFactory {
-    fun createListEventItems(domainModelList: List<ListEvent>): List<BaseListItem>
 }
