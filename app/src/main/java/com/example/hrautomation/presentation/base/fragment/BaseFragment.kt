@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.example.hrautomation.utils.ViewModelFactory
+import com.example.hrautomation.utils.ui.dpToPx
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingStateSwitcher
 import javax.inject.Inject
 
@@ -23,10 +25,15 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
     protected val contentLoadingSwitcher: ContentLoadingStateSwitcher = ContentLoadingStateSwitcher()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         initInject()
+    }
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = bindingInflater.invoke(layoutInflater)
+
+        initToolbar()
 
         initUI()
 
@@ -34,6 +41,12 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
         initListeners()
         return binding.root
+    }
+
+    private fun initToolbar() {
+        (activity as? AppCompatActivity)?.supportActionBar?.let {
+            it.elevation = requireContext().dpToPx(TOOLBAR_ELEVATION).toFloat()
+        }
     }
 
     abstract fun initInject()
@@ -47,5 +60,9 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    companion object {
+        protected const val TOOLBAR_ELEVATION = 4F
     }
 }

@@ -8,5 +8,6 @@ class ListEvent(
     val date: Date,
     val address: String,
     val pictureUrl: String?,
-    val online: Boolean
+    val online: Boolean,
+    val isOngoing: Boolean
 )

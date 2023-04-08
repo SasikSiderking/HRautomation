@@ -13,8 +13,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/productImage"
+        android:scaleType="centerCrop"
         android:layout_width="56dp"
         android:layout_height="56dp"
+        tools:src="@drawable/ic_placeholder"
         android:layout_margin="12dp"
         app:shapeAppearanceOverlay="@style/roundedImageViewRounded" />
 
