@@ -19,13 +19,17 @@ class ItemFactoryImpl @Inject constructor(
                 stringResourceProvider.getString(R.string.format_offline)
             }
             ListEventItem(
-                listEvent.id,
-                listEvent.name,
-                DateUtils.formatDate(listEvent.date),
-                listEvent.address,
-                listEvent.pictureUrl,
-                format
+                id = listEvent.id,
+                name = listEvent.name,
+                date = DateUtils.formatDate(listEvent.date),
+                address = listEvent.address,
+                pictureUrl = listEvent.pictureUrl,
+                format = format
             )
         }
     }
+}
+
+interface ItemFactory {
+    fun createListEventItems(domainModelList: List<ListEvent>): List<BaseListItem>
 }
