@@ -13,7 +13,6 @@ class ItemFactoryImpl @Inject constructor(
 ) : ItemFactory {
     override fun createListEventItems(domainModelList: List<ListEvent>): List<BaseListItem> {
         return domainModelList.map { listEvent ->
-
             val format = if (listEvent.online) {
                 stringResourceProvider.getString(R.string.format_online)
             } else {
@@ -27,7 +26,6 @@ class ItemFactoryImpl @Inject constructor(
                 listEvent.pictureUrl,
                 format
             )
-
         }
     }
 }
