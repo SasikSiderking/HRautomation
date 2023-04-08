@@ -24,5 +24,10 @@
         android:name="com.example.hrautomation.presentation.view.restaurants.RestaurantsFragment"
         android:label="@string/where_to_eat"
         tools:layout="@layout/fragment_restaurants" />
+    <fragment
+        android:id="@+id/socialFragment"
+        android:name="com.example.hrautomation.presentation.view.social.SocialFragment"
+        android:label="@string/events"
+        tools:layout="@layout/fragment_social" />
 
 </navigation>

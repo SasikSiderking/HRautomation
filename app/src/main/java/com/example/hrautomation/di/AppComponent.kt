@@ -1,6 +1,7 @@
 package com.example.hrautomation.di
 
 import com.example.hrautomation.di.network.ApiModule
+import com.example.hrautomation.di.utils.ItemFactoryModule
 import com.example.hrautomation.di.utils.MapperModule
 import com.example.hrautomation.di.utils.ResourcesModule
 import com.example.hrautomation.di.view_model.PublisherModule
@@ -24,6 +25,7 @@ import com.example.hrautomation.presentation.view.restaurants.restaurant.Restaur
 import com.example.hrautomation.presentation.view.restaurants.restaurant_details.RestaurantDetailsActivity
 import com.example.hrautomation.presentation.view.restaurants.restaurant_details.RestaurantReviewActivity
 import com.example.hrautomation.presentation.view.restaurants.сity.CityBottomSheet
+import com.example.hrautomation.presentation.view.social.SocialFragment
 import dagger.Component
 import javax.inject.Singleton
 
@@ -38,7 +40,8 @@ import javax.inject.Singleton
         DispatchersModule::class,
         ContentResolverModule::class,
         PublisherModule::class,
-        ResourcesModule::class
+        ResourcesModule::class,
+        ItemFactoryModule::class
     ]
 )
 @Singleton
@@ -67,4 +70,6 @@ interface AppComponent {
     fun inject(sheet: RestaurantBottomSheet)
     fun inject(activity: RestaurantDetailsActivity)
     fun inject(activity: RestaurantReviewActivity)
+
+    fun inject(fragment: SocialFragment)
 }

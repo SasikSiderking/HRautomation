@@ -9,5 +9,5 @@ data class EventResponse(
     val date: Date,
     val address: String,
     val online: Boolean,
-    val pictureUrl: String
+    val pictureUrl: String?
 )
