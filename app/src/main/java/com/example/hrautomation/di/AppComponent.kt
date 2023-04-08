@@ -1,6 +1,7 @@
 package com.example.hrautomation.di
 
 import com.example.hrautomation.di.network.ApiModule
+import com.example.hrautomation.di.utils.ItemFactoryModule
 import com.example.hrautomation.di.utils.MapperModule
 import com.example.hrautomation.di.utils.ResourcesModule
 import com.example.hrautomation.di.view_model.PublisherModule
@@ -39,7 +40,8 @@ import javax.inject.Singleton
         DispatchersModule::class,
         ContentResolverModule::class,
         PublisherModule::class,
-        ResourcesModule::class
+        ResourcesModule::class,
+        ItemFactoryModule::class
     ]
 )
 @Singleton

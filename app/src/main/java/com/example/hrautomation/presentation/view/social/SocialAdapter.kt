@@ -5,7 +5,7 @@ import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.utils.DiffUtilCallback
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 
-class SocialFragmentAdapter :
+class SocialAdapter :
     ListDelegationAdapter<List<BaseListItem>>() {
 
     init {

@@ -20,7 +20,7 @@ class SocialFragment : BaseFragment<FragmentSocialBinding>() {
         viewModelFactory
     }
 
-    private lateinit var adapter: SocialFragmentAdapter
+    private lateinit var adapter: SocialAdapter
 
     override fun initInject() {
         (requireContext().applicationContext as App).appComponent.inject(this)
@@ -41,7 +41,7 @@ class SocialFragment : BaseFragment<FragmentSocialBinding>() {
                 contentLoadingSwitcher.switchState(ContentLoadingState.LOADING, SwitchAnimationParams(delay = 500L))
             }
 
-            adapter = SocialFragmentAdapter()
+            adapter = SocialAdapter()
             eventRecyclerView.adapter = adapter
             eventRecyclerView.layoutManager = LinearLayoutManager(context)
         }
