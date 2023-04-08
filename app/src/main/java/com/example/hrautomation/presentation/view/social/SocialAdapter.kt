@@ -10,7 +10,6 @@ class SocialAdapter :
 
     init {
         delegatesManager.addDelegate(EventItemAdapterDelegate())
-        delegatesManager.addDelegate(EventItemDisabledAdapterDelegate())
     }
 
     fun update(data: List<BaseListItem>) {

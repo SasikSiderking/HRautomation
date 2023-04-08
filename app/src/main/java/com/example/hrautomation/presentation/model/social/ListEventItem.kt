@@ -8,5 +8,7 @@ data class ListEventItem(
     val date: String,
     val address: String,
     val pictureUrl: String?,
-    val format: String
+    val format: String,
+    val timeLineColor: Int,
+    val timeLineIcon: Int
 ) : BaseListItem

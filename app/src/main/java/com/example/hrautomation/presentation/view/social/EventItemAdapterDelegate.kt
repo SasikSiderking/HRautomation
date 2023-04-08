@@ -32,9 +32,16 @@ class EventItemAdapterDelegate :
             Glide.with(eventImage)
                 .load(item.pictureUrl)
                 .centerCrop()
-                .placeholder(R.drawable.img)
+                .placeholder(R.drawable.ic_placeholder)
                 .into(eventImage)
-            timelineIcon.setImageDrawable(ContextCompat.getDrawable(root.context, R.drawable.ic_baseline_event_available_24))
+
+            timeline.setBackgroundColor(root.context.getColor(item.timeLineColor))
+            timelineIcon.setImageDrawable(
+                ContextCompat.getDrawable(
+                    root.context,
+                    item.timeLineIcon
+                )
+            )
             eventName.text = item.name
             eventDate.text = item.date
             eventFormat.text = item.format
