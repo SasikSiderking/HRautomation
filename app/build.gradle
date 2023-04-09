@@ -23,10 +23,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField ("String", "BASE_URL",'"https://hr-automation-backend.onrender.com"')
+            buildConfigField("String", "BASE_URL", '"https://hr-automation-backend.onrender.com"')
         }
-        debug{
-            buildConfigField ("String", "BASE_URL",'"https://hr-automation-backend.onrender.com"')
+        debug {
+            buildConfigField("String", "BASE_URL", '"https://hr-automation-backend.onrender.com"')
         }
     }
     compileOptions {
@@ -37,7 +37,7 @@ android {
         jvmTarget = '1.8'
     }
 
-    dataBinding{
+    dataBinding {
         enabled = true
     }
     buildFeatures {
@@ -108,4 +108,7 @@ dependencies {
 //    Serialization
     implementation 'com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0'
     implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1'
+
+//    Jodatime
+    implementation 'joda-time:joda-time:2.12.5'
 }

@@ -23,6 +23,7 @@ import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.ActivityMainBinding
 import com.example.hrautomation.presentation.view.loading.LoadingActivity
 import com.example.hrautomation.presentation.view.profile.ProfileActivity
+import com.example.hrautomation.presentation.view.social.filter.EventFilterActivity
 import com.example.hrautomation.utils.ViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.Dispatchers
@@ -121,7 +122,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openEventFilter() {
-
+        val intent = EventFilterActivity.createIntent(this)
+        startActivity(intent)
     }
 
     private fun logout() {

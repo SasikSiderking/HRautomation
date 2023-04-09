@@ -87,4 +87,5 @@
     <string name="filter_by_format">По формату:</string>
     <string name="default_format_text">Формат не выбран</string>
     <string name="action_filters">фильтры</string>
+    <string name="filter_events">Фильтр событий</string>
 </resources>

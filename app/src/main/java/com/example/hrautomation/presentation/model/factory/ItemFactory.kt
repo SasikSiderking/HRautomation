@@ -6,6 +6,7 @@ import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.model.social.ListEventItem
 import com.example.hrautomation.utils.date.DateUtils
 import com.example.hrautomation.utils.resources.StringResourceProvider
+import com.example.hrautomation.utils.social.SocialUtils
 import javax.inject.Inject
 
 interface ItemFactory {
@@ -18,16 +19,15 @@ class ItemFactoryImpl @Inject constructor(
 
     override fun createListEventItems(listEvents: List<ListEvent>): List<BaseListItem> {
         return listEvents.map { listEvent ->
-            val format: String
-            if (listEvent.online) {
-                format = stringResourceProvider.getString(R.string.format_online)
+            val format: String = if (listEvent.online) {
+                stringResourceProvider.getString(R.string.format_online)
             } else {
-                format = stringResourceProvider.getString(R.string.format_offline)
+                stringResourceProvider.getString(R.string.format_offline)
             }
 
             val timeLineColor: Int
             val timeLineIcon: Int
-            if (listEvent.isOngoing) {
+            if (SocialUtils.checkForOngoing(listEvent.date)) {
                 timeLineColor = R.color.primary
                 timeLineIcon = R.drawable.ic_baseline_event_available_24
             } else {

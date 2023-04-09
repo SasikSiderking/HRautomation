@@ -2,9 +2,12 @@ package com.example.hrautomation.presentation.view.social.filter
 
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View.OnClickListener
 import androidx.activity.viewModels
+import com.example.hrautomation.R
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.FragmentEventFilterBinding
 import com.example.hrautomation.presentation.base.activity.BaseActivity
@@ -25,6 +28,12 @@ class EventFilterActivity : BaseActivity<FragmentEventFilterBinding>() {
         (applicationContext as App).appComponent.inject(this)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = getString(R.string.filter_events)
+        super.onCreate(savedInstanceState)
+    }
+
     override fun initUI() {
         with(binding) {
             contentLoadingSwitcher.setup(
@@ -32,7 +41,7 @@ class EventFilterActivity : BaseActivity<FragmentEventFilterBinding>() {
                     contentViews = listOf(),
                     errorViews = listOf(reusableReload.reusableReload),
                     loadingViews = listOf(reusableLoading.progressBar),
-                    initState = ContentLoadingState.LOADING
+                    initState = ContentLoadingState.CONTENT
                 )
             )
             reusableReload.reloadButton.setOnClickListener {
@@ -47,6 +56,14 @@ class EventFilterActivity : BaseActivity<FragmentEventFilterBinding>() {
 
     override fun initListeners() {
         binding.pickedDate.setOnClickListener(pickDate)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> finish()
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     private val pickDate = OnClickListener {
