@@ -13,6 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -41,6 +42,8 @@ class MainActivity : AppCompatActivity() {
         viewModelFactory
     }
 
+    private var isFilterMenuItemVisible = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -68,6 +71,8 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         this.onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+
+        navController.addOnDestinationChangedListener(navListener)
     }
 
     private val onBackPressedCallback: OnBackPressedCallback = object : OnBackPressedCallback(
@@ -88,6 +93,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        val filterMenuItem = menu!!.findItem(R.id.action_filter)
+        filterMenuItem.isVisible = isFilterMenuItemVisible
+        return super.onPrepareOptionsMenu(menu)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.menu_action_bar, menu)
@@ -98,9 +109,19 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.action_profile -> openProfile()
             R.id.action_exit -> logout()
+            R.id.action_filter -> openEventFilter()
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    private val navListener = NavController.OnDestinationChangedListener { controller, destination, arguments ->
+        isFilterMenuItemVisible = destination.id == R.id.socialFragment
+        invalidateOptionsMenu()
+    }
+
+    private fun openEventFilter() {
+
     }
 
     private fun logout() {
