@@ -51,8 +51,7 @@ class EventFilterActivity : BaseActivity<FragmentEventFilterBinding>() {
         }
     }
 
-    override fun initObserves() {
-    }
+    override fun initObserves() = Unit
 
     override fun initListeners() {
         binding.pickedDate.setOnClickListener(pickDate)
