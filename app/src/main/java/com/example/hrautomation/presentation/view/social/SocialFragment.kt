@@ -26,6 +26,7 @@ class SocialFragment : BaseFragment<FragmentSocialBinding>() {
         (requireContext().applicationContext as App).appComponent.inject(this)
     }
 
+
     override fun initUI() {
         with(binding) {
             contentLoadingSwitcher.setup(
@@ -49,6 +50,7 @@ class SocialFragment : BaseFragment<FragmentSocialBinding>() {
 
     override fun initObserves() {
         viewModel.data.observe(viewLifecycleOwner, eventsObserver)
+        viewModel.exception.observe(viewLifecycleOwner, exceptionObserver)
     }
 
     override fun initListeners() = Unit
@@ -56,5 +58,11 @@ class SocialFragment : BaseFragment<FragmentSocialBinding>() {
     private val eventsObserver = Observer<List<BaseListItem>> { events ->
         adapter.update(events)
         contentLoadingSwitcher.switchState(ContentLoadingState.CONTENT, SwitchAnimationParams(delay = 500L))
+    }
+
+    private val exceptionObserver = Observer<Throwable?> { exception ->
+        exception?.let {
+            contentLoadingSwitcher.switchState(ContentLoadingState.ERROR, SwitchAnimationParams(delay = 500L))
+        }
     }
 }

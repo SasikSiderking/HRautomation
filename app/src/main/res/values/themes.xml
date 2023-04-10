@@ -4,8 +4,8 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primary</item>
         <item name="colorOnPrimary">@color/black</item>
-        <!--Material?-->
         <item name="colorOnSurface">@color/onSurface</item>
+        <item name="colorAccent">@color/primary_deep</item>
 
         <!-- Secondary brand color. -->
 
