@@ -9,15 +9,22 @@ import com.example.hrautomation.domain.repository.SocialRepository
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
 import com.example.hrautomation.presentation.model.factory.ItemFactory
+import com.example.hrautomation.presentation.model.social.EventFilterParam
+import com.example.hrautomation.presentation.model.social.ListEventItem
+import com.example.hrautomation.utils.publisher.Event
+import com.example.hrautomation.utils.publisher.Publisher
 import com.example.hrautomation.utils.tryLaunch
 import kotlinx.coroutines.cancelChildren
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import timber.log.Timber
 import javax.inject.Inject
 
 class SocialViewModel @Inject constructor(
     private val dispatchers: CoroutineDispatchers,
     private val socialRepository: SocialRepository,
-    private val itemFactory: ItemFactory
+    private val itemFactory: ItemFactory,
+    publisher: Publisher
 ) : BaseViewModel() {
 
     val data: LiveData<List<BaseListItem>>
@@ -26,12 +33,35 @@ class SocialViewModel @Inject constructor(
 
     init {
         loadData()
+        publisher.eventFlow
+            .onEach { event ->
+                when (event) {
+                    is Event.EventFilter -> {
+                        filter(event.eventFilterParam)
+                    }
+                    else -> {}
+                }
+            }
+            .launchIn(viewModelScope)
     }
 
     fun reload() {
         viewModelScope.coroutineContext.cancelChildren()
         clearExceptionState()
         loadData()
+    }
+
+    private fun filter(filterParam: EventFilterParam) {
+        if (_data.value != null) {
+            var listEventItems: List<ListEventItem> = _data.value as List<ListEventItem>
+            if (filterParam.date != null) {
+                listEventItems = listEventItems.filter { it.date == filterParam.date }
+            }
+            if (filterParam.format != null) {
+                listEventItems = listEventItems.filter { it.format == filterParam.format }
+            }
+            _data.postValue(listEventItems)
+        }
     }
 
     private fun loadData() {

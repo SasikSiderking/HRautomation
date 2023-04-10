@@ -9,18 +9,18 @@ import android.view.View.OnClickListener
 import androidx.activity.viewModels
 import com.example.hrautomation.R
 import com.example.hrautomation.app.App
-import com.example.hrautomation.databinding.FragmentEventFilterBinding
+import com.example.hrautomation.databinding.ActivityEventFilterBinding
 import com.example.hrautomation.presentation.base.activity.BaseActivity
-import com.example.hrautomation.presentation.view.social.SocialViewModel
+import com.example.hrautomation.presentation.model.social.DatePickerDialogResult
+import com.example.hrautomation.utils.date.DateUtils
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingSettings
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingState
-import com.example.hrautomation.utils.ui.switcher.base.SwitchAnimationParams
 
-class EventFilterActivity : BaseActivity<FragmentEventFilterBinding>() {
-    override val bindingInflater: (LayoutInflater) -> FragmentEventFilterBinding
-        get() = { FragmentEventFilterBinding.inflate(layoutInflater) }
+class EventFilterActivity : BaseActivity<ActivityEventFilterBinding>() {
+    override val bindingInflater: (LayoutInflater) -> ActivityEventFilterBinding
+        get() = { ActivityEventFilterBinding.inflate(layoutInflater) }
 
-    private val viewModel: SocialViewModel by viewModels {
+    private val viewModel: EventFilterViewModel by viewModels {
         viewModelFactory
     }
 
@@ -44,10 +44,6 @@ class EventFilterActivity : BaseActivity<FragmentEventFilterBinding>() {
                     initState = ContentLoadingState.CONTENT
                 )
             )
-            reusableReload.reloadButton.setOnClickListener {
-                viewModel.reload()
-                contentLoadingSwitcher.switchState(ContentLoadingState.LOADING, SwitchAnimationParams(delay = 500L))
-            }
         }
     }
 
@@ -55,6 +51,29 @@ class EventFilterActivity : BaseActivity<FragmentEventFilterBinding>() {
 
     override fun initListeners() {
         binding.pickedDate.setOnClickListener(pickDate)
+
+        supportFragmentManager.setFragmentResultListener(
+            DatePickerFragment.REQUEST_KEY,
+            this
+        ) { _: String, bundle: Bundle ->
+            val datePickerDialogResult = bundle.getSerializable(DatePickerFragment.RESULT_KEY) as DatePickerDialogResult
+            with(datePickerDialogResult) {
+                val localDate = DateUtils.formatDate(
+                    org.joda.time.LocalDate(
+                        year,
+                        month,
+                        day
+                    ).toDate()
+                )
+                binding.pickedDate.text = localDate
+                viewModel.setDateFilter(localDate)
+            }
+        }
+
+        binding.acceptButton.setOnClickListener {
+            viewModel.sendFilterParam()
+            finish()
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -71,6 +90,7 @@ class EventFilterActivity : BaseActivity<FragmentEventFilterBinding>() {
     }
 
     companion object {
+
         fun createIntent(context: Context): Intent {
             return Intent(context, EventFilterActivity::class.java)
         }

@@ -1,5 +1,6 @@
 package com.example.hrautomation.utils.publisher
 
+import com.example.hrautomation.presentation.model.social.EventFilterParam
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -11,4 +12,5 @@ class Publisher {
 
 sealed class Event {
     object Update : Event()
+    class EventFilter(val eventFilterParam: EventFilterParam) : Event()
 }

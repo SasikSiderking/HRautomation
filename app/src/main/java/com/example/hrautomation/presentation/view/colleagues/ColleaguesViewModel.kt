@@ -22,7 +22,7 @@ class ColleaguesViewModel @Inject constructor(
     private val repo: EmployeesRepository,
     private val dispatchers: CoroutineDispatchers,
     private val employeesToColleagueItemMapper: EmployeeToColleagueItemMapper,
-    private val publisher: Publisher
+    publisher: Publisher
 ) : BaseViewModel() {
 
     val data: LiveData<List<BaseListItem>>
@@ -39,6 +39,7 @@ class ColleaguesViewModel @Inject constructor(
                     is Event.Update -> {
                         reload()
                     }
+                    else -> {}
                 }
             }
             .launchIn(viewModelScope)
