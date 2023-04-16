@@ -29,16 +29,16 @@ class EventFilterActivity : BaseActivity<ActivityEventFilterBinding>() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = getString(R.string.filter_events)
-        super.onCreate(savedInstanceState)
     }
 
     override fun initUI() {
         with(binding) {
             contentLoadingSwitcher.setup(
                 ContentLoadingSettings(
-                    contentViews = listOf(),
+                    contentViews = listOf(dateLabel, pickedDate, cityLabel, pickedCity, formatLabel, pickedFormat),
                     errorViews = listOf(reusableReload.reusableReload),
                     loadingViews = listOf(reusableLoading.progressBar),
                     initState = ContentLoadingState.CONTENT
@@ -85,12 +85,11 @@ class EventFilterActivity : BaseActivity<ActivityEventFilterBinding>() {
     }
 
     private val pickDate = OnClickListener {
-        val newFragment = DatePickerFragment()
-        newFragment.show(supportFragmentManager, "datePicker")
+        val newFragment = DatePickerFragment.newInstance()
+        newFragment.show(supportFragmentManager, DatePickerFragment.TAG)
     }
 
     companion object {
-
         fun createIntent(context: Context): Intent {
             return Intent(context, EventFilterActivity::class.java)
         }

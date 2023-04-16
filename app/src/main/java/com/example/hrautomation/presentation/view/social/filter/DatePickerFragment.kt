@@ -29,9 +29,16 @@ class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener 
     }
 
     companion object {
+
+        const val TAG = "DatePickerFragment"
+
         const val REQUEST_KEY = "PICKED_DATE"
 
         const val RESULT_KEY = "RESULT_KEY"
+
+        fun newInstance(): DatePickerFragment {
+            return DatePickerFragment()
+        }
     }
 
 }
