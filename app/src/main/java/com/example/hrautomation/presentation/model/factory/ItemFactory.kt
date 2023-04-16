@@ -2,7 +2,6 @@ package com.example.hrautomation.presentation.model.factory
 
 import com.example.hrautomation.R
 import com.example.hrautomation.domain.model.social.ListEvent
-import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.model.social.ListEventItem
 import com.example.hrautomation.utils.date.DateUtils
 import com.example.hrautomation.utils.resources.StringResourceProvider
@@ -10,14 +9,14 @@ import com.example.hrautomation.utils.social.SocialUtils
 import javax.inject.Inject
 
 interface ItemFactory {
-    fun createListEventItems(listEvents: List<ListEvent>): List<BaseListItem>
+    fun createListEventItems(listEvents: List<ListEvent>): List<ListEventItem>
 }
 
 class ItemFactoryImpl @Inject constructor(
     private val stringResourceProvider: StringResourceProvider
 ) : ItemFactory {
 
-    override fun createListEventItems(listEvents: List<ListEvent>): List<BaseListItem> {
+    override fun createListEventItems(listEvents: List<ListEvent>): List<ListEventItem> {
         return listEvents.map { listEvent ->
             val format: String = if (listEvent.online) {
                 stringResourceProvider.getString(R.string.format_online)

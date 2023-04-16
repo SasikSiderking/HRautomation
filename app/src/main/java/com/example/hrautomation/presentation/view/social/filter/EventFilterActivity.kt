@@ -15,6 +15,7 @@ import com.example.hrautomation.presentation.model.social.DatePickerDialogResult
 import com.example.hrautomation.utils.date.DateUtils
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingSettings
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingState
+import org.joda.time.LocalDate
 
 class EventFilterActivity : BaseActivity<ActivityEventFilterBinding>() {
     override val bindingInflater: (LayoutInflater) -> ActivityEventFilterBinding
@@ -59,7 +60,7 @@ class EventFilterActivity : BaseActivity<ActivityEventFilterBinding>() {
             val datePickerDialogResult = bundle.getSerializable(DatePickerFragment.RESULT_KEY) as DatePickerDialogResult
             with(datePickerDialogResult) {
                 val localDate = DateUtils.formatDate(
-                    org.joda.time.LocalDate(
+                    LocalDate(
                         year,
                         month,
                         day

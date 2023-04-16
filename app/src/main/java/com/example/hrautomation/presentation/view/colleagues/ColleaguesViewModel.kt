@@ -10,8 +10,8 @@ import com.example.hrautomation.domain.repository.EmployeesRepository
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
 import com.example.hrautomation.presentation.model.colleagues.EmployeeToColleagueItemMapper
-import com.example.hrautomation.utils.publisher.Event
-import com.example.hrautomation.utils.publisher.Publisher
+import com.example.hrautomation.utils.publisher.ProfileEvent
+import com.example.hrautomation.utils.publisher.ProfilePublisher
 import com.example.hrautomation.utils.tryLaunch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -22,7 +22,7 @@ class ColleaguesViewModel @Inject constructor(
     private val repo: EmployeesRepository,
     private val dispatchers: CoroutineDispatchers,
     private val employeesToColleagueItemMapper: EmployeeToColleagueItemMapper,
-    publisher: Publisher
+    profilePublisher: ProfilePublisher
 ) : BaseViewModel() {
 
     val data: LiveData<List<BaseListItem>>
@@ -33,10 +33,10 @@ class ColleaguesViewModel @Inject constructor(
 
     init {
         loadData()
-        publisher.eventFlow
+        profilePublisher.profileEventFlow
             .onEach { event ->
                 when (event) {
-                    is Event.Update -> {
+                    is ProfileEvent.Update -> {
                         reload()
                     }
                     else -> {}
