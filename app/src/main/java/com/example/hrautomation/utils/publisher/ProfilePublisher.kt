@@ -1,12 +1,16 @@
 package com.example.hrautomation.utils.publisher
 
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 
 class ProfilePublisher {
-    val _profileEventFlow: MutableSharedFlow<ProfileEvent> = MutableSharedFlow()
-    val profileEventFlow: SharedFlow<ProfileEvent> = _profileEventFlow.asSharedFlow()
+    private val _profileEventFlow: MutableSharedFlow<ProfileEvent> = MutableSharedFlow()
+    val profileEventFlow: Flow<ProfileEvent> = _profileEventFlow.asSharedFlow()
+
+    suspend fun emitEvent(event: ProfileEvent) {
+        _profileEventFlow.emit(event)
+    }
 }
 
 sealed class ProfileEvent {

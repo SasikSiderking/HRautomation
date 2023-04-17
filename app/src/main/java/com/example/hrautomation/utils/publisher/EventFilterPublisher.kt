@@ -1,13 +1,17 @@
 package com.example.hrautomation.utils.publisher
 
 import com.example.hrautomation.presentation.model.social.EventFilterParam
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 
 class EventFilterPublisher {
-    val _eventFilterEventFlow: MutableSharedFlow<EventFilterEvent> = MutableSharedFlow()
-    val eventFilterEventFlow: SharedFlow<EventFilterEvent> = _eventFilterEventFlow.asSharedFlow()
+    private val _eventFilterEventFlow: MutableSharedFlow<EventFilterEvent> = MutableSharedFlow()
+    val eventFilterEventFlow: Flow<EventFilterEvent> = _eventFilterEventFlow.asSharedFlow()
+
+    suspend fun emitEvent(event: EventFilterEvent) {
+        _eventFilterEventFlow.emit(event)
+    }
 }
 
 sealed class EventFilterEvent {

@@ -12,6 +12,7 @@ class MainViewModel @Inject constructor(
     private val tokenRepository: TokenRepository,
     private val profilePublisher: ProfilePublisher
 ) : BaseViewModel() {
+
     fun logout() {
         with(tokenRepository) {
             setAccessToken(null)
@@ -21,7 +22,7 @@ class MainViewModel @Inject constructor(
 
     fun updateColleagues() {
         viewModelScope.launch {
-            profilePublisher._profileEventFlow.emit(ProfileEvent.Update)
+            profilePublisher.emitEvent(ProfileEvent.Update)
         }
     }
 }

@@ -17,7 +17,7 @@ class EventFilterViewModel @Inject constructor(private val eventFilterPublisher:
 
     fun sendFilterParam() {
         viewModelScope.launch {
-            eventFilterPublisher._eventFilterEventFlow.emit(EventFilterEvent.ProfileEventFilter(eventFilterParam))
+            eventFilterPublisher.emitEvent(EventFilterEvent.ProfileEventFilter(eventFilterParam))
         }
     }
 }
