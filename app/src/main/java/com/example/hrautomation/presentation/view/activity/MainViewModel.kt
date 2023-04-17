@@ -3,12 +3,16 @@ package com.example.hrautomation.presentation.view.activity
 import androidx.lifecycle.viewModelScope
 import com.example.hrautomation.domain.repository.TokenRepository
 import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
-import com.example.hrautomation.utils.publisher.Event
-import com.example.hrautomation.utils.publisher.Publisher
+import com.example.hrautomation.utils.publisher.ProfileEvent
+import com.example.hrautomation.utils.publisher.ProfilePublisher
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class MainViewModel @Inject constructor(private val tokenRepository: TokenRepository, private val publisher: Publisher) : BaseViewModel() {
+class MainViewModel @Inject constructor(
+    private val tokenRepository: TokenRepository,
+    private val profilePublisher: ProfilePublisher
+) : BaseViewModel() {
+
     fun logout() {
         with(tokenRepository) {
             setAccessToken(null)
@@ -18,7 +22,7 @@ class MainViewModel @Inject constructor(private val tokenRepository: TokenReposi
 
     fun updateColleagues() {
         viewModelScope.launch {
-            publisher._eventFlow.emit(Event.Update)
+            profilePublisher.emitEvent(ProfileEvent.Update)
         }
     }
 }

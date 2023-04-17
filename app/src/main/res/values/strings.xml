@@ -88,4 +88,5 @@
     <string name="default_format_text">Формат не выбран</string>
     <string name="action_filters">фильтры</string>
     <string name="filter_events">Фильтр событий</string>
+    <string name="filter_accept_button_text">Применить</string>
 </resources>

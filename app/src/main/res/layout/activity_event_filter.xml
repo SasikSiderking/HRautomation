@@ -71,6 +71,16 @@
         app:layout_constraintStart_toStartOf="@+id/pickedCity"
         app:layout_constraintTop_toTopOf="@+id/formatLabel" />
 
+    <Button
+        android:id="@+id/acceptButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:text="@string/filter_accept_button_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <include
         android:id="@+id/reusableLoading"
         layout="@layout/reusable_loading"
