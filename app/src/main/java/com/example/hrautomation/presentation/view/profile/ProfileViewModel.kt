@@ -22,7 +22,6 @@ import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 
-
 class ProfileViewModel @Inject constructor(
     private val userRepo: UserRepository,
     private val tokenRepo: TokenRepository,

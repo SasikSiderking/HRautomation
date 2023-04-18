@@ -9,10 +9,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class EventFilterViewModel @Inject constructor(private val eventFilterPublisher: EventFilterPublisher) : BaseViewModel() {
-    private var eventFilterParam: EventFilterParam = EventFilterParam(null, null, null)
+    private var eventFilterParam: EventFilterParam = EventFilterParam(null, null, null, null)
 
-    fun setDateFilter(localDate: String) {
-        eventFilterParam = eventFilterParam.copy(date = localDate)
+    fun setDateFilter(date: String) {
+        eventFilterParam = eventFilterParam.copy(date = date)
+    }
+
+    fun setNameFilter(name: String) {
+        eventFilterParam = eventFilterParam.copy(name = name)
     }
 
     fun sendFilterParam() {

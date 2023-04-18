@@ -80,13 +80,15 @@
     <string name="event_image">Превью события</string>
     <string name="format_online">Онлайн-формат</string>
     <string name="format_offline">Офлайн-формат</string>
-    <string name="filter_by_date">По дате:</string>
+    <string name="filter_by_date">По дате</string>
     <string name="default_date_text">Дата не выбрана</string>
-    <string name="filter_by_city">По городу:</string>
+    <string name="filter_by_city">По городу</string>
     <string name="default_city_text">Город не выбран</string>
-    <string name="filter_by_format">По формату:</string>
+    <string name="filter_by_format">По формату</string>
     <string name="default_format_text">Формат не выбран</string>
     <string name="action_filters">фильтры</string>
     <string name="filter_events">Фильтр событий</string>
     <string name="filter_accept_button_text">Применить</string>
+    <string name="filter_by_name">По названию</string>
+    <string name="enter_event_name">Введите название</string>
 </resources>

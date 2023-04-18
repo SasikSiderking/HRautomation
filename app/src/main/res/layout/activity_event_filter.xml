@@ -6,70 +6,76 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
-    <TextView
-        android:id="@+id/dateLabel"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/nameInputLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/filter_by_date"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/pickedDate"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/pickedDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/default_date_text"
-        app:layout_constraintBottom_toBottomOf="@+id/dateLabel"
+        android:hint="@string/filter_by_name"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/dateLabel"
-        app:layout_constraintTop_toTopOf="@+id/dateLabel" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/cityLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/filter_by_city"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/dateLabel"
-        app:layout_constraintTop_toBottomOf="@id/dateLabel" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/nameInputText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:cursorVisible="false" />
 
-    <TextView
-        android:id="@+id/pickedCity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/default_city_text"
-        app:layout_constraintBottom_toBottomOf="@id/cityLabel"
-        app:layout_constraintEnd_toEndOf="@+id/pickedDate"
-        app:layout_constraintStart_toStartOf="@+id/pickedDate"
-        app:layout_constraintTop_toTopOf="@id/cityLabel" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/formatLabel"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/dateInputLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/filter_by_format"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/cityLabel"
-        app:layout_constraintTop_toBottomOf="@id/cityLabel" />
+        android:layout_marginTop="8dp"
+        android:hint="@string/filter_by_date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/nameInputLayout">
 
-    <TextView
-        android:id="@+id/pickedFormat"
-        android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/dateInputText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:cursorVisible="false"
+            android:focusable="true" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/cityInputLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/default_format_text"
-        app:layout_constraintBottom_toBottomOf="@+id/formatLabel"
-        app:layout_constraintEnd_toEndOf="@+id/pickedCity"
-        app:layout_constraintStart_toStartOf="@+id/pickedCity"
-        app:layout_constraintTop_toTopOf="@+id/formatLabel" />
+        android:layout_marginTop="8dp"
+        android:hint="@string/filter_by_city"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dateInputLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/cityInputText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:cursorVisible="false" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/formatInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="@string/filter_by_format"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cityInputLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/formatInputText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/acceptButton"
@@ -77,6 +83,9 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:text="@string/filter_accept_button_text"
+        app:layout_constraintTop_toBottomOf="@id/formatInputLayout"
+        app:layout_constraintVertical_bias="1"
+        app:shapeAppearanceOverlay="@style/roundedButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

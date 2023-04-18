@@ -59,6 +59,12 @@ class SocialViewModel @Inject constructor(
         if (filterParam.format != null) {
             reservedData = reservedData.filter { it.format == filterParam.format }
         }
+        if (filterParam.name != null) {
+            reservedData = reservedData.filter { it.name.contains(filterParam.name) }
+        }
+        if (filterParam.cityId != null) {
+            reservedData = reservedData.filter { it.name == filterParam.cityId.toString() }
+        }
         _data.postValue(reservedData)
     }
 
