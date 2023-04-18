@@ -10,7 +10,6 @@ import com.example.hrautomation.presentation.base.delegates.ClickableViewHolder
 import com.example.hrautomation.presentation.base.delegates.OnViewHolderClickListener
 import com.example.hrautomation.presentation.model.restaurants.CityItem
 import com.example.hrautomation.presentation.view.restaurants.сity.CityItemAdapterDelegate.CityViewHolder
-import com.google.android.gms.maps.model.LatLng
 
 class CityItemAdapterDelegate(private val onCityClickListener: OnCityClickListener) :
     BaseItemAdapterDelegate<CityItem, CityViewHolder>(), OnViewHolderClickListener<CityViewHolder> {
@@ -30,7 +29,7 @@ class CityItemAdapterDelegate(private val onCityClickListener: OnCityClickListen
 
     override fun onViewHolderClick(view: View, holder: CityViewHolder) {
         val item = getItemForViewHolder(holder)
-        onCityClickListener.onClick(LatLng(item.lat, item.lng))
+        onCityClickListener.onClick(item)
     }
 
     class CityViewHolder(val binding: ItemCityBinding, clickListener: OnViewHolderClickListener<CityViewHolder>) :

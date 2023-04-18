@@ -19,6 +19,10 @@ class EventFilterViewModel @Inject constructor(private val eventFilterPublisher:
         eventFilterParam = eventFilterParam.copy(name = name)
     }
 
+    fun setCityFilter(cityId: Long) {
+        eventFilterParam = eventFilterParam.copy(cityId = cityId)
+    }
+
     fun sendFilterParam() {
         viewModelScope.launch {
             eventFilterPublisher.emitEvent(EventFilterEvent.ProfileEventFilter(eventFilterParam))

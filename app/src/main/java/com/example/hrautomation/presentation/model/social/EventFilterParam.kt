@@ -5,6 +5,6 @@ import java.io.Serializable
 data class EventFilterParam(
     val name: String?,
     val date: String?,
-    val cityId: Int?,
+    val cityId: Long?,
     val format: String?
 ) : Serializable

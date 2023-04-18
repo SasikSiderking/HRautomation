@@ -1,7 +1,7 @@
 package com.example.hrautomation.presentation.view.restaurants.сity
 
-import com.google.android.gms.maps.model.LatLng
+import com.example.hrautomation.presentation.model.restaurants.CityItem
 
 fun interface OnCityClickListener {
-    fun onClick(latLng: LatLng)
+    fun onClick(city: CityItem)
 }

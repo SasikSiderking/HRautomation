@@ -9,6 +9,7 @@ import com.example.hrautomation.domain.repository.RestaurantsRepository
 import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
 import com.example.hrautomation.presentation.model.restaurants.BuildingItem
 import com.example.hrautomation.presentation.model.restaurants.BuildingToBuildingItemMapper
+import com.example.hrautomation.presentation.model.restaurants.CityItem
 import com.example.hrautomation.presentation.model.restaurants.ListRestaurantItem
 import com.example.hrautomation.presentation.view.restaurants.map.MarkerDelegate
 import com.example.hrautomation.presentation.view.restaurants.map.RestaurantsMapState
@@ -47,8 +48,10 @@ class RestaurantsViewModel @Inject constructor(
         loadData()
     }
 
-    fun chooseCity(cityLatLng: LatLng) {
+    fun chooseCity(city: CityItem) {
+        val cityLatLng = LatLng(city.lat, city.lng)
         cachedCityLatLngRepository.setLatLng(cityLatLng)
+        cachedCityLatLngRepository.setCityId(city.id)
 
         with(_restaurantsMapState) {
             postValue(

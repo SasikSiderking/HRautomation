@@ -19,8 +19,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.BottomSheetCitiesBinding
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
+import com.example.hrautomation.presentation.model.restaurants.CityItem
 import com.example.hrautomation.utils.ViewModelFactory
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import javax.inject.Inject
 
@@ -91,11 +91,10 @@ class CityBottomSheet : BottomSheetDialogFragment() {
         viewModel.data.observe(viewLifecycleOwner, cityObserver)
     }
 
-    private val onCityClickListener = OnCityClickListener { latLng: LatLng ->
+    private val onCityClickListener = OnCityClickListener { city: CityItem ->
         val bundle = Bundle()
-        bundle.putDouble(LATITUDE_KEY, latLng.latitude)
-        bundle.putDouble(LONGITUDE_KEY, latLng.longitude)
-        setFragmentResult(TAG, bundle)
+        bundle.putSerializable(RESULT_KEY, city)
+        setFragmentResult(REQUEST_KEY, bundle)
         this.dismiss()
     }
 
@@ -120,9 +119,9 @@ class CityBottomSheet : BottomSheetDialogFragment() {
     companion object {
         const val TAG = "SearchBottomSheet"
 
-        const val LATITUDE_KEY = "LatitudeKey"
+        const val RESULT_KEY = "CityKey"
 
-        const val LONGITUDE_KEY = "LongitudeKey"
+        const val REQUEST_KEY = "CityPick"
 
         fun newInstance() = CityBottomSheet()
     }

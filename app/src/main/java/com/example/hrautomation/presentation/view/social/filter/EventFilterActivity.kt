@@ -12,7 +12,9 @@ import com.example.hrautomation.R
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.ActivityEventFilterBinding
 import com.example.hrautomation.presentation.base.activity.BaseActivity
+import com.example.hrautomation.presentation.model.restaurants.CityItem
 import com.example.hrautomation.presentation.model.social.DatePickerDialogResult
+import com.example.hrautomation.presentation.view.restaurants.сity.CityBottomSheet
 import com.example.hrautomation.utils.date.DateUtils
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingSettings
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingState
@@ -55,6 +57,7 @@ class EventFilterActivity : BaseActivity<ActivityEventFilterBinding>() {
 
     override fun initListeners() {
         binding.dateInputText.setOnTouchListener(pickDate)
+        binding.cityInputText.setOnTouchListener(pickCity)
 
         supportFragmentManager.setFragmentResultListener(
             DatePickerFragment.REQUEST_KEY,
@@ -77,6 +80,18 @@ class EventFilterActivity : BaseActivity<ActivityEventFilterBinding>() {
             binding.dateInputText.clearFocus()
         }
 
+        supportFragmentManager.setFragmentResultListener(
+            CityBottomSheet.REQUEST_KEY,
+            this
+        ) { _: String, bundle: Bundle ->
+            val cityPickerDialogResult = bundle.getSerializable(CityBottomSheet.RESULT_KEY) as CityItem?
+            if (cityPickerDialogResult != null) {
+                binding.cityInputText.setText(cityPickerDialogResult.name)
+                viewModel.setCityFilter(cityPickerDialogResult.id)
+            }
+            binding.dateInputText.clearFocus()
+        }
+
         binding.acceptButton.setOnClickListener {
             viewModel.setNameFilter(binding.nameInputText.text.toString())
             viewModel.sendFilterParam()
@@ -95,9 +110,20 @@ class EventFilterActivity : BaseActivity<ActivityEventFilterBinding>() {
     private val pickDate = OnTouchListener { view, motionEvent ->
         if (motionEvent.action == MotionEvent.ACTION_UP) {
             view.performClick()
-            val newFragment = DatePickerFragment.newInstance()
             view.requestFocus()
+            val newFragment = DatePickerFragment.newInstance()
             newFragment.show(supportFragmentManager, DatePickerFragment.TAG)
+            return@OnTouchListener true
+        }
+        return@OnTouchListener false
+    }
+
+    private val pickCity = OnTouchListener { view, motionEvent ->
+        if (motionEvent.action == MotionEvent.ACTION_UP) {
+            view.performClick()
+            view.requestFocus()
+            val newFragment = CityBottomSheet.newInstance()
+            newFragment.show(supportFragmentManager, CityBottomSheet.TAG)
             return@OnTouchListener true
         }
         return@OnTouchListener false
