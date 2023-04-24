@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/filter_by_name"
+        app:endIconMode="clear_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -22,18 +23,29 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/dateInputLayout"
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/datePickIcon"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="@string/filter_by_date"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/ic_baseline_event_note_24"
+        app:layout_constraintBottom_toBottomOf="@id/toDateInputLayout"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/fromDateInputLayout" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/fromDateInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:hint="@string/filter_from_date"
+        app:endIconMode="clear_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/datePickIcon"
         app:layout_constraintTop_toBottomOf="@id/nameInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/dateInputText"
+            android:id="@+id/fromDateInputText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:cursorVisible="false" />
@@ -41,14 +53,45 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/cityInputLayout"
-        android:layout_width="match_parent"
+        android:id="@+id/toDateInputLayout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:hint="@string/filter_to_date"
+        app:endIconMode="clear_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/datePickIcon"
+        app:layout_constraintTop_toBottomOf="@id/fromDateInputLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/toDateInputText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:cursorVisible="false" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageView
+        android:id="@+id/cityPickIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_location_city_24"
+        app:layout_constraintBottom_toBottomOf="@id/cityInputLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/cityInputLayout" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/cityInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:hint="@string/filter_by_city"
+        app:endIconMode="clear_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dateInputLayout">
+        app:layout_constraintStart_toEndOf="@id/cityPickIcon"
+        app:layout_constraintTop_toBottomOf="@id/toDateInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/cityInputText"
@@ -58,21 +101,34 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <ImageView
+        android:id="@+id/formatPickIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_camera_indoor_24"
+        app:layout_constraintBottom_toBottomOf="@id/formatInputLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/formatInputLayout" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/formatInputLayout"
-        android:layout_width="match_parent"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
         android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:hint="@string/filter_by_format"
+        app:endIconMode="clear_text"
+        app:layout_constraintStart_toEndOf="@id/formatPickIcon"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cityInputLayout">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
             android:id="@+id/formatInputText"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:cursorVisible="false"
-            android:layout_height="match_parent" />
+            android:inputType="none" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

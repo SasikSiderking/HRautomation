@@ -3,24 +3,34 @@ package com.example.hrautomation.presentation.view.social.filter
 import androidx.lifecycle.viewModelScope
 import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
 import com.example.hrautomation.presentation.model.social.EventFilterParam
+import com.example.hrautomation.presentation.model.social.EventFormat
 import com.example.hrautomation.utils.publisher.EventFilterEvent
 import com.example.hrautomation.utils.publisher.EventFilterPublisher
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 class EventFilterViewModel @Inject constructor(private val eventFilterPublisher: EventFilterPublisher) : BaseViewModel() {
-    private var eventFilterParam: EventFilterParam = EventFilterParam(null, null, null, null)
+    private var eventFilterParam: EventFilterParam = EventFilterParam(null, null, null, null, null)
 
-    fun setDateFilter(date: String) {
-        eventFilterParam = eventFilterParam.copy(date = date)
+    fun setFromDateFilter(date: Date?) {
+        eventFilterParam = eventFilterParam.copy(fromDate = date)
     }
 
-    fun setNameFilter(name: String) {
+    fun setToDateFilter(date: Date?) {
+        eventFilterParam = eventFilterParam.copy(toDate = date)
+    }
+
+    fun setNameFilter(name: String?) {
         eventFilterParam = eventFilterParam.copy(name = name)
     }
 
-    fun setCityFilter(cityId: Long) {
+    fun setCityFilter(cityId: Long?) {
         eventFilterParam = eventFilterParam.copy(cityId = cityId)
+    }
+
+    fun setFormatFilter(format: EventFormat?) {
+        eventFilterParam = eventFilterParam.copy(format = format)
     }
 
     fun sendFilterParam() {

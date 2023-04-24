@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class SocialRepositoryImpl @Inject constructor(private val socialApi: SocialApi) : SocialRepository {
     override suspend fun getAllEvents(pageNumber: Int, size: Int, sortBy: EventSortBy): List<ListEvent> {
-        return socialApi.getEvents(pageNumber, size, sortBy.sortBy).map {
+        return socialApi.getEvents(pageNumber, size, sortBy.sortBy).events.map {
             it.toListEvent()
         }
     }

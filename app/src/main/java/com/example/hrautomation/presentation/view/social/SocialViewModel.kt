@@ -17,6 +17,8 @@ import com.example.hrautomation.utils.tryLaunch
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import org.joda.time.DateTime
+import org.joda.time.Interval
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -54,12 +56,13 @@ class SocialViewModel @Inject constructor(
 
     private fun filter(filterParam: EventFilterParam) {
         var copyReservedData: List<ListEventItem> = emptyList()
-        if (filterParam.date != null) {
-            Timber.e("${filterParam.date}")
-            copyReservedData = reservedData.filter { it.date == filterParam.date }
+        if (filterParam.fromDate != null && filterParam.toDate != null) {
+            copyReservedData = reservedData.filter {
+                Interval(DateTime(filterParam.fromDate), DateTime(filterParam.toDate)).contains(DateTime(it.date))
+            }
         }
         if (filterParam.format != null) {
-            copyReservedData = reservedData.filter { it.format == filterParam.format }
+            copyReservedData = reservedData.filter { it.format == filterParam.format.eventType }
         }
         if (filterParam.name != null) {
             copyReservedData = reservedData.filter { it.name.contains(filterParam.name) }

@@ -1,10 +1,12 @@
 package com.example.hrautomation.presentation.model.social
 
 import java.io.Serializable
+import java.util.*
 
 data class EventFilterParam(
     val name: String?,
-    val date: String?,
+    val fromDate: Date?,
+    val toDate: Date?,
     val cityId: Long?,
-    val format: String?
+    val format: EventFormat?
 ) : Serializable
