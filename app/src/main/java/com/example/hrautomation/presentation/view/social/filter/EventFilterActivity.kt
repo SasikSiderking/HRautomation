@@ -7,12 +7,14 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.widget.ArrayAdapter
 import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import com.example.hrautomation.R
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.ActivityEventFilterBinding
 import com.example.hrautomation.presentation.base.activity.BaseActivity
 import com.example.hrautomation.presentation.model.restaurants.CityItem
 import com.example.hrautomation.presentation.model.social.DatePickerDialogResult
+import com.example.hrautomation.presentation.model.social.EventFilterParam
 import com.example.hrautomation.presentation.model.social.EventFormat
 import com.example.hrautomation.presentation.view.restaurants.сity.CityBottomSheet
 import com.example.hrautomation.utils.date.DateUtils
@@ -28,6 +30,8 @@ class EventFilterActivity : BaseActivity<ActivityEventFilterBinding>() {
     private val viewModel: EventFilterViewModel by viewModels {
         viewModelFactory
     }
+
+    private var isFilterActive: Boolean = false
 
     override fun initInject() {
         (applicationContext as App).appComponent.inject(this)
@@ -86,12 +90,13 @@ class EventFilterActivity : BaseActivity<ActivityEventFilterBinding>() {
         }
     }
 
-    override fun initObserves() = Unit
+    override fun initObserves() {
+        viewModel.eventFilterParam.observe(this, eventFilterParamObserver)
+    }
 
     override fun initListeners() {
 
         val arrayAdapter = ArrayAdapter(this, R.layout.event_format_dropdown_item, EventFormat.values())
-        Timber.e(EventFormat.values().toString())
         binding.formatInputText.setAdapter(arrayAdapter)
 
         binding.fromDateInputText.setOnTouchListener(InputTextTouchListener({
@@ -116,8 +121,6 @@ class EventFilterActivity : BaseActivity<ActivityEventFilterBinding>() {
             this
         ) { _: String, bundle: Bundle ->
 
-            val dateInputText = binding.fromDateInputText
-
             val datePickerDialogResult = bundle.getSerializable(DatePickerFragment.RESULT_KEY) as DatePickerDialogResult?
 
             if (datePickerDialogResult != null) {
@@ -127,7 +130,6 @@ class EventFilterActivity : BaseActivity<ActivityEventFilterBinding>() {
                         month,
                         day
                     ).toDate()
-                    dateInputText.setText(DateUtils.formatDate(localDate))
                     viewModel.setFromDateFilter(localDate)
                 }
             }
@@ -137,7 +139,6 @@ class EventFilterActivity : BaseActivity<ActivityEventFilterBinding>() {
             DatePickerFragment.TO_REQUEST,
             this
         ) { _: String, bundle: Bundle ->
-            val dateInputText = binding.toDateInputText
 
             val datePickerDialogResult = bundle.getSerializable(DatePickerFragment.RESULT_KEY) as DatePickerDialogResult?
 
@@ -148,8 +149,7 @@ class EventFilterActivity : BaseActivity<ActivityEventFilterBinding>() {
                         month,
                         day
                     ).toDate()
-                    dateInputText.setText(DateUtils.formatDate(localDate))
-                    viewModel.setFromDateFilter(localDate)
+                    viewModel.setToDateFilter(localDate)
                 }
             }
         }
@@ -161,15 +161,35 @@ class EventFilterActivity : BaseActivity<ActivityEventFilterBinding>() {
 
             val cityPickerDialogResult = bundle.getSerializable(CityBottomSheet.RESULT_KEY) as CityItem?
             if (cityPickerDialogResult != null) {
-                binding.cityInputText.setText(cityPickerDialogResult.name)
-                viewModel.setCityFilter(cityPickerDialogResult.id)
+                viewModel.setCityFilter(cityPickerDialogResult)
             }
         }
 
         binding.acceptButton.setOnClickListener {
             viewModel.setNameFilter(binding.nameInputText.text.toString())
             viewModel.sendFilterParam()
+            intent.putExtra(RESULT_KEY, isFilterActive)
+            setResult(REQUEST_KEY, intent)
             finish()
+        }
+    }
+
+    private val eventFilterParamObserver = Observer<EventFilterParam> { eventFilterParam ->
+        Timber.e("name: " + eventFilterParam.name)
+        Timber.e("fromDate: " + eventFilterParam.fromDate.toString())
+        Timber.e("toDate: " + eventFilterParam.toDate.toString())
+        Timber.e("city: " + eventFilterParam.city.toString())
+        Timber.e("format:" + eventFilterParam.format.toString())
+        if (eventFilterParam.name != null || eventFilterParam.fromDate != null || eventFilterParam.toDate != null || eventFilterParam.city != null || eventFilterParam.format != null) {
+            isFilterActive = true
+            Timber.e(isFilterActive.toString())
+        } else isFilterActive = false
+        with(binding) {
+            nameInputText.setText(eventFilterParam.name)
+            fromDateInputText.setText(eventFilterParam.fromDate?.let { DateUtils.formatDate(it) })
+            toDateInputText.setText(eventFilterParam.toDate?.let { DateUtils.formatDate(it) })
+            cityInputText.setText(eventFilterParam.city?.name)
+            formatInputText.setText(eventFilterParam.format?.eventType)
         }
     }
 
@@ -182,6 +202,11 @@ class EventFilterActivity : BaseActivity<ActivityEventFilterBinding>() {
     }
 
     companion object {
+
+        const val RESULT_KEY = "isFilterActiveResult"
+
+        const val REQUEST_KEY = 986
+
         fun createIntent(context: Context): Intent {
             return Intent(context, EventFilterActivity::class.java)
         }

@@ -11,6 +11,7 @@ import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
 import com.example.hrautomation.presentation.model.factory.ItemFactory
 import com.example.hrautomation.presentation.model.social.EventFilterParam
 import com.example.hrautomation.presentation.model.social.ListEventItem
+import com.example.hrautomation.utils.date.DateUtils
 import com.example.hrautomation.utils.publisher.EventFilterEvent
 import com.example.hrautomation.utils.publisher.EventFilterPublisher
 import com.example.hrautomation.utils.tryLaunch
@@ -58,7 +59,7 @@ class SocialViewModel @Inject constructor(
         var copyReservedData: List<ListEventItem> = emptyList()
         if (filterParam.fromDate != null && filterParam.toDate != null) {
             copyReservedData = reservedData.filter {
-                Interval(DateTime(filterParam.fromDate), DateTime(filterParam.toDate)).contains(DateTime(it.date))
+                Interval(DateTime(filterParam.fromDate), DateTime(filterParam.toDate)).contains(DateUtils.parseDate(it.date))
             }
         }
         if (filterParam.format != null) {
@@ -67,7 +68,7 @@ class SocialViewModel @Inject constructor(
         if (filterParam.name != null) {
             copyReservedData = reservedData.filter { it.name.contains(filterParam.name) }
         }
-        if (filterParam.cityId != null) {
+        if (filterParam.city != null) {
 //            Просто в списочных ивентах нет айди города)))
             copyReservedData = reservedData.filter { it.name.contains("Вебинар") }
         }
