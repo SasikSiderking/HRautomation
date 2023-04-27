@@ -21,7 +21,6 @@ import com.example.hrautomation.utils.date.DateUtils
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingSettings
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingState
 import org.joda.time.LocalDate
-import timber.log.Timber
 
 class EventFilterActivity : BaseActivity<ActivityEventFilterBinding>() {
     override val bindingInflater: (LayoutInflater) -> ActivityEventFilterBinding
@@ -99,18 +98,18 @@ class EventFilterActivity : BaseActivity<ActivityEventFilterBinding>() {
         val arrayAdapter = ArrayAdapter(this, R.layout.event_format_dropdown_item, EventFormat.values())
         binding.formatInputText.setAdapter(arrayAdapter)
 
-        binding.fromDateInputText.setOnTouchListener(InputTextTouchListener({
+        binding.fromDateInputText.setOnClickListener {
             val newFragment = DatePickerFragment.newInstance(DatePickerFragment.FROM_REQUEST)
             newFragment.show(supportFragmentManager, DatePickerFragment.TAG)
-        }))
-        binding.toDateInputText.setOnTouchListener(InputTextTouchListener({
+        }
+        binding.toDateInputText.setOnClickListener {
             val newFragment = DatePickerFragment.newInstance(DatePickerFragment.TO_REQUEST)
             newFragment.show(supportFragmentManager, DatePickerFragment.TAG)
-        }))
-        binding.cityInputText.setOnTouchListener(InputTextTouchListener({
+        }
+        binding.cityInputText.setOnClickListener {
             val newFragment = CityBottomSheet.newInstance()
             newFragment.show(supportFragmentManager, CityBottomSheet.TAG)
-        }))
+        }
         binding.formatInputText.setOnItemClickListener { adapterView, view, position, id ->
             val selectedFormat = arrayAdapter.getItem(position)
             viewModel.setFormatFilter(selectedFormat)
@@ -175,15 +174,12 @@ class EventFilterActivity : BaseActivity<ActivityEventFilterBinding>() {
     }
 
     private val eventFilterParamObserver = Observer<EventFilterParam> { eventFilterParam ->
-        Timber.e("name: " + eventFilterParam.name)
-        Timber.e("fromDate: " + eventFilterParam.fromDate.toString())
-        Timber.e("toDate: " + eventFilterParam.toDate.toString())
-        Timber.e("city: " + eventFilterParam.city.toString())
-        Timber.e("format:" + eventFilterParam.format.toString())
-        if (eventFilterParam.name != null || eventFilterParam.fromDate != null || eventFilterParam.toDate != null || eventFilterParam.city != null || eventFilterParam.format != null) {
-            isFilterActive = true
-            Timber.e(isFilterActive.toString())
-        } else isFilterActive = false
+
+        isFilterActive = eventFilterParam.name != null ||
+                eventFilterParam.fromDate != null ||
+                eventFilterParam.toDate != null ||
+                eventFilterParam.city != null ||
+                eventFilterParam.format != null
         with(binding) {
             nameInputText.setText(eventFilterParam.name)
             fromDateInputText.setText(eventFilterParam.fromDate?.let { DateUtils.formatDate(it) })

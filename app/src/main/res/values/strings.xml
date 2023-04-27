@@ -92,4 +92,6 @@
     <string name="enter_event_name">Введите название</string>
     <string name="filter_from_date">С</string>
     <string name="filter_to_date">По</string>
+    <string name="event_format_choice_field">Поле выбора формата мероприятия</string>
+    <string name="filter_by_date">Фильтрация по дате проведения</string>
 </resources>

@@ -24,11 +24,12 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
+        android:contentDescription="@string/filter_by_date"
         android:id="@+id/datePickIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_baseline_event_note_24"
-        app:layout_constraintBottom_toBottomOf="@id/toDateInputLayout"
+        app:layout_constraintBottom_toBottomOf="@id/fromDateInputLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/fromDateInputLayout" />
 
@@ -40,7 +41,7 @@
         android:layout_marginTop="8dp"
         android:hint="@string/filter_from_date"
         app:endIconMode="clear_text"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/toDateInputLayout"
         app:layout_constraintStart_toEndOf="@id/datePickIcon"
         app:layout_constraintTop_toBottomOf="@id/nameInputLayout">
 
@@ -48,7 +49,7 @@
             android:id="@+id/fromDateInputText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:cursorVisible="false" />
+            android:focusableInTouchMode="false" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -61,18 +62,19 @@
         android:hint="@string/filter_to_date"
         app:endIconMode="clear_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/datePickIcon"
-        app:layout_constraintTop_toBottomOf="@id/fromDateInputLayout">
+        app:layout_constraintStart_toEndOf="@id/fromDateInputLayout"
+        app:layout_constraintTop_toBottomOf="@id/nameInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/toDateInputText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:cursorVisible="false" />
+            android:focusableInTouchMode="false" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
+        android:contentDescription="@string/filter_by_city"
         android:id="@+id/cityPickIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -97,11 +99,12 @@
             android:id="@+id/cityInputText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:cursorVisible="false" />
+            android:focusableInTouchMode="false" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
+        android:contentDescription="@string/filter_by_format"
         android:id="@+id/formatPickIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -113,22 +116,22 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/formatInputLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
-        android:layout_height="wrap_content"
         android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:hint="@string/filter_by_format"
         app:endIconMode="clear_text"
-        app:layout_constraintStart_toEndOf="@id/formatPickIcon"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/formatPickIcon"
         app:layout_constraintTop_toBottomOf="@id/cityInputLayout">
 
         <AutoCompleteTextView
+            android:focusableInTouchMode="false"
             android:id="@+id/formatInputText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:cursorVisible="false"
-            android:inputType="none" />
+            android:hint="@string/event_format_choice_field" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

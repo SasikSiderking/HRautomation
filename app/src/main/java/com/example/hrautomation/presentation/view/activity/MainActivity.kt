@@ -52,8 +52,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        filterMenuIconDrawable = ContextCompat.getDrawable(this, R.drawable.ic_baseline_filter_alt_off_24)
-
         (application as App).appComponent.inject(this)
 
         _binding = ActivityMainBinding.inflate(layoutInflater)
@@ -102,7 +100,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
         val filterMenuItem = menu!!.findItem(R.id.action_filter)
-        filterMenuItem.icon = filterMenuIconDrawable
+        if (filterMenuIconDrawable != null) {
+            filterMenuItem.icon = filterMenuIconDrawable
+        }
         filterMenuItem.isVisible = isFilterMenuItemVisible
         return super.onPrepareOptionsMenu(menu)
     }
@@ -143,13 +143,13 @@ class MainActivity : AppCompatActivity() {
         profileActivityResultLauncher.launch(ProfileActivity.createIntent(this))
     }
 
-    private fun setFilterIconType(isFilterActive: Boolean) {
+    private fun setFilterIconType(isFilterActive: Boolean?) {
         filterMenuIconDrawable = when (isFilterActive) {
             true -> {
-                ContextCompat.getDrawable(this, R.drawable.ic_baseline_filter_alt_24)
+                ContextCompat.getDrawable(this, R.drawable.ic_filter_active)
             }
-            false -> {
-                ContextCompat.getDrawable(this, R.drawable.ic_baseline_filter_alt_off_24)
+            false, null -> {
+                ContextCompat.getDrawable(this, R.drawable.ic_filter_none)
             }
         }
         invalidateOptionsMenu()

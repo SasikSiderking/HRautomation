@@ -56,21 +56,21 @@ class SocialViewModel @Inject constructor(
     }
 
     private fun filter(filterParam: EventFilterParam) {
-        var copyReservedData: List<ListEventItem> = emptyList()
+        var copyReservedData: List<ListEventItem> = reservedData.map { it }
         if (filterParam.fromDate != null && filterParam.toDate != null) {
-            copyReservedData = reservedData.filter {
+            copyReservedData = copyReservedData.filter {
                 Interval(DateTime(filterParam.fromDate), DateTime(filterParam.toDate)).contains(DateUtils.parseDate(it.date))
             }
         }
         if (filterParam.format != null) {
-            copyReservedData = reservedData.filter { it.format == filterParam.format.eventType }
+            copyReservedData = copyReservedData.filter { it.format == filterParam.format.eventType }
         }
         if (filterParam.name != null) {
-            copyReservedData = reservedData.filter { it.name.contains(filterParam.name) }
+            copyReservedData = copyReservedData.filter { it.name.contains(filterParam.name) }
         }
         if (filterParam.city != null) {
 //            Просто в списочных ивентах нет айди города)))
-            copyReservedData = reservedData.filter { it.name.contains("Вебинар") }
+            copyReservedData = copyReservedData.filter { it.name.contains("Вебинар") }
         }
         _data.postValue(copyReservedData)
     }
