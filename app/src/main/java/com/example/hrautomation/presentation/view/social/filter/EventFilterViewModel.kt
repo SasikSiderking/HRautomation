@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
 import com.example.hrautomation.presentation.model.restaurants.CityItem
 import com.example.hrautomation.presentation.model.social.EventFilterParam
-import com.example.hrautomation.presentation.model.social.EventFormat
 import com.example.hrautomation.utils.publisher.EventFilterEvent
 import com.example.hrautomation.utils.publisher.EventFilterPublisher
 import kotlinx.coroutines.launch

@@ -47,6 +47,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/fromDateInputText"
+            android:cursorVisible="false"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:focusableInTouchMode="false" />
@@ -68,13 +69,14 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/toDateInputText"
             android:layout_width="match_parent"
+            android:cursorVisible="false"
             android:layout_height="match_parent"
             android:focusableInTouchMode="false" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
-        android:contentDescription="@string/filter_by_city"
+        android:contentDescription="@string/filter_by_city_icon"
         android:id="@+id/cityPickIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -98,6 +100,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/cityInputText"
             android:layout_width="match_parent"
+            android:cursorVisible="false"
             android:layout_height="match_parent"
             android:focusableInTouchMode="false" />
 
@@ -120,18 +123,18 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:hint="@string/filter_by_format"
-        app:endIconMode="clear_text"
+        app:endIconMode="dropdown_menu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/formatPickIcon"
         app:layout_constraintTop_toBottomOf="@id/cityInputLayout">
 
         <AutoCompleteTextView
+            android:layout_height="match_parent"
             android:focusableInTouchMode="false"
             android:id="@+id/formatInputText"
+            android:hint="@string/filter_by_format"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="@string/event_format_choice_field" />
+            android:saveEnabled="true" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

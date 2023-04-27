@@ -1,4 +1,4 @@
-package com.example.hrautomation.presentation.model.social
+package com.example.hrautomation.presentation.view.social.filter
 
 enum class EventFormat(val eventType: String) {
     ONLINE("online"),

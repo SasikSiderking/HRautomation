@@ -94,4 +94,5 @@
     <string name="filter_to_date">По</string>
     <string name="event_format_choice_field">Поле выбора формата мероприятия</string>
     <string name="filter_by_date">Фильтрация по дате проведения</string>
+    <string name="filter_by_city_icon">Иконка фильтрации по городу</string>
 </resources>

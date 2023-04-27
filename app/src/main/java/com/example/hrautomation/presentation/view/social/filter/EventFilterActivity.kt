@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.widget.ArrayAdapter
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.example.hrautomation.R
 import com.example.hrautomation.app.App
@@ -15,12 +16,12 @@ import com.example.hrautomation.presentation.base.activity.BaseActivity
 import com.example.hrautomation.presentation.model.restaurants.CityItem
 import com.example.hrautomation.presentation.model.social.DatePickerDialogResult
 import com.example.hrautomation.presentation.model.social.EventFilterParam
-import com.example.hrautomation.presentation.model.social.EventFormat
 import com.example.hrautomation.presentation.view.restaurants.сity.CityBottomSheet
 import com.example.hrautomation.utils.date.DateUtils
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingSettings
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingState
 import org.joda.time.LocalDate
+import timber.log.Timber
 
 class EventFilterActivity : BaseActivity<ActivityEventFilterBinding>() {
     override val bindingInflater: (LayoutInflater) -> ActivityEventFilterBinding
@@ -50,28 +51,6 @@ class EventFilterActivity : BaseActivity<ActivityEventFilterBinding>() {
             cityInputText.showSoftInputOnFocus = false
             formatInputText.showSoftInputOnFocus = false
 
-            nameInputLayout.setEndIconOnClickListener {
-                viewModel.setNameFilter(null)
-                nameInputText.text?.clear()
-            }
-            fromDateInputLayout.setEndIconOnClickListener {
-                viewModel.setFromDateFilter(null)
-                fromDateInputText.text?.clear()
-            }
-            toDateInputLayout.setEndIconOnClickListener {
-                viewModel.setToDateFilter(null)
-                toDateInputText.text?.clear()
-            }
-            cityInputLayout.setEndIconOnClickListener {
-                viewModel.setCityFilter(null)
-                cityInputText.text?.clear()
-            }
-            formatInputLayout.setEndIconOnClickListener {
-                viewModel.setFormatFilter(null)
-                formatInputText.text?.clear()
-            }
-
-
             contentLoadingSwitcher.setup(
                 ContentLoadingSettings(
                     contentViews = listOf(
@@ -94,25 +73,64 @@ class EventFilterActivity : BaseActivity<ActivityEventFilterBinding>() {
     }
 
     override fun initListeners() {
+        with(binding) {
+            nameInputLayout.setEndIconOnClickListener {
+                viewModel.setNameFilter(null)
+                nameInputText.text?.clear()
+            }
+            fromDateInputLayout.setEndIconOnClickListener {
+                viewModel.setFromDateFilter(null)
+                fromDateInputText.text?.clear()
+            }
+            toDateInputLayout.setEndIconOnClickListener {
+                viewModel.setToDateFilter(null)
+                toDateInputText.text?.clear()
+            }
+            cityInputLayout.setEndIconOnClickListener {
+                viewModel.setCityFilter(null)
+                cityInputText.text?.clear()
+            }
 
-        val arrayAdapter = ArrayAdapter(this, R.layout.event_format_dropdown_item, EventFormat.values())
-        binding.formatInputText.setAdapter(arrayAdapter)
 
-        binding.fromDateInputText.setOnClickListener {
-            val newFragment = DatePickerFragment.newInstance(DatePickerFragment.FROM_REQUEST)
-            newFragment.show(supportFragmentManager, DatePickerFragment.TAG)
-        }
-        binding.toDateInputText.setOnClickListener {
-            val newFragment = DatePickerFragment.newInstance(DatePickerFragment.TO_REQUEST)
-            newFragment.show(supportFragmentManager, DatePickerFragment.TAG)
-        }
-        binding.cityInputText.setOnClickListener {
-            val newFragment = CityBottomSheet.newInstance()
-            newFragment.show(supportFragmentManager, CityBottomSheet.TAG)
-        }
-        binding.formatInputText.setOnItemClickListener { adapterView, view, position, id ->
-            val selectedFormat = arrayAdapter.getItem(position)
-            viewModel.setFormatFilter(selectedFormat)
+            fromDateInputText.setOnClickListener {
+                val newFragment = DatePickerFragment.newInstance(DatePickerFragment.FROM_REQUEST)
+                newFragment.show(supportFragmentManager, DatePickerFragment.TAG)
+            }
+            toDateInputText.setOnClickListener {
+                val newFragment = DatePickerFragment.newInstance(DatePickerFragment.TO_REQUEST)
+                newFragment.show(supportFragmentManager, DatePickerFragment.TAG)
+            }
+            cityInputText.setOnClickListener {
+                val newFragment = CityBottomSheet.newInstance()
+                newFragment.show(supportFragmentManager, CityBottomSheet.TAG)
+            }
+
+            val arrayAdapter =
+                ArrayAdapter(this@EventFilterActivity, R.layout.event_format_dropdown_item, EventFormat.values())
+            formatInputText.setAdapter(arrayAdapter)
+
+            formatInputText.setOnItemClickListener { adapterView, view, position, id ->
+                val selectedFormat = arrayAdapter.getItem(position)
+                viewModel.setFormatFilter(selectedFormat)
+
+                formatInputLayout.endIconDrawable =
+                    ContextCompat.getDrawable(this@EventFilterActivity, R.drawable.ic_baseline_clear_24_light)
+                formatInputLayout.setEndIconOnClickListener {
+                    viewModel.setFormatFilter(null)
+                    formatInputLayout.setEndIconOnClickListener { formatInputText.showDropDown() }
+                    formatInputLayout.endIconDrawable =
+                        ContextCompat.getDrawable(this@EventFilterActivity, R.drawable.ic_baseline_arrow_right_24)
+                }
+            }
+
+
+            acceptButton.setOnClickListener {
+                viewModel.setNameFilter(binding.nameInputText.text.toString())
+                viewModel.sendFilterParam()
+                intent.putExtra(RESULT_KEY, isFilterActive)
+                setResult(REQUEST_KEY, intent)
+                finish()
+            }
         }
 
         supportFragmentManager.setFragmentResultListener(
@@ -163,29 +181,23 @@ class EventFilterActivity : BaseActivity<ActivityEventFilterBinding>() {
                 viewModel.setCityFilter(cityPickerDialogResult)
             }
         }
-
-        binding.acceptButton.setOnClickListener {
-            viewModel.setNameFilter(binding.nameInputText.text.toString())
-            viewModel.sendFilterParam()
-            intent.putExtra(RESULT_KEY, isFilterActive)
-            setResult(REQUEST_KEY, intent)
-            finish()
-        }
     }
 
     private val eventFilterParamObserver = Observer<EventFilterParam> { eventFilterParam ->
-
-        isFilterActive = eventFilterParam.name != null ||
+        Timber.e(eventFilterParam.toString())
+        isFilterActive = !eventFilterParam.name.isNullOrEmpty() ||
                 eventFilterParam.fromDate != null ||
                 eventFilterParam.toDate != null ||
                 eventFilterParam.city != null ||
                 eventFilterParam.format != null
         with(binding) {
-            nameInputText.setText(eventFilterParam.name)
+            if (!eventFilterParam.name.isNullOrEmpty()) {
+                nameInputText.setText(eventFilterParam.name)
+            }
             fromDateInputText.setText(eventFilterParam.fromDate?.let { DateUtils.formatDate(it) })
             toDateInputText.setText(eventFilterParam.toDate?.let { DateUtils.formatDate(it) })
             cityInputText.setText(eventFilterParam.city?.name)
-            formatInputText.setText(eventFilterParam.format?.eventType)
+            formatInputText.setText(eventFilterParam.format?.eventType, false)
         }
     }
 
