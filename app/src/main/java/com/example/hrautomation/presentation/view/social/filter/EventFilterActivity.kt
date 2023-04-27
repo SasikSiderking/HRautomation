@@ -21,7 +21,6 @@ import com.example.hrautomation.utils.date.DateUtils
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingSettings
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingState
 import org.joda.time.LocalDate
-import timber.log.Timber
 
 class EventFilterActivity : BaseActivity<ActivityEventFilterBinding>() {
     override val bindingInflater: (LayoutInflater) -> ActivityEventFilterBinding
@@ -184,7 +183,6 @@ class EventFilterActivity : BaseActivity<ActivityEventFilterBinding>() {
     }
 
     private val eventFilterParamObserver = Observer<EventFilterParam> { eventFilterParam ->
-        Timber.e(eventFilterParam.toString())
         isFilterActive = !eventFilterParam.name.isNullOrEmpty() ||
                 eventFilterParam.fromDate != null ||
                 eventFilterParam.toDate != null ||
@@ -194,6 +192,11 @@ class EventFilterActivity : BaseActivity<ActivityEventFilterBinding>() {
             if (!eventFilterParam.name.isNullOrEmpty()) {
                 nameInputText.setText(eventFilterParam.name)
             }
+
+            fromDateInputLayout.isEndIconVisible = eventFilterParam.fromDate != null
+            toDateInputLayout.isEndIconVisible = eventFilterParam.toDate != null
+            cityInputLayout.isEndIconVisible = eventFilterParam.city != null
+
             fromDateInputText.setText(eventFilterParam.fromDate?.let { DateUtils.formatDate(it) })
             toDateInputText.setText(eventFilterParam.toDate?.let { DateUtils.formatDate(it) })
             cityInputText.setText(eventFilterParam.city?.name)

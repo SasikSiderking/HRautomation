@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/filter_by_name"
+        app:endIconDrawable="@drawable/ic_baseline_clear_24_light"
         app:endIconMode="clear_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +41,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:hint="@string/filter_from_date"
-        app:endIconMode="clear_text"
+        app:endIconDrawable="@drawable/ic_baseline_clear_24_light"
+        app:endIconMode="custom"
         app:layout_constraintEnd_toStartOf="@id/toDateInputLayout"
         app:layout_constraintStart_toEndOf="@id/datePickIcon"
         app:layout_constraintTop_toBottomOf="@id/nameInputLayout">
@@ -61,7 +63,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:hint="@string/filter_to_date"
-        app:endIconMode="clear_text"
+        app:endIconDrawable="@drawable/ic_baseline_clear_24_light"
+        app:endIconMode="custom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/fromDateInputLayout"
         app:layout_constraintTop_toBottomOf="@id/nameInputLayout">
@@ -92,9 +95,10 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:hint="@string/filter_by_city"
-        app:endIconMode="clear_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/cityPickIcon"
+        app:endIconDrawable="@drawable/ic_baseline_clear_24_light"
+        app:endIconMode="custom"
         app:layout_constraintTop_toBottomOf="@id/toDateInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
