@@ -2,6 +2,7 @@ package com.example.hrautomation.presentation.view.social.filter
 
 import android.app.DatePickerDialog
 import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.widget.DatePicker
 import androidx.fragment.app.DialogFragment
@@ -16,16 +17,22 @@ class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener 
         val year = c.get(Calendar.YEAR)
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
-
         return DatePickerDialog(requireContext(), this, year, month, day)
     }
 
+
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, day: Int) {
         val datePickerDialogResult = DatePickerDialogResult(year, month + 1, day)
-        val bundle = Bundle()
-        bundle.putSerializable(RESULT_KEY, datePickerDialogResult)
-        setFragmentResult(REQUEST_KEY, bundle)
+        val resultBundle = Bundle()
+        resultBundle.putSerializable(RESULT_KEY, datePickerDialogResult)
+        setFragmentResult(REQUEST_KEY, resultBundle)
         dismiss()
+    }
+
+    override fun onCancel(dialog: DialogInterface) {
+        val resultBundle = Bundle()
+        setFragmentResult(REQUEST_KEY, resultBundle)
+        super.onCancel(dialog)
     }
 
     companion object {

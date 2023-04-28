@@ -5,7 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
-import android.view.View.OnClickListener
+import android.view.MotionEvent
+import android.view.View.OnTouchListener
 import androidx.activity.viewModels
 import com.example.hrautomation.R
 import com.example.hrautomation.app.App
@@ -16,6 +17,7 @@ import com.example.hrautomation.utils.date.DateUtils
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingSettings
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingState
 import org.joda.time.LocalDate
+
 
 class EventFilterActivity : BaseActivity<ActivityEventFilterBinding>() {
     override val bindingInflater: (LayoutInflater) -> ActivityEventFilterBinding
@@ -36,10 +38,11 @@ class EventFilterActivity : BaseActivity<ActivityEventFilterBinding>() {
     }
 
     override fun initUI() {
+        binding.dateInputText.showSoftInputOnFocus = false
         with(binding) {
             contentLoadingSwitcher.setup(
                 ContentLoadingSettings(
-                    contentViews = listOf(dateLabel, pickedDate, cityLabel, pickedCity, formatLabel, pickedFormat),
+                    contentViews = listOf(nameInputLayout, dateInputLayout, cityInputLayout, formatInputLayout),
                     errorViews = listOf(reusableReload.reusableReload),
                     loadingViews = listOf(reusableLoading.progressBar),
                     initState = ContentLoadingState.CONTENT
@@ -51,27 +54,31 @@ class EventFilterActivity : BaseActivity<ActivityEventFilterBinding>() {
     override fun initObserves() = Unit
 
     override fun initListeners() {
-        binding.pickedDate.setOnClickListener(pickDate)
+        binding.dateInputText.setOnTouchListener(pickDate)
 
         supportFragmentManager.setFragmentResultListener(
             DatePickerFragment.REQUEST_KEY,
             this
         ) { _: String, bundle: Bundle ->
-            val datePickerDialogResult = bundle.getSerializable(DatePickerFragment.RESULT_KEY) as DatePickerDialogResult
-            with(datePickerDialogResult) {
-                val localDate = DateUtils.formatDate(
-                    LocalDate(
-                        year,
-                        month,
-                        day
-                    ).toDate()
-                )
-                binding.pickedDate.text = localDate
-                viewModel.setDateFilter(localDate)
+            val datePickerDialogResult = bundle.getSerializable(DatePickerFragment.RESULT_KEY) as DatePickerDialogResult?
+            if (datePickerDialogResult != null) {
+                with(datePickerDialogResult) {
+                    val localDate = DateUtils.formatDate(
+                        LocalDate(
+                            year,
+                            month,
+                            day
+                        ).toDate()
+                    )
+                    binding.dateInputText.setText(localDate)
+                    viewModel.setDateFilter(localDate)
+                }
             }
+            binding.dateInputText.clearFocus()
         }
 
         binding.acceptButton.setOnClickListener {
+            viewModel.setNameFilter(binding.nameInputText.text.toString())
             viewModel.sendFilterParam()
             finish()
         }
@@ -85,9 +92,15 @@ class EventFilterActivity : BaseActivity<ActivityEventFilterBinding>() {
         return super.onOptionsItemSelected(item)
     }
 
-    private val pickDate = OnClickListener {
-        val newFragment = DatePickerFragment.newInstance()
-        newFragment.show(supportFragmentManager, DatePickerFragment.TAG)
+    private val pickDate = OnTouchListener { view, motionEvent ->
+        if (motionEvent.action == MotionEvent.ACTION_UP) {
+            view.performClick()
+            val newFragment = DatePickerFragment.newInstance()
+            view.requestFocus()
+            newFragment.show(supportFragmentManager, DatePickerFragment.TAG)
+            return@OnTouchListener true
+        }
+        return@OnTouchListener false
     }
 
     companion object {
