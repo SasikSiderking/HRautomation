@@ -13,6 +13,7 @@ import com.example.hrautomation.R
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.FragmentMapBinding
 import com.example.hrautomation.presentation.model.restaurants.BuildingItem
+import com.example.hrautomation.presentation.model.restaurants.CityItem
 import com.example.hrautomation.presentation.model.restaurants.ListRestaurantItem
 import com.example.hrautomation.presentation.view.restaurants.RestaurantsViewModel
 import com.example.hrautomation.presentation.view.restaurants.restaurant.RestaurantBottomSheet
@@ -176,10 +177,8 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
             CityBottomSheet.TAG,
             viewLifecycleOwner
         ) { _: String, bundle: Bundle ->
-            val lat = bundle.getDouble(CityBottomSheet.LATITUDE_KEY)
-            val lng = bundle.getDouble(CityBottomSheet.LONGITUDE_KEY)
-
-            viewModel.chooseCity(LatLng(lat, lng))
+            val city = bundle.getSerializable(CityBottomSheet.RESULT_KEY) as CityItem
+            viewModel.chooseCity(city)
         }
 
         childFragmentManager.setFragmentResultListener(

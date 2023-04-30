@@ -38,7 +38,6 @@ class ItemFactoryImpl @Inject constructor(
                 id = listEvent.id,
                 name = listEvent.name,
                 date = DateUtils.formatDate(listEvent.date),
-                address = listEvent.address,
                 pictureUrl = listEvent.pictureUrl,
                 format = format,
                 timeLineColor = timeLineColor,

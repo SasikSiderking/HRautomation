@@ -6,7 +6,6 @@ data class ListEventItem(
     override val id: Long,
     val name: String,
     val date: String,
-    val address: String,
     val pictureUrl: String?,
     val format: String,
     val timeLineColor: Int,

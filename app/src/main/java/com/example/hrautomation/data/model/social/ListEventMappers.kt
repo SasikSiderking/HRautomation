@@ -7,7 +7,6 @@ fun ListEventResponse.toListEvent(): ListEvent {
         this.id,
         this.name,
         this.date,
-        this.address,
         this.pictureUrl,
         this.online
     )
