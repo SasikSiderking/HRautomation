@@ -1,11 +1,10 @@
 package com.example.hrautomation.presentation.view.social.filter
 
-enum class EventFormat(val eventType: String) {
-    ONLINE("online"),
-    OFFLINE("offline"),
-    COMBINE("combine");
+import com.example.hrautomation.R
 
-    override fun toString(): String {
-        return eventType
-    }
+enum class EventFormat(val eventType: Int, val value: String?) {
+    ONLINE(R.string.event_format_online, "online"),
+    OFFLINE(R.string.event_format_offline, "offline"),
+    COMBINE(R.string.event_format_combine, "combine"),
+    ANY(R.string.event_format_any, null);
 }

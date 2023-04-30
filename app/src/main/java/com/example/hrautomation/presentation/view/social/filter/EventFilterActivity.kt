@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.widget.ArrayAdapter
 import androidx.activity.viewModels
-import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentResultListener
 import androidx.lifecycle.Observer
 import com.example.hrautomation.R
 import com.example.hrautomation.app.App
@@ -45,10 +45,6 @@ class EventFilterActivity : BaseActivity<ActivityEventFilterBinding>() {
     override fun initUI() {
 
         with(binding) {
-            fromDateInputText.showSoftInputOnFocus = false
-            toDateInputText.showSoftInputOnFocus = false
-            cityInputText.showSoftInputOnFocus = false
-            formatInputText.showSoftInputOnFocus = false
 
             contentLoadingSwitcher.setup(
                 ContentLoadingSettings(
@@ -105,21 +101,15 @@ class EventFilterActivity : BaseActivity<ActivityEventFilterBinding>() {
             }
 
             val arrayAdapter =
-                ArrayAdapter(this@EventFilterActivity, R.layout.event_format_dropdown_item, EventFormat.values())
+                ArrayAdapter(
+                    this@EventFilterActivity,
+                    R.layout.event_format_dropdown_item,
+                    EventFormat.values().map { getString(it.eventType) })
             formatInputText.setAdapter(arrayAdapter)
 
-            formatInputText.setOnItemClickListener { adapterView, view, position, id ->
-                val selectedFormat = arrayAdapter.getItem(position)
+            formatInputText.setOnItemClickListener { _, _, position, _ ->
+                val selectedFormat = EventFormat.values()[position]
                 viewModel.setFormatFilter(selectedFormat)
-
-                formatInputLayout.endIconDrawable =
-                    ContextCompat.getDrawable(this@EventFilterActivity, R.drawable.ic_baseline_clear_24_light)
-                formatInputLayout.setEndIconOnClickListener {
-                    viewModel.setFormatFilter(null)
-                    formatInputLayout.setEndIconOnClickListener { formatInputText.showDropDown() }
-                    formatInputLayout.endIconDrawable =
-                        ContextCompat.getDrawable(this@EventFilterActivity, R.drawable.ic_baseline_arrow_right_24)
-                }
             }
 
 
@@ -134,52 +124,21 @@ class EventFilterActivity : BaseActivity<ActivityEventFilterBinding>() {
 
         supportFragmentManager.setFragmentResultListener(
             DatePickerFragment.FROM_REQUEST,
-            this
-        ) { _: String, bundle: Bundle ->
-
-            val datePickerDialogResult = bundle.getSerializable(DatePickerFragment.RESULT_KEY) as DatePickerDialogResult?
-
-            if (datePickerDialogResult != null) {
-                with(datePickerDialogResult) {
-                    val localDate = LocalDate(
-                        year,
-                        month,
-                        day
-                    ).toDate()
-                    viewModel.setFromDateFilter(localDate)
-                }
-            }
-        }
+            this,
+            fromDatePickerResultListener
+        )
 
         supportFragmentManager.setFragmentResultListener(
             DatePickerFragment.TO_REQUEST,
-            this
-        ) { _: String, bundle: Bundle ->
-
-            val datePickerDialogResult = bundle.getSerializable(DatePickerFragment.RESULT_KEY) as DatePickerDialogResult?
-
-            if (datePickerDialogResult != null) {
-                with(datePickerDialogResult) {
-                    val localDate = LocalDate(
-                        year,
-                        month,
-                        day
-                    ).toDate()
-                    viewModel.setToDateFilter(localDate)
-                }
-            }
-        }
+            this,
+            toDatePickerResultListener
+        )
 
         supportFragmentManager.setFragmentResultListener(
             CityBottomSheet.REQUEST_KEY,
-            this
-        ) { _: String, bundle: Bundle ->
-
-            val cityPickerDialogResult = bundle.getSerializable(CityBottomSheet.RESULT_KEY) as CityItem?
-            if (cityPickerDialogResult != null) {
-                viewModel.setCityFilter(cityPickerDialogResult)
-            }
-        }
+            this,
+            cityFragmentResultListener
+        )
     }
 
     private val eventFilterParamObserver = Observer<EventFilterParam> { eventFilterParam ->
@@ -187,7 +146,7 @@ class EventFilterActivity : BaseActivity<ActivityEventFilterBinding>() {
                 eventFilterParam.fromDate != null ||
                 eventFilterParam.toDate != null ||
                 eventFilterParam.city != null ||
-                eventFilterParam.format != null
+                eventFilterParam.format?.value != null
         with(binding) {
             if (!eventFilterParam.name.isNullOrEmpty()) {
                 nameInputText.setText(eventFilterParam.name)
@@ -200,7 +159,47 @@ class EventFilterActivity : BaseActivity<ActivityEventFilterBinding>() {
             fromDateInputText.setText(eventFilterParam.fromDate?.let { DateUtils.formatDate(it) })
             toDateInputText.setText(eventFilterParam.toDate?.let { DateUtils.formatDate(it) })
             cityInputText.setText(eventFilterParam.city?.name)
-            formatInputText.setText(eventFilterParam.format?.eventType, false)
+            formatInputText.setText(eventFilterParam.format?.eventType?.let { getString(it) }, false)
+        }
+    }
+
+    private val fromDatePickerResultListener = FragmentResultListener { _: String, bundle: Bundle ->
+
+        val datePickerDialogResult = bundle.getSerializable(DatePickerFragment.RESULT_KEY) as DatePickerDialogResult?
+
+        if (datePickerDialogResult != null) {
+            with(datePickerDialogResult) {
+                val localDate = LocalDate(
+                    year,
+                    month,
+                    day
+                ).toDate()
+                viewModel.setFromDateFilter(localDate)
+            }
+        }
+    }
+
+    private val toDatePickerResultListener = FragmentResultListener { _: String, bundle: Bundle ->
+
+        val datePickerDialogResult = bundle.getSerializable(DatePickerFragment.RESULT_KEY) as DatePickerDialogResult?
+
+        if (datePickerDialogResult != null) {
+            with(datePickerDialogResult) {
+                val localDate = LocalDate(
+                    year,
+                    month,
+                    day
+                ).toDate()
+                viewModel.setToDateFilter(localDate)
+            }
+        }
+    }
+
+    private val cityFragmentResultListener = FragmentResultListener { _: String, bundle: Bundle ->
+
+        val cityPickerDialogResult = bundle.getSerializable(CityBottomSheet.RESULT_KEY) as CityItem?
+        if (cityPickerDialogResult != null) {
+            viewModel.setCityFilter(cityPickerDialogResult)
         }
     }
 

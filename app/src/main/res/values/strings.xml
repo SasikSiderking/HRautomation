@@ -95,4 +95,8 @@
     <string name="event_format_choice_field">Поле выбора формата мероприятия</string>
     <string name="filter_by_date">Фильтрация по дате проведения</string>
     <string name="filter_by_city_icon">Иконка фильтрации по городу</string>
+    <string name="event_format_online">онлайн</string>
+    <string name="event_format_offline">оффлайн</string>
+    <string name="event_format_combine">комбинированный</string>
+    <string name="event_format_any">любой</string>
 </resources>

@@ -16,7 +16,7 @@ class EventFilterViewModel @Inject constructor(private val eventFilterPublisher:
     val eventFilterParam: LiveData<EventFilterParam>
         get() = _eventFilterParam
     private val _eventFilterParam: MutableLiveData<EventFilterParam> =
-        MutableLiveData(EventFilterParamGlobal.eventFilterParam)
+        MutableLiveData(EventFilterParamHolder.eventFilterParam)
 
     fun setFromDateFilter(date: Date?) {
         _eventFilterParam.postValue(eventFilterParam.value?.copy(fromDate = date))
@@ -40,7 +40,7 @@ class EventFilterViewModel @Inject constructor(private val eventFilterPublisher:
 
     fun sendFilterParam() {
         viewModelScope.launch {
-            EventFilterParamGlobal.eventFilterParam = eventFilterParam.value!!
+            EventFilterParamHolder.eventFilterParam = eventFilterParam.value!!
             eventFilterPublisher.emitEvent(EventFilterEvent.ProfileEventFilter(eventFilterParam.value!!))
         }
     }

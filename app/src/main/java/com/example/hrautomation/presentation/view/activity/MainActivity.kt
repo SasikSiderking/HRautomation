@@ -143,14 +143,11 @@ class MainActivity : AppCompatActivity() {
         profileActivityResultLauncher.launch(ProfileActivity.createIntent(this))
     }
 
-    private fun setFilterIconType(isFilterActive: Boolean?) {
-        filterMenuIconDrawable = when (isFilterActive) {
-            true -> {
-                ContextCompat.getDrawable(this, R.drawable.ic_filter_active)
-            }
-            false, null -> {
-                ContextCompat.getDrawable(this, R.drawable.ic_filter_none)
-            }
+    private fun setFilterIconType(isFilterActive: Boolean) {
+        filterMenuIconDrawable = if (isFilterActive) {
+            ContextCompat.getDrawable(this, R.drawable.ic_filter_active)
+        } else {
+            ContextCompat.getDrawable(this, R.drawable.ic_filter_none)
         }
         invalidateOptionsMenu()
     }

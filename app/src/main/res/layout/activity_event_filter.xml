@@ -50,6 +50,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/fromDateInputText"
             android:cursorVisible="false"
+            android:clickable="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:focusableInTouchMode="false" />
@@ -73,6 +74,7 @@
             android:id="@+id/toDateInputText"
             android:layout_width="match_parent"
             android:cursorVisible="false"
+            android:clickable="true"
             android:layout_height="match_parent"
             android:focusableInTouchMode="false" />
 
@@ -105,6 +107,7 @@
             android:id="@+id/cityInputText"
             android:layout_width="match_parent"
             android:cursorVisible="false"
+            android:clickable="true"
             android:layout_height="match_parent"
             android:focusableInTouchMode="false" />
 
@@ -134,11 +137,11 @@
 
         <AutoCompleteTextView
             android:layout_height="match_parent"
+            android:layout_width="match_parent"
             android:focusableInTouchMode="false"
             android:id="@+id/formatInputText"
             android:hint="@string/filter_by_format"
-            android:layout_width="match_parent"
-            android:saveEnabled="true" />
+            android:cursorVisible="false" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

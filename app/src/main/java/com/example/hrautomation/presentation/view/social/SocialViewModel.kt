@@ -63,7 +63,7 @@ class SocialViewModel @Inject constructor(
             }
         }
         if (filterParam.format != null) {
-            copyReservedData = copyReservedData.filter { it.format == filterParam.format.eventType }
+            copyReservedData = copyReservedData.filter { it.format == filterParam.format.value }
         }
         if (filterParam.name != null) {
             copyReservedData = copyReservedData.filter { it.name.contains(filterParam.name) }
