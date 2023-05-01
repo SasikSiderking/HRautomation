@@ -11,12 +11,15 @@ import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
 import com.example.hrautomation.presentation.model.factory.ItemFactory
 import com.example.hrautomation.presentation.model.social.EventFilterParam
 import com.example.hrautomation.presentation.model.social.ListEventItem
+import com.example.hrautomation.utils.date.DateUtils
 import com.example.hrautomation.utils.publisher.EventFilterEvent
 import com.example.hrautomation.utils.publisher.EventFilterPublisher
 import com.example.hrautomation.utils.tryLaunch
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import org.joda.time.DateTime
+import org.joda.time.Interval
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -53,20 +56,21 @@ class SocialViewModel @Inject constructor(
     }
 
     private fun filter(filterParam: EventFilterParam) {
-        var copyReservedData: List<ListEventItem> = emptyList()
-        if (filterParam.date != null) {
-            Timber.e("${filterParam.date}")
-            copyReservedData = reservedData.filter { it.date == filterParam.date }
+        var copyReservedData: List<ListEventItem> = reservedData.map { it }
+        if (filterParam.fromDate != null && filterParam.toDate != null) {
+            copyReservedData = copyReservedData.filter {
+                Interval(DateTime(filterParam.fromDate), DateTime(filterParam.toDate)).contains(DateUtils.parseDate(it.date))
+            }
         }
         if (filterParam.format != null) {
-            copyReservedData = reservedData.filter { it.format == filterParam.format }
+            copyReservedData = copyReservedData.filter { it.format == filterParam.format.value }
         }
         if (filterParam.name != null) {
-            copyReservedData = reservedData.filter { it.name.contains(filterParam.name) }
+            copyReservedData = copyReservedData.filter { it.name.contains(filterParam.name) }
         }
-        if (filterParam.cityId != null) {
+        if (filterParam.city != null) {
 //            Просто в списочных ивентах нет айди города)))
-            copyReservedData = reservedData.filter { it.name.contains("Вебинар") }
+            copyReservedData = copyReservedData.filter { it.name.contains("Вебинар") }
         }
         _data.postValue(copyReservedData)
     }

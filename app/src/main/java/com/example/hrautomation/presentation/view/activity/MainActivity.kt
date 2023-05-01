@@ -2,6 +2,7 @@ package com.example.hrautomation.presentation.view.activity
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -12,6 +13,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -44,6 +46,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private var isFilterMenuItemVisible = false
+
+    private var filterMenuIconDrawable: Drawable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,6 +100,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
         val filterMenuItem = menu!!.findItem(R.id.action_filter)
+        if (filterMenuIconDrawable != null) {
+            filterMenuItem.icon = filterMenuIconDrawable
+        }
         filterMenuItem.isVisible = isFilterMenuItemVisible
         return super.onPrepareOptionsMenu(menu)
     }
@@ -122,8 +129,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openEventFilter() {
-        val intent = EventFilterActivity.createIntent(this)
-        startActivity(intent)
+        eventFilterActivityResultLauncher.launch(EventFilterActivity.createIntent(this))
     }
 
     private fun logout() {
@@ -134,13 +140,31 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openProfile() {
-        activityResultLauncher.launch(ProfileActivity.createIntent(this))
+        profileActivityResultLauncher.launch(ProfileActivity.createIntent(this))
     }
 
-    private var activityResultLauncher = registerForActivityResult(
+    private fun setFilterIconType(isFilterActive: Boolean) {
+        filterMenuIconDrawable = if (isFilterActive) {
+            ContextCompat.getDrawable(this, R.drawable.ic_filter_active)
+        } else {
+            ContextCompat.getDrawable(this, R.drawable.ic_filter_none)
+        }
+        invalidateOptionsMenu()
+    }
+
+    private var profileActivityResultLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { _: ActivityResult ->
         viewModel.updateColleagues()
+    }
+
+    private var eventFilterActivityResultLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result: ActivityResult ->
+        val isFilterActive = result.data?.getBooleanExtra(EventFilterActivity.RESULT_KEY, false)
+        if (isFilterActive != null) {
+            setFilterIconType(isFilterActive)
+        }
     }
 
     companion object {

@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.widget.DatePicker
+import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
 import com.example.hrautomation.presentation.model.social.DatePickerDialogResult
@@ -25,26 +26,34 @@ class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener 
         val datePickerDialogResult = DatePickerDialogResult(year, month + 1, day)
         val resultBundle = Bundle()
         resultBundle.putSerializable(RESULT_KEY, datePickerDialogResult)
-        setFragmentResult(REQUEST_KEY, resultBundle)
+        setFragmentResult(requireArguments().getString(REQUEST_KEY)!!, resultBundle)
         dismiss()
     }
 
     override fun onCancel(dialog: DialogInterface) {
         val resultBundle = Bundle()
-        setFragmentResult(REQUEST_KEY, resultBundle)
+        setFragmentResult(requireArguments().getString(REQUEST_KEY)!!, resultBundle)
         super.onCancel(dialog)
     }
 
     companion object {
 
-        const val TAG = "DatePickerFragment"
+        const val TAG = "PICK_DATE"
 
         const val REQUEST_KEY = "PICKED_DATE"
 
         const val RESULT_KEY = "RESULT_KEY"
 
-        fun newInstance(): DatePickerFragment {
-            return DatePickerFragment()
+        const val FROM_REQUEST = "fromDate"
+
+        const val TO_REQUEST = "toDate"
+
+        fun newInstance(request: String): DatePickerFragment {
+            return DatePickerFragment().apply {
+                arguments = bundleOf(
+                    REQUEST_KEY to request
+                )
+            }
         }
     }
 
