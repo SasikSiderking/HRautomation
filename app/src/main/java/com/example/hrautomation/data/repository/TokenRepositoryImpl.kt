@@ -6,6 +6,7 @@ import com.example.hrautomation.data.api.TokenApi
 import com.example.hrautomation.data.model.TokenResponseToTokenMapper
 import com.example.hrautomation.domain.model.Token
 import com.example.hrautomation.domain.repository.TokenRepository
+import com.example.hrautomation.utils.runSuspendCatching
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
 import timber.log.Timber
@@ -29,29 +30,32 @@ class TokenRepositoryImpl @Inject constructor(
         return tokenResponseToTokenMapper.convert(tokenApi.confirmEmail(email, code))
     }
 
-    override suspend fun logout() {
+    override fun logout() {
         setAccessToken(null)
         setRefreshToken(null)
     }
 
-    override suspend fun login(token: Token) {
+    override fun login(token: Token) {
         setAccessToken(token.accessToken)
         setRefreshToken(token.refreshToken)
         setUserId(token.userId)
     }
 
     override suspend fun refreshToken(): Token? {
-        return getRefreshToken()?.let {
-            try {
-                val newToken =
-                    tokenResponseToTokenMapper.convert(tokenApi.refreshToken(it.toRequestBody("application/json".toMediaType())))
-                login(newToken)
-                return newToken
-            } catch (exception: Exception) {
+        return runSuspendCatching(
+            onSuccessBlock = {
+                return getRefreshToken()?.let {
+                    val newToken =
+                        tokenResponseToTokenMapper.convert(tokenApi.refreshToken(it.toRequestBody("application/json".toMediaType())))
+                    login(newToken)
+                    return newToken
+                }
+            },
+            onErrorBlock = { exception ->
                 Timber.e(exception)
                 null
             }
-        }
+        )
     }
 
     override fun getAccessToken(): String? {
