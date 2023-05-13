@@ -29,12 +29,12 @@ fun CoroutineScope.tryLaunch(
     }
 }
 
-inline fun <T> runSuspendCatching(block: () -> T): Result<T> {
+inline fun <T> runSuspendCatching(onSuccessBlock: () -> T, onErrorBlock: (exception: Throwable) -> T): T {
     return try {
-        Result.success(block())
+        onSuccessBlock()
     } catch (e: CancellationException) {
         throw e
     } catch (e: Throwable) {
-        Result.failure(e)
+        onErrorBlock(e)
     }
 }
