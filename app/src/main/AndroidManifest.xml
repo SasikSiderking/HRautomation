@@ -86,6 +86,8 @@
         <activity android:name=".presentation.view.restaurants.restaurant_details.RestaurantReviewActivity" />
 
         <activity android:name=".presentation.view.social.filter.EventFilterActivity" />
+
+        <activity android:name=".presentation.view.social.details.EventDetailsActivity" />
     </application>
 
 </manifest>

@@ -5,11 +5,11 @@ import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.utils.DiffUtilCallback
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 
-class SocialAdapter :
+class SocialAdapter(onEventClickListener: OnEventClickListener) :
     ListDelegationAdapter<List<BaseListItem>>() {
 
     init {
-        delegatesManager.addDelegate(EventItemAdapterDelegate())
+        delegatesManager.addDelegate(EventItemAdapterDelegate(onEventClickListener))
     }
 
     fun update(data: List<BaseListItem>) {
