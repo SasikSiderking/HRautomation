@@ -6,6 +6,10 @@ import com.example.hrautomation.data.api.TokenApi
 import com.example.hrautomation.data.model.TokenResponseToTokenMapper
 import com.example.hrautomation.domain.model.Token
 import com.example.hrautomation.domain.repository.TokenRepository
+import com.example.hrautomation.utils.runSuspendCatching
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -26,11 +30,39 @@ class TokenRepositoryImpl @Inject constructor(
         return tokenResponseToTokenMapper.convert(tokenApi.confirmEmail(email, code))
     }
 
+    override fun logout() {
+        setAccessToken(null)
+        setRefreshToken(null)
+    }
+
+    override fun login(token: Token) {
+        setAccessToken(token.accessToken)
+        setRefreshToken(token.refreshToken)
+        setUserId(token.userId)
+    }
+
+    override suspend fun refreshToken(): Token? {
+        return runSuspendCatching(
+            onSuccessBlock = {
+                return getRefreshToken()?.let {
+                    val newToken =
+                        tokenResponseToTokenMapper.convert(tokenApi.refreshToken(it.toRequestBody("application/json".toMediaType())))
+                    login(newToken)
+                    return newToken
+                }
+            },
+            onErrorBlock = { exception ->
+                Timber.e(exception)
+                null
+            }
+        )
+    }
+
     override fun getAccessToken(): String? {
         return preferences.getString(ACC_TOKEN, null)
     }
 
-    override fun setAccessToken(token: String?) {
+    private fun setAccessToken(token: String?) {
         preferences.edit().putString(ACC_TOKEN, token).apply()
     }
 
@@ -38,7 +70,7 @@ class TokenRepositoryImpl @Inject constructor(
         return preferences.getString(REF_TOKEN, null)
     }
 
-    override fun setRefreshToken(refToken: String?) {
+    private fun setRefreshToken(refToken: String?) {
         preferences.edit().putString(REF_TOKEN, refToken).apply()
     }
 
@@ -46,7 +78,7 @@ class TokenRepositoryImpl @Inject constructor(
         return preferences.getString(USER_ID, null)?.toLong()
     }
 
-    override fun setUserId(userId: Long) {
+    private fun setUserId(userId: Long) {
         preferences.edit().putString(USER_ID, userId.toString()).apply()
     }
 

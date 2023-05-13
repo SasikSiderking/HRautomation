@@ -4,6 +4,9 @@ plugins {
     id 'kotlin-kapt'
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
     id 'org.jetbrains.kotlin.plugin.serialization' version '1.7.10'
+
+    // Add the Google services Gradle plugin
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -111,4 +114,10 @@ dependencies {
 
 //    Jodatime
     implementation 'joda-time:joda-time:2.12.5'
+
+//    Firebase
+    implementation platform('com.google.firebase:firebase-bom:32.0.0')
+//    // TODO: Add the dependencies for Firebase products you want to use
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-messaging'
 }

@@ -25,11 +25,7 @@ class CodeLoginViewModel @Inject constructor(
                 doOnLaunch = {
                     val token = tokenRepo.confirmEmail(email, code)
                     _isCodeCheckSuccess.postValue(true)
-                    with(tokenRepo) {
-                        setAccessToken(token.accessToken)
-                        setRefreshToken(token.refreshToken)
-                        setUserId(token.userId)
-                    }
+                    tokenRepo.login(token)
                 },
                 doOnError = { error ->
                     _isCodeCheckSuccess.postValue(false)
