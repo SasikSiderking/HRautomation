@@ -14,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -78,6 +79,8 @@ class MainActivity : AppCompatActivity() {
         this.onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
 
         navController.addOnDestinationChangedListener(navListener)
+
+        viewModel.filterMenuIconDrawable.observe(this, filterDrawableObserver)
     }
 
     private val onBackPressedCallback: OnBackPressedCallback = object : OnBackPressedCallback(
@@ -128,6 +131,11 @@ class MainActivity : AppCompatActivity() {
         invalidateOptionsMenu()
     }
 
+    private val filterDrawableObserver = Observer<Drawable?> { drawable ->
+        filterMenuIconDrawable = drawable
+        invalidateOptionsMenu()
+    }
+
     private fun openEventFilter() {
         eventFilterActivityResultLauncher.launch(EventFilterActivity.createIntent(this))
     }
@@ -144,12 +152,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setFilterIconType(isFilterActive: Boolean) {
-        filterMenuIconDrawable = if (isFilterActive) {
-            ContextCompat.getDrawable(this, R.drawable.ic_filter_active)
+        if (isFilterActive) {
+            viewModel.updateFilterIcon(ContextCompat.getDrawable(this, R.drawable.ic_filter_active))
         } else {
-            ContextCompat.getDrawable(this, R.drawable.ic_filter_none)
+            viewModel.updateFilterIcon(ContextCompat.getDrawable(this, R.drawable.ic_filter_none))
         }
-        invalidateOptionsMenu()
     }
 
     private var profileActivityResultLauncher = registerForActivityResult(

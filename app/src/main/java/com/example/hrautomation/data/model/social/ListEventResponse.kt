@@ -1,6 +1,6 @@
 package com.example.hrautomation.data.model.social
 
-import java.util.*
+import java.util.Date
 
 class ListEventResponse(
     val id: Long,
@@ -8,5 +8,5 @@ class ListEventResponse(
     val date: Date,
     val address: String,
     val pictureUrl: String?,
-    val online: Boolean
+    val format: String
 )

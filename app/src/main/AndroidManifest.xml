@@ -87,7 +87,9 @@
 
         <activity android:name=".presentation.view.social.filter.EventFilterActivity" />
 
-        <activity android:name=".presentation.view.social.details.EventDetailsActivity" />
+        <activity
+            android:name=".presentation.view.social.details.EventDetailsActivity"
+            android:theme="@style/NoActionBarTheme" />
     </application>
 
 </manifest>

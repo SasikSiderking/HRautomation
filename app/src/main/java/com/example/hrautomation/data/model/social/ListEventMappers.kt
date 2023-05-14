@@ -8,6 +8,6 @@ fun ListEventResponse.toListEvent(): ListEvent {
         this.name,
         this.date,
         this.pictureUrl,
-        this.online
+        this.format
     )
 }

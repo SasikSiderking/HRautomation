@@ -3,6 +3,7 @@ package com.example.hrautomation.presentation.model.factory
 import com.example.hrautomation.R
 import com.example.hrautomation.domain.model.social.ListEvent
 import com.example.hrautomation.presentation.model.social.ListEventItem
+import com.example.hrautomation.presentation.view.social.filter.EventFormat
 import com.example.hrautomation.utils.date.DateUtils
 import com.example.hrautomation.utils.resources.StringResourceProvider
 import com.example.hrautomation.utils.social.SocialUtils
@@ -18,10 +19,13 @@ class ItemFactoryImpl @Inject constructor(
 
     override fun createListEventItems(listEvents: List<ListEvent>): List<ListEventItem> {
         return listEvents.map { listEvent ->
-            val format: String = if (listEvent.online) {
-                stringResourceProvider.getString(R.string.format_online)
-            } else {
-                stringResourceProvider.getString(R.string.format_offline)
+            val format: String = when (listEvent.format) {
+                EventFormat.ONLINE.value -> stringResourceProvider.getString(R.string.format_online)
+                EventFormat.OFFLINE.value -> stringResourceProvider.getString(R.string.format_offline)
+                EventFormat.COMBINE.value -> stringResourceProvider.getString(R.string.format_combined)
+                else -> {
+                    ""
+                }
             }
 
             val timeLineColor: Int
