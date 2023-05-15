@@ -1,11 +1,11 @@
 package com.example.hrautomation.domain.model.social
 
-import java.util.*
+import java.util.Date
 
 class ListEvent(
     val id: Long,
     val name: String,
     val date: Date,
     val pictureUrl: String?,
-    val online: Boolean
+    val format: String?
 )

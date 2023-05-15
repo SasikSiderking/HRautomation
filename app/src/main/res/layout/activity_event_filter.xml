@@ -25,10 +25,10 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
-        android:contentDescription="@string/filter_by_date"
         android:id="@+id/datePickIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/filter_by_date"
         android:src="@drawable/ic_baseline_event_note_24"
         app:layout_constraintBottom_toBottomOf="@id/fromDateInputLayout"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,10 +49,10 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/fromDateInputText"
-            android:cursorVisible="false"
-            android:clickable="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clickable="true"
+            android:cursorVisible="false"
             android:focusableInTouchMode="false" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -73,18 +73,18 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/toDateInputText"
             android:layout_width="match_parent"
-            android:cursorVisible="false"
-            android:clickable="true"
             android:layout_height="match_parent"
+            android:clickable="true"
+            android:cursorVisible="false"
             android:focusableInTouchMode="false" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
-        android:contentDescription="@string/filter_by_city_icon"
         android:id="@+id/cityPickIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/filter_by_city_icon"
         android:src="@drawable/ic_baseline_location_city_24"
         app:layout_constraintBottom_toBottomOf="@id/cityInputLayout"
         app:layout_constraintStart_toStartOf="parent"
@@ -97,27 +97,27 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:hint="@string/filter_by_city"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/cityPickIcon"
         app:endIconDrawable="@drawable/ic_baseline_clear_24_light"
         app:endIconMode="custom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/cityPickIcon"
         app:layout_constraintTop_toBottomOf="@id/toDateInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/cityInputText"
             android:layout_width="match_parent"
-            android:cursorVisible="false"
-            android:clickable="true"
             android:layout_height="match_parent"
+            android:clickable="true"
+            android:cursorVisible="false"
             android:focusableInTouchMode="false" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
-        android:contentDescription="@string/filter_by_format"
         android:id="@+id/formatPickIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/filter_by_format"
         android:src="@drawable/ic_baseline_camera_indoor_24"
         app:layout_constraintBottom_toBottomOf="@id/formatInputLayout"
         app:layout_constraintStart_toStartOf="parent"
@@ -136,12 +136,12 @@
         app:layout_constraintTop_toBottomOf="@id/cityInputLayout">
 
         <AutoCompleteTextView
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            android:focusableInTouchMode="false"
             android:id="@+id/formatInputText"
-            android:hint="@string/filter_by_format"
-            android:cursorVisible="false" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:cursorVisible="false"
+            android:focusableInTouchMode="false"
+            android:hint="@string/filter_by_format" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

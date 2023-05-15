@@ -8,6 +8,7 @@ import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.FragmentSocialBinding
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.base.fragment.BaseFragment
+import com.example.hrautomation.presentation.view.social.details.EventDetailsActivity
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingSettings
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingState
 import com.example.hrautomation.utils.ui.switcher.base.SwitchAnimationParams
@@ -42,7 +43,7 @@ class SocialFragment : BaseFragment<FragmentSocialBinding>() {
                 contentLoadingSwitcher.switchState(ContentLoadingState.LOADING, SwitchAnimationParams(delay = 500L))
             }
 
-            adapter = SocialAdapter()
+            adapter = SocialAdapter(onEventClickListener)
             eventRecyclerView.adapter = adapter
             eventRecyclerView.layoutManager = LinearLayoutManager(context)
         }
@@ -64,5 +65,9 @@ class SocialFragment : BaseFragment<FragmentSocialBinding>() {
         exception?.let {
             contentLoadingSwitcher.switchState(ContentLoadingState.ERROR, SwitchAnimationParams(delay = 500L))
         }
+    }
+
+    private val onEventClickListener = OnEventClickListener {
+        startActivity(EventDetailsActivity.createIntent(requireContext()))
     }
 }

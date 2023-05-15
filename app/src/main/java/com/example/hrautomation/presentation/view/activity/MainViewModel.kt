@@ -1,5 +1,7 @@
 package com.example.hrautomation.presentation.view.activity
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.hrautomation.data.dispatcher.CoroutineDispatchers
 import com.example.hrautomation.domain.repository.TokenRepository
@@ -15,6 +17,10 @@ class MainViewModel @Inject constructor(
     private val profilePublisher: ProfilePublisher,
     private val dispatchers: CoroutineDispatchers
 ) : BaseViewModel() {
+
+    val filterMenuIconDrawableResId: LiveData<Int?>
+        get() = _filterMenuIconDrawableResId
+    private val _filterMenuIconDrawableResId: MutableLiveData<Int?> = MutableLiveData()
 
     fun logout() {
         viewModelScope.tryLaunch(
@@ -32,5 +38,9 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             profilePublisher.emitEvent(ProfileEvent.Update)
         }
+    }
+
+    fun updateFilterIcon(drawableResId: Int?) {
+        _filterMenuIconDrawableResId.postValue(drawableResId)
     }
 }

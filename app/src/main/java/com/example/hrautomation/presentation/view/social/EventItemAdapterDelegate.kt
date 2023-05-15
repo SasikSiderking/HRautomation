@@ -14,7 +14,7 @@ import com.example.hrautomation.presentation.base.delegates.OnViewHolderClickLis
 import com.example.hrautomation.presentation.model.social.ListEventItem
 import com.example.hrautomation.presentation.view.social.EventItemAdapterDelegate.EventViewHolder
 
-class EventItemAdapterDelegate :
+class EventItemAdapterDelegate(private val onEventClickListener: OnEventClickListener) :
     BaseItemAdapterDelegate<ListEventItem, EventViewHolder>(),
     OnViewHolderClickListener<EventViewHolder> {
 
@@ -48,10 +48,13 @@ class EventItemAdapterDelegate :
         }
     }
 
-    override fun onViewHolderClick(view: View, holder: EventViewHolder) = Unit
-
     class EventViewHolder(
         val binding: ItemEventBinding,
         clickListener: OnViewHolderClickListener<EventViewHolder>
     ) : ClickableViewHolder<EventViewHolder>(binding.root, clickListener)
+
+    override fun onViewHolderClick(view: View, holder: EventViewHolder) {
+        val item = getItemForViewHolder(holder)
+        onEventClickListener.onClick(item)
+    }
 }

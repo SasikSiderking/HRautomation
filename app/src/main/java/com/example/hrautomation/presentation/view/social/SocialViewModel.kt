@@ -11,15 +11,13 @@ import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
 import com.example.hrautomation.presentation.model.factory.ItemFactory
 import com.example.hrautomation.presentation.model.social.EventFilterParam
 import com.example.hrautomation.presentation.model.social.ListEventItem
-import com.example.hrautomation.utils.date.DateUtils
+import com.example.hrautomation.presentation.model.social.toFilter
 import com.example.hrautomation.utils.publisher.EventFilterEvent
 import com.example.hrautomation.utils.publisher.EventFilterPublisher
 import com.example.hrautomation.utils.tryLaunch
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import org.joda.time.DateTime
-import org.joda.time.Interval
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -27,7 +25,7 @@ class SocialViewModel @Inject constructor(
     private val dispatchers: CoroutineDispatchers,
     private val socialRepository: SocialRepository,
     private val itemFactory: ItemFactory,
-    eventFilterPublisher: EventFilterPublisher,
+    private val eventFilterPublisher: EventFilterPublisher,
 ) : BaseViewModel() {
 
     val data: LiveData<List<BaseListItem>>
@@ -36,50 +34,25 @@ class SocialViewModel @Inject constructor(
 
     private lateinit var reservedData: List<ListEventItem>
 
+    private var eventFilterParam = EventFilterParam(null, null, null, null, null)
+
     init {
-        loadData()
-        eventFilterPublisher.eventFilterEventFlow
-            .onEach { event ->
-                when (event) {
-                    is EventFilterEvent.ProfileEventFilter -> {
-                        filter(event.eventFilterParam)
-                    }
-                }
-            }
-            .launchIn(viewModelScope)
+        loadData(eventFilterParam)
+        subscribeForFilterPublisher()
     }
 
     fun reload() {
         viewModelScope.coroutineContext.cancelChildren()
         clearExceptionState()
-        loadData()
+        loadData(eventFilterParam)
     }
 
-    private fun filter(filterParam: EventFilterParam) {
-        var copyReservedData: List<ListEventItem> = reservedData.map { it }
-        if (filterParam.fromDate != null && filterParam.toDate != null) {
-            copyReservedData = copyReservedData.filter {
-                Interval(DateTime(filterParam.fromDate), DateTime(filterParam.toDate)).contains(DateUtils.parseDate(it.date))
-            }
-        }
-        if (filterParam.format != null) {
-            copyReservedData = copyReservedData.filter { it.format == filterParam.format.value }
-        }
-        if (filterParam.name != null) {
-            copyReservedData = copyReservedData.filter { it.name.contains(filterParam.name) }
-        }
-        if (filterParam.city != null) {
-//            Просто в списочных ивентах нет айди города)))
-            copyReservedData = copyReservedData.filter { it.name.contains("Вебинар") }
-        }
-        _data.postValue(copyReservedData)
-    }
-
-    private fun loadData() {
+    private fun loadData(eventFilterParam: EventFilterParam) {
         viewModelScope.tryLaunch(
             contextPiece = dispatchers.io,
             doOnLaunch = {
-                val events = socialRepository.getAllEvents(PAGE_NUMBER, PAGE_SIZE, EventSortBy.ID)
+                val events =
+                    socialRepository.getAllEvents(PAGE_NUMBER, PAGE_SIZE, EventSortBy.ID, eventFilterParam.toFilter())
                 val eventItems = itemFactory.createListEventItems(events)
 
                 _data.postValue(eventItems)
@@ -90,6 +63,19 @@ class SocialViewModel @Inject constructor(
                 _exception.postValue(error)
             }
         )
+    }
+
+    private fun subscribeForFilterPublisher() {
+        eventFilterPublisher.eventFilterEventFlow
+            .onEach { event ->
+                when (event) {
+                    is EventFilterEvent.ProfileEventFilter -> {
+                        eventFilterParam = event.eventFilterParam
+                        loadData(eventFilterParam)
+                    }
+                }
+            }
+            .launchIn(viewModelScope)
     }
 
     private companion object {
