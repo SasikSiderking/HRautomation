@@ -25,7 +25,7 @@ class SocialViewModel @Inject constructor(
     private val dispatchers: CoroutineDispatchers,
     private val socialRepository: SocialRepository,
     private val itemFactory: ItemFactory,
-    eventFilterPublisher: EventFilterPublisher,
+    private val eventFilterPublisher: EventFilterPublisher,
 ) : BaseViewModel() {
 
     val data: LiveData<List<BaseListItem>>
@@ -38,16 +38,7 @@ class SocialViewModel @Inject constructor(
 
     init {
         loadData(eventFilterParam)
-        eventFilterPublisher.eventFilterEventFlow
-            .onEach { event ->
-                when (event) {
-                    is EventFilterEvent.ProfileEventFilter -> {
-                        eventFilterParam = event.eventFilterParam
-                        loadData(eventFilterParam)
-                    }
-                }
-            }
-            .launchIn(viewModelScope)
+        subscribeForFilterPublisher()
     }
 
     fun reload() {
@@ -72,6 +63,19 @@ class SocialViewModel @Inject constructor(
                 _exception.postValue(error)
             }
         )
+    }
+
+    private fun subscribeForFilterPublisher() {
+        eventFilterPublisher.eventFilterEventFlow
+            .onEach { event ->
+                when (event) {
+                    is EventFilterEvent.ProfileEventFilter -> {
+                        eventFilterParam = event.eventFilterParam
+                        loadData(eventFilterParam)
+                    }
+                }
+            }
+            .launchIn(viewModelScope)
     }
 
     private companion object {

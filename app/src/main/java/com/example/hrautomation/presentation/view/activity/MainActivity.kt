@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener(navListener)
 
-        viewModel.filterMenuIconDrawable.observe(this, filterDrawableObserver)
+        viewModel.filterMenuIconDrawableResId.observe(this, filterDrawableObserver)
     }
 
     private val onBackPressedCallback: OnBackPressedCallback = object : OnBackPressedCallback(
@@ -131,8 +131,8 @@ class MainActivity : AppCompatActivity() {
         invalidateOptionsMenu()
     }
 
-    private val filterDrawableObserver = Observer<Drawable?> { drawable ->
-        filterMenuIconDrawable = drawable
+    private val filterDrawableObserver = Observer<Int?> { drawableResId ->
+        filterMenuIconDrawable = ContextCompat.getDrawable(this, drawableResId)
         invalidateOptionsMenu()
     }
 
@@ -153,9 +153,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun setFilterIconType(isFilterActive: Boolean) {
         if (isFilterActive) {
-            viewModel.updateFilterIcon(ContextCompat.getDrawable(this, R.drawable.ic_filter_active))
+            viewModel.updateFilterIcon(R.drawable.ic_filter_active)
         } else {
-            viewModel.updateFilterIcon(ContextCompat.getDrawable(this, R.drawable.ic_filter_none))
+            viewModel.updateFilterIcon(R.drawable.ic_filter_none)
         }
     }
 

@@ -23,9 +23,7 @@ class ItemFactoryImpl @Inject constructor(
                 EventFormat.ONLINE.value -> stringResourceProvider.getString(R.string.format_online)
                 EventFormat.OFFLINE.value -> stringResourceProvider.getString(R.string.format_offline)
                 EventFormat.COMBINE.value -> stringResourceProvider.getString(R.string.format_combined)
-                else -> {
-                    ""
-                }
+                else -> ""
             }
 
             val timeLineColor: Int

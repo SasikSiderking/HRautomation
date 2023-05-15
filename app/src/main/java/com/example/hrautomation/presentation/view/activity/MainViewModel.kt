@@ -1,6 +1,5 @@
 package com.example.hrautomation.presentation.view.activity
 
-import android.graphics.drawable.Drawable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -19,9 +18,9 @@ class MainViewModel @Inject constructor(
     private val dispatchers: CoroutineDispatchers
 ) : BaseViewModel() {
 
-    val filterMenuIconDrawable: LiveData<Drawable?>
-        get() = _filterMenuIconDrawable
-    private val _filterMenuIconDrawable: MutableLiveData<Drawable?> = MutableLiveData()
+    val filterMenuIconDrawableResId: LiveData<Int?>
+        get() = _filterMenuIconDrawableResId
+    private val _filterMenuIconDrawableResId: MutableLiveData<Int?> = MutableLiveData()
 
     fun logout() {
         viewModelScope.tryLaunch(
@@ -41,7 +40,7 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun updateFilterIcon(drawable: Drawable?) {
-        _filterMenuIconDrawable.postValue(drawable)
+    fun updateFilterIcon(drawableResId: Int?) {
+        _filterMenuIconDrawableResId.postValue(drawableResId)
     }
 }

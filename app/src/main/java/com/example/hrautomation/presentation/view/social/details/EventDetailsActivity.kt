@@ -97,13 +97,6 @@ class EventDetailsActivity : BaseActivity<ActivityEventDetailsBinding>(), OnMapR
 //        TODO: open the Full map
     }
 
-    companion object {
-        const val MAP_ZOOM = 12F
-        fun createIntent(context: Context): Intent {
-            return Intent(context, EventDetailsActivity::class.java)
-        }
-    }
-
     override fun onMapReady(map: GoogleMap) {
         map.uiSettings.isScrollGesturesEnabled = false
         map.setOnMapClickListener(onMapClickListener)
@@ -111,5 +104,12 @@ class EventDetailsActivity : BaseActivity<ActivityEventDetailsBinding>(), OnMapR
 
         viewModel.exception.observe(this, exceptionObserver)
         viewModel.data.observe(this, eventObserver)
+    }
+
+    companion object {
+        const val MAP_ZOOM = 12F
+        fun createIntent(context: Context): Intent {
+            return Intent(context, EventDetailsActivity::class.java)
+        }
     }
 }
