@@ -24,27 +24,16 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <ImageView
-        android:id="@+id/datePickIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/filter_by_date"
-        android:src="@drawable/ic_baseline_event_note_24"
-        app:layout_constraintBottom_toBottomOf="@id/fromDateInputLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/fromDateInputLayout" />
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/fromDateInputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:hint="@string/filter_from_date"
         app:endIconDrawable="@drawable/ic_baseline_clear_24_light"
         app:endIconMode="custom"
         app:layout_constraintEnd_toStartOf="@id/toDateInputLayout"
-        app:layout_constraintStart_toEndOf="@id/datePickIcon"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/nameInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -80,27 +69,16 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <ImageView
-        android:id="@+id/cityPickIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/filter_by_city_icon"
-        android:src="@drawable/ic_baseline_location_city_24"
-        app:layout_constraintBottom_toBottomOf="@id/cityInputLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/cityInputLayout" />
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/cityInputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:hint="@string/filter_by_city"
         app:endIconDrawable="@drawable/ic_baseline_clear_24_light"
         app:endIconMode="custom"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/cityPickIcon"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toDateInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -113,26 +91,15 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <ImageView
-        android:id="@+id/formatPickIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/filter_by_format"
-        android:src="@drawable/ic_baseline_camera_indoor_24"
-        app:layout_constraintBottom_toBottomOf="@id/formatInputLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/formatInputLayout" />
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/formatInputLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         app:endIconMode="dropdown_menu"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/formatPickIcon"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cityInputLayout">
 
         <AutoCompleteTextView
@@ -150,6 +117,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
+        android:paddingVertical="12dp"
         android:text="@string/filter_accept_button_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
