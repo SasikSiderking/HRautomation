@@ -7,10 +7,10 @@ data class ProductResponse(
     val id: Long,
     val categoryId: Long,
     val pictureUrl: String?,
-    val name: String
+    val name: String?
 )
 
 class ProductResponseToProductMapper : Mapper<ProductResponse, Product> {
     override fun convert(model: ProductResponse): Product =
-        Product(model.id, model.categoryId, model.pictureUrl, model.name)
+        Product(model.id, model.categoryId, model.pictureUrl, model.name ?: "")
 }

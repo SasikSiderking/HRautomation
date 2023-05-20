@@ -10,8 +10,8 @@ data class GetEmployees(
 
 data class ListEmployeeResponse(
     val id: Long,
-    val username: String,
-    val post: String,
+    val username: String?,
+    val post: String?,
     val pictureUrl: String?
 )
 
@@ -19,8 +19,8 @@ class ListEmployeeResponseToListEmployeeMapper : Mapper<ListEmployeeResponse, Li
     override fun convert(model: ListEmployeeResponse): ListEmployee =
         ListEmployee(
             model.id,
-            model.username,
-            model.post,
+            model.username ?: "",
+            model.post ?: "",
             model.pictureUrl
         )
 }

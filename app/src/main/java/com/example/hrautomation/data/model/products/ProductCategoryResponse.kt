@@ -5,9 +5,9 @@ import com.example.hrautomation.utils.Mapper
 
 data class ProductCategoryResponse(
     val id: Long,
-    val name: String
+    val name: String?
 )
 
 class ProductCategoryResponseToProductCategoryMapper : Mapper<ProductCategoryResponse, ProductCategory> {
-    override fun convert(model: ProductCategoryResponse): ProductCategory = ProductCategory(model.id, model.name)
+    override fun convert(model: ProductCategoryResponse): ProductCategory = ProductCategory(model.id, model.name ?: "")
 }
