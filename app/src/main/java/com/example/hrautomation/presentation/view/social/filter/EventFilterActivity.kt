@@ -14,8 +14,8 @@ import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.ActivityEventFilterBinding
 import com.example.hrautomation.presentation.base.activity.BaseActivity
 import com.example.hrautomation.presentation.model.restaurants.CityItem
-import com.example.hrautomation.presentation.model.social.DatePickerDialogResult
-import com.example.hrautomation.presentation.model.social.EventFilterParam
+import com.example.hrautomation.presentation.model.social.filter.DatePickerDialogResult
+import com.example.hrautomation.presentation.model.social.filter.EventFilterParam
 import com.example.hrautomation.presentation.view.restaurants.сity.CityBottomSheet
 import com.example.hrautomation.utils.date.DateUtils
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingSettings

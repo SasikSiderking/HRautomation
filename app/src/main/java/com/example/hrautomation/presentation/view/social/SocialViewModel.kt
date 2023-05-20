@@ -4,14 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.hrautomation.data.dispatcher.CoroutineDispatchers
-import com.example.hrautomation.domain.model.social.EventSortBy
+import com.example.hrautomation.domain.model.social.list_event.EventSortBy
 import com.example.hrautomation.domain.repository.SocialRepository
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
-import com.example.hrautomation.presentation.model.factory.ItemFactory
-import com.example.hrautomation.presentation.model.social.EventFilterParam
-import com.example.hrautomation.presentation.model.social.ListEventItem
-import com.example.hrautomation.presentation.model.social.toFilter
+import com.example.hrautomation.presentation.model.factory.EventItemFactory
+import com.example.hrautomation.presentation.model.social.filter.EventFilterParam
+import com.example.hrautomation.presentation.model.social.filter.toFilter
+import com.example.hrautomation.presentation.model.social.list_event.ListEventItem
 import com.example.hrautomation.utils.publisher.EventFilterEvent
 import com.example.hrautomation.utils.publisher.EventFilterPublisher
 import com.example.hrautomation.utils.tryLaunch
@@ -24,7 +24,7 @@ import javax.inject.Inject
 class SocialViewModel @Inject constructor(
     private val dispatchers: CoroutineDispatchers,
     private val socialRepository: SocialRepository,
-    private val itemFactory: ItemFactory,
+    private val eventItemFactory: EventItemFactory,
     private val eventFilterPublisher: EventFilterPublisher,
 ) : BaseViewModel() {
 
@@ -53,7 +53,7 @@ class SocialViewModel @Inject constructor(
             doOnLaunch = {
                 val events =
                     socialRepository.getAllEvents(PAGE_NUMBER, PAGE_SIZE, EventSortBy.ID, eventFilterParam.toFilter())
-                val eventItems = itemFactory.createListEventItems(events)
+                val eventItems = eventItemFactory.createListEventItems(events)
 
                 _data.postValue(eventItems)
                 reservedData = eventItems
