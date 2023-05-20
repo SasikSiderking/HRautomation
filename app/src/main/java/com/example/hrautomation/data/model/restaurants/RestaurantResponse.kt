@@ -6,11 +6,11 @@ import javax.inject.Inject
 
 data class RestaurantResponse(
     val id: Long,
-    val name: String?,
+    val name: String,
     val rating: Float,
-    val status: String?,
+    val status: String,
     val average: Int,
-    val address: String?
+    val address: String
 )
 
 class RestaurantResponseToRestaurantMapper @Inject constructor() :
@@ -18,11 +18,11 @@ class RestaurantResponseToRestaurantMapper @Inject constructor() :
     override fun convert(model: RestaurantResponse): Restaurant {
         return Restaurant(
             model.id,
-            model.name ?: "",
+            model.name,
             model.rating,
-            model.status ?: "",
+            model.status,
             model.average,
-            model.address ?: ""
+            model.address
         )
     }
 }

@@ -5,9 +5,9 @@ import com.example.hrautomation.utils.Mapper
 
 data class FaqCategoryResponse(
     val id: Long,
-    val name: String?
+    val name: String
 )
 
 class FaqCategoryResponseToFaqCategoryMapper : Mapper<FaqCategoryResponse, FaqCategory> {
-    override fun convert(model: FaqCategoryResponse): FaqCategory = FaqCategory(model.id, model.name ?: "")
+    override fun convert(model: FaqCategoryResponse): FaqCategory = FaqCategory(model.id, model.name)
 }

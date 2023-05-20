@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 data class BuildingResponse(
     val id: Long,
-    val address: String?,
+    val address: String,
     val lat: Double,
     val lng: Double,
     val restaurants: List<ListRestaurantResponse>
@@ -15,11 +15,11 @@ data class BuildingResponse(
 
 data class ListRestaurantResponse(
     val id: Long,
-    val name: String?,
-    val status: String?,
+    val name: String,
+    val status: String,
     val average: Int,
     val rating: Float,
-    val address: String?
+    val address: String
 )
 
 class ListRestaurantResponseToListRestaurantMapper : Mapper<ListRestaurantResponse, ListRestaurant> {
@@ -27,11 +27,11 @@ class ListRestaurantResponseToListRestaurantMapper : Mapper<ListRestaurantRespon
     override fun convert(model: ListRestaurantResponse): ListRestaurant =
         ListRestaurant(
             model.id,
-            model.name ?: "",
-            model.status ?: "",
+            model.name,
+            model.status,
             model.average,
             model.rating,
-            model.address ?: ""
+            model.address
         )
 
 }
@@ -41,7 +41,7 @@ class BuildingsResponseToBuildingsMapper @Inject constructor(private val listRes
     override fun convert(model: BuildingResponse): Building {
         return Building(
             model.id,
-            model.address ?: "",
+            model.address,
             model.lat,
             model.lng,
             model.restaurants.map { listRestaurantResponseToListRestaurantMapper.convert(it) }
