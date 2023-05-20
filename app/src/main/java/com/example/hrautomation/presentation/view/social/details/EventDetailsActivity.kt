@@ -12,13 +12,16 @@ import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.ActivityEventDetailsBinding
 import com.example.hrautomation.presentation.base.activity.BaseActivity
 import com.example.hrautomation.presentation.model.social.EventItem
+import com.example.hrautomation.presentation.view.social.details.map.EventMapActivity
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingSettings
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingState
 import com.example.hrautomation.utils.ui.switcher.base.SwitchAnimationParams
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
 class EventDetailsActivity : BaseActivity<ActivityEventDetailsBinding>(), OnMapReadyCallback {
@@ -28,6 +31,10 @@ class EventDetailsActivity : BaseActivity<ActivityEventDetailsBinding>(), OnMapR
     private val viewModel: EventDetailsViewModel by viewModels {
         viewModelFactory
     }
+
+    private var eventLatLng: LatLng? = null
+
+    private var eventName: String? = null
 
     private lateinit var map: GoogleMap
 
@@ -39,6 +46,7 @@ class EventDetailsActivity : BaseActivity<ActivityEventDetailsBinding>(), OnMapR
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
         setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun initUI() {
@@ -81,8 +89,13 @@ class EventDetailsActivity : BaseActivity<ActivityEventDetailsBinding>(), OnMapR
             address.setText(event.address)
         }
 
+        eventName = event.name
+        eventLatLng = event.latLng
+
         map.addMarker(MarkerOptions().position(event.latLng))
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(event.latLng, MAP_ZOOM))
+        map.setOnMapClickListener(onMapClickListener)
+        map.setOnMarkerClickListener(onMarkerClickListener)
 
         contentLoadingSwitcher.switchState(ContentLoadingState.CONTENT, SwitchAnimationParams(delay = 500L))
     }
@@ -94,12 +107,22 @@ class EventDetailsActivity : BaseActivity<ActivityEventDetailsBinding>(), OnMapR
     }
 
     private val onMapClickListener = GoogleMap.OnMapClickListener {
-//        TODO: open the Full map
+        openFullMap()
+    }
+
+    private val onMarkerClickListener = OnMarkerClickListener {
+        openFullMap()
+        true
+    }
+
+    private fun openFullMap() {
+        if (eventLatLng != null && eventName != null) {
+            startActivity(EventMapActivity.createIntent(this, eventLatLng!!, eventName!!))
+        }
     }
 
     override fun onMapReady(map: GoogleMap) {
-        map.uiSettings.isScrollGesturesEnabled = false
-        map.setOnMapClickListener(onMapClickListener)
+        map.uiSettings.setAllGesturesEnabled(false)
         this.map = map
 
         viewModel.exception.observe(this, exceptionObserver)
@@ -107,7 +130,7 @@ class EventDetailsActivity : BaseActivity<ActivityEventDetailsBinding>(), OnMapR
     }
 
     companion object {
-        const val MAP_ZOOM = 12F
+        const val MAP_ZOOM = 16F
         fun createIntent(context: Context): Intent {
             return Intent(context, EventDetailsActivity::class.java)
         }
