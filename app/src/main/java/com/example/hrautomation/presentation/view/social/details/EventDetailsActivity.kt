@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
@@ -127,6 +128,14 @@ class EventDetailsActivity : BaseActivity<ActivityEventDetailsBinding>(), OnMapR
 
         viewModel.exception.observe(this, exceptionObserver)
         viewModel.data.observe(this, eventObserver)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> finish()
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     companion object {
