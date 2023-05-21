@@ -61,7 +61,12 @@ class EventEventItemFactoryImpl @Inject constructor(
             event.description,
             DateUtils.formatDate(event.date),
             event.address,
-            event.format,
+            when (event.format) {
+                EventFormat.ONLINE.value -> stringResourceProvider.getString(R.string.format_online)
+                EventFormat.OFFLINE.value -> stringResourceProvider.getString(R.string.format_offline)
+                EventFormat.COMBINE.value -> stringResourceProvider.getString(R.string.format_combined)
+                else -> ""
+            },
             event.pictureUrl,
             event.latLng,
             event.materials.map { it.toEventItemMaterial() }

@@ -18,6 +18,6 @@ interface SocialApi {
         @Body filter: EventFilter
     ): EventsRequest
 
-    @GET
+    @GET("/events/get/{id}")
     suspend fun getEvent(@Path("id") id: Long): EventResponse
 }
