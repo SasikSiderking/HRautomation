@@ -1,4 +1,4 @@
-package com.example.hrautomation.domain.model.social
+package com.example.hrautomation.domain.model.social.list_event
 
 enum class EventSortBy(val sortBy: String) {
     ID("id"),

@@ -12,7 +12,7 @@ import com.example.hrautomation.R
 import com.example.hrautomation.app.App
 import com.example.hrautomation.databinding.ActivityEventDetailsBinding
 import com.example.hrautomation.presentation.base.activity.BaseActivity
-import com.example.hrautomation.presentation.model.social.EventItem
+import com.example.hrautomation.presentation.model.social.event.EventItem
 import com.example.hrautomation.presentation.view.social.details.map.EventMapActivity
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingSettings
 import com.example.hrautomation.utils.ui.switcher.ContentLoadingState
@@ -37,6 +37,8 @@ class EventDetailsActivity : BaseActivity<ActivityEventDetailsBinding>(), OnMapR
 
     private var eventName: String? = null
 
+    private val eventId: Long by lazy { intent.getLongExtra(EVENT_ID_EXTRA, 0L) }
+
     private lateinit var map: GoogleMap
 
     override fun initInject() {
@@ -48,6 +50,8 @@ class EventDetailsActivity : BaseActivity<ActivityEventDetailsBinding>(), OnMapR
         supportActionBar?.hide()
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        viewModel.loadData(eventId)
     }
 
     override fun initUI() {
@@ -66,7 +70,7 @@ class EventDetailsActivity : BaseActivity<ActivityEventDetailsBinding>(), OnMapR
             )
 
             reusableReload.reloadButton.setOnClickListener {
-                viewModel.reload()
+                viewModel.reload(eventId)
                 contentLoadingSwitcher.switchState(ContentLoadingState.LOADING, SwitchAnimationParams(delay = 500L))
             }
         }
@@ -140,8 +144,12 @@ class EventDetailsActivity : BaseActivity<ActivityEventDetailsBinding>(), OnMapR
 
     companion object {
         const val MAP_ZOOM = 16F
-        fun createIntent(context: Context): Intent {
-            return Intent(context, EventDetailsActivity::class.java)
+
+        private const val EVENT_ID_EXTRA = "event_id_extra"
+        fun createIntent(context: Context, eventId: Long): Intent {
+            val intent = Intent(context, EventDetailsActivity::class.java)
+            intent.putExtra(EVENT_ID_EXTRA, eventId)
+            return intent
         }
     }
 }

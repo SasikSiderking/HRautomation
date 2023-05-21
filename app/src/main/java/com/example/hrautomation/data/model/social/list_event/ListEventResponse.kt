@@ -1,4 +1,4 @@
-package com.example.hrautomation.data.model.social
+package com.example.hrautomation.data.model.social.list_event
 
 import java.util.Date
 

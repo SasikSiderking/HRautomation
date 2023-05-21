@@ -1,4 +1,4 @@
-package com.example.hrautomation.data.model.social
+package com.example.hrautomation.data.model.social.filter
 
 import java.util.Date
 

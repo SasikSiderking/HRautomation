@@ -1,6 +1,6 @@
 package com.example.hrautomation.utils.publisher
 
-import com.example.hrautomation.presentation.model.social.EventFilterParam
+import com.example.hrautomation.presentation.model.social.filter.EventFilterParam
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
