@@ -31,7 +31,7 @@ class EventItemAdapterDelegate(private val onEventClickListener: OnEventClickLis
         with(holder.binding) {
             Glide.with(eventImage)
                 .load(item.pictureUrl)
-                .centerCrop()
+                .centerInside()
                 .placeholder(R.drawable.ic_placeholder)
                 .into(eventImage)
 

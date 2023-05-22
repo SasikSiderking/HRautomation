@@ -80,7 +80,7 @@
     <string name="event_image">Превью события</string>
     <string name="format_online">Онлайн формат</string>
     <string name="format_offline">Офлайн формат</string>
-    <string name="format_combined">Совмещенный</string>
+    <string name="format_combined">Совмещенный формат</string>
     <string name="default_date_text">Дата не выбрана</string>
     <string name="filter_by_city">По городу</string>
     <string name="default_city_text">Город не выбран</string>
