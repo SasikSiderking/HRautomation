@@ -60,7 +60,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:enabled="false"
                     android:hint="@string/event_details_description"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -72,7 +71,7 @@
                         android:layout_height="match_parent"
                         android:enabled="false"
                         android:textColor="@color/main_text"
-                        tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum" />
+                        tools:text="Aboba" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <ImageView
@@ -136,7 +135,7 @@
                         android:layout_height="match_parent"
                         android:enabled="false"
                         android:textColor="@color/main_text"
-                        tools:text="online" />
+                        tools:text="Совмещенный" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <ImageView
@@ -176,12 +175,40 @@
                     android:layout_width="0dp"
                     android:layout_height="165dp"
                     android:layout_marginTop="4dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/addressLayout"
                     app:layout_constraintStart_toStartOf="@id/addressLayout"
                     app:layout_constraintTop_toBottomOf="@id/addressLayout"
                     tools:layout="@layout/fragment_map" />
 
+                <TextView
+                    android:id="@+id/materialsHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/materials_title"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/map" />
+
+                <View
+                    android:id="@+id/materialsDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/primary_deep"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/materialsHeader" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/eventMaterialRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/materialsDivider"
+                    tools:itemCount="9" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
