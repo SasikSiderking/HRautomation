@@ -32,6 +32,8 @@ class EventDetailsActivity : BaseActivity<ActivityEventDetailsBinding>(), OnMapR
         viewModelFactory
     }
 
+    private val eventMaterialAdapter = EventMaterialAdapter()
+
     private val eventId: Long by lazy { intent.getLongExtra(EVENT_ID_EXTRA, 0L) }
 
     private lateinit var map: GoogleMap
@@ -68,6 +70,8 @@ class EventDetailsActivity : BaseActivity<ActivityEventDetailsBinding>(), OnMapR
                 viewModel.reload(eventId)
                 contentLoadingSwitcher.switchState(ContentLoadingState.LOADING, SwitchAnimationParams(delay = 500L))
             }
+
+            eventMaterialRecyclerView.adapter = eventMaterialAdapter
         }
     }
 
@@ -87,6 +91,7 @@ class EventDetailsActivity : BaseActivity<ActivityEventDetailsBinding>(), OnMapR
             date.setText(event.date)
             format.setText(event.format)
             address.setText(event.address)
+            eventMaterialAdapter.update(event.materials)
         }
 
         map.addMarker(MarkerOptions().position(event.latLng))
