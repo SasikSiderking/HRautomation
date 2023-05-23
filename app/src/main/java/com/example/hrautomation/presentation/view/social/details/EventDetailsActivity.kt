@@ -19,7 +19,6 @@ import com.example.hrautomation.utils.ui.switcher.ContentLoadingState
 import com.example.hrautomation.utils.ui.switcher.base.SwitchAnimationParams
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
@@ -32,10 +31,6 @@ class EventDetailsActivity : BaseActivity<ActivityEventDetailsBinding>(), OnMapR
     private val viewModel: EventDetailsViewModel by viewModels {
         viewModelFactory
     }
-
-    private var eventLatLng: LatLng? = null
-
-    private var eventName: String? = null
 
     private val eventMaterialAdapter = EventMaterialAdapter()
 
@@ -99,13 +94,15 @@ class EventDetailsActivity : BaseActivity<ActivityEventDetailsBinding>(), OnMapR
             eventMaterialAdapter.update(event.materials)
         }
 
-        eventName = event.name
-        eventLatLng = event.latLng
-
         map.addMarker(MarkerOptions().position(event.latLng))
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(event.latLng, MAP_ZOOM))
-        map.setOnMapClickListener(onMapClickListener)
-        map.setOnMarkerClickListener(onMarkerClickListener)
+        map.setOnMapClickListener {
+            openFullMap(event.latLng, event.name)
+        }
+        map.setOnMarkerClickListener {
+            openFullMap(event.latLng, event.name)
+            true
+        }
 
         contentLoadingSwitcher.switchState(ContentLoadingState.CONTENT, SwitchAnimationParams(delay = 500L))
     }
@@ -116,19 +113,8 @@ class EventDetailsActivity : BaseActivity<ActivityEventDetailsBinding>(), OnMapR
         }
     }
 
-    private val onMapClickListener = GoogleMap.OnMapClickListener {
-        openFullMap()
-    }
-
-    private val onMarkerClickListener = OnMarkerClickListener {
-        openFullMap()
-        true
-    }
-
-    private fun openFullMap() {
-        if (eventLatLng != null && eventName != null) {
-            startActivity(EventMapActivity.createIntent(this, eventLatLng!!, eventName!!))
-        }
+    private fun openFullMap(eventLatLng: LatLng, eventName: String) {
+        startActivity(EventMapActivity.createIntent(this, eventLatLng, eventName))
     }
 
     override fun onMapReady(map: GoogleMap) {
