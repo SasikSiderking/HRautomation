@@ -90,6 +90,8 @@
         <activity
             android:name=".presentation.view.social.details.EventDetailsActivity"
             android:theme="@style/NoActionBarTheme" />
+
+        <activity android:name=".presentation.view.social.details.map.EventMapActivity" />
     </application>
 
 </manifest>
