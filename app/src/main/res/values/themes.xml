@@ -28,6 +28,11 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <!-- Customize color of navigation drawer icon and back arrow -->
+        <item name="colorControlNormal">@color/black</item>
+    </style>
+
     <!--Recycler View Item Style-->
     <style name="SelectableViewItemStyle">
         <item name="android:foreground">@drawable/recycler_view_item_ripple_shape</item>

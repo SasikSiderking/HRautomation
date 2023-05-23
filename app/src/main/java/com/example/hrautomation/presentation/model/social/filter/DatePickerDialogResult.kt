@@ -1,4 +1,4 @@
-package com.example.hrautomation.presentation.model.social
+package com.example.hrautomation.presentation.model.social.filter
 
 import java.io.Serializable
 

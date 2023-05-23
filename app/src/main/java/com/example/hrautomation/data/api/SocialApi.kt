@@ -1,9 +1,12 @@
 package com.example.hrautomation.data.api
 
-import com.example.hrautomation.data.model.social.EventFilter
-import com.example.hrautomation.data.model.social.EventsRequest
+import com.example.hrautomation.data.model.social.event.EventResponse
+import com.example.hrautomation.data.model.social.filter.EventFilter
+import com.example.hrautomation.data.model.social.list_event.EventsRequest
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface SocialApi {
@@ -14,4 +17,7 @@ interface SocialApi {
         @Query("sortBy") sortBy: String,
         @Body filter: EventFilter
     ): EventsRequest
+
+    @GET("/events/get/{id}")
+    suspend fun getEvent(@Path("id") id: Long): EventResponse
 }

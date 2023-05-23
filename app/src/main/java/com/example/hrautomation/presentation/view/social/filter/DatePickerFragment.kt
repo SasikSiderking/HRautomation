@@ -8,8 +8,8 @@ import android.widget.DatePicker
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
-import com.example.hrautomation.presentation.model.social.DatePickerDialogResult
-import java.util.*
+import com.example.hrautomation.presentation.model.social.filter.DatePickerDialogResult
+import java.util.Calendar
 
 class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener {
 

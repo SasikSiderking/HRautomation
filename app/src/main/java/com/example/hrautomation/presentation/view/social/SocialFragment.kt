@@ -67,7 +67,7 @@ class SocialFragment : BaseFragment<FragmentSocialBinding>() {
         }
     }
 
-    private val onEventClickListener = OnEventClickListener {
-        startActivity(EventDetailsActivity.createIntent(requireContext()))
+    private val onEventClickListener = OnEventClickListener { eventId ->
+        startActivity(EventDetailsActivity.createIntent(requireContext(), eventId))
     }
 }

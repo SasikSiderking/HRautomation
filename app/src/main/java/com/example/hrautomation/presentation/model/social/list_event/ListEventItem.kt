@@ -1,4 +1,4 @@
-package com.example.hrautomation.presentation.model.social
+package com.example.hrautomation.presentation.model.social.list_event
 
 import com.example.hrautomation.presentation.base.delegates.BaseListItem
 

@@ -1,6 +1,5 @@
-package com.example.hrautomation.presentation.model.social
+package com.example.hrautomation.presentation.model.social.event
 
-import com.example.hrautomation.presentation.view.social.details.EventMaterialItem
 import com.google.android.gms.maps.model.LatLng
 
 data class EventItem(
