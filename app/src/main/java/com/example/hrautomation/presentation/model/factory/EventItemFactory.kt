@@ -19,7 +19,7 @@ interface EventItemFactory {
     fun createEventItem(event: Event): EventItem
 }
 
-class EventEventItemFactoryImpl @Inject constructor(
+class EventItemFactoryImpl @Inject constructor(
     private val stringResourceProvider: StringResourceProvider
 ) : EventItemFactory {
 
