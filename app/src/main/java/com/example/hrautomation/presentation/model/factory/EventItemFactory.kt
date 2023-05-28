@@ -58,9 +58,9 @@ class EventItemFactoryImpl @Inject constructor(
         return EventItem(
             event.id,
             event.name,
-            event.description,
+            event.description ?: "",
             DateUtils.formatDate(event.date),
-            event.address,
+            event.address ?: "",
             when (event.format) {
                 EventFormat.ONLINE.value -> stringResourceProvider.getString(R.string.format_online)
                 EventFormat.OFFLINE.value -> stringResourceProvider.getString(R.string.format_offline)

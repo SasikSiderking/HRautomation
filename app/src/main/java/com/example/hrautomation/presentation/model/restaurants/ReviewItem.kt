@@ -10,7 +10,7 @@ data class ReviewItem(
     val content: String,
     val rating: Float,
     val author: String,
-    val pictureUrl: String,
+    val pictureUrl: String?,
     val date: String
 ) : BaseListItem
 

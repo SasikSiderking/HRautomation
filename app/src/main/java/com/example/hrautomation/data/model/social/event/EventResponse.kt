@@ -5,9 +5,9 @@ import java.util.Date
 data class EventResponse(
     val id: Long,
     val name: String,
-    val description: String,
+    val description: String?,
     val date: Date,
-    val address: String,
+    val address: String?,
     val format: String,
     val pictureUrl: String?,
     val lat: Double,

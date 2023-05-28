@@ -4,9 +4,9 @@ data class Employee(
     val id: Long,
     val name: String,
     val email: String,
-    val project: String,
-    val post: String,
-    val info: String,
+    val project: String?,
+    val post: String?,
+    val info: String?,
     val pictureUrl: String?
 )
 

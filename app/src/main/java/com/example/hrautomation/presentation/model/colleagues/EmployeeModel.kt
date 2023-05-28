@@ -15,5 +15,13 @@ data class EmployeeItem(
 
 class EmployeeToEmployeeItemMapper : Mapper<Employee, EmployeeItem> {
     override fun convert(model: Employee): EmployeeItem =
-        EmployeeItem(model.id, model.name, model.email, model.project, model.post, model.info, model.pictureUrl)
+        EmployeeItem(
+            model.id,
+            model.name,
+            model.email,
+            model.project ?: "",
+            model.post ?: "",
+            model.info ?: "",
+            model.pictureUrl
+        )
 }
