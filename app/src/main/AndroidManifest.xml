@@ -22,24 +22,16 @@
         tools:targetApi="31">
 
         <service
-            android:name=".presentation.notification.PushService"
+            android:name=".utils.notification.PushService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
-        <!-- Set custom default icon. This is used when no icon is set for incoming notification messages.
-     See README(https://goo.gl/l4GJaQ) for more. -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_hr_splash" />
-        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
-             notification message. See README(https://goo.gl/6BKBk7) for more. -->
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/primary" />
-
 
         <uses-library
             android:name="org.apache.http.legacy"
@@ -89,7 +81,13 @@
 
         <activity
             android:name=".presentation.view.social.details.EventDetailsActivity"
-            android:theme="@style/NoActionBarTheme" />
+            android:exported="true"
+            android:theme="@style/NoActionBarTheme">
+            <intent-filter>
+                <action android:name="openEventDetailsActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <activity android:name=".presentation.view.social.details.map.EventMapActivity" />
     </application>

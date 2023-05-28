@@ -13,6 +13,8 @@ import com.example.hrautomation.domain.repository.UserRepository
 import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
 import com.example.hrautomation.presentation.model.colleagues.EmployeeItem
 import com.example.hrautomation.presentation.model.colleagues.EmployeeToEmployeeItemMapper
+import com.example.hrautomation.utils.publisher.ProfileEvent
+import com.example.hrautomation.utils.publisher.Publisher
 import com.example.hrautomation.utils.resources.StringResourceProvider
 import com.example.hrautomation.utils.tryLaunch
 import kotlinx.coroutines.NonCancellable
@@ -26,6 +28,7 @@ class ProfileViewModel @Inject constructor(
     private val userRepo: UserRepository,
     private val tokenRepo: TokenRepository,
     private val dispatchers: CoroutineDispatchers,
+    private val profilePublisher: Publisher<ProfileEvent>,
     private val employeeToEmployeeItemMapper: EmployeeToEmployeeItemMapper,
     private val mediaContentRepository: MediaContentRepository,
     private val stringResourceProvider: StringResourceProvider
@@ -103,6 +106,8 @@ class ProfileViewModel @Inject constructor(
                     }
                     loadUserData()
 
+                    updateColleagues()
+
                 }
             },
             doOnError = { error ->
@@ -111,6 +116,10 @@ class ProfileViewModel @Inject constructor(
                 _exception.postValue(error)
             }
         )
+    }
+
+    private suspend fun updateColleagues() {
+        profilePublisher.emitEvent(ProfileEvent.Update)
     }
 
     private fun convertBitmapToByteArray(bitmap: Bitmap): ByteArray {

@@ -1,7 +1,8 @@
 package com.example.hrautomation.di.view_model
 
-import com.example.hrautomation.utils.publisher.EventFilterPublisher
-import com.example.hrautomation.utils.publisher.ProfilePublisher
+import com.example.hrautomation.utils.publisher.EventFilterEvent
+import com.example.hrautomation.utils.publisher.ProfileEvent
+import com.example.hrautomation.utils.publisher.Publisher
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -10,9 +11,9 @@ import javax.inject.Singleton
 class PublisherModule {
     @Singleton
     @Provides
-    fun provideProfilePublisher(): ProfilePublisher = ProfilePublisher()
+    fun provideProfilePublisher(): Publisher<ProfileEvent> = Publisher()
 
     @Singleton
     @Provides
-    fun provideEventFilterPublisher(): EventFilterPublisher = EventFilterPublisher()
+    fun provideEventFilterPublisher(): Publisher<EventFilterEvent> = Publisher()
 }

@@ -34,7 +34,12 @@ class EventDetailsActivity : BaseActivity<ActivityEventDetailsBinding>(), OnMapR
 
     private val eventMaterialAdapter = EventMaterialAdapter()
 
-    private val eventId: Long by lazy { intent.getLongExtra(EVENT_ID_EXTRA, 0L) }
+    private val eventId: Long by lazy {
+        intent.getLongExtra(
+            EVENT_ID_EXTRA,
+            intent.getStringExtra(EVENT_ID_EXTRA)?.toLong() ?: DUMMY_EVENT_ID
+        )
+    }
 
     private lateinit var map: GoogleMap
 
@@ -134,9 +139,12 @@ class EventDetailsActivity : BaseActivity<ActivityEventDetailsBinding>(), OnMapR
     }
 
     companion object {
+
+        const val DUMMY_EVENT_ID = 0L
+
         const val MAP_ZOOM = 16F
 
-        private const val EVENT_ID_EXTRA = "event_id_extra"
+        const val EVENT_ID_EXTRA = "event_id_extra"
         fun createIntent(context: Context, eventId: Long): Intent {
             val intent = Intent(context, EventDetailsActivity::class.java)
             intent.putExtra(EVENT_ID_EXTRA, eventId)

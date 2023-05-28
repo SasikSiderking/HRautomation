@@ -13,7 +13,7 @@ import com.example.hrautomation.presentation.model.social.filter.EventFilterPara
 import com.example.hrautomation.presentation.model.social.filter.toFilter
 import com.example.hrautomation.presentation.model.social.list_event.ListEventItem
 import com.example.hrautomation.utils.publisher.EventFilterEvent
-import com.example.hrautomation.utils.publisher.EventFilterPublisher
+import com.example.hrautomation.utils.publisher.Publisher
 import com.example.hrautomation.utils.tryLaunch
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.flow.launchIn
@@ -25,7 +25,7 @@ class SocialViewModel @Inject constructor(
     private val dispatchers: CoroutineDispatchers,
     private val socialRepository: SocialRepository,
     private val eventItemFactory: EventItemFactory,
-    private val eventFilterPublisher: EventFilterPublisher,
+    private val eventFilterPublisher: Publisher<EventFilterEvent>,
 ) : BaseViewModel() {
 
     val data: LiveData<List<BaseListItem>>
@@ -66,7 +66,7 @@ class SocialViewModel @Inject constructor(
     }
 
     private fun subscribeForFilterPublisher() {
-        eventFilterPublisher.eventFilterEventFlow
+        eventFilterPublisher.eventFlow
             .onEach { event ->
                 when (event) {
                     is EventFilterEvent.ProfileEventFilter -> {

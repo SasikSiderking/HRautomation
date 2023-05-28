@@ -161,9 +161,7 @@ class MainActivity : AppCompatActivity() {
 
     private var profileActivityResultLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
-    ) { _: ActivityResult ->
-        viewModel.updateColleagues()
-    }
+    ) {}
 
     private var eventFilterActivityResultLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
