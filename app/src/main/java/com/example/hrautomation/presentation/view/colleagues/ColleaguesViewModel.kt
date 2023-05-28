@@ -11,7 +11,7 @@ import com.example.hrautomation.presentation.base.delegates.BaseListItem
 import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
 import com.example.hrautomation.presentation.model.colleagues.EmployeeToColleagueItemMapper
 import com.example.hrautomation.utils.publisher.ProfileEvent
-import com.example.hrautomation.utils.publisher.ProfilePublisher
+import com.example.hrautomation.utils.publisher.Publisher
 import com.example.hrautomation.utils.tryLaunch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -22,7 +22,7 @@ class ColleaguesViewModel @Inject constructor(
     private val repo: EmployeesRepository,
     private val dispatchers: CoroutineDispatchers,
     private val employeesToColleagueItemMapper: EmployeeToColleagueItemMapper,
-    profilePublisher: ProfilePublisher
+    private val profilePublisher: Publisher<ProfileEvent>
 ) : BaseViewModel() {
 
     val data: LiveData<List<BaseListItem>>
@@ -33,20 +33,10 @@ class ColleaguesViewModel @Inject constructor(
 
     init {
         loadData()
-        profilePublisher.profileEventFlow
-            .onEach { event ->
-                when (event) {
-                    is ProfileEvent.Update -> {
-                        reload()
-                    }
-                    else -> {}
-                }
-            }
-            .launchIn(viewModelScope)
+        collectProfileEvents()
     }
 
     fun reload() {
-//        viewModelScope.coroutineContext.cancelChildren()
         clearExceptionState()
         loadData()
     }
@@ -86,6 +76,18 @@ class ColleaguesViewModel @Inject constructor(
                 _exception.postValue(error)
             }
         )
+    }
+
+    private fun collectProfileEvents() {
+        profilePublisher.eventFlow
+            .onEach { event ->
+                when (event) {
+                    is ProfileEvent.Update -> {
+                        reload()
+                    }
+                }
+            }
+            .launchIn(viewModelScope)
     }
 
     private companion object {

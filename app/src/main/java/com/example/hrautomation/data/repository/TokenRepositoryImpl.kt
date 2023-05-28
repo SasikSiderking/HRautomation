@@ -3,7 +3,8 @@ package com.example.hrautomation.data.repository
 import android.content.Context
 import android.content.SharedPreferences
 import com.example.hrautomation.data.api.TokenApi
-import com.example.hrautomation.data.model.TokenResponseToTokenMapper
+import com.example.hrautomation.data.model.tokens.NotificationTokenRequest
+import com.example.hrautomation.data.model.tokens.TokenResponseToTokenMapper
 import com.example.hrautomation.domain.model.Token
 import com.example.hrautomation.domain.repository.TokenRepository
 import com.example.hrautomation.utils.runSuspendCatching
@@ -58,6 +59,22 @@ class TokenRepositoryImpl @Inject constructor(
         )
     }
 
+    override suspend fun sendNotificationToken() {
+        val userId = getUserId()
+        val notificationToken = getNotificationToken()
+        if (userId != null && notificationToken != null) {
+            tokenApi.sendNotificationToken(NotificationTokenRequest(notificationToken, userId))
+        }
+    }
+
+    override fun saveNotificationToken(notificationToken: String) {
+        preferences.edit().putString(NOTIFICATION_TOKEN, notificationToken).apply()
+    }
+
+    private fun getNotificationToken(): String? {
+        return preferences.getString(NOTIFICATION_TOKEN, null)
+    }
+
     override fun getAccessToken(): String? {
         return preferences.getString(ACC_TOKEN, null)
     }
@@ -87,5 +104,7 @@ class TokenRepositoryImpl @Inject constructor(
         const val ACC_TOKEN = "accessToken"
         const val REF_TOKEN = "refreshToken"
         const val USER_ID = "userId"
+
+        const val NOTIFICATION_TOKEN = "notification_token"
     }
 }

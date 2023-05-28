@@ -1,6 +1,7 @@
 package com.example.hrautomation.data.api
 
-import com.example.hrautomation.data.model.TokenResponse
+import com.example.hrautomation.data.model.tokens.NotificationTokenRequest
+import com.example.hrautomation.data.model.tokens.TokenResponse
 import okhttp3.RequestBody
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -16,4 +17,7 @@ interface TokenApi {
 
     @POST("/refresh")
     suspend fun refreshToken(@Body refreshToken: RequestBody): TokenResponse
+
+    @POST("/authorization/token")
+    suspend fun sendNotificationToken(@Body notificationTokenRequest: NotificationTokenRequest)
 }

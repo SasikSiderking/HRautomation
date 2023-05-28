@@ -9,9 +9,13 @@ interface TokenRepository {
     suspend fun checkEmail(email: String)
     suspend fun confirmEmail(email: String, code: String): Token
 
-     fun logout()
+    fun logout()
 
     fun login(token: Token)
 
     suspend fun refreshToken(): Token?
+
+    suspend fun sendNotificationToken()
+
+    fun saveNotificationToken(notificationToken: String)
 }

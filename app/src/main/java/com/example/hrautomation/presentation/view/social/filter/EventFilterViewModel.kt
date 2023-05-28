@@ -7,12 +7,13 @@ import com.example.hrautomation.presentation.base.viewModel.BaseViewModel
 import com.example.hrautomation.presentation.model.restaurants.CityItem
 import com.example.hrautomation.presentation.model.social.filter.EventFilterParam
 import com.example.hrautomation.utils.publisher.EventFilterEvent
-import com.example.hrautomation.utils.publisher.EventFilterPublisher
+import com.example.hrautomation.utils.publisher.Publisher
 import kotlinx.coroutines.launch
 import java.util.Date
 import javax.inject.Inject
 
-class EventFilterViewModel @Inject constructor(private val eventFilterPublisher: EventFilterPublisher) : BaseViewModel() {
+class EventFilterViewModel @Inject constructor(private val eventFilterPublisher: Publisher<EventFilterEvent>) :
+    BaseViewModel() {
     val eventFilterParam: LiveData<EventFilterParam>
         get() = _eventFilterParam
     private val _eventFilterParam: MutableLiveData<EventFilterParam> =
