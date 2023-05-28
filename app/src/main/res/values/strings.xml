@@ -78,9 +78,9 @@
     <!--Social-->
     <string name="events">События</string>
     <string name="event_image">Превью события</string>
-    <string name="format_online">Онлайн-формат</string>
-    <string name="format_offline">Офлайн-формат</string>
-    <string name="format_combined">Комбинированный</string>
+    <string name="format_online">Онлайн формат</string>
+    <string name="format_offline">Офлайн формат</string>
+    <string name="format_combined">Совмещенный формат</string>
     <string name="default_date_text">Дата не выбрана</string>
     <string name="filter_by_city">По городу</string>
     <string name="default_city_text">Город не выбран</string>
@@ -103,8 +103,10 @@
     <string name="event_details_description">Описание</string>
     <string name="event_details_date">Дата проведения</string>
     <string name="event_details_format">Формат</string>
-    <string name="event_details_address">Адресс</string>
+    <string name="event_details_address">Адрес</string>
     <string name="event_details_image">Картинка события</string>
     <string name="event_channel_name">primary notification channel</string>
     <string name="event_channel_description">this channel is for event notification</string>
+    <string name="materials_title">Материалы</string>
+    <string name="image_of_file">изображение файл</string>
 </resources>
