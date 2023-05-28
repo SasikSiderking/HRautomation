@@ -105,6 +105,6 @@
     <string name="event_details_format">Формат</string>
     <string name="event_details_address">Адресс</string>
     <string name="event_details_image">Картинка события</string>
-    <string name="channel_name">primary notification channel</string>
-    <string name="channel_description">this channel is for event notification</string>
+    <string name="event_channel_name">primary notification channel</string>
+    <string name="event_channel_description">this channel is for event notification</string>
 </resources>
