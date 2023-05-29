@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
@@ -52,6 +53,7 @@ class EventDetailsActivity : BaseActivity<ActivityEventDetailsBinding>(), OnMapR
         supportActionBar?.hide()
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back_arrow_contrast)
 
         viewModel.loadData(eventId)
     }
@@ -96,7 +98,11 @@ class EventDetailsActivity : BaseActivity<ActivityEventDetailsBinding>(), OnMapR
             date.setText(event.date)
             format.setText(event.format)
             address.setText(event.address)
-            eventMaterialAdapter.update(event.materials)
+
+            if (event.materials.isNotEmpty()) {
+                materialsHeader.visibility = View.VISIBLE
+                eventMaterialAdapter.update(event.materials)
+            }
         }
 
         map.addMarker(MarkerOptions().position(event.latLng))

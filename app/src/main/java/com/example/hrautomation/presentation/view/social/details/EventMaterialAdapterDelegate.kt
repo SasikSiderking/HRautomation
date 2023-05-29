@@ -1,5 +1,6 @@
 package com.example.hrautomation.presentation.view.social.details
 
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
@@ -21,8 +22,8 @@ class EventMaterialAdapterDelegate : BaseItemAdapterDelegate<EventMaterialItem, 
 
     override fun onBind(item: EventMaterialItem, holder: EventMaterialViewHolder, payloads: List<Any>) {
         with(holder.binding) {
-            materialDescription.text = item.description
-            materialUrl.text = item.url
+            materialUrl.text = item.text
+            materialUrl.movementMethod = LinkMovementMethod.getInstance()
         }
     }
 
