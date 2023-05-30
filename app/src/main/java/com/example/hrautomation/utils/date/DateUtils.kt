@@ -10,12 +10,22 @@ object DateUtils {
 
     const val PATTERN = "dd.MM.yyyy"
 
-    const val READABLE_PATTERN = "dd MMMM"
+    private const val DAY_MONTH_PATTERN = "d MMMM"
 
-    const val READABLE_PATTERN_TIME = "dd MMMM, HH:mm z"
+    private const val DAY_MONTH_LOCALE_PATTERN = "d MMMM, HH:mm X"
 
-    fun formatDate(date: Date, pattern: String): String {
-        val formatter = SimpleDateFormat(pattern, Locale("ru", "RU"))
+    fun formatDate(date: Date): String {
+        val formatter = SimpleDateFormat(PATTERN, Locale("ru", "RU"))
+        return formatter.format(date)
+    }
+
+    fun formatDateToDayMonth(date: Date): String {
+        val formatter = SimpleDateFormat(DAY_MONTH_PATTERN, Locale("ru", "RU"))
+        return formatter.format(date)
+    }
+
+    fun formatDateToDayMonthAndLocale(date: Date): String {
+        val formatter = SimpleDateFormat(DAY_MONTH_LOCALE_PATTERN, Locale("ru", "RU"))
         return formatter.format(date)
     }
 

@@ -90,11 +90,10 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="8dp"
+                    android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:hint="@string/event_details_date"
-                    app:layout_constraintBottom_toBottomOf="@id/formatLayout"
-                    app:layout_constraintEnd_toStartOf="@id/formatIcon"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/dateIcon"
                     app:layout_constraintTop_toBottomOf="@id/descriptionLayout">
 
@@ -115,7 +114,7 @@
                     android:src="@drawable/ic_baseline_camera_indoor_24"
                     app:layout_constraintBottom_toBottomOf="@id/formatLayout"
                     app:layout_constraintEnd_toStartOf="@id/formatLayout"
-                    app:layout_constraintStart_toEndOf="@id/dateLayout"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/formatLayout" />
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -128,7 +127,7 @@
                     android:hint="@string/event_details_format"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/formatIcon"
-                    app:layout_constraintTop_toBottomOf="@id/descriptionLayout">
+                    app:layout_constraintTop_toBottomOf="@id/dateLayout">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/format"
@@ -177,7 +176,7 @@
                     android:layout_height="165dp"
                     android:layout_marginTop="4dp"
                     app:layout_constraintEnd_toEndOf="@id/addressLayout"
-                    app:layout_constraintStart_toStartOf="@id/addressLayout"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/addressLayout"
                     tools:layout="@layout/fragment_map" />
 

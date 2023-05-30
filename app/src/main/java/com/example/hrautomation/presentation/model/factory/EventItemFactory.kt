@@ -48,7 +48,7 @@ class EventItemFactoryImpl @Inject constructor(
             ListEventItem(
                 id = listEvent.id,
                 name = listEvent.name,
-                date = DateUtils.formatDate(listEvent.date, DateUtils.READABLE_PATTERN),
+                date = DateUtils.formatDateToDayMonth(listEvent.date),
                 pictureUrl = listEvent.pictureUrl,
                 format = format,
                 timeLineColor = timeLineColor,
@@ -62,7 +62,7 @@ class EventItemFactoryImpl @Inject constructor(
             event.id,
             event.name,
             event.description ?: "",
-            DateUtils.formatDate(event.date, DateUtils.READABLE_PATTERN_TIME),
+            DateUtils.formatDateToDayMonthAndLocale(event.date),
             event.address ?: "",
             when (event.format) {
                 EventFormat.ONLINE.value -> stringResourceProvider.getString(R.string.format_online)
