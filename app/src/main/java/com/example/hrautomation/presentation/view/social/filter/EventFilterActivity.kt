@@ -156,8 +156,8 @@ class EventFilterActivity : BaseActivity<ActivityEventFilterBinding>() {
             toDateInputLayout.isEndIconVisible = eventFilterParam.toDate != null
             cityInputLayout.isEndIconVisible = eventFilterParam.city != null
 
-            fromDateInputText.setText(eventFilterParam.fromDate?.let { DateUtils.formatDate(it) })
-            toDateInputText.setText(eventFilterParam.toDate?.let { DateUtils.formatDate(it) })
+            fromDateInputText.setText(eventFilterParam.fromDate?.let { DateUtils.formatDate(it, DateUtils.PATTERN) })
+            toDateInputText.setText(eventFilterParam.toDate?.let { DateUtils.formatDate(it, DateUtils.PATTERN) })
             cityInputText.setText(eventFilterParam.city?.name)
             formatInputText.setText(eventFilterParam.format?.eventType?.let { getString(it) }, false)
         }
