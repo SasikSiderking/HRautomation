@@ -11,7 +11,7 @@ data class GetEmployees(
 data class ListEmployeeResponse(
     val id: Long,
     val username: String,
-    val post: String,
+    val post: String?,
     val pictureUrl: String?
 )
 

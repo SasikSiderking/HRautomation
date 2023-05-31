@@ -1,5 +1,8 @@
 package com.example.hrautomation.presentation.model.factory
 
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.URLSpan
 import com.example.hrautomation.R
 import com.example.hrautomation.domain.model.social.event.Event
 import com.example.hrautomation.domain.model.social.event.EventMaterial
@@ -58,9 +61,9 @@ class EventItemFactoryImpl @Inject constructor(
         return EventItem(
             event.id,
             event.name,
-            event.description,
+            event.description ?: "",
             DateUtils.formatDate(event.date),
-            event.address,
+            event.address ?: "",
             when (event.format) {
                 EventFormat.ONLINE.value -> stringResourceProvider.getString(R.string.format_online)
                 EventFormat.OFFLINE.value -> stringResourceProvider.getString(R.string.format_offline)
@@ -74,10 +77,13 @@ class EventItemFactoryImpl @Inject constructor(
     }
 
     private fun EventMaterial.toEventItemMaterial(): EventMaterialItem {
+
+        val spannableString = SpannableString(this.description)
+        spannableString.setSpan(URLSpan(this.url), 0, this.description.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
         return EventMaterialItem(
             this.id,
-            this.url,
-            this.description,
+            spannableString
         )
     }
 }

@@ -4,17 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp">
-
-    <TextView
-        android:id="@+id/materialDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/main_text"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Jd;lsf;sadng;lksndg/ksng;lkwn;gne;rgnwe;gnajkbdfjk" />
+    android:minHeight="52dp"
+    android:paddingHorizontal="8dp"
+    android:paddingVertical="2dp">
 
     <ImageView
         android:id="@+id/fileImage"
@@ -28,14 +20,16 @@
 
     <TextView
         android:id="@+id/materialUrl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:clickable="true"
+        android:gravity="center_vertical"
         app:layout_constrainedWidth="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/fileImage"
-        app:layout_constraintTop_toBottomOf="@id/materialDescription"
-        tools:text="https://stackoverflow.com/questions/2734270/how-to-make-links-in-a-textview-clickable" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="https://stackovenks-in-a-textview-clickable" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

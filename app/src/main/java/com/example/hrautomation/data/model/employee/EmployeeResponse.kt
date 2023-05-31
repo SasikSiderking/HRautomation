@@ -7,10 +7,9 @@ data class EmployeeResponse(
     val id: Long,
     val username: String,
     val email: String,
-    val project: String,
-    val post: String,
-    val about: String,
-    val admin: String,
+    val project: String?,
+    val post: String?,
+    val about: String?,
     val pictureUrl: String?
 )
 

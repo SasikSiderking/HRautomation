@@ -13,5 +13,5 @@ data class ListedColleagueItem(
 
 class EmployeeToColleagueItemMapper : Mapper<ListEmployee, ListedColleagueItem> {
     override fun convert(model: ListEmployee): ListedColleagueItem =
-        ListedColleagueItem(model.id, model.username, model.post, model.pictureUrl)
+        ListedColleagueItem(model.id, model.username, model.post ?: "", model.pictureUrl)
 }

@@ -185,30 +185,22 @@
                     android:id="@+id/materialsHeader"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
                     android:text="@string/materials_title"
-                    android:textSize="20sp"
+                    android:textSize="24sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/map" />
-
-                <View
-                    android:id="@+id/materialsDivider"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@color/primary_deep"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/materialsHeader" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/eventMaterialRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/materialsDivider"
+                    app:layout_constraintTop_toBottomOf="@id/materialsHeader"
                     tools:itemCount="9" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

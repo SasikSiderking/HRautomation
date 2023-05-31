@@ -7,5 +7,5 @@ class ListEvent(
     val name: String,
     val date: Date,
     val pictureUrl: String?,
-    val format: String?
+    val format: String
 )
