@@ -12,7 +12,7 @@ object DateUtils {
 
     private const val INPUT_PATTERN = "yyyy-MM-dd'T'HH:mm:ss"
 
-    const val PATTERN = "dd.MM.yyyy"
+    private const val PATTERN = "dd.MM.yyyy"
 
     private const val DAY_MONTH_PATTERN = "d MMMM"
 

@@ -21,6 +21,6 @@ class ReviewToReviewItemMapper : Mapper<Review, ReviewItem> {
         model.rating,
         model.author,
         model.pictureUrl,
-        DateUtils.formatDate(model.date, DateUtils.PATTERN)
+        DateUtils.formatDate(model.date)
     )
 }
