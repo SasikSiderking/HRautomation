@@ -53,7 +53,7 @@ class EventDetailsActivity : BaseActivity<ActivityEventDetailsBinding>(), OnMapR
         supportActionBar?.hide()
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back_arrow_contrast)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.home_as_up_indicator_ripple)
 
         viewModel.loadData(eventId)
     }
