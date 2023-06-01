@@ -1,5 +1,6 @@
 package com.example.hrautomation.presentation.model.factory
 
+import android.content.res.Resources
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.URLSpan
@@ -23,7 +24,8 @@ interface EventItemFactory {
 }
 
 class EventItemFactoryImpl @Inject constructor(
-    private val stringResourceProvider: StringResourceProvider
+    private val stringResourceProvider: StringResourceProvider,
+    private val resources: Resources
 ) : EventItemFactory {
 
     override fun createListEventItems(listEvents: List<ListEvent>): List<ListEventItem> {
@@ -48,7 +50,7 @@ class EventItemFactoryImpl @Inject constructor(
             ListEventItem(
                 id = listEvent.id,
                 name = listEvent.name,
-                date = DateUtils.formatDateToDayMonth(listEvent.date),
+                date = DateUtils.formatDateToDayMonth(listEvent.date, resources),
                 pictureUrl = listEvent.pictureUrl,
                 format = format,
                 timeLineColor = timeLineColor,
@@ -62,7 +64,7 @@ class EventItemFactoryImpl @Inject constructor(
             event.id,
             event.name,
             event.description ?: "",
-            DateUtils.formatDateToDayMonthAndLocale(event.date),
+            DateUtils.formatDateToDayMonthAndLocale(event.date, resources),
             event.address ?: "",
             when (event.format) {
                 EventFormat.ONLINE.value -> stringResourceProvider.getString(R.string.format_online)

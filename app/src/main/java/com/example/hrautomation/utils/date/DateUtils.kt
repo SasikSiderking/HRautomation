@@ -1,5 +1,7 @@
 package com.example.hrautomation.utils.date
 
+import android.content.res.Resources
+import com.example.hrautomation.R
 import java.text.SimpleDateFormat
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -18,31 +20,30 @@ object DateUtils {
 
     private const val DAY_MONTH_TIME_PATTERN = "d MMMM, HH:mm"
 
+    private const val ZONE_ID = "Europe/Moscow"
+
+
     fun formatDate(date: Date): String {
-        val formatter = SimpleDateFormat(PATTERN, Locale("ru", "RU"))
+        val formatter = SimpleDateFormat(PATTERN, Locale.getDefault())
         return formatter.format(date)
     }
 
-    fun formatDateToDayMonth(date: Date): String {
-        val zonedDateTime = ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("Europe/Moscow"))
-        val formatter = DateTimeFormatter.ofPattern(DAY_MONTH_PATTERN, Locale("ru", "RU"))
+    fun formatDateToDayMonth(date: Date, resources: Resources): String {
+        val zonedDateTime = ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of(ZONE_ID))
+        val formatter = DateTimeFormatter.ofPattern(DAY_MONTH_PATTERN, resources.configuration.locales.get(0))
         return zonedDateTime.format(formatter)
     }
 
-    fun formatDateToDayMonthAndLocale(date: Date): String {
-        val zonedDateTime = ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of("Europe/Moscow"))
-        val formatter = DateTimeFormatter.ofPattern(DAY_MONTH_TIME_PATTERN, Locale("ru", "RU"))
-        return zonedDateTime.format(formatter) + " МСК"
+    fun formatDateToDayMonthAndLocale(date: Date, resources: Resources): String {
+        val zonedDateTime = ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of(ZONE_ID))
+        val formatter = DateTimeFormatter.ofPattern(DAY_MONTH_TIME_PATTERN, resources.configuration.locales.get(0))
+        return resources.getString(R.string.date_format_with_timezone, zonedDateTime.format(formatter))
     }
 
-    fun parseDate(string: String): Date {
-        val isoFormat = SimpleDateFormat(INPUT_PATTERN, Locale("ru", "RU"))
+    fun parseDate(stringDate: String): Date {
+        val isoFormat = SimpleDateFormat(INPUT_PATTERN, Locale.getDefault())
         isoFormat.timeZone = TimeZone.getTimeZone("UTC")
-        val date = isoFormat.parse(string)
-        if (date != null) {
-            return date
-        } else {
-            throw IllegalStateException("Unparsable date")
-        }
+        val date = isoFormat.parse(stringDate)
+        return date ?: throw IllegalStateException("Unparsable date $stringDate")
     }
 }
