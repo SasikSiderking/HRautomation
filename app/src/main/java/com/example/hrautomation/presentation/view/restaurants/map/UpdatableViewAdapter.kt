@@ -26,6 +26,7 @@ class UpdatableViewAdapter<Item : BaseListItem, View>(
 
     fun closeView() {
         view.close()
+        currentItemId = null
     }
 
     fun setItems(items: List<Item>) {

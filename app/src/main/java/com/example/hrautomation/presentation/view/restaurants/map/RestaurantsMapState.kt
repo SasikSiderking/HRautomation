@@ -8,10 +8,6 @@ data class RestaurantsMapState(
     val chosenMarker: MarkerDelegate? = null
 ) {
 
-    fun setCurrentCity(cityLatLng: LatLng): RestaurantsMapState {
-        return this.copy(chosenCityLatLng = cityLatLng)
-    }
-
     fun setChosenBuilding(buildingId: Long?, marker: MarkerDelegate?): RestaurantsMapState {
         return this.copy(chosenBuildingId = buildingId, chosenMarker = marker)
     }

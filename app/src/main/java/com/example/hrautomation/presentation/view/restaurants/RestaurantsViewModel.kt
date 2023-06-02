@@ -53,17 +53,13 @@ class RestaurantsViewModel @Inject constructor(
         cachedCityLatLngRepository.setLatLng(cityLatLng)
         cachedCityLatLngRepository.setCityId(city.id)
 
-        with(_restaurantsMapState) {
-            postValue(
-                value?.setCurrentCity(cityLatLng)
-            )
-        }
+        reload()
     }
 
-    fun chooseBuilding(restaurantId: Long, marker: MarkerDelegate) {
+    fun chooseBuilding(buildingId: Long, marker: MarkerDelegate) {
         with(_restaurantsMapState) {
             postValue(
-                value?.setChosenBuilding(restaurantId, marker)
+                value?.setChosenBuilding(buildingId, marker)
             )
         }
     }
