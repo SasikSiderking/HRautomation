@@ -29,9 +29,13 @@ class MapAdapter(private val map: GoogleMap) {
 
     fun unChooseMarker() {
         chosenMarker?.setDefaultIcon()
+        chosenMarker = null
     }
 
     fun setMarkers(buildings: List<BuildingItem>, context: Context) {
+
+        unChooseMarker()
+        map.clear()
 
         val markerDelegates = createMarkers(buildings, context)
 

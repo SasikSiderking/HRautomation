@@ -51,7 +51,7 @@
     <string name="try_again">Что-то пошло не так, попробуйте еще раз</string>
 
     <!--Restaurants-->
-    <string name="where_to_eat">Где поесть</string>
+    <string name="where_to_eat">Рестораны</string>
     <string name="tab_map">Карта</string>
     <string name="tab_list">Список</string>
     <string name="restaurants_map_details">ДЕТАЛИ</string>

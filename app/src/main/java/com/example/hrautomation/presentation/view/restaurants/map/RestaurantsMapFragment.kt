@@ -92,7 +92,14 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
 
     private val markerClickListener: OnMarkerDelegateClickListener =
         OnMarkerDelegateClickListener { markerDelegate: MarkerDelegate ->
-            viewModel.chooseBuilding(markerDelegate.marker?.tag as Long, markerDelegate)
+            val chosenBuildingId = markerDelegate.marker?.tag as Long
+
+            viewModel.chooseBuilding(chosenBuildingId, markerDelegate)
+
+            val chosenRestaurantId = viewModel.getSingleRestaurantIdInBuildingOrNull(chosenBuildingId)
+            if (chosenRestaurantId == null) {
+                openRestaurantsBottomSheet(chosenBuildingId)
+            }
         }
 
     private val onCardClickListener = OnCardClickListener { cardAction ->
@@ -100,6 +107,7 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
             CardAction.CLOSE -> {
                 viewModel.resetChosenBuilding()
             }
+
             CardAction.GO_TO -> {
                 val chosenRestaurantId = restaurantCardAdapter.getCurrentItemId()
                 if (chosenRestaurantId != null) {
@@ -133,7 +141,6 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
                     restaurantCardAdapter.updateView(chosenRestaurantId)
                 } else {
                     restaurantCardAdapter.closeView()
-                    openRestaurantsBottomSheet(chosenBuildingId)
                 }
             } else {
                 restaurantCardAdapter.closeView()
@@ -174,7 +181,7 @@ class RestaurantsMapFragment : Fragment(), OnMapReadyCallback {
         binding.chooseCityButton.setOnClickListener(chooseCityClickListener)
 
         childFragmentManager.setFragmentResultListener(
-            CityBottomSheet.TAG,
+            CityBottomSheet.REQUEST_KEY,
             viewLifecycleOwner
         ) { _: String, bundle: Bundle ->
             val city = bundle.getSerializable(CityBottomSheet.RESULT_KEY) as CityItem
