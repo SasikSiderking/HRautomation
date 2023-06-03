@@ -12,6 +12,7 @@ import com.example.hrautomation.presentation.model.social.event.EventMaterialIte
 import com.example.hrautomation.presentation.model.social.list_event.ListEventItem
 import com.example.hrautomation.presentation.view.social.filter.EventFormat
 import com.example.hrautomation.utils.date.DateUtils
+import com.example.hrautomation.utils.resources.ConfigurationProvider
 import com.example.hrautomation.utils.resources.StringResourceProvider
 import com.example.hrautomation.utils.social.SocialUtils
 import javax.inject.Inject
@@ -23,7 +24,8 @@ interface EventItemFactory {
 }
 
 class EventItemFactoryImpl @Inject constructor(
-    private val stringResourceProvider: StringResourceProvider
+    private val stringResourceProvider: StringResourceProvider,
+    private val configurationProvider: ConfigurationProvider
 ) : EventItemFactory {
 
     override fun createListEventItems(listEvents: List<ListEvent>): List<ListEventItem> {
@@ -48,7 +50,7 @@ class EventItemFactoryImpl @Inject constructor(
             ListEventItem(
                 id = listEvent.id,
                 name = listEvent.name,
-                date = DateUtils.formatDate(listEvent.date),
+                date = DateUtils.formatDateToDayMonth(listEvent.date, configurationProvider),
                 pictureUrl = listEvent.pictureUrl,
                 format = format,
                 timeLineColor = timeLineColor,
@@ -62,7 +64,7 @@ class EventItemFactoryImpl @Inject constructor(
             event.id,
             event.name,
             event.description ?: "",
-            DateUtils.formatDate(event.date),
+            DateUtils.formatDateToDayMonthAndLocale(event.date, configurationProvider, stringResourceProvider),
             event.address ?: "",
             when (event.format) {
                 EventFormat.ONLINE.value -> stringResourceProvider.getString(R.string.format_online)

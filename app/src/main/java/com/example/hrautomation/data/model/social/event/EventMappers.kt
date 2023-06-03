@@ -2,6 +2,7 @@ package com.example.hrautomation.data.model.social.event
 
 import com.example.hrautomation.domain.model.social.event.Event
 import com.example.hrautomation.domain.model.social.event.EventMaterial
+import com.example.hrautomation.utils.date.DateUtils
 import com.google.android.gms.maps.model.LatLng
 
 fun EventResponse.toEvent(): Event {
@@ -9,7 +10,7 @@ fun EventResponse.toEvent(): Event {
         this.id,
         this.name,
         this.description,
-        this.date,
+        DateUtils.parseDate(this.date),
         this.address,
         this.format,
         this.pictureUrl,
