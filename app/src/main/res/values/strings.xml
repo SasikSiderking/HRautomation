@@ -109,5 +109,5 @@
     <string name="event_channel_description">this channel is for event notification</string>
     <string name="materials_title">Материалы</string>
     <string name="image_of_file">изображение файл</string>
-<string name="date_format_with_timezone">%s МСК</string>
+    <string name="date_format_with_timezone">%s МСК</string>
 </resources>

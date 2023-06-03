@@ -1,7 +1,8 @@
 package com.example.hrautomation.utils.date
 
-import android.content.res.Resources
 import com.example.hrautomation.R
+import com.example.hrautomation.utils.resources.ConfigurationProvider
+import com.example.hrautomation.utils.resources.StringResourceProvider
 import java.text.SimpleDateFormat
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -28,16 +29,22 @@ object DateUtils {
         return formatter.format(date)
     }
 
-    fun formatDateToDayMonth(date: Date, resources: Resources): String {
+    fun formatDateToDayMonth(date: Date, configurationProvider: ConfigurationProvider): String {
         val zonedDateTime = ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of(ZONE_ID))
-        val formatter = DateTimeFormatter.ofPattern(DAY_MONTH_PATTERN, resources.configuration.locales.get(0))
+        val formatter =
+            DateTimeFormatter.ofPattern(DAY_MONTH_PATTERN, configurationProvider.getConfiguration().locales.get(0))
         return zonedDateTime.format(formatter)
     }
 
-    fun formatDateToDayMonthAndLocale(date: Date, resources: Resources): String {
+    fun formatDateToDayMonthAndLocale(
+        date: Date,
+        configurationProvider: ConfigurationProvider,
+        stringResourceProvider: StringResourceProvider
+    ): String {
         val zonedDateTime = ZonedDateTime.ofInstant(date.toInstant(), ZoneId.of(ZONE_ID))
-        val formatter = DateTimeFormatter.ofPattern(DAY_MONTH_TIME_PATTERN, resources.configuration.locales.get(0))
-        return resources.getString(R.string.date_format_with_timezone, zonedDateTime.format(formatter))
+        val formatter =
+            DateTimeFormatter.ofPattern(DAY_MONTH_TIME_PATTERN, configurationProvider.getConfiguration().locales.get(0))
+        return stringResourceProvider.getString(R.string.date_format_with_timezone, zonedDateTime.format(formatter))
     }
 
     fun parseDate(stringDate: String): Date {

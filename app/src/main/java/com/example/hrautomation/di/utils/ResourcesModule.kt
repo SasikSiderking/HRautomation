@@ -1,8 +1,9 @@
 package com.example.hrautomation.di.utils
 
 import android.content.Context
-import android.content.res.Resources
+import com.example.hrautomation.presentation.resources.ConfigurationProviderImpl
 import com.example.hrautomation.presentation.resources.StringResourceProviderImpl
+import com.example.hrautomation.utils.resources.ConfigurationProvider
 import com.example.hrautomation.utils.resources.StringResourceProvider
 import dagger.Module
 import dagger.Provides
@@ -17,5 +18,5 @@ class ResourcesModule {
 
     @Reusable
     @Provides
-    fun provideResources(context: Context): Resources = context.resources
+    fun provideConfigurationProvider(context: Context): ConfigurationProvider = ConfigurationProviderImpl(context.resources)
 }

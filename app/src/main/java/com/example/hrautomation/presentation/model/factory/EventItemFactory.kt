@@ -1,6 +1,5 @@
 package com.example.hrautomation.presentation.model.factory
 
-import android.content.res.Resources
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.URLSpan
@@ -13,6 +12,7 @@ import com.example.hrautomation.presentation.model.social.event.EventMaterialIte
 import com.example.hrautomation.presentation.model.social.list_event.ListEventItem
 import com.example.hrautomation.presentation.view.social.filter.EventFormat
 import com.example.hrautomation.utils.date.DateUtils
+import com.example.hrautomation.utils.resources.ConfigurationProvider
 import com.example.hrautomation.utils.resources.StringResourceProvider
 import com.example.hrautomation.utils.social.SocialUtils
 import javax.inject.Inject
@@ -25,7 +25,7 @@ interface EventItemFactory {
 
 class EventItemFactoryImpl @Inject constructor(
     private val stringResourceProvider: StringResourceProvider,
-    private val resources: Resources
+    private val configurationProvider: ConfigurationProvider
 ) : EventItemFactory {
 
     override fun createListEventItems(listEvents: List<ListEvent>): List<ListEventItem> {
@@ -50,7 +50,7 @@ class EventItemFactoryImpl @Inject constructor(
             ListEventItem(
                 id = listEvent.id,
                 name = listEvent.name,
-                date = DateUtils.formatDateToDayMonth(listEvent.date, resources),
+                date = DateUtils.formatDateToDayMonth(listEvent.date, configurationProvider),
                 pictureUrl = listEvent.pictureUrl,
                 format = format,
                 timeLineColor = timeLineColor,
@@ -64,7 +64,7 @@ class EventItemFactoryImpl @Inject constructor(
             event.id,
             event.name,
             event.description ?: "",
-            DateUtils.formatDateToDayMonthAndLocale(event.date, resources),
+            DateUtils.formatDateToDayMonthAndLocale(event.date, configurationProvider, stringResourceProvider),
             event.address ?: "",
             when (event.format) {
                 EventFormat.ONLINE.value -> stringResourceProvider.getString(R.string.format_online)
