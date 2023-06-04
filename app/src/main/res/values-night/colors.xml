@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FFFFFFFF</color>
+    <color name="white">#FF000000</color>
+    <color name="primary">#fad827</color>
+    <color name="primary_deep">#fcd703</color>
+    <color name="background">#FF000000</color>
+    <color name="surface">#292929</color>
+    <color name="onSurface">#BDBABA</color>
+    <color name="main_text">#EAEAEA</color>
+    <color name="bottom_nav_bar_color">#fad827</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="icon">#BDBABA</color>
+    <color name="toolbar">#292929</color>
+    <color name="buttonText">#FF000000</color>
+    <color name="splash_background">#FF000000</color>
+    <color name="splash_foreground">#fad827</color>
+</resources>

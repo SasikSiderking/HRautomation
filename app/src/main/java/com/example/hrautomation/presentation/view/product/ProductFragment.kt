@@ -79,7 +79,7 @@ class ProductFragment : Fragment() {
         with(binding) {
             contentLoadingSwitcher.setup(
                 ContentLoadingSettings(
-                    contentViews = listOf(horizontalScrollView, productRecyclerview),
+                    contentViews = listOf(coordinatorLayout),
                     errorViews = listOf(reusableReload.reusableReload),
                     loadingViews = listOf(reusableLoading.progressBar),
                     initState = ContentLoadingState.LOADING
