@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="primary">#fad827</color>
+    <color name="primary_deep">#fcd703</color>
+    <color name="background">#fcfcfb</color>
+    <color name="onSurface">#454545</color>
+    <color name="main_text">#222222</color>
+    <color name="bottom_nav_bar_color">#252525</color>
+    <color name="transparent">#00FFFFFF</color>
+</resources>

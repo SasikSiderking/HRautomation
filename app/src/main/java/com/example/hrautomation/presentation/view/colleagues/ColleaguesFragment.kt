@@ -101,7 +101,7 @@ class ColleaguesFragment : Fragment() {
         with(binding) {
             contentLoadingSwitcher.setup(
                 ContentLoadingSettings(
-                    contentViews = listOf(colleaguesRecyclerview, searchContainer),
+                    contentViews = listOf(coordinatorLayout),
                     errorViews = listOf(reusableReload.reusableReload),
                     loadingViews = listOf(reusableLoading.progressBar),
                     initState = ContentLoadingState.LOADING
