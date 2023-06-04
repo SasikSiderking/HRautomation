@@ -8,8 +8,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:layout_height="match_parent">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/app_bar"
@@ -25,9 +24,9 @@
 
                 <ImageView
                     android:id="@+id/eventImage"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:contentDescription="@string/event_details_image"
-                    android:layout_width="match_parent"
                     android:foreground="@drawable/event_gradient"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_placeholder"
@@ -36,10 +35,10 @@
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
-                    android:theme="@style/ToolbarTheme"
-                    app:layout_collapseMode="pin"
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize" />
+                    android:layout_height="?attr/actionBarSize"
+                    android:theme="@style/ToolbarTheme"
+                    app:layout_collapseMode="pin" />
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
@@ -75,10 +74,10 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <ImageView
-                    android:contentDescription="@string/event_details_date"
                     android:id="@+id/dateIcon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:contentDescription="@string/event_details_date"
                     android:src="@drawable/ic_baseline_event_note_24"
                     app:layout_constraintBottom_toBottomOf="@id/dateLayout"
                     app:layout_constraintEnd_toStartOf="@id/dateLayout"
@@ -107,10 +106,10 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <ImageView
-                    android:contentDescription="@string/event_details_format"
                     android:id="@+id/formatIcon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:contentDescription="@string/event_details_format"
                     android:src="@drawable/ic_baseline_camera_indoor_24"
                     app:layout_constraintBottom_toBottomOf="@id/formatLayout"
                     app:layout_constraintEnd_toStartOf="@id/formatLayout"
@@ -139,10 +138,10 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <ImageView
-                    android:contentDescription="@string/event_details_address"
                     android:id="@+id/addressIcon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:contentDescription="@string/event_details_address"
                     android:src="@drawable/ic_baseline_route_24"
                     app:layout_constraintBottom_toBottomOf="@+id/addressLayout"
                     app:layout_constraintStart_toStartOf="parent"
