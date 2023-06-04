@@ -9,7 +9,7 @@
         android:id="@+id/detailsToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/primary"
+        android:background="@color/toolbar"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="16dp">
 
@@ -34,7 +34,7 @@
                 style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="28dp"
+                android:layout_marginStart="28dp"
                 android:textColor="@color/black"
 
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -218,6 +218,7 @@
     </androidx.core.widget.NestedScrollView>
 
     <Button
+        android:textColor="@color/buttonText"
         android:id="@+id/addReviewButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

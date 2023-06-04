@@ -7,7 +7,7 @@
                 android:angle="90"
                 android:centerColor="#00ffffff"
                 android:endColor="#00ffffff"
-                android:startColor="@color/primary" />
+                android:startColor="@color/toolbar" />
         </shape>
     </item>
 </layer-list>
