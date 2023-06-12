@@ -44,7 +44,7 @@ This app is a simple HR helper which provides the following functions to employe
 ![Screenshot_2023-06-12-13-32-52-196_com example hrautomation](https://github.com/SasikSiderking/HRautomation/assets/101384226/278304b9-fe54-4211-bc61-b90a2163f886)
 ![Screenshot_2023-06-12-13-32-57-836_com example hrautomation](https://github.com/SasikSiderking/HRautomation/assets/101384226/5f939112-4855-4522-9f54-39ab82cfdedd)
 ![Screenshot_2023-06-12-13-33-05-777_com example hrautomation](https://github.com/SasikSiderking/HRautomation/assets/101384226/b0a4bf7d-eff7-4ed0-b1ec-51d0518fa574)
-![Screenshot_2023-06-12-13-25-36-283_com example hrautomation](https://github.com/SasikSiderking/HRautomation/assets/101384226/151a7aa8-0c79-4324-a890-ae38a97010cf)
+![Screenshot_2023-06-12-13-33-11-533_com example hrautomation](https://github.com/SasikSiderking/HRautomation/assets/101384226/eca70812-7df7-465b-b481-976741edaf62)
 ![Screenshot_2023-06-12-13-33-19-164_com example hrautomation](https://github.com/SasikSiderking/HRautomation/assets/101384226/ab2aaaa0-05dd-4897-a5a1-6fdb77529195)
 ![Screenshot_2023-06-12-13-33-39-988_com example hrautomation](https://github.com/SasikSiderking/HRautomation/assets/101384226/db55b4da-b9c1-4819-b8a1-87419da44b4f)
 ![Screenshot_2023-06-12-13-33-56-288_com example hrautomation](https://github.com/SasikSiderking/HRautomation/assets/101384226/7028fb14-3e95-4fdb-808d-102e01e0277e)
